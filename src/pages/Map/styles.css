@@ -1,0 +1,57 @@
+.context {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    justify-content: center;
+    align-items: center;
+    height: auto;
+    min-height: 100%;
+    padding-bottom: 200px;
+}
+
+.contextTitle {
+    font-size: 25px;
+    font-weight: bolder;
+}
+
+.titleSeparator {
+    max-width: 30%;
+    border: none;
+    height: 2px;
+    background-color: rgb(183, 210, 245);
+    margin-top: 15px;
+}
+
+.map-container {
+    display: flex;
+    justify-content: center;
+    align-items: center; /* 좌우 정렬 및 세로 중앙 정렬 */
+    gap: 5px; /* 지도와 정보 사이의 간격 */
+    margin: 40px auto;
+    width: 90%;
+}
+
+.map {
+    width: 400px;
+    height: 400px;
+    background-color: #f0f0f0;
+}
+
+.map-info {
+    background-color: #def1ff;
+    width: 400px;
+    height: 400px;
+    font-family: Arial, sans-serif;
+    font-size: 15px;
+    line-height: 1.6;
+    text-align: start;
+    color: #565b61;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.map-subinfo {
+    margin-bottom: 15px;
+    padding-left: 30px;
+}

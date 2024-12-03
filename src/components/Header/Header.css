@@ -1,0 +1,377 @@
+.header {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    /*padding: 25px 25px;*/
+    position: fixed; /* 상단 고정 */
+    top: 0; /* 화면 상단에 고정 */
+    width: 100%; /* 화면 전체 너비를 차지하도록 설정 */
+    z-index: 1000; /* 다른 요소들 위에 표시되도록 설정 */
+    /*background: rgba(255, 255, 255, 0.2);*/
+
+    background: linear-gradient(
+            to bottom,
+            rgba(255, 255, 255, 0.2), /* 상단에서 60% 불투명도 */
+            rgba(255, 255, 255, 0.1), /* 중간에서 40% 불투명도 */
+            rgba(255, 255, 255, 0)    /* 하단에서 완전 투명 */
+    );
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+}
+.dot{
+    color: #889daa;
+    margin: 0 5px;
+}
+
+.header.scrolled {
+    background: rgba(255, 255, 255, 1); /* 스크롤 시 흰색 배경 */
+    border-bottom: 2px solid rgb(183, 210, 245); /* 스크롤 시 테두리 변경 */
+    z-index: 1000;
+    .upper{
+        background-color: rgb(198, 225, 251);
+    }
+
+}
+
+
+.upper{
+    padding: 8px 50px;
+    /*background-color: rgb(198, 225, 251);*/
+    width:100%;
+    top: 0;
+    /*padding: 10px 0;*/
+    box-sizing: border-box;
+    /*justify-content: center;*/
+    /*align-items: center;*/
+
+}
+
+
+.upper .upnav-menu  ul li {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    padding: 0;
+    margin: 0;
+}
+.upnav-menu a {
+    text-decoration: none;
+    color: #5d6b73;
+}
+.upnav-menu a:hover {
+    text-decoration: none;
+    color: #0c2643;
+}
+
+.upnav-menu ul {
+    list-style: none;
+    display: flex;
+    margin: 0;
+    padding: 0;
+}
+
+.upper .upnav-menu2  ul li {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    padding: 0;
+    margin: 0;
+}
+.upnav-menu2 a{
+    text-decoration: none;
+    color: #5d6b73;
+}
+.upnav-menu2 ul {
+    list-style: none;
+    display: flex;
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    right: 50px;
+    top: 8px;
+}
+.upnav-menu2 a:hover {
+    text-decoration: none;
+    color: #0c2643;
+}
+
+/*.lower{*/
+/*    padding: 25px 25px;*/
+/*    width:100%;*/
+/*    justify-content: center;*/
+/*    align-items: center;*/
+/*    background-color: #f8f9fa;*/
+/*!*}*!*/
+/*.upper {*/
+/*    display: flex;*/
+/*    justify-content: flex-end; !* 오른쪽 정렬 *!*/
+/*    padding: 10px 25px;*/
+/*    background-color:#E1BEE1;*/
+/*    width: 100%;*/
+/*}*/
+.lower {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding: 30px 20px;
+    position: relative;
+}
+
+
+.logo {
+    position: absolute;
+    left: 50px;
+
+}
+
+.logo img {
+    height: 50px;
+
+}
+
+
+
+.nav-menu ul {
+    list-style: none;
+    display: flex;
+    margin: 0;
+    padding: 0;
+}
+
+
+.nav-menu li {
+    margin-right: 40px;
+    position: relative;
+
+}
+
+.nav-menu li:last-child {
+    margin-right: 0;
+}
+
+.nav-menu li:hover .dropdown-container,
+.dropdown-container:hover {
+    display: flex; /* 드롭다운 메뉴가 보이도록 설정 */
+}
+.nav-menu li:hover{
+    display: flex; /* 드롭다운 메뉴가 보이도록 설정 */
+}
+.dropdown-container{
+    display: flex; /* 드롭다운 메뉴가 보이도록 설정 */
+}
+.nav-menu a {
+    text-decoration: none;
+    color: #565b61;
+    font-weight: bold;
+
+}
+
+
+
+.navtitle {
+    color: rgb(0, 0, 0);
+    font-weight: bold;
+    cursor: pointer;
+    /*filter: drop-shadow(0 0 2px rgba(255, 255, 255, 0.7))*/
+    /*drop-shadow(0 0 2px rgba(255, 255, 255, 0.7))*/
+    /*drop-shadow(0 0 2px rgba(255, 255, 255, 0.7));*/
+    position: relative; /* ::after 가상 요소를 사용하기 위해 position을 relative로 설정 */
+}
+
+.navtitle::after {
+    content: ''; /* 내용 없이 가상 요소 생성 */
+    position: absolute;
+    bottom: -40px; /* 아래로 20px 확장 */
+    left: 0;
+    right: 0;
+    height: 20px; /* 20px의 hover 영역 추가 */
+    /* 확장된 영역에 마우스를 올리면 드롭다운이 보이도록 설정 */
+}
+
+.navtitle:hover,
+.navtitle::after:hover {
+    color: #A84B94; /* hover 시 색상 변경 */
+}
+
+.navtitle:hover .dropdown-container,
+.navtitle::after:hover .dropdown-container {
+    display: flex; /* 드롭다운 메뉴가 보이도록 설정 */
+}
+
+.nav-menu a:hover {
+    color: #A84B94;
+}
+.nav-menu li:hover .navtitle,
+.nav-menu li:hover .dropdown-container:hover {
+    color: #A84B94; /* 드롭다운 위로 커서를 옮겼을 때에도 navtitle 색상 유지 */
+}
+
+.navtitle.active {
+    color: #A84B94; /* Highlight color for active state */
+}
+.button a{
+    width: 135px;
+    height: 35px;
+    color: #e9ecef;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+
+}
+.button:hover {
+    background-color: #ffffff;;
+
+}
+.button {
+    background-color: #282c34;
+    width: 135px;
+    height: 35px;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    right: 20px;
+    border-radius: 10px;
+    display: flex;
+    margin-right: 30px;
+    padding: 0;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    border: none; /* 테두리 제거 */
+}
+
+.button a {
+    width: 100%;
+    height: 100%;
+    color: #e9ecef;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    border: none; /* a 요소의 테두리 제거 */
+}
+.auth-button {
+    width: 100%; /* 부모 .button 요소의 너비에 맞춤 */
+    height: 100%; /* 부모 .button 요소의 높이에 맞춤 */
+    color: #e9ecef;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    background: none; /* 버튼 배경 투명 */
+    border: none; /* 기본 버튼 테두리 제거 */
+    cursor: pointer;
+    border-radius: 10px; /* 버튼 모서리 둥글게 */
+}
+
+.auth-button:hover {
+    background-color: #ffffff; /* 호버 시 배경색 변경 */
+    color: #282c34; /* 호버 시 텍스트 색상 변경 */
+}
+.button:hover {
+    background-color: #ffffff;
+}
+
+.button:hover a {
+    color: #353535;
+}
+
+.dropdown-container {
+    background-color: rgba(255, 255, 255, 0.96);
+    border-top: 2px solid #bed8f0;
+    flex-direction: column;
+    position: absolute;
+    width: 200px;
+    /*right:0;*/
+    /*top: 43px; !* 네비게이션 바 바로 아래에 위치 *!*/
+    top:255%;
+    display: none;
+    justify-content: center;
+    align-items: center;
+
+    z-index: 1; /* 드롭다운 메뉴가 다른 요소들 위에 표시되도록 설정 */
+    left: 50%; /* 가운데 정렬을 위한 기준 설정 */
+    transform: translateX(-50%); /* 왼쪽으로 반만 이동하여 가운데 정렬 */
+}
+
+.dropdown-container {
+    list-style: none;
+    padding: 0;
+    margin: 10px 0;
+}
+
+.dropdown-container li {
+    margin: 0;
+    padding: 10px 50px;
+    width: 100%; /* li 요소가 드롭다운의 전체 너비를 차지하도록 설정 */
+    box-sizing: border-box;
+}
+
+
+.dropdown-container li a {
+    color: #343a40;
+    text-decoration: none;
+    font-weight: normal;
+
+    display: block; /* a 요소가 li 전체를 차지하도록 설정 */
+    width: 100%; /* a 요소도 드롭다운의 전체 너비를 차지하도록 설정 */
+    height: 100%; /* a 요소가 li 요소의 전체 높이를 차지하도록 설정 */
+    box-sizing: border-box;
+    padding: 10px 20px; /* padding을 li와 동일하게 설정 */
+}
+
+.dropdown-container li:hover a{
+    color: #ffffff;
+    background-color: #b0d8ff;
+}
+.dropdown-container li:hover {
+    background-color: #b0d8ff;
+
+
+}
+
+
+@media (max-width: 768px) {
+    .lower {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .logo {
+        position: static;
+        margin-bottom: 10px;
+    }
+
+    .button {
+        position: static;
+        margin-top: 10px;
+    }
+}
+
+.custom-button {
+    background-color: #282c34; /* 원하는 배경색 */
+    color: #e9ecef; /* 텍스트 색상 */
+    border: none; /* 기본 버튼 테두리 제거 */
+    padding: 5px 20px; /* 패딩을 추가해 크기 조정 */
+    border-radius: 10px; /* 모서리 둥글게 */
+    cursor: pointer;
+    width: 135px;
+    height: 35px;
+    font-size: 16px; /* 폰트 크기 */
+    font-weight: normal;
+    transition: background-color 0.3s ease, color 0.3s ease; /* 호버 효과 전환 */
+}
+
+.custom-button:hover {
+    background-color: #ffffff; /* 호버 시 배경색 */
+    color: #353535; /* 호버 시 텍스트 색상 */
+}
+
+.custom-button:focus {
+    outline: none; /* 포커스 시 기본 아웃라인 제거 */
+}

@@ -1,0 +1,36 @@
+services:
+  database:
+    image: postgres:14.12
+    container_name: ajouchong-db
+    environment:
+      POSTGRES_DB: ajouchong
+      POSTGRES_USER: chongchong
+      POSTGRES_PASSWORD: chong
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - ajouchong-network
+
+  backend:
+    image: ytnwjd/ajouchong-backend:latest
+    container_name: ajouchong-backend
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://database:5432/ajouchong
+      SPRING_DATASOURCE_USERNAME: chongchong
+      SPRING_DATASOURCE_PASSWORD: chong
+      JWT_SECRET: 7929ecd2699dc0cddbbebdc1559944ac9244adb42550626822bf4d17d232e05f
+    depends_on:
+      - database
+    ports:
+      - "8080:8080"
+    networks:
+      - ajouchong-network
+
+volumes:
+  postgres_data:
+
+networks:
+  ajouchong-network:
+

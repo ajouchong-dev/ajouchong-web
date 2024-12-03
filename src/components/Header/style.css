@@ -1,0 +1,35 @@
+.breadcrumb {
+    padding: 10px 50px;
+    font-size: 14px;
+    border-bottom: 1px solid #c6e1fb;
+    margin-top: 119px;
+
+
+}
+
+.breadcrumb ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    color: #636363;
+}
+
+.breadcrumb li {
+    margin-right: 5px;
+    color: #636363;
+}
+
+.breadcrumb li a {
+    text-decoration: none;
+    color: #636363;
+}
+
+.breadcrumb li::after {
+    content: '>';
+    margin-left: 5px;
+}
+
+.breadcrumb li:last-child::after {
+    content: '';
+}

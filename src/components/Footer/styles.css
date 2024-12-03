@@ -1,0 +1,100 @@
+.footer {
+    background-color: #BFDBFF;
+    padding: 50px;
+    border-top: 1px solid #e9ecef;
+    bottom: 0px;
+    /*position:relative;*/
+    /*transform: translateY(0%);*/
+    /*display: flex;*/
+    /*position : relative;*/
+    /*transform : translateY(300%);*/
+    height: 200px;
+    position : relative;
+    transform : translateY(100%);
+}
+.main {
+    display: flex; /* 좌우 정렬 */
+    flex-direction:row;
+    justify-content: space-around;
+    align-items: center; /* 아이템들을 위쪽에 맞춤 */
+    text-align: center; /* 텍스트를 왼쪽 정렬 */
+    max-width: 1200px;
+    margin: 0 auto; /* 가운데 정렬을 위해 */
+    flex-wrap: wrap;
+}
+.mainleft {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    margin-right: 100px;
+}
+.mainright {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    align-items: flex-start;
+}
+.column {
+    margin: 15px 0;
+}
+.title {
+    font-size: 24px;
+    font-weight: bold;
+    display: block;
+    margin-bottom: 10px;
+}
+.mainleft img {
+    max-width: 130px;
+    margin-top: 10px;
+}
+.info {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 10px 0;
+    text-decoration: none;
+    text-decoration-line: none;
+}
+.infotext {
+    margin: 0 10px;
+    font-size: 14px;
+    text-decoration: none;
+    text-decoration-line: none;
+    cursor: pointer;
+}
+.infotext a{
+    color: #282c34;
+    text-decoration: none;
+    text-decoration-line: none;
+    cursor: pointer;
+}
+.space {
+    margin: 0 5px;
+}
+.address {
+    display: block;
+    font-size: 14px;
+    line-height: 0.5%;
+    margin: 10px 0;
+}
+
+.developer{
+    display: block;
+    color: #565b61;
+    font-size: 14px;
+    line-height: 0.5%;
+    margin: 10px 0;
+}
+.copyright {
+    display: block;
+    font-size: 12px;
+    color: #6c757d;
+    margin-top: 10px;
+}
+.address .space,
+.copyright .space
+.developer .space{
+    margin: 30px 5px;
+
+}
+

@@ -1,0 +1,330 @@
+/* styles.css */
+@import "~slick-carousel/slick/slick.css";
+@import "~slick-carousel/slick/slick-theme.css";
+.root{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    overflow: hidden;
+
+}
+
+.slider {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100vh; /* 화면 전체 높이를 차지하도록 설정 */
+    overflow: hidden;
+    position: relative;
+
+}
+
+.box {
+    width: 100%;
+    height: 100%; /* 부모 요소의 높이를 차지하도록 설정 */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    position: relative;
+    margin: 0;
+    padding: 0;
+}
+
+.topslider {
+    width: 100%;
+    height: 100%;/* 부모 요소의 높이를 차지하도록 설정 */
+    overflow: hidden;
+    position: relative;
+}
+.topslider div {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+}
+
+
+.topslider img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* 비율을 유지하지 않고, 슬라이더의 크기에 맞게 조정 */
+    position: absolute;
+    top: 0;
+    left: 0;
+    animation: zoomIn 10s ease-in-out;
+    animation-fill-mode: forwards;
+}
+
+
+@keyframes zoomIn {
+    0% {
+        transform: scale(1.1); /* 초기 상태에서 원래 크기 */
+    }
+    100% {
+        transform: scale(1); /* 중간 상태에서 10% 확대 */
+    }
+
+}
+.slick-dots {
+    position: absolute;
+    bottom: 20px; /* 이미지 안에서 dots의 위치를 조정 */
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex !important;
+    justify-content: center;
+    align-items: center;
+}
+.slick-dots li {
+    margin: 0 4px; /* dot 사이의 간격 조정 */
+
+}
+
+
+.slick-dots li button:before {
+    color: #ffffff; /* dots의 색상을 변경 */
+}
+.overlay {
+    position: absolute;
+    bottom: 70%;
+    left: 50%;
+    transform: translateX(-50%);
+    color: white;
+    font-size: 1.5rem;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    text-align: center;
+    width: 100%;
+    animation-name:fade;
+    animation-duration: 3s;
+}
+
+
+
+.title2{
+    position: absolute;
+    bottom: 50%;
+    left: 50%;
+    transform: translateX(-50%);
+    color: whitesmoke;
+    font-size: 5rem;
+    font-weight: bold;
+    text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.5);
+    text-align: center;
+    width: 100%;
+    animation-name:fade;
+    animation-duration: 5s;
+}
+/*.title2:hover {*/
+/*    transform: translateY(-5px);*/
+/*    color: rgb(255, 255, 255);*/
+/*    filter: drop-shadow(0 0 2px rgba(0, 196, 255, 0.7))*/
+/*    drop-shadow(0 0 5px rgba(0, 196, 255, 0.7))*/
+/*    drop-shadow(0 0 15px rgba(0, 196, 255, 0.7));*/
+/*}*/
+
+@keyframes move {
+    from { transform: translateY(-40%); }
+    to   { transform: translateY(0);}
+}
+@keyframes fade {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+.card-wrapper{
+    width: 100%;
+    background-color: #fffefe;
+}
+.division-line {
+    position: relative;
+    width: 0; /* 초기 상태에서 너비를 0으로 설정 */
+    height: 3px;
+    background-color: #b7d2f4;
+    margin: 30px 0;
+    transition: width 4s; /* 애니메이션 적용 */
+
+
+}
+
+.division-line.visible {
+    opacity: 1;
+    width: 500px;
+}
+
+.more-link {
+    opacity: 0;
+    transform: translateY(20px); /* 아래에서 위로 나타나는 효과 */
+    transition: opacity 3s ease, transform 3s ease; /* 애니메이션 속성 */
+    font-size: 1rem;
+    color: rgba(135, 135, 135, 0.77);
+    text-decoration: none;
+    margin-top: 10px;.more-link {
+
+    display: inline-block;
+}
+
+    .more-link.visible {
+        opacity: 1;
+        transform: translateY(0); /* 원래 위치로 */
+    }
+
+    .more-link:hover {
+        color: #0056b3;
+    }
+    display: inline-block;
+}
+
+.more-link.visible {
+    opacity: 1;
+    transform: translateY(0); /* 원래 위치로 */
+}
+
+.more-link:hover {
+    color: #c6e1fb;
+}
+@keyframes expandLine {
+    from { width: 0; }
+    to { width: 500px; }
+}
+
+
+.notices-container {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    width: 80%;
+    margin: 40px auto;
+    margin-top: 40px;
+    /*margin-bottom: 150px;*/
+
+}
+.card-title{
+    width: 100%;
+    text-align: center;
+    margin-top: 90px;
+    margin-bottom: 50px;
+    color: #5c5c5c;
+    display: flex; /* flexbox 활성화 */
+    flex-direction: column; /* 세로 방향으로 정렬 */
+    align-items: center; /* 가로 방향 가운데 정렬 */
+}
+.card-title p,
+.card-title span {
+    opacity: 0; /* 초기 상태: 보이지 않음 */
+    transform: translateY(20px); /* 초기 상태: 아래로 이동 */
+    transition: opacity 3s ease, transform 3s ease; /* 애니메이션 설정 */
+}
+
+.card-title.visible p,
+.card-title.visible span {
+    opacity: 1; /* 애니메이션 완료 후 보이도록 설정 */
+    transform: translateY(0); /* 애니메이션 완료 후 원래 위치로 */
+}
+
+.card-title p {
+    font-size: 1.8rem;
+    font-weight: bold;
+    margin-bottom: 30px;
+    /*animation-name:fade,move;*/
+    /*animation-duration: 3s;*/
+        opacity: 0; /* 초기 상태: 보이지 않음 */
+        transform: translateY(20px); /* 초기 상태: 아래로 이동 */
+        transition: opacity 3s ease, transform 3s ease;
+
+}
+
+.card-title span {
+    font-size: 1rem;
+    color: #636363;
+    /*animation-name:fade,move;*/
+    /*animation-duration: 5s;*/
+    opacity: 0;
+        transform: translateY(20px); /* 초기 상태: 아래로 이동 */
+        transition: opacity 5s ease, transform 5s ease;
+
+}
+
+.notice-card {
+    background: rgba(251, 251, 251, 0.82);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    /*border-radius: 8px;*/
+    /*padding: 20px;*/
+    width: 20%; /* 4개가 가로로 배치되도록 설정 */
+    height:320px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    /*transition: transform 0.3s ease;*/
+    /*animation-name:fade;*/
+    /*animation-duration: 5s;*/
+    transition: opacity 0.8s ease, transform 0.8s ease;
+    /*opacity: 0; !* 초기 상태: 보이지 않음 *!*/
+    transform: translateY(20px); /* 초기 상태: 아래로 이동 */
+    padding-bottom: 30px;
+    cursor: pointer;
+}
+.notice-card.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.notice-card:hover {
+    transform: translateY(-5px);
+    background-color: #dadada;
+}
+
+.notice-image {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 8px 8px 0 0;
+    margin-bottom: 15px;
+    overflow: hidden;
+}
+
+.notice-card h3 {
+    margin-bottom: 10px;
+    padding: 4px;
+    font-size: 1.2rem;
+    color: #353535;
+}
+
+.notice-card p {
+    font-size: 1rem;
+    color: #61686c;
+    padding: 3px;
+}
+
+.notice-card span {
+    font-size: 0.9rem;
+    color: #868e96;
+    margin-bottom: 10px;
+
+}
+.visible {
+    opacity: 1;
+    transform: translateY(-10px);
+}
+
+.visible .division-line {
+    width: 500px; /* 구분선 애니메이션 시작 */
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
