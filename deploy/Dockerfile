@@ -1,8 +1,5 @@
-# Step 1: Base Image
 FROM node:18.17.0
 
-
-# Step 2: Set working directory
 WORKDIR /app
 
 # Step 3: Copy package.json and package-lock.json
