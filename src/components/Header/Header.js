@@ -42,9 +42,11 @@ const Header = () => {
 
 
     const handleLogout = () => {
-        logout(); // AuthContext에서 제공하는 로그아웃 함수 호출
+        logout(); // AuthContext에서 상태 초기화
+        localStorage.removeItem('accessToken'); // JWT 토큰 삭제
         alert('로그아웃 되었습니다.');
     };
+
 
 
 

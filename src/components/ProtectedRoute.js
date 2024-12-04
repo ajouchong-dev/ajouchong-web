@@ -1,9 +1,13 @@
 import React from 'react';
+import { useAuth } from '../contexts/AuthContext';
 
-const ProtectedRoute = ({ isLoggedIn, children }) => {
-    const handleGoogleLogin = () => {
+const ProtectedRoute = ({ children }) => {
+    const { auth } = useAuth();
+
+    if (!auth.isAuthenticated) {
+        // 로그인 상태가 아니면 Google OAuth로 리디렉션
         const clientId = '440712020433-ljqa7d2r8drohnblmmfum3cls1et2kuq.apps.googleusercontent.com';
-        const redirectUri = 'https://www.ajouchong.com/api/login/oauth/google'; // Google Cloud Console에 설정된 URI와 일치해야 함
+        const redirectUri = 'https://www.ajouchong.com/api/login/oauth/google';
 
         const googleAuthUrl =
             `https://accounts.google.com/o/oauth2/v2/auth?` +
@@ -14,16 +18,10 @@ const ProtectedRoute = ({ isLoggedIn, children }) => {
             `hd=ajou.ac.kr`;
 
         window.location.href = googleAuthUrl;
-    };
-
-    if (!isLoggedIn) {
-        // Redirect to Google OAuth login
-        handleGoogleLogin();
-        return null; // Do not render anything while redirecting
+        return null; // 리디렉션 중에는 아무것도 렌더링하지 않음
     }
 
-    // Render the child components if logged in
-    return children;
+    return children; // 로그인 상태일 경우 자식 컴포넌트를 렌더링
 };
 
 export default ProtectedRoute;
