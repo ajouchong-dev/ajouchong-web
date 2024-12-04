@@ -10,10 +10,6 @@ on:
       - main
       - develop
 
-permissions:
-  contents: read
-  packages: write
-
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -40,15 +36,7 @@ jobs:
           file: ./deploy/Dockerfile
           push: true
           platforms: linux/amd64,linux/arm64
-          tags: |
-            ghcr.io/${{ github.repository_owner }}/${{ github.repository }}:${{ steps.get-commit-sha.outputs.sha_short }}
-            ghcr.io/${{ github.repository_owner }}/${{ github.repository }}:latest
-          cache-from: type=registry,ref=ghcr.io/${{ github.repository_owner }}/${{ github.repository }}:cache
-          cache-to: type=inline
-
-      - name: Debug Docker Push
-        run: |
-          echo "Image pushed to: ghcr.io/${{ github.repository_owner }}/${{ github.repository }}:${{ env.SHA_SHORT }}"
+          tags: ghcr.io/${{ github.repository_owner }}/${{ github.repository }}:${{ steps.get-commit-sha.outputs.sha_short }}
 
       - name: Logout from GitHub Container Registry
         run: docker logout ghcr.io
