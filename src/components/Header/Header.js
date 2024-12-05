@@ -253,9 +253,25 @@ const Header = () => {
                 </nav>
                 <div className="button">
                     {auth.isAuthenticated ? (
-                        <button onClick={handleLogout} className="auth-button">Logout</button>
+                        <button
+                            onClick={() => {
+                                console.log('Logout 버튼 클릭됨');
+                                handleLogout();
+                            }}
+                            className="auth-button"
+                        >
+                            Logout
+                        </button>
                     ) : (
-                        <button onClick={handleGoogleLogin} className="auth-button">Login</button>
+                        <button
+                            onClick={() => {
+                                console.log('Login 버튼 클릭됨');
+                                handleGoogleLogin();
+                            }}
+                            className="auth-button"
+                        >
+                            Login
+                        </button>
                     )}
                 </div>
             </div>

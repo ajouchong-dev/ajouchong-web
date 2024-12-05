@@ -38,7 +38,6 @@ import GoogleOAuthHandler from './components/GoogleOAuthHandler';
 import Termsofservice from './pages/Policy/termsofservice';
 import Policy from './pages/Policy/policy';
 import ProtectedRoute from './components/ProtectedRoute';
-import GoogleOAuthCallbackoogleOAuthHandler from "./components/GoogleOAuthHandler";
 import GoogleOAuthCallback from "./components/GoogleOAuthHandler";
 
 function App() {
@@ -83,7 +82,7 @@ const Content = () => {
                 <Route path="/communication/require/write" element={<ProtectedRoute><RequireWrite /></ProtectedRoute>} />
                 <Route path="/communication/require/:id" element={<ProtectedRoute><RequireDetail /></ProtectedRoute>} />
                 <Route path="/communication/commu" element={<Commu />} />
-                <Route path="/resources/bylaws" element={<ProtectedRoute><Bylaws /></ProtectedRoute>} />
+                <Route path="/resources/bylaws" element={<Bylaws />} />
                 <Route path="/resources/bylaws/:id" element={<ProtectedRoute><BylawsDetail /></ProtectedRoute>} />
                 <Route path="/resources/proceeding" element={<ProtectedRoute><Proceeding /></ProtectedRoute>} />
                 <Route path="/resources/audit" element={<ProtectedRoute><Audit /></ProtectedRoute>} />

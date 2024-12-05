@@ -11,33 +11,33 @@ const GoogleOAuthHandler = () => {
         const authorizationCode = queryParams.get('code');
 
         if (!authorizationCode) {
-            alert('Authorization code missing. Redirecting to login.');
-            navigate('/login');
+            alert('Authorization code가 누락되었습니다.');
+            navigate('/');
             return;
         }
 
-        const handleLogin = async () => {
+        const fetchToken = async () => {
             try {
                 const response = await fetch(`https://www.ajouchong.com/api/login/oauth/google?code=${authorizationCode}`);
                 if (response.ok) {
                     const data = await response.json();
-                    login(data.data, { email: 'UserEmail' }); // Set the token and optional user details
-                    alert(data.message || 'Login successful!');
-                    navigate('/'); // Redirect to the main page
+                    login(data.token, data.user); // 서버에서 받은 토큰과 사용자 정보로 로그인
+                    navigate('/');
                 } else {
-                    alert('Login failed. Please try again.');
-                    navigate('/login');
+                    alert('로그인 실패: 서버 오류');
+                    navigate('/');
                 }
             } catch (error) {
-                alert('Error during login. Redirecting to login page.');
-                navigate('/login');
+                console.error('토큰 요청 중 오류 발생:', error);
+                alert('로그인 처리 중 오류가 발생했습니다.');
+                navigate('/');
             }
         };
 
-        handleLogin();
+        fetchToken();
     }, [navigate, login]);
 
-    return <h2>Logging in...</h2>;
+    return <h2>로그인 처리 중...</h2>;
 };
 
 export default GoogleOAuthHandler;

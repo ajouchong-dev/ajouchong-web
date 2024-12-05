@@ -7,25 +7,26 @@ export const AuthProvider = ({ children }) => {
         isAuthenticated: false,
         token: null,
         user: null,
+        loading: true,
     });
 
     useEffect(() => {
-        // Check login status on mount
         const token = localStorage.getItem('accessToken');
         if (token) {
-            setAuth({ isAuthenticated: true, token, user: null });
-            // Optionally fetch user details here if needed
+            setAuth({ isAuthenticated: true, token, user: null, loading: false });
+        } else {
+            setAuth({ isAuthenticated: false, token: null, user: null, loading: false });
         }
     }, []);
 
     const login = (token, user) => {
-        setAuth({ isAuthenticated: true, token, user });
-        localStorage.setItem('accessToken', token); // Save token
+        localStorage.setItem('accessToken', token);
+        setAuth({ isAuthenticated: true, token, user, loading: false });
     };
 
     const logout = () => {
-        setAuth({ isAuthenticated: false, token: null, user: null });
-        localStorage.removeItem('accessToken'); // Remove token
+        localStorage.removeItem('accessToken');
+        setAuth({ isAuthenticated: false, token: null, user: null, loading: false });
     };
 
     return (
@@ -36,5 +37,3 @@ export const AuthProvider = ({ children }) => {
 };
 
 export const useAuth = () => useContext(AuthContext);
-
-
