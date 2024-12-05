@@ -1,23 +1,15 @@
 import React from 'react';
 import { useAuth } from '../contexts/AuthContext';
+import { useNavigate } from 'react-router-dom';
 
 const ProtectedRoute = ({ children }) => {
     const { auth } = useAuth();
+    const navigate = useNavigate();
 
     if (!auth.isAuthenticated) {
-        // 로그인 상태가 아니면 Google OAuth로 리디렉션
-        const clientId = '440712020433-ljqa7d2r8drohnblmmfum3cls1et2kuq.apps.googleusercontent.com';
-        const redirectUri = 'https://www.ajouchong.com/api/login/oauth/google';
-
-        const googleAuthUrl =
-            `https://accounts.google.com/o/oauth2/v2/auth?` +
-            `client_id=${clientId}&` +
-            `redirect_uri=${redirectUri}&` +
-            `response_type=code&` +
-            `scope=https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile&` +
-            `hd=ajou.ac.kr`;
-
-        window.location.href = googleAuthUrl;
+        // 로그인 상태가 아니면 알림을 띄우고 메인 페이지로 리디렉션
+        alert('로그인이 필요합니다.');
+        navigate('/'); // 메인 페이지로 리디렉션
         return null; // 리디렉션 중에는 아무것도 렌더링하지 않음
     }
 
@@ -25,3 +17,4 @@ const ProtectedRoute = ({ children }) => {
 };
 
 export default ProtectedRoute;
+
