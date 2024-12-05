@@ -10,21 +10,22 @@ export const AuthProvider = ({ children }) => {
     });
 
     useEffect(() => {
-        // 로그인 상태 확인 (예: localStorage에서 토큰 확인)
+        // Check login status on mount
         const token = localStorage.getItem('accessToken');
         if (token) {
             setAuth({ isAuthenticated: true, token, user: null });
+            // Optionally fetch user details here if needed
         }
     }, []);
 
     const login = (token, user) => {
         setAuth({ isAuthenticated: true, token, user });
-        localStorage.setItem('accessToken', token); // 토큰 저장
+        localStorage.setItem('accessToken', token); // Save token
     };
 
     const logout = () => {
         setAuth({ isAuthenticated: false, token: null, user: null });
-        localStorage.removeItem('accessToken'); // 토큰 삭제
+        localStorage.removeItem('accessToken'); // Remove token
     };
 
     return (
@@ -35,4 +36,5 @@ export const AuthProvider = ({ children }) => {
 };
 
 export const useAuth = () => useContext(AuthContext);
+
 
