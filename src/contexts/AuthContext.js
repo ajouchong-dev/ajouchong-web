@@ -4,8 +4,8 @@ const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
     const [auth, setAuth] = useState({
-        isAuthenticated: !!localStorage.getItem('accessToken'),
-        token: localStorage.getItem('accessToken'),
+        isAuthenticated: false,
+        token: null,
         user: null,
     });
 
