@@ -159,14 +159,10 @@ const Header = () => {
                     <ul>
                         <li><a href="/sitemap">사이트맵</a></li>
                         <span className="dot"> • </span>
-                        {auth.isAuthenticated ? ( // 로그인 상태에 따라 조건부 렌더링
-                            <li onClick={handleLogout} style={{ cursor: 'pointer' }}>
-                                로그아웃
-                            </li>
+                        {auth.isAuthenticated ? (
+                            <button onClick={handleLogout}>Logout</button>
                         ) : (
-                            <li onClick={handleGoogleLogin} style={{ cursor: 'pointer' }}>
-                                로그인
-                            </li>
+                            <button onClick={handleGoogleLogin}>Login</button>
                         )}
 
                     </ul>
