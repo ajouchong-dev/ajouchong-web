@@ -37,7 +37,6 @@ import RequireDetail from './pages/require/RequireDetail';
 import GoogleOAuthHandler from './components/GoogleOAuthHandler';
 import Termsofservice from './pages/Policy/termsofservice';
 import Policy from './pages/Policy/policy';
-import ProtectedRoute from './components/ProtectedRoute';
 import GoogleOAuthCallback from "./components/GoogleOAuthHandler";
 
 function App() {
@@ -75,19 +74,19 @@ const Content = () => {
                 <Route path="/news/notice" element={<Announcement />} />
                 <Route path="/notice/:id" element={<AnnouncementDetail />} />
                 <Route path="/news/planning" element={<Planning />} />
-                <Route path="/communication/qna" element={<ProtectedRoute><Qna /></ProtectedRoute>} />
-                <Route path="/communication/qna/write" element={<ProtectedRoute><WritePage /></ProtectedRoute>} />
+                <Route path="/communication/qna" element={<Qna />} />
+                <Route path="/communication/qna/write" element={<WritePage />} />
                 <Route path="/communication/qna/:postId" element={<QnaDetail />} />
-                <Route path="/communication/require" element={<ProtectedRoute><Require /></ProtectedRoute>} />
-                <Route path="/communication/require/write" element={<ProtectedRoute><RequireWrite /></ProtectedRoute>} />
-                <Route path="/communication/require/:id" element={<ProtectedRoute><RequireDetail /></ProtectedRoute>} />
+                <Route path="/communication/require" element={<Require />} />
+                <Route path="/communication/require/write" element={<RequireWrite />} />
+                <Route path="/communication/require/:id" element={<RequireDetail />} />
                 <Route path="/communication/commu" element={<Commu />} />
                 <Route path="/resources/bylaws" element={<Bylaws />} />
-                <Route path="/resources/bylaws/:id" element={<ProtectedRoute><BylawsDetail /></ProtectedRoute>} />
-                <Route path="/resources/proceeding" element={<ProtectedRoute><Proceeding /></ProtectedRoute>} />
-                <Route path="/resources/audit" element={<ProtectedRoute><Audit /></ProtectedRoute>} />
-                <Route path="/welfare/promotion" element={<ProtectedRoute><Promotion /></ProtectedRoute>} />
-                <Route path="/welfare/promotion/:postId" element={<ProtectedRoute><PromotionDetail /></ProtectedRoute>} />
+                <Route path="/resources/bylaws/:id" element={<BylawsDetail />} />
+                <Route path="/resources/proceeding" element={<Proceeding />} />
+                <Route path="/resources/audit" element={<Audit />} />
+                <Route path="/welfare/promotion" element={<Promotion />} />
+                <Route path="/welfare/promotion/:postId" element={<PromotionDetail />} />
                 <Route path="/welfare/rental" element={<Rental />} />
                 <Route path="/signin" element={<Signin />} />
                 <Route path="/join" element={<Join />} />
@@ -101,4 +100,3 @@ const Content = () => {
 };
 
 export default App;
-
