@@ -11,7 +11,7 @@ const Sitemap = () => {
             <div className="sitemap">
                 <ul className="sitemap-list">
                     <div className="list-container">
-                        <Link className="sitemapTitle" to="/introduction">소개</Link>
+                        <Link className="sitemapTitle" to="/introduction/about">소개</Link>
                         <hr className="listSeparator"/>
                         <ul>
                             <li><Link to="/introduction/about">총학생회 소개</Link></li>
@@ -32,7 +32,7 @@ const Sitemap = () => {
                     </li>
 
                     <li className="list-container">
-                        <Link className="sitemapTitle" to="/communication">소통</Link>
+                        <Link className="sitemapTitle" to="/communication/qna">소통</Link>
                         <hr className="listSeparator"/>
                         <ul>
                             <li><Link to="/communication/qna">Q&A</Link></li>
@@ -42,7 +42,7 @@ const Sitemap = () => {
                     </li>
 
                     <li className="list-container">
-                        <Link className="sitemapTitle" to="/resources">자료실</Link>
+                        <Link className="sitemapTitle" to="/resources/bylaws">자료실</Link>
                         <hr className="listSeparator"/>
                         <ul>
                             <li><Link to="/resources/bylaws">회칙 및 세칙</Link></li>
@@ -52,7 +52,7 @@ const Sitemap = () => {
                     </li>
 
                     <li className="list-container">
-                        <Link className="sitemapTitle" to="/welfare">학생복지</Link>
+                        <Link className="sitemapTitle" to="/welfare/promotion">학생복지</Link>
                         <hr className="listSeparator"/>
                         <ul>
                             <li><Link to="/welfare/promotion">제휴백과</Link></li>
