@@ -44,7 +44,7 @@ const GoogleOAuthCallback = () => {
                 login(data.data, { email: 'tae1231@ajou.ac.kr' }); // 사용자 정보를 업데이트
 
                 alert(data.message || '로그인 성공!');
-                navigate('/'); // 성공 시 메인 화면으로 리디렉션
+                // navigate('/'); // 성공 시 메인 화면으로 리디렉션
             } else {
                 const errorText = await response.text();
                 console.error('Failed response:', errorText);
