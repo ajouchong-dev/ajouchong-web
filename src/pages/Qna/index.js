@@ -72,7 +72,7 @@ const Qna = () => {
     };
 
     const handlePostClick = (postId) => {
-        setSelectedPostId(postId);
+        navigate(`/communication/qna/${postId}`);
     };
 
     const handleBackToList = () => {
