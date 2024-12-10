@@ -218,7 +218,8 @@ const Header = () => {
                                 <ul className="dropdown-container">
                                     <li><a href="/communication/qna">Q&A</a></li>
                                     <li><a href="/communication/require">100인 안건 상정제</a></li>
-                                    <li><a href="/communication/commu">통합 소통 창구</a></li>
+                                    <li><a href="https://forms.gle/ynoZGkmY8uQdbcoc7" target="_blank" rel="noopener noreferrer">
+                                        통합 소통 창구</a></li>
                                 </ul>
                             )}
                         </li>
