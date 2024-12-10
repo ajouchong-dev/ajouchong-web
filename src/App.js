@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
+import {BrowserRouter as Router, Routes, Route, useLocation, Navigate} from 'react-router-dom';
 import { AuthProvider } from './contexts/AuthContext';
 import './App.css';
 import Header from './components/Header/Header';
@@ -80,7 +80,7 @@ const Content = () => {
                 <Route path="/communication/require" element={<Require />} />
                 <Route path="/communication/require/write" element={<RequireWrite />} />
                 <Route path="/communication/require/:id" element={<RequireDetail />} />
-                <Route path="/communication/commu" element={<Commu />} />
+                {/*<Route path="/communication/commu" element={<Commu />} />*/}
                 <Route path="/resources/bylaws" element={<Bylaws />} />
                 <Route path="/resources/bylaws/:id" element={<BylawsDetail />} />
                 <Route path="/resources/proceeding" element={<Proceeding />} />
