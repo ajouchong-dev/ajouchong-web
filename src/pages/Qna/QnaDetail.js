@@ -14,7 +14,7 @@ const QnaDetail = () => {
         const fetchPostDetails = async () => {
             setLoading(true); // Start loading
             try {
-                const response = await axios.get(`https://www.ajouchong.com/api/qna/{postId}`);
+                const response = await axios.get(`https://www.ajouchong.com/api/qna/${postId}`);
                 if (response.data.code === 1) {
                     setPostDetails(response.data.data);
                 } else {
@@ -55,7 +55,9 @@ const QnaDetail = () => {
                 <p>{postDetails.answer || '답변이 아직 없습니다.'}</p>
             </div>
 
-            <button onClick={() => navigate(-1)} className="back-button">목록으로 돌아가기</button>
+            <button onClick={() => navigate(-1)} className="back-button">
+                목록으로 돌아가기
+            </button>
         </div>
     );
 };
