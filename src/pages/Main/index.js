@@ -100,7 +100,7 @@ const Main = () => {
                         ))}
                     </Slider>
                     <div className="overlay">
-                        <p>아주대학교 제 43대 총학생회 아우름</p>
+                        <p>아주대학교 제 44대 총학생회 아침</p>
                     </div>
                     <div className="title2">
                         <p>AJOU UNIV.</p>
@@ -111,7 +111,7 @@ const Main = () => {
             <div className="card-wrapper">
                 <div className="notices-container">
                     <div className="card-title">
-                        <p>아우름 공지사항</p>
+                        <p>아침 공지사항</p>
                         <span>다음 카드를 클릭하여 자세한 공지사항을 확인할 수 있습니다.</span>
                         <Link to="/news/notice" className="more-link">more &gt;</Link>
 
@@ -131,7 +131,7 @@ const Main = () => {
                                     className="notice-image"
                                     onError={(e) => {
                                         e.target.onerror = null;
-                                        e.target.src = '/main/aurum_square.jpeg';
+                                        e.target.src = '/main/achim_square.jpeg';
                                     }}
                                 />
                                 <h3>{notice.title}</h3>

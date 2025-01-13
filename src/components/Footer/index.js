@@ -28,13 +28,10 @@ const Footer = (props) => (
                     총학생회실
                     </span>
                     <span className="space"></span>
-                    <span className="developer">
-                    developer | 아주대 소프트웨어학과 22학번 오태림 (front, design) 유수정 (backend)
-                    </span>
+                    <span className="developer"> developer | 소프트웨어학과 오태림(FE) 유수정(BE)</span>
                 </div>
                 <div className="column">
                     <p className="copyright">&copy; {new Date().getFullYear()} Ajou University Council. All Rights Reserved.</p>
-
                 </div>
             </div>
 

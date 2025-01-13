@@ -24,39 +24,37 @@ const About = (props, context) => {
                 <hr className="titleSeparator"/>
                 <img
                     className="aboutImg"
-                    src='/chairman.png'
+                    src='/chairman.jpeg'
                     // src={imageUrl}
-                    alt="ajouchong"
+                    alt="ajouchong_chairman"
                 />
             <div className="aboutTextBox">
-                <div className="aboutText">안녕하십니까 아주대학교 학우 여러분</div>
-                <div className="aboutText">아주대학교 제43대 총학생회장 이홍서, 부총학생회장 이원재입니다.</div>
+                <div className="aboutText">안녕하십니까, 아주대학교 1만 학우 여러분.</div>
+                <div className="aboutText">아주대학교 제44대 총학생회 '아침'의 총학생회장 이재건, 부총학생회장 송재원입니다.</div>
                 <span className="space2"></span>
-                <div className="aboutText">선거가 종료되며 중앙비상대책위원회에서 총학생회 체제로 변경됨에 따라</div>
-                <div className="aboutText">학우 여러분께 정식으로 인사드릴 수 있게 되었습니다.</div>
-                <div className="aboutText">소중한 한 표를 행사해주신 학우 여러분의 많은 관심과 참여에 감사드립니다.</div>
+                <div className="aboutText">2025년 을사년 새 아침이 밝아, 학우 여러분께 정식으로 인사드립니다.</div>
                 <span className="space2"></span>
-                <div className="aboutText">아우름은‘아울러 함께하는 우리의 아주’ 라는
-                    슬로건을 내세우며 학우 여러분 앞에 서게 되었습니다.</div>
-                <div className="aboutText">슬로건의 의미와 함께 학우 여러분께 보여드리는 각오를 말씀드리겠습니다.</div>
+                <div className="aboutText">먼저, 지난 선거에서 보내주신 관심과 소중한 지지에 깊은 감사의 말씀을 드립니다.
+                여러분의 신뢰를 무겁게 받아들이며, 그 믿음에 부응하고자 한 해 동안 학우 여러분의 목소리에 귀 기울이고,
+                    함께 더 나은 학교를 만들어가는 데 최선을 다하겠습니다.
+                </div>
                 <span className="space2"></span>
-                <div className="aboutText">아울러 함께하는 학생 사회가 필요하다고 생각했습니다.</div>
-                <div className="aboutText">위기의 상황을 바꾸는 일도, 우리의 일상과 문화를 형성하는 일도,</div>
-                <div className="aboutText">우리의 목소리가 모여 그 힘이 있을 때 가능합니다.</div>
-                <div className="aboutText">퍼즐 조각을 모아 하나의 그림을 완성하듯이</div>
-                <div className="aboutText">학우 여러분의 의견에 귀 기울이고 함께 만들어가는 학생 사회라는 큰 그림을 위해 노력하겠습니다.</div>
+                <div className="aboutText">2025년, 우리 학교는 융합 학문과 창의적 성장을 중심으로 새 지평을 열어가며 중요한 전환점을 맞이할 것입니다.
+                    지속 가능하고 조화로운 발전을 추구하는 대학의 이념 아래,
+                    학우 여러분의 생각과 뜻을 하나로 모아, 아주대학교만의 문화를 정립하고자 합니다.
+                </div>
                 <span className="space2"></span>
-                <div className="aboutText">우리의 아주라는 문화와 자부심을 중요하게 생각하고 있습니다.</div>
-                <div className="aboutText">학우 여러분을 위해 존재하는 총학생회의 목적에 부합하도록 소통하고 헌신할 것을 진심으로 약속드립니다.</div>
-                <div className="aboutText">나아가 학우 여러분의 자부심을 지킬 수 있는 우리 아주인의 문화를 형성하고 노력하겠습니다.</div>
+                <div className="aboutText">학생회의 본질을 지키며, 학우 여러분과 상호 소통하며 권익을 위해 함께 걸어가도록 노력하겠습니다.
+                    아울러, 격려와 조언뿐만 아니라 때로는 날카로운 비판과 질책도 받아들이며 발전하는 학생회를 만들어가도록 하겠습니다.</div>
                 <span className="space2"></span>
-                <div className="aboutText">아주대학교 학우 여러분, 총학생회는 아우름이라는 이름처럼 다양한 의견을 아우르기 위해 노력하겠습니다.</div>
-                <div className="aboutText">우리 대학과 우리의 학교 생활의 가치를 높이기 위한</div>
-                <div className="aboutText"> 학우 여러분의 관심과 참여, 비판까지 아낌없이 부탁드립니다.</div>
-                <div className="aboutText"> 감사합니다.</div>
+                <div className="aboutText">마지막으로, 학우 여러분의 다양한 의견을 경청하며, 여러분들을 위한 밝은 아침을 만들겠습니다.
+                    2025년 한 해 동안 학우 여러분 모두가 건강하시고, 자신의 잠재력을 마음껏 발휘하며 뜻깊은 대학 생활을 보내시기를 진심으로 기원합니다.
+                </div>
                 <span className="space2"></span>
-                <div className="aboutText">제43대 총학생회장 이홍서, 부총학생회장 이원재 올림</div>
-
+                <div className="aboutText">새해 복 많이 받으시길 바랍니다.</div>
+                <span className="space2"></span>
+                <div className="aboutText">2025년 1월 1일.</div>
+                <div className="aboutText">아주대학교 제44대 총학생회 '아침' 올림</div>
             </div>
         </div>
 

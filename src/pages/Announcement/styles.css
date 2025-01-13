@@ -14,7 +14,7 @@
     max-width: 30%;
     border: none; /* 기본 테두리 제거 */
     height: 2px; /* 선의 두께 */
-    background-color: rgb(183, 210, 245); /* 선의 색상 */
+    background-color: #a7c898; /* 선의 색상 */
     margin-top: 15px; /* 제목과 선 사이의 여백 */
 }
 .search-container {
@@ -48,7 +48,7 @@
 }
 
 .search-button:hover {
-    background-color: rgba(83, 153, 255, 0.69);
+    background-color: rgba(106, 170, 125, 0.69);
 }
 .contentSeparator{
     max-width: 60%;
@@ -102,7 +102,7 @@
 }
 
 .pagination-button.active {
-    background-color: #c6e1fb;
+    background-color: #a7c898;
     color: #fff;
     border: none;
 }

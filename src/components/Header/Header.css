@@ -25,10 +25,10 @@
 
 .header.scrolled {
     background: rgba(255, 255, 255, 1); /* 스크롤 시 흰색 배경 */
-    border-bottom: 2px solid rgb(183, 210, 245); /* 스크롤 시 테두리 변경 */
+    border-bottom: 2px solid #a7c898; /* 스크롤 시 테두리 변경 */
     z-index: 1000;
     .upper{
-        background-color: rgb(198, 225, 251);
+        background-color: #a7c898;
     }
 
 }
@@ -60,7 +60,7 @@
 }
 .upnav-menu a:hover {
     text-decoration: none;
-    color: #0c2643;
+    color: #6aaa7d;
 }
 
 .upnav-menu ul {
@@ -92,7 +92,7 @@
 }
 .upnav-menu2 a:hover {
     text-decoration: none;
-    color: #0c2643;
+    color: #6aaa7d;
 }
 
 /*.lower{*/
@@ -191,7 +191,7 @@
 
 .navtitle:hover,
 .navtitle::after:hover {
-    color: #A84B94; /* hover 시 색상 변경 */
+    color: #6aaa7d; /* hover 시 색상 변경 */
 }
 
 .navtitle:hover .dropdown-container,
@@ -200,15 +200,15 @@
 }
 
 .nav-menu a:hover {
-    color: #A84B94;
+    color: #6aaa7d;
 }
 .nav-menu li:hover .navtitle,
 .nav-menu li:hover .dropdown-container:hover {
-    color: #A84B94; /* 드롭다운 위로 커서를 옮겼을 때에도 navtitle 색상 유지 */
+    color: #6aaa7d; /* 드롭다운 위로 커서를 옮겼을 때에도 navtitle 색상 유지 */
 }
 
 .navtitle.active {
-    color: #A84B94; /* Highlight color for active state */
+    color: #6aaa7d; /* Highlight color for active state */
 }
 .button a{
     width: 135px;
@@ -283,7 +283,7 @@
 
 .dropdown-container {
     background-color: rgba(255, 255, 255, 0.96);
-    border-top: 2px solid #bed8f0;
+    border-top: 2px solid #a7c898;
     flex-direction: column;
     position: absolute;
     width: 200px;
@@ -327,10 +327,10 @@
 
 .dropdown-container li:hover a{
     color: #ffffff;
-    background-color: #b0d8ff;
+    background-color: #a7c898;
 }
 .dropdown-container li:hover {
-    background-color: #b0d8ff;
+    background-color: #a7c898;
 
 
 }

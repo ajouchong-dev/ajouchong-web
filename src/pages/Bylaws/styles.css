@@ -14,7 +14,7 @@
     max-width: 30%;
     border: none; /* 기본 테두리 제거 */
     height: 2px; /* 선의 두께 */
-    background-color: rgb(183, 210, 245); /* 선의 색상 */
+    background-color: #a7c898; /* 선의 색상 */
     margin-top: 15px; /* 제목과 선 사이의 여백 */
 }
 .announcement-table {
@@ -94,12 +94,12 @@
     cursor: pointer;
 }
 .bylaw-button:hover {
-    background-color: rgb(198, 225, 251);
+    background-color: #a7c898;
     color: black;
 }
 
 .bylaw-button.active{
-    background-color: rgb(198, 225, 251);
+    background-color: #a7c898;
     color: black;
 }
 .post-attachment {
@@ -122,7 +122,7 @@
 .post-attachment a {
     justify-content: center;
     margin-top: 40px;
-    color: #4c75ff;
+    color: #6aaa7d;
     text-decoration: none;
     font-weight: bold;
     transition: color 0.3s ease;

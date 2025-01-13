@@ -15,7 +15,7 @@
     max-width: 30%;
     border: none; /* 기본 테두리 제거 */
     height: 2px; /* 선의 두께 */
-    background-color: rgb(183, 210, 245); /* 선의 색상 */
+    background-color: #a7c898; /* 선의 색상 */
     margin-top: 15px; /* 제목과 선 사이의 여백 */
 }
 .rental-subTitle {
@@ -86,7 +86,7 @@
    width: 300px;
     border: none; /* 기본 테두리 제거 */
     height: 2px; /* 선의 두께 */
-    background-color: rgb(183, 210, 245); /* 선의 색상 */
+    background-color: #a7c898; /* 선의 색상 */
     margin-top: 15px; /* 제목과 선 사이의 여백 */
     margin-bottom: 30px;
 }
@@ -110,6 +110,6 @@
 }
 
 .rental-button:hover {
-    background-color: #d8b8de; /* 호버 시 색상 변경 */
+    background-color: #a7c898; /* 호버 시 색상 변경 */
 }
 
