@@ -141,7 +141,7 @@
     position: relative;
     width: 0; /* 초기 상태에서 너비를 0으로 설정 */
     height: 3px;
-    background-color: #b7d2f4;
+    background-color: #a7c898;
     margin: 30px 0;
     transition: width 4s; /* 애니메이션 적용 */
 
@@ -171,7 +171,7 @@
     }
 
     .more-link:hover {
-        color: #0056b3;
+        color: #6aaa7d;
     }
     display: inline-block;
 }
@@ -182,7 +182,7 @@
 }
 
 .more-link:hover {
-    color: #c6e1fb;
+    color: #a7c898;
 }
 @keyframes expandLine {
     from { width: 0; }
