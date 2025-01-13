@@ -38,7 +38,7 @@
 }
 
 .map-info {
-    background-color: #a7c898;
+    background-color: rgba(211, 230, 202, 0.3);
     width: 400px;
     height: 400px;
     font-family: Arial, sans-serif;
