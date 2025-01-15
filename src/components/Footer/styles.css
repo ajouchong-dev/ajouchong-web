@@ -34,18 +34,25 @@
     text-align: left;
     align-items: flex-start;
 }
+
+.main_logo {
+    color: white;
+}
+
 .column {
     margin: 15px 0;
 }
 .title {
-    font-size: 24px;
+    font-size: 30px;
     font-weight: bold;
     display: block;
-    margin-bottom: 10px;
+    /*margin-bottom: 10px;*/
+    margin-right: 30px;
 }
 .mainleft img {
-    max-width: 130px;
-    margin-top: 10px;
+    /*max-width: 130px;*/
+    /*margin-top: 5px;*/
+    height: 170px;
 }
 .info {
     display: flex;
@@ -92,7 +99,7 @@
     margin-top: 10px;
 }
 .address .space,
-.copyright .space
+.copyright .space,
 .developer .space{
     margin: 30px 5px;
 

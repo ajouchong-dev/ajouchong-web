@@ -4,9 +4,9 @@ const Footer = (props) => (
     <footer className="footer">
         <div className="main">
             <div className="mainleft">
-                <div className="column">
+                <div className="main_logo">
                     <span className="title">AJOU UNIV</span>
-                    <img src="/aurum_black.png" alt="로고"/>
+                    <img src="/achim_subLogo.svg" alt="로고" />
                 </div>
             </div>
             <div className="mainright">
