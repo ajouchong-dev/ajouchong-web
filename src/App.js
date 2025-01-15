@@ -88,11 +88,11 @@ const Content = () => {
                 <Route path="/welfare/promotion" element={<Promotion />} />
                 <Route path="/welfare/promotion/:postId" element={<PromotionDetail />} />
                 <Route path="/welfare/rental" element={<Rental />} />
-                <Route path="/signin" element={<Signin />} />
-                <Route path="/join" element={<Join />} />
-                <Route path="/password" element={<Password />} />
-                <Route path="/pwchange" element={<Passwordchange />} />
-                <Route path="/personal-info" element={<PersonalInfo />} />
+                {/*<Route path="/signin" element={<Signin />} />*/}
+                {/*<Route path="/join" element={<Join />} />*/}
+                {/*<Route path="/password" element={<Password />} />*/}
+                {/*<Route path="/pwchange" element={<Passwordchange />} />*/}
+                {/*<Route path="/personal-info" element={<PersonalInfo />} />*/}
                 <Route path="/auth/callback" element={<GoogleOAuthCallback />} />
             </Routes>
         </>

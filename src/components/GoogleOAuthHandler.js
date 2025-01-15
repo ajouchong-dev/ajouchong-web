@@ -22,6 +22,7 @@ const GoogleOAuthHandler = () => {
                 if (response.ok) {
                     const data = await response.json();
                     login(data.token, data.user); // 서버에서 받은 토큰과 사용자 정보로 로그인
+                    console.log(data.token, data.user, "!!");
                     navigate('/');
                 } else {
                     alert('로그인 실패: 서버 오류');

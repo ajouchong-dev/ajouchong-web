@@ -11,15 +11,14 @@ const Header = () => {
     const location = useLocation();
     // const [isLoggedIn, setIsLoggedIn] = useState(false);
     const navigate = useNavigate();
-    const { auth, logout } = useAuth(); // 로그인 상태와 로그아웃 함수 가져오기
-
+    const { auth, logout, login } = useAuth(); // 로그인 상태와 로그아웃 함수 가져오기
 
 
     const [isLoggedIn, setIsLoggedIn] = useState(false);
 
      const handleGoogleLogin = () => {
         const clientId = '440712020433-ljqa7d2r8drohnblmmfum3cls1et2kuq.apps.googleusercontent.com';
-        const redirectUri = 'https://www.ajouchong.com/api/login/oauth/google';
+        const redirectUri = 'http://localhost:3000/auth/callback';
 
         // Google OAuth URL 생성
         const googleAuthUrl =
@@ -88,24 +87,6 @@ const Header = () => {
         setIsLoggedIn(!!token);
     }, [location]);
 
-    // const handleLogout = async () => {
-    //     const confirmLogout = window.confirm('로그아웃 하시겠습니까?');
-    //     if (confirmLogout) {
-    //         try {
-    //             const response = await axios.post('http://ajouchong.com:8080/api/auth/logout');
-    //             if (response.data.code === 1) {
-    //                 // Successful logout: update state, clear token, redirect to sign-in
-    //                 setIsLoggedIn(false);
-    //                 localStorage.removeItem('token');
-    //                 navigate('/');
-    //             } else {
-    //                 console.error('Logout error:', response.data.message);
-    //             }
-    //         } catch (error) {
-    //             console.error('Logout request failed:', error);
-    //         }
-    //     }
-    // };
 
 
     const getNavtitle = () => {
@@ -158,13 +139,6 @@ const Header = () => {
                 <nav className="upnav-menu2">
                     <ul>
                         <li><a href="/sitemap">사이트맵</a></li>
-                        <span className="dot"> • </span>
-                        {auth.isAuthenticated ? (
-                            <button onClick={handleLogout}>Logout</button>
-                        ) : (
-                            <button onClick={handleGoogleLogin}>Login</button>
-                        )}
-
                     </ul>
                 </nav>
 
@@ -218,7 +192,7 @@ const Header = () => {
                                 <ul className="dropdown-container">
                                     <li><a href="/communication/qna">Q&A</a></li>
                                     <li><a href="/communication/require">100인 안건 상정제</a></li>
-                                    <li><a href="https://forms.gle/ynoZGkmY8uQdbcoc7" target="_blank" rel="noopener noreferrer">
+                                    <li><a href="https://forms.gle/V1hH3Gf5uyuC7CVp6" target="_blank" rel="noopener noreferrer">
                                         통합 소통 창구</a></li>
                                 </ul>
                             )}
@@ -267,6 +241,7 @@ const Header = () => {
                         <button
                             onClick={() => {
                                 console.log('Login 버튼 클릭됨');
+                                console.log(auth.isAuthenticated);
                                 handleGoogleLogin();
                             }}
                             className="auth-button"
