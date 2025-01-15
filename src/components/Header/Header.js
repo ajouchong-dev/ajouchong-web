@@ -173,7 +173,7 @@ const Header = () => {
             <div className="lower">
                 <div className="logo">
                     <a href="/">
-                        <img src="/aurum_black.png" alt="로고"/>
+                        <img src="/achim_mainLogo.svg" alt="로고"/>
                     </a>
                 </div>
                 <nav className="nav-menu">
