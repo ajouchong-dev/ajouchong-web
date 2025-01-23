@@ -82,7 +82,7 @@ const Announcement = () => {
                                     className="post-image"
                                     onError={(e) => {
                                         e.target.onerror = null;
-                                        e.target.src = '/main/aurum_square.jpeg';
+                                        e.target.src = '/main/achim_square.jpeg';
                                     }}
                                     style={{ cursor: 'pointer' }}
                                 />
