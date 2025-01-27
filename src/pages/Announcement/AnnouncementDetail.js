@@ -4,10 +4,6 @@ import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './styles.css';
 
-import Slider from "react-slick";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
-
 const AnnouncementDetail = () => {
     const { id } = useParams();
     const [postDetails, setPostDetails] = useState(null);
@@ -62,15 +58,6 @@ const AnnouncementDetail = () => {
         return <div>Loading...</div>;
     }
 
-    const sliderSettings = {
-        dots: true,
-        infinite: false,
-        speed: 500,
-        slidesToShow: 1,
-        slidesToScroll: 1,
-        arrows: false,
-    };
-
     return (
         <div className="post-detail">
             <h2 className="post-title">{postDetails.npTitle}</h2>
@@ -83,19 +70,11 @@ const AnnouncementDetail = () => {
 
             <div className="post-images">
                 {postDetails.imageUrls && postDetails.imageUrls.length > 0 ? (
-                    <Slider {...sliderSettings} className="slider">
-                        {postDetails.imageUrls.map((url, index) => (
-                            <div key={index} className="slider-image-wrapper">
-                                <img
-                                    src={url}
-                                    alt={`Image ${index + 1}`}
-                                    className="slider-image"
-                                />
-                            </div>
-                        ))}
-                    </Slider>
+                    postDetails.imageUrls.map((url, index) => (
+                        <img key={index} src={url} alt={`Image ${index + 1}`} />
+                    ))
                 ) : (
-                    <img src="/main/achim_square.jpeg" alt="Default" className="default-image" />
+                    <img src="/main/aurum_square.jpeg" alt="Default" />
                 )}
             </div>
 
