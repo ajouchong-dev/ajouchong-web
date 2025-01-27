@@ -181,16 +181,53 @@
 
 .post-images {
     display: flex;
-    flex-wrap: wrap;
-    justify-content: center; /* 가운데 정렬 */
-    gap: 20px;
-    margin-top: 20px;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+    overflow: hidden;
 }
 
-.post-images img {
+.image-container {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.current-image {
     width: 100%;
-    max-width: 500px;
-    border-radius: 2px;
+    height: auto;
+    object-fit: contain;
+}
+
+.prev-btn,
+.next-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0, 0, 0, 0.3);
+    color: white;
+    border: none;
+    padding: 8px;
+    cursor: pointer;
+    border-radius: 50%;
+    font-size: 15px;
+}
+
+.prev-btn {
+    left: 10px;
+}
+
+.next-btn {
+    right: 10px;
+}
+
+.prev-btn:hover,
+.next-btn:hover {
+    background: rgba(0, 0, 0, 0.8);
 }
 
 .like-section {

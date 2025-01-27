@@ -14,6 +14,7 @@ const AnnouncementDetail = () => {
     const [likeCount, setLikeCount] = useState(0);
     const [liked, setLiked] = useState(false);
     const navigate = useNavigate();
+    const [currentIndex, setCurrentIndex] = useState(0);
 
     useEffect(() => {
         const fetchPostDetails = async () => {
@@ -62,13 +63,16 @@ const AnnouncementDetail = () => {
         return <div>Loading...</div>;
     }
 
-    const sliderSettings = {
-        dots: true,
-        infinite: false,
-        speed: 500,
-        slidesToShow: 1,
-        slidesToScroll: 1,
-        arrows: false,
+    const handleNext = () => {
+        if (postDetails.imageUrls && currentIndex < postDetails.imageUrls.length - 1) {
+            setCurrentIndex((prevIndex) => prevIndex + 1);
+        }
+    };
+
+    const handlePrev = () => {
+        if (postDetails.imageUrls && currentIndex > 0) {
+            setCurrentIndex((prevIndex) => prevIndex - 1);
+        }
     };
 
     return (
@@ -83,16 +87,30 @@ const AnnouncementDetail = () => {
 
             <div className="post-images">
                 {postDetails.imageUrls && postDetails.imageUrls.length > 0 ? (
-                    postDetails.imageUrls.map((url, index) => (
-                        <img key={index} src={url} alt={`Image ${index + 1}`} />
-                    ))
+                    <div className="image-container">
+                        {currentIndex > 0 && (
+                            <button className="prev-btn" onClick={handlePrev}>
+                                ❮
+                            </button>
+                        )}
+                        <img
+                            src={postDetails.imageUrls[currentIndex]}
+                            alt={`Image ${currentIndex + 1}`}
+                            className="current-image"
+                        />
+                        {currentIndex < postDetails.imageUrls.length - 1 && (
+                            <button className="next-btn" onClick={handleNext}>
+                                ❯
+                            </button>
+                        )}
+                    </div>
                 ) : (
                     <img src="/main/achim_square.jpeg" alt="Default" className="default-image"/>
                 )}
             </div>
 
             <div className="like-section">
-            <button onClick={handleLike} className="like-button" disabled={liked}>
+                <button onClick={handleLike} className="like-button" disabled={liked}>
                     <img
                         src={liked ? "/main/filled-heart.png" : "/main/heart.png"}
                         alt="좋아요"
