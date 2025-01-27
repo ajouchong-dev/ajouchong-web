@@ -17,6 +17,7 @@
     background-color: #a7c898; /* 선의 색상 */
     margin-top: 15px; /* 제목과 선 사이의 여백 */
 }
+
 .search-container {
     display: flex;
     justify-content: flex-start; /* 왼쪽 정렬을 기본으로 함 */
@@ -24,8 +25,6 @@
     margin-bottom: 10px;
     margin-top: 40px;
     margin-left: 60%;
-
-
 }
 
 .search-input {
@@ -38,7 +37,6 @@
 }
 
 .search-button {
-
     padding: 10px 20px;
     font-size: 14px;
     background-color:  rgb(53, 53, 53);
@@ -51,6 +49,7 @@
 .search-button:hover {
     background-color:  #a7c898;
 }
+
 .contentSeparator{
     max-width: 60%;
     border: none; /* 기본 테두리 제거 */
@@ -100,12 +99,12 @@
     margin-bottom: 20px;
     margin-top: 0;
 }
+
 .pagination {
     display: flex;
     justify-content: center;
     margin-top: 20px;
     margin-bottom: 90px;
-
 }
 
 .pagination-button {
