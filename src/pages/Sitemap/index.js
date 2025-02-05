@@ -45,7 +45,7 @@ const Sitemap = () => {
                         <Link className="sitemapTitle" to="/resources/bylaws">자료실</Link>
                         <hr className="listSeparator"/>
                         <ul>
-                            <li><Link to="/resources/bylaws">회칙 및 세칙</Link></li>
+                            <li><Link to="/resources/bylaws">세칙 및 회칙</Link></li>
                             <li><Link to="/resources/proceeding">회의록</Link></li>
                             <li><Link to="/resources/audit">감사자료</Link></li>
                         </ul>
