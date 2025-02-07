@@ -17,7 +17,7 @@ const Rental = () => {
                 {/*<div className="rental-subTitle">물품 대여 현황</div>*/}
                 {/*<div className="rental-box"></div>*/}
                 <iframe className="rental-box"
-                        src="https://docs.google.com/spreadsheets/d/1IU3CiAEz99-MzoRr-IVcihwIItuqx-H_2bsv7n_SZU8/pubhtml?widget=true&amp;headers=false"></iframe>
+                    src="https://docs.google.com/spreadsheets/d/e/2PACX-1vTJHth6JF5fzylhaW_6Rx6ZkqEd6iweJEyRzkM9DwbEfA23-B90roLf91PWLTXEX0PTwH7lNGQS_3sd/pubhtml?widget=true&amp;headers=false"></iframe>
                 {/*<ul className="rental-button">*/}
 
 
