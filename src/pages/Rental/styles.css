@@ -36,11 +36,12 @@
 }
 
 .rental-box {
-    width: 30%;
-    height: 700px;
+    width: 40%;
+    height: 680px;
     border: none;
     border-radius: 10px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    margin-top: 60px;
 }
 
 .rental-button{
