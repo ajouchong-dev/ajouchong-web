@@ -18,7 +18,7 @@ const Header = () => {
 
      const handleGoogleLogin = () => {
         const clientId = '440712020433-ljqa7d2r8drohnblmmfum3cls1et2kuq.apps.googleusercontent.com';
-        const redirectUri = 'http://localhost:3000/auth/callback';
+        const redirectUri = 'https://www.ajouchong.com/api/login/oauth/google';
 
         // Google OAuth URL 생성
         const googleAuthUrl =
