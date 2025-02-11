@@ -13,11 +13,11 @@ const Footer = (props) => (
                 <div className="column">
                     <div className="info">
                         <span className="infotext">
-                        <a href="/policy">개인정보처리방침</a>
+                        <a href="/policy">이용약관</a>
                         </span>
                         <span className="space">|</span>
                         <span className="infotext">
-                        <a href="/policy/termsofservice">이용약관</a>
+                        <a href="/policy/termsofservice">개인정보처리방침</a>
                         </span>
                         <span className="space"></span>
                     </div>
