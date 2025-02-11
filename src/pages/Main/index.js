@@ -137,7 +137,7 @@ const Main = () => {
                                 <h3>{notice.title}</h3>
                                 <p>
                                     {notice.content.length > 30
-                                        ? `${notice.content.slice(0, 30)}...`
+                                        ? `${notice.content.slice(0, 40)}...`
                                         : notice.content}
                                 </p>
                                 <span>{notice.date}</span>
