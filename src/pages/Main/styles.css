@@ -8,7 +8,6 @@
     justify-content: center;
     width: 100%;
     overflow: hidden;
-
 }
 
 .slider {
@@ -19,7 +18,6 @@
     height: 100vh; /* 화면 전체 높이를 차지하도록 설정 */
     overflow: hidden;
     position: relative;
-
 }
 
 .box {
@@ -40,13 +38,13 @@
     overflow: hidden;
     position: relative;
 }
+
 .topslider div {
     width: 100%;
     height: 100%;
     position: relative;
     overflow: hidden;
 }
-
 
 .topslider img {
     width: 100%;
@@ -59,7 +57,6 @@
     animation-fill-mode: forwards;
 }
 
-
 @keyframes zoomIn {
     0% {
         transform: scale(1.1); /* 초기 상태에서 원래 크기 */
@@ -67,8 +64,8 @@
     100% {
         transform: scale(1); /* 중간 상태에서 10% 확대 */
     }
-
 }
+
 .slick-dots {
     position: absolute;
     bottom: 20px; /* 이미지 안에서 dots의 위치를 조정 */
@@ -78,15 +75,15 @@
     justify-content: center;
     align-items: center;
 }
+
 .slick-dots li {
     margin: 0 4px; /* dot 사이의 간격 조정 */
-
 }
-
 
 .slick-dots li button:before {
     color: #ffffff; /* dots의 색상을 변경 */
 }
+
 .overlay {
     position: absolute;
     bottom: 70%;
@@ -100,8 +97,6 @@
     animation-name:fade;
     animation-duration: 3s;
 }
-
-
 
 .title2{
     position: absolute;
@@ -129,14 +124,18 @@
     from { transform: translateY(-40%); }
     to   { transform: translateY(0);}
 }
+
 @keyframes fade {
     from { opacity: 0; }
     to   { opacity: 1; }
 }
+
 .card-wrapper{
     width: 100%;
     background-color: #fffefe;
+    padding: 50px;
 }
+
 .division-line {
     position: relative;
     width: 0; /* 초기 상태에서 너비를 0으로 설정 */
@@ -144,8 +143,6 @@
     background-color: #a7c898;
     margin: 30px 0;
     transition: width 4s; /* 애니메이션 적용 */
-
-
 }
 
 .division-line.visible {
@@ -164,7 +161,6 @@
 
     display: inline-block;
 }
-
     .more-link.visible {
         opacity: 1;
         transform: translateY(0); /* 원래 위치로 */
@@ -184,11 +180,11 @@
 .more-link:hover {
     color: #a7c898;
 }
+
 @keyframes expandLine {
     from { width: 0; }
     to { width: 500px; }
 }
-
 
 .notices-container {
     display: flex;
@@ -198,8 +194,8 @@
     margin: 40px auto;
     margin-top: 40px;
     /*margin-bottom: 150px;*/
-
 }
+
 .card-title{
     width: 100%;
     text-align: center;
@@ -210,6 +206,7 @@
     flex-direction: column; /* 세로 방향으로 정렬 */
     align-items: center; /* 가로 방향 가운데 정렬 */
 }
+
 .card-title p,
 .card-title span {
     opacity: 0; /* 초기 상태: 보이지 않음 */
@@ -232,7 +229,6 @@
         opacity: 0; /* 초기 상태: 보이지 않음 */
         transform: translateY(20px); /* 초기 상태: 아래로 이동 */
         transition: opacity 3s ease, transform 3s ease;
-
 }
 
 .card-title span {
@@ -243,7 +239,6 @@
     opacity: 0;
         transform: translateY(20px); /* 초기 상태: 아래로 이동 */
         transition: opacity 5s ease, transform 5s ease;
-
 }
 
 .notice-card {
@@ -265,6 +260,7 @@
     padding-bottom: 30px;
     cursor: pointer;
 }
+
 .notice-card.visible {
     opacity: 1;
     transform: translateY(0);
@@ -301,8 +297,9 @@
     font-size: 0.9rem;
     color: #868e96;
     margin-bottom: 10px;
-
+    display: block;
 }
+
 .visible {
     opacity: 1;
     transform: translateY(-10px);
@@ -311,20 +308,3 @@
 .visible .division-line {
     width: 500px; /* 구분선 애니메이션 시작 */
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
