@@ -13,7 +13,7 @@ const Footer = (props) => (
                 <div className="column">
                     <div className="info">
                         <span className="infotext">
-                        <a href="https://ytnwjd.notion.site/44a7f555ce864ed79ac55bf3781e6011?pvs=4">개인정보처리방침</a>
+                        <a href="/policy">개인정보처리방침</a>
                         </span>
                         <span className="space">|</span>
                         <span className="infotext">
