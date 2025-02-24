@@ -30,7 +30,7 @@ const Login = ({ user, setUser }) => {
                 setUser(userInfo.data);
                 localStorage.setItem("user", JSON.stringify(userInfo.data));
 
-                const backendResponse = await axios.post("http://localhost:8080/api/login/auth/oauth", {
+                const backendResponse = await axios.post("https://ajouchong.com/api/login/auth/oauth", {
                     accessToken: tokenResponse.access_token,
                     expiresIn: tokenResponse.expires_in,
                 });

@@ -15,11 +15,11 @@ export const AuthProvider = ({ children }) => {
 
     const fetchUser = async (token) => {
         try {
-            const response = await fetch("http://localhost:8080/api/login/auth/info", {
+            const response = await fetch("https://www.ajouchong.com/api/login/auth/info", {
                 method: "GET",
                 headers: {
                     Authorization: `Bearer ${token}`,
-                    "Content-Type": "application/json",
+                    "Content-Type": "application/json"
                 },
             });
 

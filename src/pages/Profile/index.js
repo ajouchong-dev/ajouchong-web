@@ -20,7 +20,7 @@ const Profile = () => {
                     return;
                 }
 
-                const response = await axios.get("http://localhost:8080/api/login/auth/info", {
+                const response = await axios.get("https://www.ajouchong.com/api/login/auth/info", {
                     headers: { Authorization: `Bearer ${jwtToken}` },
                 });
 
