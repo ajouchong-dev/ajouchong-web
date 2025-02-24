@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {BrowserRouter as Router, Routes, Route, useLocation, Navigate} from 'react-router-dom';
 import { AuthProvider } from './contexts/AuthContext';
 import './App.css';
@@ -21,23 +21,16 @@ import Proceeding from './pages/Proceeding';
 import Audit from './pages/Audit';
 import Promotion from './pages/Promotion';
 import Rental from './pages/Rental';
-import Signin from './pages/Signin';
-import Join from './pages/Join';
-import Password from './pages/Password';
-import Passwordchange from './pages/Pwchange';
 import Campusmap from './pages/Campusmap';
-import Commu from './pages/commu';
 import WritePage from './pages/WritePage';
 import QnaDetail from './pages/Qna/QnaDetail';
 import BylawsDetail from './pages/Bylaws/BylawsDetail';
 import PromotionDetail from './pages/Promotion/promotionDetail';
-import PersonalInfo from './pages/Join/PersonalInfo';
 import RequireWrite from './pages/require/requireWrite';
 import RequireDetail from './pages/require/RequireDetail';
-import GoogleOAuthHandler from './components/GoogleOAuthHandler';
 import Termsofservice from './pages/Policy/termsofservice';
 import Policy from './pages/Policy/policy';
-import GoogleOAuthCallback from "./components/GoogleOAuthHandler";
+import Profile from "./pages/Profile";
 
 function App() {
     return (
@@ -62,7 +55,6 @@ const Content = () => {
             {showBreadcrumb && <Breadcrumb />}
             <Routes>
                 <Route path="/" element={<Main />} />
-                <Route path="/auth/callback" element={<GoogleOAuthHandler />} />
                 <Route path="/policy/termsofservice" element={<Termsofservice />} />
                 <Route path="/policy" element={<Policy />} />
                 <Route path="/sitemap" element={<Sitemap />} />
@@ -92,8 +84,8 @@ const Content = () => {
                 {/*<Route path="/join" element={<Join />} />*/}
                 {/*<Route path="/password" element={<Password />} />*/}
                 {/*<Route path="/pwchange" element={<Passwordchange />} />*/}
-                {/*<Route path="/personal-info" element={<PersonalInfo />} />*/}
-                <Route path="/auth/callback" element={<GoogleOAuthCallback />} />
+                {/*<Route path="/personal-info" element={<PersonalInfo />} />*/}s
+                <Route path="/profile" element={<Profile />} />
             </Routes>
         </>
     );

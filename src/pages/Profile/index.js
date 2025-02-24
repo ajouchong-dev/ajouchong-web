@@ -1,17 +1,66 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import "./styles.css";
+import {googleLogout} from "@react-oauth/google";
+import Cookies from "js-cookie";
 
-const MyPage = ({ user }) => {
-    if (!user) {
-        return <h2>로그인이 필요합니다.</h2>;
-    }
+const Profile = () => {
+    const [user, setUser] = useState(null);
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        const fetchUserInfo = async () => {
+            try {
+                const jwtToken = localStorage.getItem("jwtToken");
+
+                if (!jwtToken) {
+                    alert("로그인이 필요한 서비스입니다.");
+                    navigate("/");
+                    return;
+                }
+
+                const response = await axios.get("http://localhost:8080/api/login/auth/info", {
+                    headers: { Authorization: `Bearer ${jwtToken}` },
+                });
+
+                console.log("User:", response.data);
+                setUser(response.data.data.member);
+            } catch (error) {
+                console.error("사용자 정보 가져오기 실패:", error);
+            }
+        };
+
+        fetchUserInfo();
+    }, [navigate]);
+
+    const logout = () => {
+        googleLogout();
+        setUser(null);
+
+        localStorage.clear();
+        Cookies.remove("jwtToken");
+
+        navigate("/");
+        window.location.reload();
+    };
 
     return (
-        <div>
-            <h1>마이 페이지</h1>
-            <p>이름: {user.name}</p>
-            <p>이메일: {user.email}</p>
+        <div className="profile-container">
+            <h1>Profile</h1>
+            <hr className="titleSeparator"/>
+            {user ? (
+                <div className="profile-info">
+                    <p>이름: {user.name}</p>
+                    <p>이메일: {user.email}</p>
+                </div>
+            ) : (
+                <p className="loading-text">로딩 중...</p>
+            )}
+            <p> </p>
+            <button className="logout-btn" onClick={logout}>로그아웃</button>
         </div>
     );
 };
 
-export default MyPage;
+export default Profile;

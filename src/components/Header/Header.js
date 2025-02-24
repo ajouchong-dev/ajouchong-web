@@ -8,7 +8,7 @@ import './Header.css';
 const Header = () => {
     const [dropdown, setDropdown] = useState(null);
     const location = useLocation();
-    const { auth} = useAuth();
+    const { auth } = useAuth();
     const [user, setUser] = useState(auth.user);
 
     useEffect(() => {
@@ -85,6 +85,8 @@ const Header = () => {
                     <nav className="upnav-menu2">
                         <ul>
                             <li><a href="/sitemap">사이트맵</a></li>
+                            <span className="dot"> • </span>
+                            <li><a href="/profile">profile</a></li>
                         </ul>
                     </nav>
                 </div>

@@ -1,10 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { googleLogout, useGoogleLogin } from "@react-oauth/google";
 import Cookies from "js-cookie";
 import axios from "axios";
 import "./login.css";
+import {useNavigate} from "react-router-dom";
 
 const Login = ({ user, setUser }) => {
+    const navigate = useNavigate();
+
     useEffect(() => {
         const storedUser = localStorage.getItem("user");
         if (storedUser) {
@@ -29,16 +32,20 @@ const Login = ({ user, setUser }) => {
 
                 const backendResponse = await axios.post("http://localhost:8080/api/login/auth/oauth", {
                     accessToken: tokenResponse.access_token,
+                    expiresIn: tokenResponse.expires_in,
                 });
 
-                console.log("backRes", backendResponse.data);
+                // console.log("backRes", backendResponse.data);
 
-                const jwtToken = backendResponse.data.jwtToken;
+                const jwtToken = backendResponse.data.data.jwtToken;
 
                 if (jwtToken) {
-                    Cookies.set("accessToken", jwtToken, { expires: 1 });
+                    localStorage.setItem("jwtToken", jwtToken);
+                    Cookies.set("jwtToken", jwtToken, { expires: 1 });
+
+                    navigate("/profile");
                 } else {
-                    console.error("JWT Token이 존재하지 않습니다.");
+                    console.error("jwt Token이 존재하지 않습니다.");
                 }
             } catch (error) {
                 console.error("Login Error:", error);
@@ -46,6 +53,8 @@ const Login = ({ user, setUser }) => {
         },
         onError: (error) => console.error("Login Failed:", error),
         scope: "https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile",
+        access_type: "offline",
+        prompt: "consent",
     });
 
     const logout = () => {
@@ -53,7 +62,9 @@ const Login = ({ user, setUser }) => {
         setUser(null);
 
         localStorage.clear();
-        Cookies.remove("accessToken");
+        Cookies.remove("jwtToken");
+
+        navigate("/");
     };
 
     return (
