@@ -1,34 +1,63 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useState, useEffect } from "react";
 
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
     const [auth, setAuth] = useState(() => {
-        const token = localStorage.getItem('accessToken');
+        const token = localStorage.getItem("jwtToken");
         return {
             isAuthenticated: !!token,
             token,
             user: null,
-            loading: !token,
+            loading: true, // 초기 로딩 상태 추가
         };
     });
 
+    const fetchUser = async (token) => {
+        try {
+            const response = await fetch("https://www.ajouchong.com/api/login/auth/info", {
+                method: "GET",
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    "Content-Type": "application/json"
+                },
+            });
+
+            if (response.ok) {
+                const userData = await response.json();
+                setAuth((prev) => ({
+                    ...prev,
+                    user: userData,
+                    loading: false,
+                }));
+            } else {
+                throw new Error("유저 정보를 불러올 수 없습니다.");
+            }
+        } catch (error) {
+            console.error("Error fetching user:", error);
+            logout();
+        }
+    };
+
     useEffect(() => {
-        const token = localStorage.getItem('accessToken');
+        const token = localStorage.getItem("jwtToken");
         if (token) {
-            setAuth({ isAuthenticated: true, token, user: null, loading: false });
+            fetchUser(token);
         } else {
-            setAuth({ isAuthenticated: false, token: null, user: null, loading: false });
+            setAuth((prev) => ({
+                ...prev,
+                loading: false,
+            }));
         }
     }, []);
 
     const login = (token, user) => {
-        localStorage.setItem('accessToken', token);
-        setAuth({ isAuthenticated: true, token: token, user: user, loading: false });
+        localStorage.setItem("jwtToken", token);
+        setAuth({ isAuthenticated: true, token, user, loading: false });
     };
 
     const logout = () => {
-        localStorage.removeItem('accessToken');
+        localStorage.removeItem("jwtToken");
         setAuth({ isAuthenticated: false, token: null, user: null, loading: false });
     };
 
