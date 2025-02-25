@@ -28,11 +28,10 @@ const Login = ({ user, setUser }) => {
                 }
 
                 setUser(userInfo.data);
-                localStorage.setItem("user", JSON.stringify(userInfo.data));
 
                 const backendResponse = await axios.post("https://ajouchong.com/api/login/auth/oauth", {
                     accessToken: tokenResponse.access_token,
-                    expiresIn: tokenResponse.expires_in,
+                    // expiresIn: tokenResponse.expires_in,
                 });
 
                 // console.log("backRes", backendResponse.data);
@@ -41,6 +40,7 @@ const Login = ({ user, setUser }) => {
 
                 if (jwtToken) {
                     localStorage.setItem("jwtToken", jwtToken);
+                    localStorage.setItem("user", JSON.stringify(userInfo.data));
                     Cookies.set("jwtToken", jwtToken, { expires: 1 });
 
                     navigate("/profile");
