@@ -29,10 +29,18 @@ const Login = ({ user, setUser }) => {
 
                 setUser(userInfo.data);
 
-                const backendResponse = await axios.post("https://ajouchong.com/api/login/auth/oauth", {
-                    accessToken: tokenResponse.access_token,
-                    // expiresIn: tokenResponse.expires_in,
-                });
+                const backendResponse = await axios.post(
+                    "https://ajouchong.com/api/login/auth/oauth",
+                    {
+                        accessToken: tokenResponse.access_token,
+                    },
+                    {
+                        withCredentials: true,
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                    }
+                );
 
                 // console.log("backRes", backendResponse.data);
 
