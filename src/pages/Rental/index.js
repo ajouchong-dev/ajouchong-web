@@ -25,8 +25,8 @@ const Rental = () => {
                 <div className="rental-info">
                     <div id="retal-title">총학생회 대여 사업 안내</div>
                     <hr className="tableSeparator"/>
-                    <img className="rentalimg" src="/main/rental_1.png" alt="대여사업 안내 이미지 1"/>
-                    <img className="rentalimg" src="/main/rental_2.png" alt="대여사업 안내 이미지 2"/>
+                    <img className="rentalImg" src="/main/rental_1.png" alt="대여사업 안내 이미지 1"/>
+                    <img className="rentalImg" src="/main/rental_2.png" alt="대여사업 안내 이미지 2"/>
 
                 </div>
 

@@ -88,11 +88,12 @@
     margin-top: 15px; /* 제목과 선 사이의 여백 */
     margin-bottom: 30px;
 }
-.rentalimg{
-
+.rentalImg{
     width: 450px;
-    height:450px;
+    height: 550px;
+    margin-right: 10px;
 }
+
 .rental-button {
     display: inline-block;
     background-color: #000000;
