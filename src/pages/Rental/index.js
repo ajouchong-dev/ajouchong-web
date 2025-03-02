@@ -10,7 +10,7 @@ const Rental = () => {
 
                 <button
                     className="rental-button"
-                    onClick={() => window.open("https://forms.gle/pyzHeDk8bQfnJGk76", "_blank")}
+                    onClick={() => window.open("https://forms.gle/buMhGLbFYeVjcdTi8", "_blank")}
                 >
                     대여사업 구글폼 바로가기
                 </button>
@@ -25,8 +25,8 @@ const Rental = () => {
                 <div className="rental-info">
                     <div id="retal-title">총학생회 대여 사업 안내</div>
                     <hr className="tableSeparator"/>
-                    <img className="rentalimg" src="/main/대여사업.jpg"/>
-                    <img className="rentalimg" src="/main/대여사업2.jpg"/>
+                    <img className="rentalImg" src="/main/rental_1.png" alt="대여사업 안내 이미지 1"/>
+                    <img className="rentalImg" src="/main/rental_2.png" alt="대여사업 안내 이미지 2"/>
 
                 </div>
 

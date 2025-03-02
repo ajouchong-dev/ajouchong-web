@@ -13,6 +13,9 @@ RUN npm install
 # Copy all project files
 COPY . .
 
+ARG REACT_APP_GOOGLE_CLIENT_ID
+ENV REACT_APP_GOOGLE_CLIENT_ID=$REACT_APP_GOOGLE_CLIENT_ID
+
 # Build the React application
 RUN npm run build
 
