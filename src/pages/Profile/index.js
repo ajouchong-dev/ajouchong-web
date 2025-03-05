@@ -7,21 +7,17 @@ import Cookies from "js-cookie";
 
 const Profile = () => {
     const [user, setUser] = useState(null);
+    const [isLoading, setIsLoading] = useState(true); // 로딩 상태 추가
     const navigate = useNavigate();
-
-    const getStoredJwtToken = () => Cookies.get("jwtToken");
-
-    const storeJwtToken = (newToken) => {
-        if (newToken) {
-            Cookies.set("jwtToken", newToken, { expires: 1 });
-        }
-    };
 
     const handleLogout = useCallback(() => {
         googleLogout();
         setUser(null);
-        Cookies.remove("jwtToken");
+
+        Cookies.remove("accessToken");
+        Cookies.remove("refreshToken");
         localStorage.removeItem("user");
+
         navigate("/");
         setTimeout(() => window.location.reload(), 500);
     }, [navigate]);
@@ -29,38 +25,44 @@ const Profile = () => {
     useEffect(() => {
         const fetchUserInfo = async () => {
             try {
-                let jwtToken = getStoredJwtToken();
-
-                if (!jwtToken) {
-                    alert("로그인이 필요한 서비스입니다.");
-                    setTimeout(() => handleLogout(), 500);
-                    return;
-                }
-
-                const response = await axios.get("https://www.ajouchong.com/api/login/auth/info", {
-                    headers: { Authorization: `Bearer ${jwtToken}` },
-                    withCredentials: true,
+                const response = await axios.get("http://localhost:8080/api/login/auth/info", {
+                    withCredentials: true, // 쿠키 기반 인증
                 });
 
-                const { status, data } = response.data;
+                console.log("API 응답:", response.data);
+                console.log("응답 데이터:", response.data.data);
 
-                if (status === 2 && data.jwtToken) {
-                    storeJwtToken(data.jwtToken);
+                if (response.data.code === 1 && response.data.data) {
+                    setUser(response.data.data);
+                } else {
+                    console.warn("서버에서 사용자 정보를 제공하지 않음:", response.data.message);
+                    setUser(null);
                 }
 
-                setUser(data.member);
             } catch (error) {
+                console.error("사용자 정보를 불러오는 중 오류 발생:", error);
 
-                if (error.response?.status === 401) {
-                    console.log(error);
-                    alert("세션이 만료되었습니다. 다시 로그인해주세요.");
-                    setTimeout(() => handleLogout(), 500);
+                if (error.response) {
+                    // console.error("서버 응답 상태 코드:", error.response.status);
+                    // console.error("서버 응답 데이터:", error.response.data);
+
+                    if (error.response.status === 401) {
+                        console.warn("세션이 만료됨. 로그아웃 처리.");
+                        alert("세션이 만료되었습니다. 다시 로그인해주세요.");
+                        handleLogout();
+                    }
                 }
+            } finally {
+                setIsLoading(false);
             }
         };
 
         fetchUserInfo();
-    }, [handleLogout, navigate]);
+    }, []);
+
+    if (isLoading) {
+        return <p className="loading-text">로딩 중...</p>;
+    }
 
     return (
         <div className="profile-container">
@@ -70,9 +72,10 @@ const Profile = () => {
                 <div className="profile-info">
                     <p>이름: {user.name}</p>
                     <p>이메일: {user.email}</p>
+                    <p>역할: {user.role}</p>
                 </div>
             ) : (
-                <p className="loading-text">로딩 중...</p>
+                <p className="loading-text">사용자 정보를 불러올 수 없습니다.</p>
             )}
             <button className="logout-btn" onClick={handleLogout}>로그아웃</button>
         </div>

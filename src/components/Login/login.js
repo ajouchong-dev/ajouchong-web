@@ -15,10 +15,9 @@ const Login = ({ user, setUser }) => {
     }, [user]);
 
     useEffect(() => {
-        const storedJwt = Cookies.get("jwtToken");
         const storedUser = localStorage.getItem("user");
 
-        if (storedJwt && storedUser) {
+        if (storedUser) {
             setUser(JSON.parse(storedUser));
         }
     }, [setUser]);
@@ -33,15 +32,15 @@ const Login = ({ user, setUser }) => {
                     }
                 );
 
-                console.log("Google User Info:", userInfo);
+                // console.log("Google User Info:", userInfo);
 
-                const existingJwtToken = Cookies.get("jwtToken") || null;
+                const refreshToken = Cookies.get("refreshToken") || null;
 
                 const { data: backendData } = await axios.post(
-                    "https://www.ajouchong.com/api/login/auth/oauth",
+                    "http://localhost:8080/api/login/auth/oauth",
                     {
                         accessToken: tokenResponse.access_token,
-                        jwtToken: existingJwtToken, //기존 JWT를 쿠키에서 가져와 전달
+                        refreshToken: refreshToken,
                     },
                     {
                         withCredentials: true,
@@ -49,19 +48,14 @@ const Login = ({ user, setUser }) => {
                     }
                 );
 
-                console.log("Backend Response:", backendData.data);
-                console.log(backendData.data.jwtToken);
-                console.log(backendData.data.member);
+                // console.log("Backend Response:", backendData.data);
+                // console.log(backendData.data.jwtToken);
+                // console.log(backendData.data.member);
 
                 const { status, data } = backendData;
-                const jwtToken = data?.jwtToken;
+                const jwtToken = data.jwtToken;
 
                 if (jwtToken) {
-                    Cookies.set("jwtToken", jwtToken, { expires: 1 });
-
-                    if (status === 2) {
-                        console.log("새로운 JWT 발급 완료:", jwtToken);
-                    }
 
                     setUser(userInfo);
                     localStorage.setItem("user", JSON.stringify(userInfo));
@@ -91,7 +85,8 @@ const Login = ({ user, setUser }) => {
         setUser(null);
 
         localStorage.removeItem("user");
-        Cookies.remove("jwtToken");
+        Cookies.remove("refreshToken");
+        Cookies.remove("accessToken");
 
         navigate("/");
     };
