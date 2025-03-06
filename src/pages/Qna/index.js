@@ -16,7 +16,7 @@ const Qna = () => {
     useEffect(() => {
         const fetchPosts = async () => {
             try {
-                const response = await fetch('http://localhost:8080/api/qna');
+                const response = await fetch('https://www.ajouchong.com/api/qna');
                 const result = await response.json();
 
                 if (result.code === 1) {
