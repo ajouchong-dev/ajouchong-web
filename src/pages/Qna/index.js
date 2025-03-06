@@ -16,13 +16,14 @@ const Qna = () => {
     useEffect(() => {
         const fetchPosts = async () => {
             try {
-                const response = await fetch('https://www.ajouchong.com/api/qna');
+                const response = await fetch('http://localhost:8080/api/qna');
                 const result = await response.json();
 
                 if (result.code === 1) {
                     const formattedPosts = result.data.map(post => ({
                         id: post.qpostId,
                         title: post.qpTitle,
+                        author: maskName(post.qpAuthor),
                         date: new Date(post.qpCreateTime).toLocaleString("ko-KR", {
                             year: "numeric",
                             month: "2-digit",
@@ -45,6 +46,13 @@ const Qna = () => {
 
         fetchPosts();
     }, []);
+
+    const maskName = (name) => {
+        if (!name) return '';
+        if (name.length === 2) return name[0] + '*'; // 두 글자면 첫 글자만 보이게
+        if (name.length > 2) return name[0] + '*'.repeat(name.length - 2) + name[name.length - 1]; // 첫 글자와 마지막 글자만 남기기
+        return name;
+    };
 
     const handleSearch = () => {
         if (searchQuery === '') {
