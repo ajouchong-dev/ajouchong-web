@@ -2,7 +2,7 @@ import React, { useEffect, useState, useCallback } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import "./styles.css";
-import { googleLogout } from "@react-oauth/google";
+import {googleLogout, useGoogleLogin} from "@react-oauth/google";
 import Cookies from "js-cookie";
 
 const Profile = () => {
@@ -21,6 +21,60 @@ const Profile = () => {
         navigate("/");
         setTimeout(() => window.location.reload(), 500);
     }, [navigate]);
+
+    const signInWithGoogle = useGoogleLogin({
+        onSuccess: async (tokenResponse) => {
+            try {
+                const { data: userInfo } = await axios.get(
+                    "https://www.googleapis.com/oauth2/v3/userinfo",
+                    {
+                        headers: { Authorization: `Bearer ${tokenResponse.access_token}` },
+                    }
+                );
+
+                // console.log("Google User Info:", userInfo);
+
+                const refreshToken = Cookies.get("refreshToken") || null;
+
+                const { data: backendData } = await axios.post(
+                    "http://localhost:8080/api/login/auth/oauth",
+                    {
+                        accessToken: tokenResponse.access_token,
+                        refreshToken: refreshToken,
+                    },
+                    {
+                        withCredentials: true,
+                        headers: { "Content-Type": "application/json" },
+                    }
+                );
+
+                const { status, data } = backendData;
+                const jwtToken = data.jwtToken;
+
+                if (jwtToken) {
+
+                    setUser(userInfo);
+                    localStorage.setItem("user", JSON.stringify(userInfo));
+
+                    navigate("/profile");
+                } else {
+                    console.error("JWT가 존재하지 않습니다.");
+                }
+            } catch (error) {
+                if (error.response?.status === 401) {
+                    console.error("JWT 만료됨 - 로그아웃 처리");
+                    handleLogout();
+                } else {
+                    console.error("Login Error:", error);
+                }
+            }
+        },
+        onError: (error) => console.error("Login Failed:", error),
+        scope: "https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile",
+        access_type: "offline",
+        prompt: "consent",
+        hosted_domain: "ajou.ac.kr",
+    });
 
     useEffect(() => {
         const fetchUserInfo = async () => {
@@ -77,7 +131,18 @@ const Profile = () => {
             ) : (
                 <p className="loading-text">사용자 정보를 불러올 수 없습니다.</p>
             )}
-            <button className="logout-btn" onClick={handleLogout}>로그아웃</button>
+
+            <div className="login-container">
+                {user ? (
+                    <button className="auth-button" onClick={handleLogout}>
+                        Logout
+                    </button>
+                ) : (
+                    <button onClick={signInWithGoogle} className="auth-button">
+                        Login
+                    </button>
+                )}
+            </div>
         </div>
     );
 };
