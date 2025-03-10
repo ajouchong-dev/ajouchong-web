@@ -15,6 +15,7 @@ const Announcement = () => {
             try {
                 const response = await axios.get("https://www.ajouchong.com/api/notice", {
                     headers: { 'Content-Type': 'application/json' },
+                    withCredentials: true, // 쿠키 자동 포함
                 });
 
                 if (response.data.code === 1) {
@@ -25,7 +26,7 @@ const Announcement = () => {
                         date: new Date(post.npCreateTime).toLocaleDateString(),
                     }));
                     setPosts(fetchedPosts);
-                    setFilteredPosts(fetchedPosts); // 초기에는 전체 게시물 표시
+                    setFilteredPosts(fetchedPosts);
                 } else {
                     console.error('Error fetching data:', response.data.message);
                 }
@@ -39,9 +40,8 @@ const Announcement = () => {
 
     const handleSearch = () => {
         if (searchQuery === '') {
-            setFilteredPosts(posts); // 검색어가 없으면 전체 게시물 표시
+            setFilteredPosts(posts);
         } else {
-            // 검색어가 포함된 모든 제목을 가진 게시물 표시
             const matchedPosts = posts.filter(post => post.title.toLowerCase().includes(searchQuery.toLowerCase()));
             setFilteredPosts(matchedPosts);
         }
