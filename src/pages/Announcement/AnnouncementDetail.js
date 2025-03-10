@@ -1,12 +1,7 @@
-// src/pages/Announcement/AnnouncementDetail.js
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './styles.css';
-
-import Slider from "react-slick";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
 
 const AnnouncementDetail = () => {
     const { id } = useParams();
@@ -19,17 +14,17 @@ const AnnouncementDetail = () => {
     useEffect(() => {
         const fetchPostDetails = async () => {
             try {
-                const response = await axios.get(`https://www.ajouchong.com/api/notice/${id}`);
+                const response = await axios.get(`https://www.ajouchong.com/api/notice/${id}`, {
+                    withCredentials: true
+                });
+
+                console.log(response.data);
                 if (response.data.code === 1) {
                     setPostDetails(response.data.data);
                     setLikeCount(response.data.data.npUserLikeCnt);
-
-                    const storedLikeStatus = localStorage.getItem(`liked_${id}`);
-                    if (storedLikeStatus === 'true') {
-                        setLiked(true);
-                    }
+                    setLiked(response.data.data.likedByCurrentUser); // 서버 응답 기반으로 좋아요 상태 설정
                 } else {
-                    console.error('Error fetching post details:', response.data.message);
+                    console.log(response.data.message);
                 }
             } catch (error) {
                 console.error('API request error:', error);
@@ -39,23 +34,26 @@ const AnnouncementDetail = () => {
         fetchPostDetails();
     }, [id]);
 
-    const handleLike = async () => {
-        if (!liked) {
-            const confirmLike = window.confirm("해당 게시글에 공감하시겠습니까?");
-            if (confirmLike) {
-                try {
-                    const response = await axios.post(`https://www.ajouchong.com/api/notice/${id}/like`);
-                    if (response.data.code === 1) {
-                        setLikeCount(prevCount => prevCount + 1); // Increment like count
-                        setLiked(true);
-                        localStorage.setItem(`liked_${id}`, 'true');
-                    } else {
-                        console.error("Error liking the post:", response.data.message);
-                    }
-                } catch (error) {
-                    console.error("API request error:", error);
+    const handleLikeToggle = async () => {
+        try {
+            const response = await axios.post(
+                `https://www.ajouchong.com/api/notice/${id}/like`,
+                {}, // 요청 본문 없음
+                {
+                    withCredentials: true // 쿠키에 저장된 JWT 포함
                 }
+            );
+
+            if (response.data.code === 1) {
+                const updatedLiked = response.data.data; // 서버에서 반환한 좋아요 상태 (true or false)
+                setLiked(updatedLiked);
+                setLikeCount(prevCount => (updatedLiked ? prevCount + 1 : prevCount - 1));
+            } else {
+                alert("로그인이 필요한 서비스 입니다.");
+                console.error("Error toggling like:", response.data.message);
             }
+        } catch (error) {
+            console.error("API request error:", error);
         }
     };
 
@@ -110,7 +108,7 @@ const AnnouncementDetail = () => {
             </div>
 
             <div className="like-section">
-                <button onClick={handleLike} className="like-button" disabled={liked}>
+                <button onClick={handleLikeToggle} className="like-button">
                     <img
                         src={liked ? "/main/filled-heart.png" : "/main/heart.png"}
                         alt="좋아요"

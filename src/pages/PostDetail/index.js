@@ -8,7 +8,7 @@ const PostDetail = () => {
     useEffect(() => {
         const fetchPostDetails = async () => {
             try {
-                const response = await fetch(`http://localhost:8080/notice/${id}`);
+                const response = await fetch(`https://www.ajouchong.com/notice/${id}`);
                 const result = await response.json();
 
                 if (response.ok) {

@@ -37,7 +37,7 @@ const Login = ({ user, setUser }) => {
                 const refreshToken = Cookies.get("refreshToken") || null;
 
                 const { data: backendData } = await axios.post(
-                    "http://localhost:8080/api/login/auth/oauth",
+                    "https://www.ajouchong.com/api/login/auth/oauth",
                     {
                         accessToken: tokenResponse.access_token,
                         refreshToken: refreshToken,
@@ -80,16 +80,26 @@ const Login = ({ user, setUser }) => {
         hosted_domain: "ajou.ac.kr",
     });
 
-    const logout = () => {
-        googleLogout();
-        setUser(null);
+    const logout = async () => {
+        try {
+            await axios.post("https://www.ajouchong.com/api/login/auth/logout",
+                {},
+                { withCredentials: true }
+            );
 
-        localStorage.removeItem("user");
-        Cookies.remove("refreshToken");
-        Cookies.remove("accessToken");
+            googleLogout();
+            setUser(null);
 
-        navigate("/");
+            localStorage.removeItem("user");
+            Cookies.remove("refreshToken");
+            Cookies.remove("accessToken");
+
+            navigate("/");
+        } catch (error) {
+            console.error("Logout error:", error);
+        }
     };
+
 
     return (
         <div className="login-container">
