@@ -1,42 +1,58 @@
 import './styles.css';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 const QnAPost = () => {
-    const [title, setTitle] = useState('');
-    const [content, setContent] = useState('');
-    const [successMessage, setSuccessMessage] = useState('');
-    const [errorMessage, setErrorMessage] = useState('');
+    const [form, setForm] = useState({ title: '', content: '' });
+    const [message, setMessage] = useState({ success: '', error: '' });
     const navigate = useNavigate();
+
+    useEffect(() => {
+        const checkLoginStatus = async () => {
+            try {
+                await axios.get('https://www.ajouchong.com/api/login/auth/info', { withCredentials: true });
+            } catch {
+                alert('로그인이 필요합니다.');
+                navigate('/');
+            }
+        };
+
+        checkLoginStatus();
+    }, [navigate]);
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setForm((prev) => ({ ...prev, [name]: value }));
+    };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setMessage({ success: '', error: '' });
 
         try {
-            const response = await axios.post('https://www.ajouchong.com/api/qna', {
-                qpTitle: title,
-                qpContent: content
-            });
+            const response = await axios.post(
+                'https://www.ajouchong.com/api/qna',
+                { qpTitle: form.title, qpContent: form.content },
+                { withCredentials: true, headers: { "Content-Type": "application/json" } }
+            );
+
+            console.log(response);
 
             if (response.data.code === 1) {
-                setSuccessMessage('게시글이 성공적으로 작성되었습니다.');
-                setTitle(''); // 입력 필드 초기화
-                setContent('');
-                setTimeout(() => {
-                    navigate('/communication/qna'); // Q&A 목록으로 이동
-                }, 2000); // 2초 후 이동
+                setMessage({ success: '게시글이 성공적으로 작성되었습니다.', error: '' });
+                setForm({ title: '', content: '' });
+
+                setTimeout(() => navigate('/communication/qna'), 2000);
             } else {
-                setErrorMessage('게시글 작성에 실패했습니다.');
+                setMessage({ success: '', error: '게시글 작성에 실패했습니다.' });
             }
         } catch (error) {
-            console.error('API 요청 오류:', error);
-            setErrorMessage('게시글 작성 중 오류가 발생했습니다.');
+            setMessage({
+                success: '',
+                error: error.response?.data?.message || '게시글 작성 중 오류가 발생했습니다.'
+            });
         }
-    };
-
-    const handleBackToPosts = () => {
-        navigate('/communication/qna'); // Adjust path as needed
     };
 
     return (
@@ -50,8 +66,9 @@ const QnAPost = () => {
                     <input
                         type="text"
                         id="title"
-                        value={title}
-                        onChange={(e) => setTitle(e.target.value)}
+                        name="title"
+                        value={form.title}
+                        onChange={handleChange}
                         required
                         placeholder="제목을 입력하세요"
                     />
@@ -60,23 +77,20 @@ const QnAPost = () => {
                     <label htmlFor="content">내용</label>
                     <textarea
                         id="content"
-                        value={content}
-                        onChange={(e) => setContent(e.target.value)}
+                        name="content"
+                        value={form.content}
+                        onChange={handleChange}
                         required
                         placeholder="내용을 입력하세요"
-                    ></textarea>
+                    />
                 </div>
                 <button type="submit" className="submit-button">게시</button>
             </form>
 
-            {successMessage && (
-                <div className="success-message">{successMessage}</div>
-            )}
-            {errorMessage && (
-                <div className="error-message">{errorMessage}</div>
-            )}
+            {message.success && <div className="success-message">{message.success}</div>}
+            {message.error && <div className="error-message">{message.error}</div>}
 
-            <button onClick={handleBackToPosts} className="back-button">
+            <button onClick={() => navigate('/communication/qna')} className="back-button">
                 게시글 목록으로 돌아가기
             </button>
         </div>

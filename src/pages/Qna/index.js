@@ -3,6 +3,7 @@ import './styles.css';
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import QnaDetail from './QnaDetail';
+import axios from "axios";
 
 const Qna = () => {
     const [posts, setPosts] = useState([]);
@@ -75,8 +76,24 @@ const Qna = () => {
         setCurrentPage(pageNumber);
     };
 
-    const goToWritePage = () => {
-        navigate('/communication/qna/write'); // 글 작성 페이지로 이동
+    const goToWritePage = async () => {
+        try {
+            const response = await axios.get("https://www.ajouchong.com/api/login/auth/info", {
+                withCredentials: true,
+            });
+
+            if(response.data.code === 1 && response.data.data) {
+                navigate('/communication/qna/write');
+            }
+            else {
+                alert('로그인이 필요합니다.');
+                navigate('/communication/qna');
+            }
+
+        } catch (error) {
+            alert('로그인이 필요합니다.');
+            navigate('/communication/qna');
+        }
     };
 
     const handlePostClick = (postId) => {
