@@ -55,6 +55,7 @@ const QnaDetail = () => {
                     }));
                 } else {
                     console.error("좋아요 실패:", response.data.message);
+                    alert('로그인이 필요합니다.');
                 }
             } catch (error) {
                 console.error("좋아요 요청 오류:", error);
