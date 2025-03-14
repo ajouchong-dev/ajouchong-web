@@ -21,7 +21,7 @@ const Require = () => {
                         title: post.apTitle,
                         author: post.author,
                         date: new Date(post.createTime).toLocaleDateString(),
-                        status: post.approve ? '가결' : '부결',
+                        status: post.approve ? '가결' : '진행중',
                     }));
                     setPosts(fetchedPosts);
                     setFilteredPosts(fetchedPosts);
