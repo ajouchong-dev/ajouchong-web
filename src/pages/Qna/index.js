@@ -143,9 +143,9 @@ const Qna = () => {
                         </tr>
                         </thead>
                         <tbody>
-                        {currentPosts.map((post, index) => (
+                        {currentPosts.map((post) => (
                             <tr key={post.id} onClick={() => handlePostClick(post.id)}>
-                                <td>{index + 1}</td>
+                                <td>{post.id}</td>
                                 <td>{post.title}</td>
                                 <td>{post.author || '익명'}</td>
                                 <td>{post.date}</td>
