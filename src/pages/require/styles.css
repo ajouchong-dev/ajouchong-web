@@ -65,12 +65,12 @@
 
 /* styles.css */
 .status.approved {
-    color: blue;
+    color: #007bff;
     font-weight: bold;
 }
 
 .status.rejected {
-    color: red;
+    color: #6aaa7d;
     font-weight: bold;
 }
 
@@ -146,5 +146,5 @@
 }
 
 .approval-denied {
-    color: #dc3545; /* Red for denied */
+    color: #6aaa7d; /* Red for denied */
 }

@@ -43,7 +43,7 @@ const QnAPost = () => {
                 setMessage({ success: '게시글이 성공적으로 작성되었습니다.', error: '' });
                 setForm({ title: '', content: '' });
 
-                setTimeout(() => navigate('/communication/qna'), 2000);
+                navigate('/communication/qna');
             } else {
                 setMessage({ success: '', error: '게시글 작성에 실패했습니다.' });
             }

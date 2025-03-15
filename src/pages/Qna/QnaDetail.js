@@ -1,22 +1,23 @@
-// src/pages/Qna/QnaDetail.js
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './styles.css';
-import Cookies from "js-cookie";
 
 const QnaDetail = () => {
-    const { postId } = useParams(); // Extract postId from URL parameters
+    const { postId } = useParams();
     const [postDetails, setPostDetails] = useState(null);
-    const [loading, setLoading] = useState(true); // Add loading state
+    const [loading, setLoading] = useState(true);
     const [isLiking, setIsLiking] = useState(false);
     const navigate = useNavigate();
+    const didFetch = useRef(false); // 첫 실행 여부를 추적하는 useRef
 
     useEffect(() => {
         const fetchPostDetails = async () => {
-            setLoading(true); // Start loading
+            setLoading(true);
             try {
                 const response = await axios.get(`https://www.ajouchong.com/api/qna/${postId}`);
+                // console.log("API 응답 데이터:", response.data);
+
                 if (response.data.code === 1) {
                     setPostDetails(response.data.data);
                 } else {
@@ -25,43 +26,52 @@ const QnaDetail = () => {
             } catch (error) {
                 console.error('API request error:', error);
             } finally {
-                setLoading(false); // End loading regardless of success or failure
+                setLoading(false);
             }
         };
 
-        if (postId) fetchPostDetails(); // Only fetch data if postId exists
+        if (postId && !didFetch.current) {
+            didFetch.current = true; // 중복 실행 방지
+            fetchPostDetails();
+        }
     }, [postId]);
 
     const handleLike = async () => {
-        if (!isLiking) {
-            const confirmLike = window.confirm("해당 게시글에 공감하시겠습니까?");
-            if (!confirmLike) return;
+        if (isLiking) return;
 
-            setIsLiking(true);
+        const isCurrentlyLiked = postDetails.isLiked;
+        const confirmMessage = isCurrentlyLiked
+            ? "해당 게시글의 공감을 취소 하시겠습니까?"
+            : "해당 게시글에 공감하시겠습니까?";
 
-            try {
-                const response = await axios.post(
-                    `https://www.ajouchong.com/api/qna/${postId}/like`,
-                    {},
-                    {
-                        withCredentials: true, // 쿠키 자동 포함
-                    }
-                );
+        const confirmLike = window.confirm(confirmMessage);
+        if (!confirmLike) return;
 
-                if (response.data.code === 1) {
-                    setPostDetails(prev => ({
-                        ...prev,
-                        qpUserLikeCnt: prev.qpUserLikeCnt + 1
-                    }));
-                } else {
-                    console.error("좋아요 실패:", response.data.message);
-                    alert('로그인이 필요합니다.');
-                }
-            } catch (error) {
-                console.error("좋아요 요청 오류:", error);
-            } finally {
-                setIsLiking(false);
+        setIsLiking(true);
+
+        try {
+            const response = await axios.post(
+                `https://www.ajouchong.com/api/qna/${postId}/like`,
+                {},
+                { withCredentials: true }
+            );
+
+            if (response.data.code === 1) {
+                const { isLiked, likeCount } = response.data.data;
+
+                setPostDetails(prev => ({
+                    ...prev,
+                    qpUserLikeCnt: likeCount,
+                    isLiked: isLiked
+                }));
+            } else {
+                console.error("좋아요 실패:", response.data.message);
+                alert("로그인이 필요합니다.");
             }
+        } catch (error) {
+            console.error("좋아요 요청 오류:", error);
+        } finally {
+            setIsLiking(false);
         }
     };
 
@@ -93,7 +103,7 @@ const QnaDetail = () => {
             <div className="like-section">
                 <button onClick={handleLike} className="like-button" disabled={isLiking}>
                     <img
-                        src={isLiking ? "/main/filled-heart.png" : "/main/heart.png"}
+                        src={postDetails.isLiked ? "/main/filled-heart.png" : "/main/heart.png"}
                         alt="좋아요"
                         className="like-icon"
                     />
