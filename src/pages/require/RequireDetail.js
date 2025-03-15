@@ -1,6 +1,6 @@
 // RequireDetail.js
 import './styles.css';
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
@@ -9,6 +9,7 @@ const RequireDetail = () => {
     const [postDetails, setPostDetails] = useState(null);
     const [isLiking, setIsLiking] = useState(false); // Local "liked" state
     const navigate = useNavigate();
+    const didFetch = useRef(false);
 
     // Check localStorage for like status on initial load
     useEffect(() => {
@@ -27,7 +28,10 @@ const RequireDetail = () => {
             }
         };
 
-        fetchPostDetails();
+        if (id && !didFetch.current) {
+            didFetch.current = true;
+            fetchPostDetails();
+        }
     }, [id]);
 
     const handleLike = async () => {
