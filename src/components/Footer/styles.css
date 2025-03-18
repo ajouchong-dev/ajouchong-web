@@ -1,107 +1,110 @@
 .footer {
     background-color: #a7c898;
-    padding: 50px;
+    padding: 30px 20px;
     border-top: 1px solid #e9ecef;
-    bottom: 0px;
-    /*position:relative;*/
-    /*transform: translateY(0%);*/
-    /*display: flex;*/
-    /*position : relative;*/
-    /*transform : translateY(300%);*/
-    height: 200px;
-    position : relative;
-    transform : translateY(100%);
+    height: auto;
+    position: relative;
+    transform: translateY(0);
 }
+
 .main {
-    display: flex; /* 좌우 정렬 */
-    flex-direction:row;
-    justify-content: space-around;
-    align-items: center; /* 아이템들을 위쪽에 맞춤 */
-    text-align: center; /* 텍스트를 왼쪽 정렬 */
-    max-width: 1200px;
-    margin: 0 auto; /* 가운데 정렬을 위해 */
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    text-align: center;
+    max-width: 500px;
+    margin: 0 auto;
     flex-wrap: wrap;
+    color: #f8f9fa;
 }
+
 .mainleft {
     display: flex;
     flex-direction: column;
     text-align: center;
-    margin-right: 100px;
+    margin-right: 50px;
 }
+
 .mainright {
     display: flex;
     flex-direction: column;
     text-align: left;
     align-items: flex-start;
+    flex-grow: 1;
 }
 
 .main_logo {
     color: white;
+    display: flex;
+    flex-direction: column;
 }
 
 .column {
-    margin: 15px 0;
+    margin: 10px 0;
+    display: flex;
+    flex-direction: column;
 }
+
 .title {
-    font-size: 30px;
+    font-size: 24px;
     font-weight: bold;
-    display: block;
-    /*margin-bottom: 10px;*/
     margin-right: 20px;
 }
+
 .mainleft img {
-    /*max-width: 130px;*/
-    /*margin-top: 5px;*/
-    height: 130px;
+    height: 100px;
 }
+
 .info {
     display: flex;
+    flex-wrap: wrap;
     justify-content: center;
     align-items: center;
     margin: 10px 0;
-    text-decoration: none;
-    text-decoration-line: none;
+
 }
+
 .infotext {
-    margin: 0 0;
     font-size: 14px;
-    text-decoration: none;
-    text-decoration-line: none;
-    cursor: pointer;
-}
-.infotext a{
-    color: #282c34;
-    text-decoration: none;
-    text-decoration-line: none;
-    cursor: pointer;
-}
-.space {
-    margin: 0 5px;
-}
-.address {
-    display: block;
-    font-size: 14px;
-    line-height: 0.5%;
-    margin: 10px 0;
+    color: #f8f9fa;
 }
 
-.developer{
-    display: block;
-    color: #565b61;
-    font-size: 14px;
-    line-height: 0.5%;
-    margin: 10px 0;
+.infotext a {
+    color: #f8f9fa;
+    text-decoration: none;
 }
-.copyright {
-    display: block;
+.developer a{
+    color: #f8f9fa;
+    text-decoration: none;
+}
+
+.address, .developer, .copyright {
     font-size: 12px;
-    color: #6c757d;
-    margin-top: 10px;
-}
-.address .space,
-.copyright .space,
-.developer .space{
-    margin: 30px 5px;
-
+    text-align: center;
 }
 
+@media (max-width: 768px) {
+    .main {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .mainleft {
+        margin: 0;
+    }
+
+    .mainright {
+        align-items: center;
+        text-align: center;
+    }
+
+    .info {
+        flex-direction: column;
+    }
+
+    .infotext, .address, .developer, .copyright {
+        font-size: 12px;
+    }
+}
