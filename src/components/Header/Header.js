@@ -211,7 +211,7 @@ const Header = () => {
                                 소식
                                 {dropdown === 'news' && (
                                     <ul className="dropdown">
-                                        <li><a href="/news/announcement">공지사항</a></li>
+                                        <li><a href="/news/notice">공지사항</a></li>
                                     </ul>
                                 )}
                             </li>
