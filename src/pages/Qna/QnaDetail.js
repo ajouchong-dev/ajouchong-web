@@ -15,11 +15,15 @@ const QnaDetail = () => {
         const fetchPostDetails = async () => {
             setLoading(true);
             try {
-                const response = await axios.get(`https://www.ajouchong.com/api/qna/${postId}`);
-                // console.log("API 응답 데이터:", response.data);
+                const response = await axios.get(`https://www.ajouchong.com/api/qna/${postId}`, {
+                    withCredentials: true
+                });
 
                 if (response.data.code === 1) {
-                    setPostDetails(response.data.data);
+                    setPostDetails({
+                        ...response.data.data,
+                        isLiked: response.data.data.likedByCurrentMember
+                    });
                 } else {
                     console.error('Error fetching post details:', response.data.message);
                 }
@@ -39,8 +43,7 @@ const QnaDetail = () => {
     const handleLike = async () => {
         if (isLiking) return;
 
-        const isCurrentlyLiked = postDetails.isLiked;
-        const confirmMessage = isCurrentlyLiked
+        const confirmMessage = postDetails.isLiked
             ? "해당 게시글의 공감을 취소 하시겠습니까?"
             : "해당 게시글에 공감하시겠습니까?";
 
@@ -62,7 +65,7 @@ const QnaDetail = () => {
                 setPostDetails(prev => ({
                     ...prev,
                     qpUserLikeCnt: likeCount,
-                    isLiked: isLiked
+                    isLiked: isLikedg
                 }));
             } else {
                 console.error("좋아요 실패:", response.data.message);
