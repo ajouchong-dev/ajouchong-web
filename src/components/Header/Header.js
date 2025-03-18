@@ -10,6 +10,11 @@ const Header = () => {
     const location = useLocation();
     const { auth } = useAuth();
     const [user, setUser] = useState(auth.user);
+    const [menuOpen, setMenuOpen] = useState(false);
+    const [mobileDropdown, setMobileDropdown] = useState(null);
+    const handleToggleMenu = () => {
+        setMenuOpen(!menuOpen);
+    };
 
     useEffect(() => {
         const header = document.querySelector('.header');
@@ -176,6 +181,62 @@ const Header = () => {
                             </li>
                         </ul>
                     </nav>
+
+
+                    {/*<nav className={`mobile-menu ${menuOpen ? 'open' : ''}`}>*/}
+                    {/*    <ul>*/}
+                    {/*        <li onClick={() => setDropdown(dropdown === 'introduction' ? null : 'introduction')}>*/}
+                    {/*            소개*/}
+                    {/*            {dropdown === 'introduction' && (*/}
+                    {/*                <ul className="dropdown">*/}
+                    {/*                    <li><a href="/introduction/about">총학생회 소개</a></li>*/}
+                    {/*                    <li><a href="/introduction/promise">공약 소개</a></li>*/}
+                    {/*                    <li><a href="/introduction/organization">조직도</a></li>*/}
+                    {/*                    <li><a href="/introduction/map">오시는 길</a></li>*/}
+                    {/*                    <li><a href="/introduction/campusmap">캠퍼스 맵</a></li>*/}
+                    {/*                </ul>*/}
+                    {/*            )}*/}
+                    {/*        </li>*/}
+                    {/*        <li onClick={() => setDropdown(dropdown === 'news' ? null : 'news')}>*/}
+                    {/*            소식*/}
+                    {/*            {dropdown === 'news' && (*/}
+                    {/*                <ul className="dropdown">*/}
+                    {/*                    <li><a href="/news/announcement">공지사항</a></li>*/}
+                    {/*                </ul>*/}
+                    {/*            )}*/}
+                    {/*        </li>*/}
+                    {/*        <li onClick={() => setDropdown(dropdown === 'communication' ? null : 'communication')}>*/}
+                    {/*            소통*/}
+                    {/*            {dropdown === 'communication' && (*/}
+                    {/*                <ul className="dropdown">*/}
+                    {/*                    <li><a href="/communication/qna">Q&A</a></li>*/}
+                    {/*                    <li><a href="/communication/require">100인 안건 상정제</a></li>*/}
+                    {/*                    <li><a href="https://forms.gle/V1hH3Gf5uyuC7CVp6" target="_blank" rel="noopener noreferrer">통합 소통 창구</a></li>*/}
+                    {/*                </ul>*/}
+                    {/*            )}*/}
+                    {/*        </li>*/}
+                    {/*        <li onClick={() => setDropdown(dropdown === 'resources' ? null : 'resources')}>*/}
+                    {/*            자료실*/}
+                    {/*            {dropdown === 'resources' && (*/}
+                    {/*                <ul className="dropdown">*/}
+                    {/*                    <li><a href="/resources/bylaws">세칙 및 회칙</a></li>*/}
+                    {/*                    <li><a href="/resources/proceeding">회의록</a></li>*/}
+                    {/*                    <li><a href="/resources/audit">감사자료</a></li>*/}
+                    {/*                </ul>*/}
+                    {/*            )}*/}
+                    {/*        </li>*/}
+                    {/*        <li onClick={() => setDropdown(dropdown === 'welfare' ? null : 'welfare')}>*/}
+                    {/*            학생복지*/}
+                    {/*            {dropdown === 'welfare' && (*/}
+                    {/*                <ul className="dropdown">*/}
+                    {/*                    <li><a href="/welfare/promotion">제휴백과</a></li>*/}
+                    {/*                    <li><a href="/welfare/rental">대여사업</a></li>*/}
+                    {/*                </ul>*/}
+                    {/*            )}*/}
+                    {/*        </li>*/}
+                    {/*    </ul>*/}
+                    {/*</nav>*/}
+
 
                     <div className="button">
                         <Login user={user} setUser={setUser} />

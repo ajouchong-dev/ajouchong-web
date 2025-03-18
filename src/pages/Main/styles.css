@@ -88,6 +88,7 @@
     position: absolute;
     bottom: 70%;
     left: 50%;
+
     transform: translateX(-50%);
     color: white;
     font-size: 1.5rem;
@@ -307,4 +308,27 @@
 
 .visible .division-line {
     width: 500px; /* 구분선 애니메이션 시작 */
+}
+
+@media (max-width: 768px) {
+    .slider {
+        display: flex;
+        flex-direction: column-reverse;
+        align-items: center;
+    }
+
+    .overlay {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        order: 1; /* 위쪽으로 이동 */
+        margin-bottom: 10px;
+    }
+
+    .title2 {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        order: 2; /* 아래쪽으로 이동 */
+    }
 }
