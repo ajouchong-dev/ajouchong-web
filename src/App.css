@@ -10,16 +10,17 @@ html, body {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  min-width: 768px; /* 최소 높이 설정 */
+  /*min-width: 768px; */
   width: 100%;
   /*overflow-x: hidden; !* 가로 스크롤 방지 *!*/
 }
 
 /* 작은 화면에 대한 스타일 */
-@media screen and (max-height: 768px) {
+@media screen and (max-height: 600px) {
   html, body {
-   width: 768px; /* 최소 높이 고정 */
+    width: 100%; /* 최소 높이 고정 */
   }
 }
-
-
+.content{
+  width: 100%;
+}

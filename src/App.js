@@ -38,7 +38,8 @@ function App() {
             <Router>
                 <div className="App">
                     <Header />
-                    <Content />
+                    <div className="content">
+                    <Content /></div>
                     <Footer />
                 </div>
             </Router>
