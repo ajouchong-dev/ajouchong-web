@@ -65,7 +65,7 @@ const QnaDetail = () => {
                 setPostDetails(prev => ({
                     ...prev,
                     qpUserLikeCnt: likeCount,
-                    isLiked: isLikedg
+                    isLiked: isLiked
                 }));
             } else {
                 console.error("좋아요 실패:", response.data.message);
