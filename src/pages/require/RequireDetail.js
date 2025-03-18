@@ -1,25 +1,26 @@
-// RequireDetail.js
 import './styles.css';
-import React, {useState, useEffect, useRef} from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 const RequireDetail = () => {
     const { id } = useParams();
     const [postDetails, setPostDetails] = useState(null);
-    const [isLiking, setIsLiking] = useState(false); // Local "liked" state
+    const [isLiking, setIsLiking] = useState(false);
     const navigate = useNavigate();
     const didFetch = useRef(false);
 
-    // Check localStorage for like status on initial load
     useEffect(() => {
         const fetchPostDetails = async () => {
             try {
-                const response = await axios.get(`https://www.ajouchong.com/api/agora/${id}`);
-                //console.log(response.data);
+                const response = await axios.get(`https://www.ajouchong.com/api/agora/${id}`,
+                    { withCredentials: true });
                 if (response.data.code === 1) {
                     const post = response.data.data;
-                    setPostDetails(post);
+                    setPostDetails({
+                        ...post,
+                        isLiked: post.likedByCurrentMember
+                    });
                 } else {
                     console.error('게시글 조회 오류:', response.data.message);
                 }
@@ -35,10 +36,9 @@ const RequireDetail = () => {
     }, [id]);
 
     const handleLike = async () => {
-        if (isLiking) return;
+        if (isLiking || !postDetails) return;
 
-        const isCurrentlyLiked = postDetails.isLiked;
-        const confirmMessage = isCurrentlyLiked
+        const confirmMessage = postDetails.isLiked
             ? "해당 게시글의 공감을 취소 하시겠습니까?"
             : "해당 게시글에 공감하시겠습니까?";
 
@@ -54,7 +54,6 @@ const RequireDetail = () => {
                 { withCredentials: true }
             );
 
-            console.log(response.data.data);
             if (response.data.code === 1) {
                 const { isLiked, likeCount } = response.data.data;
 
