@@ -20,12 +20,15 @@
 
 .search-container {
     display: flex;
-    justify-content: flex-start; /* 왼쪽 정렬을 기본으로 함 */
+    justify-content: center; /* 왼쪽 정렬을 기본으로 함 */
     align-items: center;
     margin-bottom: 10px;
     margin-top: 40px;
-    margin-left: 60%;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
 }
+
 
 .search-input {
     padding: 10px;
@@ -37,8 +40,9 @@
 }
 
 .search-button {
+
     padding: 10px 20px;
-    font-size: 14px;
+    font-size: 13px;
     background-color:  rgb(53, 53, 53);
     color: white;
     border: none;

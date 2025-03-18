@@ -26,7 +26,7 @@ const Promotion = () => {
                         date: new Date(post.psCreateTime).toLocaleDateString(),
                     }));
                     setPosts(fetchedPosts);
-                    setFilteredPosts(fetchedPosts); // ✅ 검색 기능을 위해 초기 데이터 설정
+                    setFilteredPosts(fetchedPosts);
                 } else {
                     console.error('데이터를 불러오는 중 오류 발생:', response.data.message);
                 }
@@ -38,7 +38,7 @@ const Promotion = () => {
         fetchPosts();
     }, []);
 
-    // ✅ 검색어 입력 핸들러
+
     const handleSearchChange = (e) => {
         setSearchQuery(e.target.value);
         if (e.target.value === '') {
@@ -46,7 +46,7 @@ const Promotion = () => {
         }
     };
 
-    // ✅ 검색 실행 핸들러
+
     const handleSearch = () => {
         const matchedPosts = posts.filter(post =>
             post.title.toLowerCase().includes(searchQuery.toLowerCase())
