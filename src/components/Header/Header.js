@@ -123,7 +123,7 @@ const Header = () => {
                                     <ul className="dropdown-container">
                                         <li><a href="/introduction/about">총학생회 소개</a></li>
                                         <li><a href="/introduction/promise">공약 소개</a></li>
-                                        <li><a href="/introduction/organization">조직도</a></li>
+                                        {/*<li><a href="/introduction/organization">조직도</a></li>*/}
                                         <li><a href="/introduction/map">오시는 길</a></li>
                                         <li><a href="/introduction/campusmap">캠퍼스 맵</a></li>
                                     </ul>
