@@ -1,18 +1,39 @@
-.App {
-  text-align: center;
-}
-.wrapper{
-  height: auto;
-  min-height: 100%;
-  padding-bottom: 200px;
-}
 html, body {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  /*min-width: 768px; */
   width: 100%;
-  /*overflow-x: hidden; !* 가로 스크롤 방지 *!*/
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.App {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+.content {
+  flex-grow: 1;
+  width: 100%;
+  padding-bottom: 100px;
+}
+
+.wrapper {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+footer {
+  background: #A7C898;
+  padding: 30px 20px;
+  text-align: center;
+  width: 100%;
+  height: 230px;
 }
 
 /* 작은 화면에 대한 스타일 */
@@ -21,6 +42,7 @@ html, body {
     width: 100%; /* 최소 높이 고정 */
   }
 }
+
 .content{
   width: 100%;
 }
