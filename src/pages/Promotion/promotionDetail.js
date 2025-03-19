@@ -1,5 +1,4 @@
-// src/pages/PromotionDetail.js
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './styles.css';
@@ -7,32 +6,24 @@ import './styles.css';
 const PromotionDetail = () => {
     const { postId } = useParams();
     const [postDetails, setPostDetails] = useState(null);
-    const [likeCount, setLikeCount] = useState(0);
-    const [liked, setLiked] = useState(false);
+    const [isLiking, setIsLiking] = useState(false);
     const navigate = useNavigate();
     const [currentIndex, setCurrentIndex] = useState(0);
+    const didFetch = useRef(false);
 
     useEffect(() => {
         const fetchPostDetails = async () => {
             try {
-                const response = await axios.get(`https://www.ajouchong.com/api/partnership/${postId}`);
+                const response = await axios.get(`https://www.ajouchong.com/api/partnership/${postId}`, {
+                    withCredentials: true
+                });
+                // console.log(response.data.data);
+
                 if (response.data.code === 1) {
-                    setPostDetails(response.data.data);
-                    setLikeCount(response.data.data.psUserLikeCnt);
-
-                    const likedPosts = JSON.parse(localStorage.getItem('likedPosts')) || {};
-                    setLiked(!!likedPosts[postId]);
-                    // const post = response.data.data;
-                    // setPostDetails({
-                    //     id: post.psPostId,
-                    //     title: post.psTitle,
-                    //     content: post.psContent,
-                    //     userLikeCount: post.psUserLikeCnt,
-                    //     hitCount: post.psHitCnt,
-                    //     createTime: new Date(post.psCreateTime).toLocaleString(),
-                    //     updateTime: new Date(post.psUpdateTime).toLocaleString(),
-                    //     imageUrls: post.imageUrls.length ? post.imageUrls : ['/default-image.jpg']
-
+                    setPostDetails({
+                        ...response.data.data,
+                        isLiked: response.data.data.likedByCurrentMember
+                    });
                 } else {
                     console.error('게시글 조회 오류:', response.data.message);
                 }
@@ -41,30 +32,44 @@ const PromotionDetail = () => {
             }
         };
 
-        fetchPostDetails();
+        if (postId && !didFetch.current) {
+            didFetch.current = true;
+            fetchPostDetails();
+        }
     }, [postId]);
 
     const handleLike = async () => {
-        if (!liked) {
-            const userConfirmed = window.confirm('해당 제휴에 공감하시겠습니까?');
-            if (userConfirmed) {
-                try {
-                    const response = await axios.post(`https://www.ajouchong.com/api/partnership/${postId}/like`);
-                    if (response.data.code === 1) {
-                        setLikeCount(likeCount + 1);
-                        setLiked(true);
 
-                        // Save liked state in local storage
-                        const likedPosts = JSON.parse(localStorage.getItem('likedPosts')) || {};
-                        likedPosts[postId] = true;
-                        localStorage.setItem('likedPosts', JSON.stringify(likedPosts));
-                    } else {
-                        console.error("좋아요 오류:", response.data.message);
-                    }
-                } catch (error) {
-                    console.error("API 요청 오류:", error);
-                }
+        const confirmMessage = postDetails.isLiked
+            ? "해당 게시글의 공감을 취소 하시겠습니까?"
+            : "해당 게시글에 공감하시겠습니까?";
+
+        const confirmLike = window.confirm(confirmMessage);
+        if (!confirmLike) return;
+
+        setIsLiking(true);
+
+        try {
+            const response = await axios.post(
+                `https://www.ajouchong.com/api/partnership/${postId}/like`,
+                {},
+                { withCredentials: true }
+            );
+
+            if (response.data.code === 1) {
+                const { isLiked, likeCount } = response.data.data;
+
+                setPostDetails(prev => ({
+                    ...prev,
+                    psUserLikeCnt: likeCount,
+                    isLiked: isLiked
+                }));
+            } else {
+                alert("로그인이 필요한 서비스 입니다.");
+                console.error("Error toggling like:", response.data.message);
             }
+        } catch (error) {
+            console.error("API request error:", error);
         }
     };
 
@@ -119,14 +124,14 @@ const PromotionDetail = () => {
                 )}
             </div>
             <div className="like-section">
-                <button onClick={handleLike} className="like-button" disabled={liked}>
+                <button onClick={handleLike} className="like-button">
                     <img
-                        src={liked ? "/main/filled-heart.png" : "/main/heart.png"}
+                        src={postDetails.isLiked ? "/main/filled-heart.png" : "/main/heart.png"}
                         alt="좋아요"
                         className="like-icon"
                     />
                 </button>
-                <span className="like-count">{likeCount}</span>
+                <span className="like-count">{postDetails.psUserLikeCnt}</span>
             </div>
             <button onClick={() => navigate(-1)} className="back-button">목록으로 돌아가기</button>
         </div>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './styles.css';
@@ -6,10 +6,10 @@ import './styles.css';
 const AnnouncementDetail = () => {
     const { id } = useParams();
     const [postDetails, setPostDetails] = useState(null);
-    const [likeCount, setLikeCount] = useState(0);
-    const [liked, setLiked] = useState(false);
+    const [isLiking, setIsLiking] = useState(false);
     const navigate = useNavigate();
     const [currentIndex, setCurrentIndex] = useState(0);
+    const didFetch = useRef(false);
 
     useEffect(() => {
         const fetchPostDetails = async () => {
@@ -19,10 +19,13 @@ const AnnouncementDetail = () => {
                 });
 
                 console.log(response.data);
+
                 if (response.data.code === 1) {
-                    setPostDetails(response.data.data);
-                    setLikeCount(response.data.data.npUserLikeCnt);
-                    setLiked(response.data.data.likedByCurrentUser); // 서버 응답 기반으로 좋아요 상태 설정
+                    const post = response.data.data;
+                    setPostDetails({
+                        ...post,
+                        isLiked: post.likedByCurrentUser
+                    });
                 } else {
                     console.log(response.data.message);
                 }
@@ -31,23 +34,38 @@ const AnnouncementDetail = () => {
             }
         };
 
-        fetchPostDetails();
+        if (id && !didFetch.current) {
+            didFetch.current = true; // 중복 실행 방지
+            fetchPostDetails();
+        }
     }, [id]);
 
     const handleLikeToggle = async () => {
+
+        const confirmMessage = postDetails.isLiked
+            ? "해당 게시글의 공감을 취소 하시겠습니까?"
+            : "해당 게시글에 공감하시겠습니까?";
+
+        const confirmLike = window.confirm(confirmMessage);
+        if (!confirmLike) return;
+
+        setIsLiking(true);
+
         try {
             const response = await axios.post(
                 `https://www.ajouchong.com/api/notice/${id}/like`,
-                {}, // 요청 본문 없음
-                {
-                    withCredentials: true // 쿠키에 저장된 JWT 포함
-                }
+                {},
+                { withCredentials: true }
             );
 
             if (response.data.code === 1) {
-                const updatedLiked = response.data.data; // 서버에서 반환한 좋아요 상태 (true or false)
-                setLiked(updatedLiked);
-                setLikeCount(prevCount => (updatedLiked ? prevCount + 1 : prevCount - 1));
+                const { isLiked, likeCount } = response.data.data;
+
+                setPostDetails(prev => ({
+                    ...prev,
+                    npUserLikeCnt: likeCount,
+                    isLiked: isLiked
+                }));
             } else {
                 alert("로그인이 필요한 서비스 입니다.");
                 console.error("Error toggling like:", response.data.message);
@@ -63,13 +81,13 @@ const AnnouncementDetail = () => {
 
     const handleNext = () => {
         if (postDetails.imageUrls && currentIndex < postDetails.imageUrls.length - 1) {
-            setCurrentIndex((prevIndex) => prevIndex + 1);
+            setCurrentIndex(prevIndex => prevIndex + 1);
         }
     };
 
     const handlePrev = () => {
         if (postDetails.imageUrls && currentIndex > 0) {
-            setCurrentIndex((prevIndex) => prevIndex - 1);
+            setCurrentIndex(prevIndex => prevIndex - 1);
         }
     };
 
@@ -87,9 +105,7 @@ const AnnouncementDetail = () => {
                 {postDetails.imageUrls && postDetails.imageUrls.length > 0 ? (
                     <div className="image-container">
                         {currentIndex > 0 && (
-                            <button className="prev-btn" onClick={handlePrev}>
-                                ❮
-                            </button>
+                            <button className="prev-btn" onClick={handlePrev}>❮</button>
                         )}
                         <img
                             src={postDetails.imageUrls[currentIndex]}
@@ -97,9 +113,7 @@ const AnnouncementDetail = () => {
                             className="current-image"
                         />
                         {currentIndex < postDetails.imageUrls.length - 1 && (
-                            <button className="next-btn" onClick={handleNext}>
-                                ❯
-                            </button>
+                            <button className="next-btn" onClick={handleNext}>❯</button>
                         )}
                     </div>
                 ) : (
@@ -110,12 +124,12 @@ const AnnouncementDetail = () => {
             <div className="like-section">
                 <button onClick={handleLikeToggle} className="like-button">
                     <img
-                        src={liked ? "/main/filled-heart.png" : "/main/heart.png"}
+                        src={postDetails.isLiked ? "/main/filled-heart.png" : "/main/heart.png"}
                         alt="좋아요"
                         className="like-icon"
                     />
                 </button>
-                <span className="like-count">{likeCount}</span>
+                <span className="like-count">{postDetails.npUserLikeCnt}</span>
             </div>
 
             <button onClick={() => navigate(-1)} className="back-button">목록으로 돌아가기</button>

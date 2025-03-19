@@ -32,7 +32,7 @@ const Main = () => {
         const fetchNotices = async () => {
             try {
                 const response = await axios.get("https://www.ajouchong.com/api/notice");
-                console.log("API Response:", response.data);
+                // console.log("API Response:", response.data);
 
                 if (response.data.code === 1 && Array.isArray(response.data.data)) {
                     const sortedNotices = response.data.data
@@ -48,7 +48,7 @@ const Main = () => {
                     }));
 
                     setNotices(formattedNotices);
-                    console.log("Formatted Notices:", formattedNotices);
+                    // console.log("Formatted Notices:", formattedNotices);
                 } else {
                     console.error('Error fetching notices:', response.data.message);
                 }
