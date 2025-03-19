@@ -132,6 +132,7 @@
 }
 
 .card-wrapper{
+    flex-wrap: wrap;
     width: 100%;
     background-color: #fffefe;
     padding: 50px;
