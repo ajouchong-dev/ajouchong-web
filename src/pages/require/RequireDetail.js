@@ -1,29 +1,26 @@
-// RequireDetail.js
 import './styles.css';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 const RequireDetail = () => {
     const { id } = useParams();
     const [postDetails, setPostDetails] = useState(null);
-    const [likeCount, setLikeCount] = useState(0);
-    const [liked, setLiked] = useState(false); // Local "liked" state
+    const [isLiking, setIsLiking] = useState(false);
     const navigate = useNavigate();
+    const didFetch = useRef(false);
 
-    // Check localStorage for like status on initial load
     useEffect(() => {
         const fetchPostDetails = async () => {
             try {
-                const response = await axios.get(`https://www.ajouchong.com/api/agora/${id}`);
+                const response = await axios.get(`https://www.ajouchong.com/api/agora/${id}`,
+                    { withCredentials: true });
                 if (response.data.code === 1) {
                     const post = response.data.data;
-                    setPostDetails(post);
-                    setLikeCount(post.apUserLikeCount);
-
-                    // Check if this post was liked by the user
-                    const likedPosts = JSON.parse(localStorage.getItem('likedPosts')) || {};
-                    setLiked(likedPosts[id] || false);
+                    setPostDetails({
+                        ...post,
+                        isLiked: post.likedByCurrentMember
+                    });
                 } else {
                     console.error('게시글 조회 오류:', response.data.message);
                 }
@@ -32,40 +29,46 @@ const RequireDetail = () => {
             }
         };
 
-        fetchPostDetails();
+        if (id && !didFetch.current) {
+            didFetch.current = true;
+            fetchPostDetails();
+        }
     }, [id]);
 
     const handleLike = async () => {
-        if (!liked) {
-            const confirmLike = window.confirm("해당 안건에 공감하시겠습니까?");
-            if (confirmLike) {
-                try {
-                    const response = await axios.post(`https://www.ajouchong.com/api/agora/${id}/like`);
-                    if (response.data.code === 1) {
-                        const newLikeCount = likeCount + 1;
-                        const isApproved = newLikeCount >= 100;
+        if (isLiking || !postDetails) return;
 
-                        setLikeCount(newLikeCount);
-                        setLiked(true);
+        const confirmMessage = postDetails.isLiked
+            ? "해당 게시글의 공감을 취소 하시겠습니까?"
+            : "해당 게시글에 공감하시겠습니까?";
 
-                        // Update the postDetails with the new like count and approval status
-                        setPostDetails(prevDetails => ({
-                            ...prevDetails,
-                            apUserLikeCount: newLikeCount,
-                            approve: isApproved
-                        }));
+        const confirmLike = window.confirm(confirmMessage);
+        if (!confirmLike) return;
 
-                        // Save the liked status to localStorage
-                        const likedPosts = JSON.parse(localStorage.getItem('likedPosts')) || {};
-                        likedPosts[id] = true;
-                        localStorage.setItem('likedPosts', JSON.stringify(likedPosts));
-                    } else {
-                        console.error("Error liking the post:", response.data.message);
-                    }
-                } catch (error) {
-                    console.error("API request error:", error);
-                }
+        setIsLiking(true);
+
+        try {
+            const response = await axios.post(
+                `https://www.ajouchong.com/api/agora/${id}/like`,
+                {},
+                { withCredentials: true }
+            );
+
+            if (response.data.code === 1) {
+                const { isLiked, likeCount } = response.data.data;
+
+                setPostDetails(prev => ({
+                    ...prev,
+                    apUserLikeCount: likeCount,
+                    isLiked: isLiked
+                }));
+            } else {
+                alert('로그인이 필요합니다.');
             }
+        } catch (error) {
+            console.error("좋아요 요청 오류:", error);
+        } finally {
+            setIsLiking(false);
         }
     };
 
@@ -79,9 +82,8 @@ const RequireDetail = () => {
             <hr className="titleSeparator" />
             <div className="post-metadata">
                 <span><strong>작성일 |</strong> {new Date(postDetails.createTime).toLocaleString()}</span>
-                <span><strong>수정일 |</strong> {new Date(postDetails.updateTime).toLocaleString()}</span>
                 <span><strong>조회수 |</strong> {postDetails.apHitCount}</span>
-                <span><strong>좋아요 |</strong> {likeCount}</span>
+                <span><strong>좋아요 |</strong> {postDetails.apUserLikeCount}</span>
             </div>
             <p>{postDetails.apContent}</p>
 
@@ -89,7 +91,7 @@ const RequireDetail = () => {
                 <div className="comment-item">
                     <strong>승인 상태:</strong>
                     <span className={postDetails.approve ? 'approval-approved' : 'approval-denied'}>
-                        {postDetails.approve ? '가결' : '부결'}
+                        {postDetails.approve ? '가결' : '진행중'}
                     </span>
                 </div>
                 <div className="comment-item">
@@ -99,14 +101,14 @@ const RequireDetail = () => {
 
             {/* Like Section */}
             <div className="like-section">
-                <button onClick={handleLike} className="like-button" disabled={liked}>
+                <button onClick={handleLike} className="like-button" disabled={isLiking}>
                     <img
-                        src={liked ? "/main/filled-heart.png" : "/main/heart.png"}
+                        src={postDetails.isLiked ? "/main/filled-heart.png" : "/main/heart.png"}
                         alt="좋아요"
                         className="like-icon"
                     />
                 </button>
-                <span className="like-count">{likeCount}</span>
+                <span className="like-count">{postDetails.apUserLikeCount}</span>
             </div>
 
             <button onClick={() => navigate(-1)} className="back-button">목록으로 돌아가기</button>

@@ -18,7 +18,7 @@
     max-width: 30%;
     border: none;
     height: 2px;
-    background-color: rgb(183, 210, 245);
+    background-color: #a7c898;
     margin-top: 15px;
 }
 
@@ -38,7 +38,7 @@
 }
 
 .map-info {
-    background-color: #def1ff;
+    background-color: rgba(211, 230, 202, 0.3);
     width: 400px;
     height: 400px;
     font-family: Arial, sans-serif;

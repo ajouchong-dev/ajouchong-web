@@ -3,6 +3,7 @@ import './styles.css';
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import QnaDetail from './QnaDetail';
+import axios from "axios";
 
 const Qna = () => {
     const [posts, setPosts] = useState([]);
@@ -23,6 +24,7 @@ const Qna = () => {
                     const formattedPosts = result.data.map(post => ({
                         id: post.qpostId,
                         title: post.qpTitle,
+                        author: maskName(post.qpAuthor),
                         date: new Date(post.qpCreateTime).toLocaleString("ko-KR", {
                             year: "numeric",
                             month: "2-digit",
@@ -46,6 +48,13 @@ const Qna = () => {
         fetchPosts();
     }, []);
 
+    const maskName = (name) => {
+        if (!name) return '';
+        if (name.length === 2) return name[0] + '*'; // 두 글자면 첫 글자만 보이게
+        if (name.length > 2) return name[0] + '*'.repeat(name.length - 2) + name[name.length - 1]; // 첫 글자와 마지막 글자만 남기기
+        return name;
+    };
+
     const handleSearch = () => {
         if (searchQuery === '') {
             setFilteredPosts(posts); // 검색어가 없으면 전체 게시물 표시
@@ -67,12 +76,28 @@ const Qna = () => {
         setCurrentPage(pageNumber);
     };
 
-    const goToWritePage = () => {
-        navigate('/communication/qna/write'); // 글 작성 페이지로 이동
+    const goToWritePage = async () => {
+        try {
+            const response = await axios.get("https://www.ajouchong.com/api/login/auth/info", {
+                withCredentials: true,
+            });
+
+            if(response.data.code === 1 && response.data.data) {
+                navigate('/communication/qna/write');
+            }
+            else {
+                alert('로그인이 필요합니다.');
+                navigate('/communication/qna');
+            }
+
+        } catch (error) {
+            alert('로그인이 필요합니다.');
+            navigate('/communication/qna');
+        }
     };
 
     const handlePostClick = (postId) => {
-        setSelectedPostId(postId);
+        navigate(`/communication/qna/${postId}`);
     };
 
     const handleBackToList = () => {
@@ -118,9 +143,9 @@ const Qna = () => {
                         </tr>
                         </thead>
                         <tbody>
-                        {currentPosts.map((post, index) => (
+                        {currentPosts.map((post) => (
                             <tr key={post.id} onClick={() => handlePostClick(post.id)}>
-                                <td>{index + 1}</td>
+                                <td>{post.id}</td>
                                 <td>{post.title}</td>
                                 <td>{post.author || '익명'}</td>
                                 <td>{post.date}</td>

@@ -4,7 +4,7 @@ import React from 'react';
 const TermOfService = () => {
     return (
         <div className="context">
-            <div className="contextTitle">이용약관</div>
+            <div className="contextTitle">개인정보처리방침</div>
             <hr className="titleSeparator"/>
             <div className="terms-content">
                 <h2>개인정보 수집 및 이용</h2>

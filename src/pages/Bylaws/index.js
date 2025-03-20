@@ -59,16 +59,16 @@ const Bylaws = () => {
             <hr className="titleSeparator"/>
 
             <button
-                className={`bylaw-button ${ruleType === 'OFFICIAL' ? 'active' : ''}`}
-                onClick={handleOfficialClick}
-            >
-                회칙
-            </button>
-            <button
                 className={`bylaw-button ${ruleType === 'DETAIL' ? 'active' : ''}`}
                 onClick={handleDetailClick}
             >
                 세칙
+            </button>
+            <button
+                className={`bylaw-button ${ruleType === 'OFFICIAL' ? 'active' : ''}`}
+                onClick={handleOfficialClick}
+            >
+                회칙
             </button>
 
             <table className="announcement-table">
@@ -97,7 +97,7 @@ const Bylaws = () => {
             </table>
 
             <div className="pagination">
-                {Array.from({ length: totalPages }, (_, index) => (
+                {Array.from({length: totalPages}, (_, index) => (
                     <button
                         key={index + 1}
                         onClick={() => paginate(index + 1)}

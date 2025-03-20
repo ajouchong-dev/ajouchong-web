@@ -6,11 +6,11 @@ const Organization = (props, context) => {
         <div className="context">
             <div className="contextTitle">조직도</div>
             <hr className="titleSeparator"/>
-            <img
-                className="organizationImg"
-                src='/organization.jpg'
-                alt="ajouchong"
-            />
+            {/*<img*/}
+            {/*    className="organizationImg"*/}
+            {/*    src='/organization.jpg'*/}
+            {/*    alt="ajouchong"*/}
+            {/*/>*/}
         </div>
     );
 }

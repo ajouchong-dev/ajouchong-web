@@ -15,7 +15,7 @@
     max-width: 30%;
     border: none; /* 기본 테두리 제거 */
     height: 2px; /* 선의 두께 */
-    background-color: rgb(183, 210, 245); /* 선의 색상 */
+    background-color: #a7c898; /* 선의 색상 */
     margin-top: 15px; /* 제목과 선 사이의 여백 */
 }
 .rental-subTitle {
@@ -36,14 +36,12 @@
 }
 
 .rental-box {
-    height: 500px;
-    margin-top: 40px;
-    width: 800px;
-    background-color: #d5ecff;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
+    width: 40%;
+    height: 680px;
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    margin-top: 60px;
 }
 
 .rental-button{
@@ -86,15 +84,16 @@
    width: 300px;
     border: none; /* 기본 테두리 제거 */
     height: 2px; /* 선의 두께 */
-    background-color: rgb(183, 210, 245); /* 선의 색상 */
+    background-color: #a7c898; /* 선의 색상 */
     margin-top: 15px; /* 제목과 선 사이의 여백 */
     margin-bottom: 30px;
 }
-.rentalimg{
-
+.rentalImg{
     width: 450px;
-    height:450px;
+    height: 550px;
+    margin-right: 10px;
 }
+
 .rental-button {
     display: inline-block;
     background-color: #000000;
@@ -110,6 +109,6 @@
 }
 
 .rental-button:hover {
-    background-color: #d8b8de; /* 호버 시 색상 변경 */
+    background-color: #a7c898; /* 호버 시 색상 변경 */
 }
 

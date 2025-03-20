@@ -10,14 +10,14 @@ const Rental = () => {
 
                 <button
                     className="rental-button"
-                    onClick={() => window.open("https://forms.gle/pyzHeDk8bQfnJGk76", "_blank")}
+                    onClick={() => window.open("https://forms.gle/buMhGLbFYeVjcdTi8", "_blank")}
                 >
-                    대여사업 바로가기
+                    대여사업 구글폼 바로가기
                 </button>
                 {/*<div className="rental-subTitle">물품 대여 현황</div>*/}
                 {/*<div className="rental-box"></div>*/}
                 <iframe className="rental-box"
-                        src="https://docs.google.com/spreadsheets/d/1IU3CiAEz99-MzoRr-IVcihwIItuqx-H_2bsv7n_SZU8/pubhtml?widget=true&amp;headers=false"></iframe>
+                    src="https://docs.google.com/spreadsheets/d/e/2PACX-1vTJHth6JF5fzylhaW_6Rx6ZkqEd6iweJEyRzkM9DwbEfA23-B90roLf91PWLTXEX0PTwH7lNGQS_3sd/pubhtml?widget=true&amp;headers=false"></iframe>
                 {/*<ul className="rental-button">*/}
 
 
@@ -25,8 +25,8 @@ const Rental = () => {
                 <div className="rental-info">
                     <div id="retal-title">총학생회 대여 사업 안내</div>
                     <hr className="tableSeparator"/>
-                    <img className="rentalimg" src="/main/대여사업.jpg"/>
-                    <img className="rentalimg" src="/main/대여사업2.jpg"/>
+                    <img className="rentalImg" src="/main/rental_1.png" alt="대여사업 안내 이미지 1"/>
+                    <img className="rentalImg" src="/main/rental_2.png" alt="대여사업 안내 이미지 2"/>
 
                 </div>
 

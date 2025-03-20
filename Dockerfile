@@ -1,25 +1,41 @@
-# Step 1: Base Image
-FROM node:18.17.0
+# Step 1: Build React App
+FROM node:lts AS build
 
-
-# Step 2: Set working directory
+# Set working directory
 WORKDIR /app
 
-# Step 3: Copy package.json and package-lock.json
-COPY package*.json ./
+# Copy package.json and package-lock.json
+COPY package.json ./
 
-# Step 4: Install dependencies
+# Install dependencies
 RUN npm install
 
-# Step 5: Copy project files
+# Copy all project files
 COPY . .
 
-## Step 6: Build the project (if applicable)
-#RUN npm run build
+ARG REACT_APP_GOOGLE_CLIENT_ID
+ENV REACT_APP_GOOGLE_CLIENT_ID=$REACT_APP_GOOGLE_CLIENT_ID
 
-# Step 7: Expose the application port
-EXPOSE 3000
+# Build the React application
+RUN npm run build
 
-# Step 8: Start the application
-CMD ["npm", "start"]
+# Step 2: Nginx for serving the React App
+FROM nginx:1.21.0
 
+# Set working directory for nginx
+WORKDIR /usr/share/nginx/html
+
+# Remove default nginx static assets
+RUN rm -rf ./*
+
+# Copy the React build output from the build stage
+COPY --from=build /app/build .
+
+# Copy custom nginx configuration
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+
+# Expose port 80 for Nginx
+EXPOSE 80
+
+# Start Nginx server
+CMD ["nginx", "-g", "daemon off;"]

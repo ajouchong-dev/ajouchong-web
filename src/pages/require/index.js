@@ -19,9 +19,9 @@ const Require = () => {
                     const fetchedPosts = response.data.data.map(post => ({
                         id: post.apostId,
                         title: post.apTitle,
-                        author: '관리자',
+                        author: post.author,
                         date: new Date(post.createTime).toLocaleDateString(),
-                        views: post.approve ? '가결' : '부결',
+                        status: post.approve ? '가결' : '진행중',
                     }));
                     setPosts(fetchedPosts);
                     setFilteredPosts(fetchedPosts);
@@ -38,16 +38,17 @@ const Require = () => {
 
     const handleSearchChange = (e) => {
         setSearchQuery(e.target.value);
-        if (e.target.value === '') {
-            setFilteredPosts(posts);
-        }
     };
 
     const handleSearch = () => {
-        const matchedPosts = posts.filter(post =>
-            post.title.toLowerCase().includes(searchQuery.toLowerCase())
-        );
-        setFilteredPosts(matchedPosts);
+        if (searchQuery.trim() === '') {
+            setFilteredPosts(posts);
+        } else {
+            const matchedPosts = posts.filter(post =>
+                post.title.toLowerCase().includes(searchQuery.toLowerCase())
+            );
+            setFilteredPosts(matchedPosts);
+        }
         setCurrentPage(1);
     };
 
@@ -57,6 +58,25 @@ const Require = () => {
     const totalPages = Math.ceil(filteredPosts.length / postsPerPage);
 
     const handleClick = (pageNumber) => setCurrentPage(pageNumber);
+
+    const goToWritePage = async () => {
+        try {
+            const response = await axios.get("https://www.ajouchong.com/api/login/auth/info", {
+                withCredentials: true,
+            });
+
+            if (response.data.code === 1 && response.data.data) {
+                navigate('/communication/require/write');
+            } else {
+                alert('로그인이 필요합니다.');
+                navigate('/communication/require');
+            }
+
+        } catch (error) {
+            console.error(error);
+            navigate('/');
+        }
+    };
 
     return (
         <div className="context">
@@ -75,7 +95,7 @@ const Require = () => {
             </div>
 
             <div className="write-container">
-                <button className="write-button" onClick={() => navigate('/communication/require/write')}>
+                <button className="write-button" onClick={goToWritePage}>
                     글 작성하기
                 </button>
             </div>
@@ -105,10 +125,8 @@ const Require = () => {
                         <td>{post.author}</td>
                         <td>{post.date}</td>
                         <td>
-                            <span
-                                className={`status ${post.views === '가결' ? 'approved' : 'rejected'}`}
-                            >
-                                {post.views}
+                            <span className={`status ${post.status === '가결' ? 'approved' : 'rejected'}`}>
+                                {post.status}
                             </span>
                         </td>
                     </tr>

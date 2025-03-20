@@ -1,28 +1,19 @@
 import React from 'react';
+import { useAuth } from '../contexts/AuthContext';
+import { Navigate } from 'react-router-dom';
 
-const ProtectedRoute = ({ isLoggedIn, children }) => {
-    const handleGoogleLogin = () => {
-        const clientId = '440712020433-ljqa7d2r8drohnblmmfum3cls1et2kuq.apps.googleusercontent.com';
-        const redirectUri = 'https://www.ajouchong.com/api/login/oauth/google'; // Google Cloud Console에 설정된 URI와 일치해야 함
+const ProtectedRoute = ({ children }) => {
+    const { auth } = useAuth();
 
-        const googleAuthUrl =
-            `https://accounts.google.com/o/oauth2/v2/auth?` +
-            `client_id=${clientId}&` +
-            `redirect_uri=${redirectUri}&` +
-            `response_type=code&` +
-            `scope=https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile&` +
-            `hd=ajou.ac.kr`;
-
-        window.location.href = googleAuthUrl;
-    };
-
-    if (!isLoggedIn) {
-        // Redirect to Google OAuth login
-        handleGoogleLogin();
-        return null; // Do not render anything while redirecting
+    if (auth.loading) {
+        return <div>로딩 중...</div>;
     }
 
-    // Render the child components if logged in
+    if (!auth.isAuthenticated) {
+        alert('로그인이 필요합니다.');
+        return <Navigate to="/" replace />;
+    }
+
     return children;
 };
 

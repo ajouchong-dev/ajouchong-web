@@ -42,7 +42,7 @@ const Map = () => {
                 <div className="map" id="map" style={{ width: '400px', height: '400px' }}></div>
                 <div className="map-info">
                     <div className="map-subinfo">* 주소: 경기 수원시 원천동 아주대학교 신학생회관 208호</div>
-                    <div className="map-subinfo">* 연락처: 총학생회장 이홍서 010-5613-0359</div>
+                    <div className="map-subinfo">* 연락처: 총학생회장 이재건 010-9607-2128</div>
                     <div className="map-subinfo">* 재실 시간: 10:00 ~ 16:30</div>
                 </div>
             </div>

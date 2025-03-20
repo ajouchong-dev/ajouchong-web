@@ -4,20 +4,20 @@ const Footer = (props) => (
     <footer className="footer">
         <div className="main">
             <div className="mainleft">
-                <div className="column">
+                <div className="main_logo">
                     <span className="title">AJOU UNIV</span>
-                    <img src="/aurum_black.png" alt="로고"/>
+                    <img src="/achim_subLogo.svg" alt="로고" />
                 </div>
             </div>
             <div className="mainright">
                 <div className="column">
                     <div className="info">
                         <span className="infotext">
-                        <a href="/policy">개인정보처리방침</a>
+                        <a href="/policy">이용약관</a>
                         </span>
                         <span className="space">|</span>
                         <span className="infotext">
-                        <a href="/policy/termsofservice">이용약관</a>
+                        <a href="/policy/termsofservice">개인정보처리방침</a>
                         </span>
                         <span className="space"></span>
                     </div>
@@ -28,13 +28,10 @@ const Footer = (props) => (
                     총학생회실
                     </span>
                     <span className="space"></span>
-                    <span className="developer">
-                    developer | 아주대 소프트웨어학과 22학번 오태림 (front, design) 유수정 (backend)
-                    </span>
+                    <span className="developer"> developer | 소프트웨어학과 오태림(FE) 유수정(BE) E-mail: <a href="mailto:ajouchongdev@gmail.com">ajouchongdev@gmail.com</a></span>
                 </div>
                 <div className="column">
                     <p className="copyright">&copy; {new Date().getFullYear()} Ajou University Council. All Rights Reserved.</p>
-
                 </div>
             </div>
 
