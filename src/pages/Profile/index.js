@@ -129,7 +129,7 @@ const Profile = () => {
                     <p>역할: {user.role}</p>
                 </div>
             ) : (
-                <p className="loading-text">사용자 정보를 불러올 수 없습니다.</p>
+                <p className="loading-text">로그인이 필요한 서비스입니다.</p>
             )}
 
             <div className="login-container">
