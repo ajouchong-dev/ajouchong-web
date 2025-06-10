@@ -20,11 +20,10 @@ const Main = () => {
 
     // 슬라이더에 표시할 이미지 배열
     const images = [
-        "/main/main_10.jpeg",
-        // "/main/main_9.jpeg",
-        // "/main/main_1.jpg",
-        // "/main/main_8.JPG",
         "/main/main_7.jpg",
+        "/main/spring_1.jpeg",
+        "/main/spring_2.jpeg",
+        "/main/spring_3.jpeg",
     ];
 
     // 공지사항 데이터를 API에서 가져오기
