@@ -117,7 +117,7 @@ const Header = () => {
                                 onMouseLeave={handleMouseLeave}
                             >
                                 <div className={`navtitle ${isIntroductionActive ? 'active' : ''}`}
-                                     href="/introduction">소개
+                                     onClick={() => window.location.href = '/introduction/about'}>소개
                                 </div>
                                 {dropdown === 'introduction' && (
                                     <ul className="dropdown-container">
@@ -133,7 +133,8 @@ const Header = () => {
                                 onMouseEnter={() => handleMouseEnter('news')}
                                 onMouseLeave={handleMouseLeave}
                             >
-                                <div className={`navtitle ${isNewsActive ? 'active' : ''}`} href="/news">소식</div>
+                                <div className={`navtitle ${isNewsActive ? 'active' : ''}`} 
+                                     onClick={() => window.location.href = '/news/notice'}>소식</div>
                                 {dropdown === 'news' && (
                                     <ul className="dropdown-container">
                                         <li><a href="/news/notice">공지사항</a></li>
@@ -146,7 +147,7 @@ const Header = () => {
                                 onMouseLeave={handleMouseLeave}
                             >
                                 <div className={`navtitle ${isCommunicationActive ? 'active' : ''}`}
-                                     href="/communication">소통
+                                     onClick={() => window.location.href = '/communication/qna'}>소통
                                 </div>
                                 {dropdown === 'communication' && (
                                     <ul className="dropdown-container">
@@ -162,7 +163,8 @@ const Header = () => {
                                 onMouseEnter={() => handleMouseEnter('resources')}
                                 onMouseLeave={handleMouseLeave}
                             >
-                                <div className={`navtitle ${isResourcesActive ? 'active' : ''}`} href="/resources">자료실
+                                <div className={`navtitle ${isResourcesActive ? 'active' : ''}`} 
+                                     onClick={() => window.location.href = '/resources/bylaws'}>자료실
                                 </div>
                                 {dropdown === 'resources' && (
                                     <ul className="dropdown-container">
@@ -177,7 +179,7 @@ const Header = () => {
                                 onMouseLeave={handleMouseLeave}
                             >
                                 <div className={`navtitle ${isWelfareActive ? 'active' : ''}`}
-                                     href="/student-welfare">학생복지
+                                     onClick={() => window.location.href = '/welfare/promotion'}>학생복지
                                 </div>
                                 {dropdown === 'welfare' && (
                                     <ul className="dropdown-container">
