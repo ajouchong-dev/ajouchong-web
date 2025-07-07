@@ -24,6 +24,8 @@ const Main = () => {
         "/main/spring_1.jpeg",
         "/main/spring_2.jpeg",
         "/main/spring_3.jpeg",
+        "/main/acentia_1.jpeg",
+        "/main/acentia_2.jpeg",
     ];
 
     // 공지사항 데이터를 API에서 가져오기
