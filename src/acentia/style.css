@@ -1,0 +1,24 @@
+.context{
+    font-family: Arial, sans-serif;
+    padding: 0;
+}
+
+.contextTitle{
+    font-size: 25px;
+    font-weight: bolder;
+}
+
+.titleSeparator {
+    max-width: 30%;
+    border: none; /* 기본 테두리 제거 */
+    height: 2px; /* 선의 두께 */
+    background-color: #a7c898; /* 선의 색상 */
+    margin-top: 15px; /* 제목과 선 사이의 여백 */
+}
+
+.video-player {
+    width: 60%;
+    margin: 2rem auto;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
