@@ -75,7 +75,7 @@ const Header = () => {
 
     const navtitle = getNavtitle();
     const isMainPage = location.pathname === '/';
-    const isIntroductionActive = ['/introduction/about', '/introduction/promise', '/introduction/organization', '/introduction/map','/introduction/campusmap'].includes(location.pathname);
+    const isIntroductionActive = ['/introduction/about', '/introduction/promise', '/introduction/organization',  '/introduction/history', '/introduction/map','/introduction/campusmap'].includes(location.pathname);
     const isNewsActive = ['/news/announcement',  '/news/planning'].includes(location.pathname);
     const isResourcesActive = ['/resources/bylaws',  '/resources/proceeding','/resources/audit'].includes(location.pathname);
     const isCommunicationActive = ['/communication/qna', '/communication/require'].includes(location.pathname);
@@ -124,6 +124,7 @@ const Header = () => {
                                         <li><a href="/introduction/about">총학생회 소개</a></li>
                                         <li><a href="/introduction/promise">공약 소개</a></li>
                                         <li><a href="/introduction/organization">조직도</a></li>
+                                        <li><a href="/introduction/history">역대 총학생회 소개</a></li>
                                         <li><a href="/introduction/map">오시는 길</a></li>
                                         <li><a href="/introduction/campusmap">캠퍼스 맵</a></li>
                                     </ul>

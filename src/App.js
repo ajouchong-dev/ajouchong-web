@@ -31,6 +31,7 @@ import RequireDetail from './pages/require/RequireDetail';
 import Termsofservice from './pages/Policy/termsofservice';
 import Policy from './pages/Policy/policy';
 import Profile from "./pages/Profile";
+import History from "./history";
 
 function App() {
     return (
@@ -62,6 +63,7 @@ const Content = () => {
                 <Route path="/introduction/about" element={<About />} />
                 <Route path="/introduction/organization" element={<Organization />} />
                 <Route path="/introduction/promise" element={<PromiseComponent />} />
+                <Route path="/introduction/history" element={<History />} />
                 <Route path="/introduction/map" element={<Map />} />
                 <Route path="/introduction/campusmap" element={<Campusmap />} />
                 <Route path="/news/notice" element={<Announcement />} />
