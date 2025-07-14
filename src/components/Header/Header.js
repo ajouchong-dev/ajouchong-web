@@ -80,6 +80,7 @@ const Header = () => {
     const isResourcesActive = ['/resources/bylaws',  '/resources/proceeding','/resources/audit'].includes(location.pathname);
     const isCommunicationActive = ['/communication/qna', '/communication/require'].includes(location.pathname);
     const isWelfareActive = ['/welfare/promotion', '/welfare/rental'].includes(location.pathname);
+    const isAcentiaActive = ['/acentia/intro', '/acentia/gods', '/acentia/history'].includes(location.pathname);
 
     return (
         <div>
@@ -139,7 +140,6 @@ const Header = () => {
                                 {dropdown === 'news' && (
                                     <ul className="dropdown-container">
                                         <li><a href="/news/notice">공지사항</a></li>
-                                        <li><a href="/news/acentia">ACENTIA</a></li>
                                         {/*<li><a href="/news/planning">학사일정</a></li>*/}
                                     </ul>
                                 )}
@@ -165,7 +165,7 @@ const Header = () => {
                                 onMouseEnter={() => handleMouseEnter('resources')}
                                 onMouseLeave={handleMouseLeave}
                             >
-                                <div className={`navtitle ${isResourcesActive ? 'active' : ''}`} 
+                                <div className={`navtitle ${isResourcesActive ? 'active' : ''}`}
                                      onClick={() => window.location.href = '/resources/bylaws'}>자료실
                                 </div>
                                 {dropdown === 'resources' && (
@@ -190,16 +190,32 @@ const Header = () => {
                                     </ul>
                                 )}
                             </li>
+                            <li
+                                onMouseEnter={() => handleMouseEnter('acentia')}
+                                onMouseLeave={handleMouseLeave}
+                            >
+                                <div className={`navtitle ${isWelfareActive ? 'active' : ''}`}
+                                     onClick={() => window.location.href = '/acentia/intro'}>ACENTIA
+                                </div>
+                                {dropdown === 'acentia' && (
+                                    <ul className="dropdown-container">
+                                        <li><a href="/acentia/intro">ACENTIA 소개</a></li>
+                                        <li><a href="/acentia/gods">ACENTIA 굿즈</a></li>
+                                        <li><a href="/acentia/history">역대 ACENTIA</a></li>
+                                    </ul>
+                                )}
+                            </li>
                         </ul>
                     </nav>
 
                     <div className="hamburger-menu" onClick={toggleMobileMenu}>
-                        {isMobileMenuOpen ? <X size={28} /> : <Menu size={28} />}
+                        {isMobileMenuOpen ? <X size={28}/> : <Menu size={28}/>}
                     </div>
 
                     <nav className={`mobile-menu ${isMobileMenuOpen ? 'open' : ''}`}>
                         <ul>
-                            <li onClick={() => setDropdown(dropdown === 'introduction' ? null : 'introduction')}  className={dropdown === 'introduction' ? 'active' : ''}>
+                            <li onClick={() => setDropdown(dropdown === 'introduction' ? null : 'introduction')}
+                                className={dropdown === 'introduction' ? 'active' : ''}>
                                 소개
                                 {dropdown === 'introduction' && (
                                     <ul className="dropdown">

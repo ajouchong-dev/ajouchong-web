@@ -68,7 +68,7 @@ const Content = () => {
                 <Route path="/introduction/map" element={<Map />} />
                 <Route path="/introduction/campusmap" element={<Campusmap />} />
                 <Route path="/news/notice" element={<Announcement />} />
-                <Route path="/news/acentia" element={<Acentia />} />
+                <Route path="/acentia/intro" element={<Acentia />} />
                 <Route path="/notice/:id" element={<AnnouncementDetail />} />
                 <Route path="/news/planning" element={<Planning />} />
                 <Route path="/communication/qna" element={<Qna />} />
