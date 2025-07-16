@@ -1,13 +1,13 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
-import './detail.css'; // detail.css는 반드시 존재해야 함
+import './detail.css'; // 스타일 파일 반드시 필요
 
-// 🔽 연도별 상세 정보 객체 (문자열 key + 정확한 경로)
+// 🔽 연도별 총학생회 정보
 const councilData = {
   "2025": {
     title: "2025년 제44대 총학생회 '아침'",
     출사표: "/assets/2025/정책집.pdf",
-    조직도: "/assets/2025/조직도.png",
+    조직도: "/assets/2025/출사표.png",
     단체사진: "/assets/2025/단체사진.jpg"
   },
   "2024": {
@@ -21,7 +21,7 @@ const councilData = {
     출사표: "/assets/2023/출사표.pdf",
     조직도: "/assets/2023/조직도.png",
     단체사진: "/assets/2023/단체사진.jpg"
-  },
+  }
 };
 
 const CouncilDetail = () => {
@@ -33,22 +33,28 @@ const CouncilDetail = () => {
   }
 
   return (
-    <div className="council-detail">
-      <h2>{data.title}</h2>
-      <p className="notice">맨 위 오른쪽 상단에 정책집을 다운받을 수 있도록 (첨부파일)</p>
-      <ul className="file-list">
-        <li>
-          <a href={data.출사표} target="_blank" rel="noreferrer">
-            📄 출사표 다운로드
-          </a>
-        </li>
-        <li>
-          <img src={data.조직도} alt="조직도" className="image-preview" />
-        </li>
-        <li>
-          <img src={data.단체사진} alt="단체사진" className="image-preview" />
-        </li>
-      </ul>
+    <div className="council-detail-wrapper">
+      <div className="council-card">
+        <h2>{data.title}</h2>
+        <p className="description">
+          📝 맨 위 오른쪽 상단에 정책집을 다운받을 수 있도록 (첨부파일)
+        </p>
+
+        <a href={data.출사표} target="_blank" rel="noreferrer" className="download-link">
+          📄 출사표 다운로드
+        </a>
+
+        <div className="image-gallery">
+          <div className="image-box">
+            <img src={data.조직도} alt="조직도" />
+            <p>조직도</p>
+          </div>
+          <div className="image-box">
+            <img src={data.단체사진} alt="단체사진" />
+            <p>단체사진</p>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
