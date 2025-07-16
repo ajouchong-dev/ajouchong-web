@@ -1,0 +1,26 @@
+.council-detail {
+  padding: 2rem;
+  font-family: sans-serif;
+}
+
+.notice {
+  margin-bottom: 1rem;
+  color: #666;
+  font-size: 0.95rem;
+}
+
+.file-list {
+  list-style: none;
+  padding: 0;
+}
+
+.file-list li {
+  margin-bottom: 1.5rem;
+}
+
+.image-preview {
+  max-width: 100%;
+  border: 1px solid #ccc;
+  padding: 5px;
+  background: #f9f9f9;
+}
