@@ -1,66 +1,71 @@
-.context{
-    font-family: Arial, sans-serif;
-    padding: 0;
+.context {
+  font-family: Arial, sans-serif;
+  padding: 0;
 }
 
-.contextTitle{
-    font-size: 25px;
-    font-weight: bolder;
+.contextTitle {
+  font-size: 25px;
+  font-weight: bolder;
 }
 
 .titleSeparator {
-    max-width: 30%;
-    border: none; /* 기본 테두리 제거 */
-    height: 2px; /* 선의 두께 */
-    background-color: #a7c898; /* 선의 색상 */
-    margin-top: 15px; /* 제목과 선 사이의 여백 */
+  max-width: 30%;
+  border: none;
+  height: 2px;
+  background-color: #a7c898;
+  margin-top: 15px;
 }
 
 .council-history {
-    width: 80%;
-    max-width: 800px;
-    margin: 2rem auto;
-    border-collapse: collapse;
-    font-size: 1rem;
-    text-align: center;
-    background-color: #fff;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  width: 80%;
+  max-width: 800px;
+  margin: 2rem auto;
+  border-collapse: collapse;
+  font-size: 1rem;
+  text-align: center;
+  background-color: #fff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 .council-history thead {
-    background-color: #a7c898;
-    color: black;
+  background-color: #a7c898;
+  color: black;
 }
 
 .council-history th,
-.council-history td {;
-    padding: 1rem;
-    text-align: center;
-    border-bottom: 1px solid #ddd;
-
+.council-history td {
+  padding: 1rem;
+  text-align: center;
+  border-bottom: 1px solid #ddd;
 }
 
 .council-history th:first-child,
 .council-history td:first-child {
-    border-right: 1px solid #e0e0e0;
-}
-
-.council-history tbody tr:hover {
-    background-color: #f5f5f5;
+  border-right: 1px solid #e0e0e0;
 }
 
 .council-history td:first-child {
-    font-weight: 600;
-    color: black;
+  font-weight: 600;
+  color: black;
+}
+
+/* ✅ row 전체 클릭 가능하게 (hover + pointer) */
+.clickable-row {
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.clickable-row:hover {
+  background-color: #f5f5f5;
 }
 
 @media screen and (max-width: 600px) {
-    .council-history {
-        font-size: 0.9rem;
-    }
+  .council-history {
+    font-size: 0.9rem;
+  }
 
-    .council-history th,
-    .council-history td {
-        padding: 0.75rem;
-    }
+  .council-history th,
+  .council-history td {
+    padding: 0.75rem;
+  }
 }

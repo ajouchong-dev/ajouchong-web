@@ -36,6 +36,7 @@
   font-weight: bold;
   transition: background-color 0.2s ease;
 }
+
 .download-link:hover {
   background-color: #d8d8f0;
 }
@@ -50,13 +51,13 @@
 
 .image-box {
   flex: 1 1 100%;
-  max-width: 600px; /* 원하는 너비로 설정 */
+  max-width: 600px;
   text-align: center;
 }
 
 .image-box img {
   width: 100%;
-  max-width: 600px; /* 기존 320px → 600px로 키움 */
+  max-width: 600px;
   height: auto;
   border-radius: 10px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);

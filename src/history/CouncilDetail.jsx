@@ -1,6 +1,6 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
-import './detail.css'; // 스타일 파일 반드시 필요
+import './detail.css'; // 반드시 존재해야 하는 CSS
 
 // 🔽 연도별 총학생회 정보
 const councilData = {
@@ -36,9 +36,6 @@ const CouncilDetail = () => {
     <div className="council-detail-wrapper">
       <div className="council-card">
         <h2>{data.title}</h2>
-        <p className="description">
-          📝 맨 위 오른쪽 상단에 정책집을 다운받을 수 있도록 (첨부파일)
-        </p>
 
         <a href={data.출사표} target="_blank" rel="noreferrer" className="download-link">
           📄 출사표 다운로드
