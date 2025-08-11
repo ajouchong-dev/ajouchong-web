@@ -32,7 +32,7 @@ import Termsofservice from './pages/Policy/termsofservice';
 import Policy from './pages/Policy/policy';
 import Profile from "./pages/Profile";
 import History from "./history";
-import Acentia from "./acentia";
+import Acentia from "./pages/acentia/index"
 
 function App() {
     return (
