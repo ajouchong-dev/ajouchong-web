@@ -1,77 +1,52 @@
 import "./style.css";
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
-const history = () => {
-    return (
-        <div className="context">
-            <div className="contextTitle">역대 총학생회 소개</div>
-            <hr className="titleSeparator" />
+const councilList = [
+  { year: "2025", title: "2025년 제44대 총학생회 '아침'", leaders: "이재건(건축), 송재원(산공)" },
+  { year: "2024", title: "2024년 제43대 총학생회 '아우름'", leaders: "이홍서(경제), 이원재(산공)" },
+  { year: "2023", title: "2023년 제42대 총학생회 '위아'", leaders: "이효성(환안공), 이동현(전자)" },
+  { year: "2022", title: "2022년 제41대 총학생회 '담아'", leaders: "김형우(불문), 박시연(산공)" },
+  { year: "2021", title: "2021년 비상대책위원회", leaders: "김현빈(전자)" },
+  { year: "2020", title: "2020년 제40대 총학생회 '아워'", leaders: "김현빈(전자), 이소민(문콘)" },
+  { year: "2019", title: "2019년 제39대 총학생회 '다움'", leaders: "이기훈(경영), 김상서(기계)" },
+  { year: "2018", title: "2018년 제38대 총학생회 '아이콘'", leaders: "이성호(건축), 박수빈(경영)" },
+];
 
-        <table className="council-history">
-            <colgroup>
-                <col style={{width: "65%"}}/>
-                <col style={{width: "35%"}}/>
-            </colgroup>
-            <thead>
-            <tr>
-                <th>해당연도</th>
-                <th>총, 부학생회장</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-                <td>
-                    2025년 제44대 총학생회 '아침'
-                </td>
-                <td>이재건(건축), 송재원(산공)</td>
-            </tr>
-            <tr>
-                <td>
-                    2024년 제43대 총학생회 '아우름'
-                </td>
-                <td>이홍서(경제), 이원재(산공)</td>
-            </tr>
-            <tr>
-                <td>
-                    2023년 제42대 총학생회 '위아'
-                </td>
-                <td>이효성(환안공), 이동현(전자)</td>
-            </tr>
-            <tr>
-                <td>
-                    2022년 제41대 총학생회 '담아'
-                </td>
-                <td>김형우(불문), 박시연(산공)</td>
-            </tr>
-            <tr>
-                <td>
-                    2021년 비상대책위원회
-                </td>
-                <td>김현빈(전자)</td>
-            </tr>
-            <tr>
-                <td>
-                    2020년 제40대 총학생회 '아워'
-                </td>
-                <td>김현빈(전자), 이소민(문콘)</td>
-            </tr>
-            <tr>
-                <td>
-                    2019년 제39대 총학생회 '다움'
-                </td>
-                <td>이기훈(경영), 김상서(기계)</td>
-            </tr>
-            <tr>
-                <td>
-                    2018년 제38대 총학생회 '아이콘'
-                </td>
-                <td>이성호(건축), 박수빈(경영)</td>
-            </tr>
-            </tbody>
+const History = () => {
+  const navigate = useNavigate();
 
-        </table>
-        </div>
-    );
-}
+  return (
+    <div className="context">
+      <div className="contextTitle">역대 총학생회 소개</div>
+      <hr className="titleSeparator" />
 
-export default history;
+      <table className="council-history">
+        <colgroup>
+          <col style={{ width: "65%" }} />
+          <col style={{ width: "35%" }} />
+        </colgroup>
+        <thead>
+          <tr>
+            <th>해당연도</th>
+            <th>총, 부학생회장</th>
+          </tr>
+        </thead>
+        <tbody>
+          {councilList.map(({ year, title, leaders }) => (
+            <tr
+              key={year}
+              onClick={() => navigate(`/history/${year}`)}
+              className="clickable-row"
+            >
+              <td>{title}</td>
+              <td>{leaders}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+};
+
+export default History;
