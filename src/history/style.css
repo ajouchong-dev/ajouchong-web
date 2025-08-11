@@ -28,15 +28,15 @@
 }
 
 .council-history thead {
-  background-color: #a7c898;
-  color: black;
+    background-color: #a7c898;
+    color: #1c1c1c;
 }
 
 .council-history th,
-.council-history td {
-  padding: 1rem;
-  text-align: center;
-  border-bottom: 1px solid #ddd;
+.council-history td {;
+    padding: 1rem;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
 }
 
 .council-history th:first-child,
@@ -46,7 +46,7 @@
 
 .council-history td:first-child {
   font-weight: 600;
-  color: black;
+  color: #1c1c1c;
 }
 
 /* ✅ row 전체 클릭 가능하게 (hover + pointer) */

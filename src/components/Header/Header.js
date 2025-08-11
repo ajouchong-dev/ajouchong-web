@@ -66,13 +66,6 @@ const Header = () => {
         setIsMobileMenuOpen(!isMobileMenuOpen);
     };
 
-    // const isMainPage = currentPath === '/';
-    // const isIntroductionActive = ['/about', '/promise', '/organization', '/map'].includes(currentPath);
-    // const isNewsActive = ['/announcement', '/planning'].includes(currentPath);
-    // const isResourcesActive = ['/bylaws', '/proceeding', '/audit'].includes(currentPath);
-    // const isCommunicationActive = ['/qna', '/require'].includes(currentPath);
-    // const isWelfareActive = ['/promotion', '/rental'].includes(currentPath);
-
     const navtitle = getNavtitle();
     const isMainPage = location.pathname === '/';
     const isIntroductionActive = ['/introduction/about', '/introduction/promise', '/introduction/organization',  '/introduction/history', '/introduction/map','/introduction/campusmap'].includes(location.pathname);
@@ -80,7 +73,7 @@ const Header = () => {
     const isResourcesActive = ['/resources/bylaws',  '/resources/proceeding','/resources/audit'].includes(location.pathname);
     const isCommunicationActive = ['/communication/qna', '/communication/require'].includes(location.pathname);
     const isWelfareActive = ['/welfare/promotion', '/welfare/rental'].includes(location.pathname);
-    const isAcentiaActive = ['/acentia/intro', '/acentia/gods', '/acentia/history'].includes(location.pathname);
+    const isAcentiaActive = ['/acentia/intro', '/acentia/goods', '/acentia/record'].includes(location.pathname);
 
     return (
         <div>
@@ -194,14 +187,14 @@ const Header = () => {
                                 onMouseEnter={() => handleMouseEnter('acentia')}
                                 onMouseLeave={handleMouseLeave}
                             >
-                                <div className={`navtitle ${isWelfareActive ? 'active' : ''}`}
+                                <div className={`navtitle ${isAcentiaActive ? 'active' : ''}`}
                                      onClick={() => window.location.href = '/acentia/intro'}>ACENTIA
                                 </div>
                                 {dropdown === 'acentia' && (
                                     <ul className="dropdown-container">
                                         <li><a href="/acentia/intro">ACENTIA 소개</a></li>
-                                        <li><a href="/acentia/gods">ACENTIA 굿즈</a></li>
-                                        <li><a href="/acentia/history">역대 ACENTIA</a></li>
+                                        <li><a href="/Acentia/goods">ACENTIA 굿즈</a></li>
+                                        <li><a href="/Acentia/record">역대 ACENTIA</a></li>
                                     </ul>
                                 )}
                             </li>
@@ -227,7 +220,8 @@ const Header = () => {
                                     </ul>
                                 )}
                             </li>
-                            <li onClick={() => setDropdown(dropdown === 'news' ? null : 'news')}  className={dropdown === 'news' ? 'active' : ''} >
+                            <li onClick={() => setDropdown(dropdown === 'news' ? null : 'news')}
+                                className={dropdown === 'news' ? 'active' : ''}>
                                 소식
                                 {dropdown === 'news' && (
                                     <ul className="dropdown">
@@ -235,17 +229,20 @@ const Header = () => {
                                     </ul>
                                 )}
                             </li>
-                            <li onClick={() => setDropdown(dropdown === 'communication' ? null : 'communication')}  className={dropdown === 'communication' ? 'active' : ''}>
+                            <li onClick={() => setDropdown(dropdown === 'communication' ? null : 'communication')}
+                                className={dropdown === 'communication' ? 'active' : ''}>
                                 소통
                                 {dropdown === 'communication' && (
                                     <ul className="dropdown">
                                         <li><a href="/communication/qna">Q&A</a></li>
                                         <li><a href="/communication/require">100인 안건 상정제</a></li>
-                                        <li><a href="https://forms.gle/V1hH3Gf5uyuC7CVp6" target="_blank" rel="noopener noreferrer">통합 소통 창구</a></li>
+                                        <li><a href="https://forms.gle/V1hH3Gf5uyuC7CVp6" target="_blank"
+                                               rel="noopener noreferrer">통합 소통 창구</a></li>
                                     </ul>
                                 )}
                             </li>
-                            <li onClick={() => setDropdown(dropdown === 'resources' ? null : 'resources')}  className={dropdown === 'resources' ? 'active' : ''}>
+                            <li onClick={() => setDropdown(dropdown === 'resources' ? null : 'resources')}
+                                className={dropdown === 'resources' ? 'active' : ''}>
                                 자료실
                                 {dropdown === 'resources' && (
                                     <ul className="dropdown">
@@ -255,12 +252,24 @@ const Header = () => {
                                     </ul>
                                 )}
                             </li>
-                            <li onClick={() => setDropdown(dropdown === 'welfare' ? null : 'welfare')}  className={dropdown === 'welfare' ? 'active' : ''}>
+                            <li onClick={() => setDropdown(dropdown === 'welfare' ? null : 'welfare')}
+                                className={dropdown === 'welfare' ? 'active' : ''}>
                                 학생복지
                                 {dropdown === 'welfare' && (
                                     <ul className="dropdown">
                                         <li><a href="/welfare/promotion">제휴백과</a></li>
                                         <li><a href="/welfare/rental">대여사업</a></li>
+                                    </ul>
+                                )}
+                            </li>
+                            <li onClick={() => setDropdown(dropdown === 'acentia' ? null : 'acentia')}
+                                className={dropdown === 'acentia' ? 'active' : ''}>
+                                ACENTIA
+                                {dropdown === 'acentia' && (
+                                    <ul className="dropdown">
+                                        <li><a href="/acentia/intro">ACENTIA 소개</a></li>
+                                        <li><a href="/Acentia/goods">ACENTIA 굿즈</a></li>
+                                        <li><a href="/Acentia/record">역대 ACENTIA</a></li>
                                     </ul>
                                 )}
                             </li>
@@ -281,65 +290,7 @@ const Header = () => {
                                 <li><a href="/profile">profile</a></li>
                             </ul>
                         </nav>
-
-
                     </nav>
-
-
-                    {/*<nav className={`mobile-menu ${menuOpen ? 'open' : ''}`}>*/}
-                    {/*    <ul>*/}
-                    {/*        <li onClick={() => setDropdown(dropdown === 'introduction' ? null : 'introduction')}>*/}
-                    {/*            소개*/}
-                    {/*            {dropdown === 'introduction' && (*/}
-                    {/*                <ul className="dropdown">*/}
-                    {/*                    <li><a href="/introduction/about">총학생회 소개</a></li>*/}
-                    {/*                    <li><a href="/introduction/promise">공약 소개</a></li>*/}
-                    {/*                    <li><a href="/introduction/organization">조직도</a></li>*/}
-                    {/*                    <li><a href="/introduction/map">오시는 길</a></li>*/}
-                    {/*                    <li><a href="/introduction/campusmap">캠퍼스 맵</a></li>*/}
-                    {/*                </ul>*/}
-                    {/*            )}*/}
-                    {/*        </li>*/}
-                    {/*        <li onClick={() => setDropdown(dropdown === 'news' ? null : 'news')}>*/}
-                    {/*            소식*/}
-                    {/*            {dropdown === 'news' && (*/}
-                    {/*                <ul className="dropdown">*/}
-                    {/*                    <li><a href="/news/announcement">공지사항</a></li>*/}
-                    {/*                </ul>*/}
-                    {/*            )}*/}
-                    {/*        </li>*/}
-                    {/*        <li onClick={() => setDropdown(dropdown === 'communication' ? null : 'communication')}>*/}
-                    {/*            소통*/}
-                    {/*            {dropdown === 'communication' && (*/}
-                    {/*                <ul className="dropdown">*/}
-                    {/*                    <li><a href="/communication/qna">Q&A</a></li>*/}
-                    {/*                    <li><a href="/communication/require">100인 안건 상정제</a></li>*/}
-                    {/*                    <li><a href="https://forms.gle/V1hH3Gf5uyuC7CVp6" target="_blank" rel="noopener noreferrer">통합 소통 창구</a></li>*/}
-                    {/*                </ul>*/}
-                    {/*            )}*/}
-                    {/*        </li>*/}
-                    {/*        <li onClick={() => setDropdown(dropdown === 'resources' ? null : 'resources')}>*/}
-                    {/*            자료실*/}
-                    {/*            {dropdown === 'resources' && (*/}
-                    {/*                <ul className="dropdown">*/}
-                    {/*                    <li><a href="/resources/bylaws">세칙 및 회칙</a></li>*/}
-                    {/*                    <li><a href="/resources/proceeding">회의록</a></li>*/}
-                    {/*                    <li><a href="/resources/audit">감사자료</a></li>*/}
-                    {/*                </ul>*/}
-                    {/*            )}*/}
-                    {/*        </li>*/}
-                    {/*        <li onClick={() => setDropdown(dropdown === 'welfare' ? null : 'welfare')}>*/}
-                    {/*            학생복지*/}
-                    {/*            {dropdown === 'welfare' && (*/}
-                    {/*                <ul className="dropdown">*/}
-                    {/*                    <li><a href="/welfare/promotion">제휴백과</a></li>*/}
-                    {/*                    <li><a href="/welfare/rental">대여사업</a></li>*/}
-                    {/*                </ul>*/}
-                    {/*            )}*/}
-                    {/*        </li>*/}
-                    {/*    </ul>*/}
-                    {/*</nav>*/}
-
 
                     <div className="button">
                         <Login user={user} setUser={setUser} />

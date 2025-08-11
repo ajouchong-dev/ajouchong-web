@@ -32,6 +32,10 @@ import Termsofservice from './pages/Policy/termsofservice';
 import Policy from './pages/Policy/policy';
 import Profile from "./pages/Profile";
 import History from "./history";
+
+import Intro from "./pages/Acentia/intro"
+import Goods from "./pages/Acentia/goods";
+import Record from "./pages/Acentia/Record";
 import Acentia from "./acentia";
 import CouncilDetail from "./history/CouncilDetail";
 
@@ -56,43 +60,38 @@ const Content = () => {
 
     return (
         <>
-            {showBreadcrumb && <Breadcrumb />}
+            {showBreadcrumb && <Breadcrumb/>}
             <Routes>
-                <Route path="/" element={<Main />} />
-                <Route path="/policy/termsofservice" element={<Termsofservice />} />
-                <Route path="/policy" element={<Policy />} />
-                <Route path="/sitemap" element={<Sitemap />} />
-                <Route path="/introduction/about" element={<About />} />
-                <Route path="/introduction/organization" element={<Organization />} />
-                <Route path="/introduction/promise" element={<PromiseComponent />} />
-                <Route path="/introduction/history" element={<History />} />
-                <Route path="/history/:year" element={<CouncilDetail />} />
-                <Route path="/introduction/map" element={<Map />} />
-                <Route path="/introduction/campusmap" element={<Campusmap />} />
-                <Route path="/news/notice" element={<Announcement />} />
-                <Route path="/acentia/intro" element={<Acentia />} />
-                <Route path="/notice/:id" element={<AnnouncementDetail />} />
-                <Route path="/news/planning" element={<Planning />} />
-                <Route path="/communication/qna" element={<Qna />} />
-                <Route path="/communication/qna/write" element={<WritePage />} />
-                <Route path="/communication/qna/:postId" element={<QnaDetail />} />
-                <Route path="/communication/require" element={<Require />} />
-                <Route path="/communication/require/write" element={<RequireWrite />} />
-                <Route path="/communication/require/:id" element={<RequireDetail />} />
-                {/*<Route path="/communication/commu" element={<Commu />} />*/}
-                <Route path="/resources/bylaws" element={<Bylaws />} />
-                <Route path="/resources/bylaws/:id" element={<BylawsDetail />} />
-                <Route path="/resources/proceeding" element={<Proceeding />} />
-                <Route path="/resources/audit" element={<Audit />} />
-                <Route path="/welfare/promotion" element={<Promotion />} />
-                <Route path="/welfare/promotion/:postId" element={<PromotionDetail />} />
-                <Route path="/welfare/rental" element={<Rental />} />
-                {/*<Route path="/signin" element={<Signin />} />*/}
-                {/*<Route path="/join" element={<Join />} />*/}
-                {/*<Route path="/password" element={<Password />} />*/}
-                {/*<Route path="/pwchange" element={<Passwordchange />} />*/}
-                {/*<Route path="/personal-info" element={<PersonalInfo />} />*/}s
-                <Route path="/profile" element={<Profile />} />
+                <Route path="/" element={<Main/>}/>
+                <Route path="/policy/termsofservice" element={<Termsofservice/>}/>
+                <Route path="/policy" element={<Policy/>}/>
+                <Route path="/sitemap" element={<Sitemap/>}/>
+                <Route path="/introduction/about" element={<About/>}/>
+                <Route path="/introduction/organization" element={<Organization/>}/>
+                <Route path="/introduction/promise" element={<PromiseComponent/>}/>
+                <Route path="/introduction/history" element={<History/>}/>
+                <Route path="/introduction/map" element={<Map/>}/>
+                <Route path="/introduction/campusmap" element={<Campusmap/>}/>
+                <Route path="/news/notice" element={<Announcement/>}/>
+                <Route path="/notice/:id" element={<AnnouncementDetail/>}/>
+                <Route path="/news/planning" element={<Planning/>}/>
+                <Route path="/communication/qna" element={<Qna/>}/>
+                <Route path="/communication/qna/write" element={<WritePage/>}/>
+                <Route path="/communication/qna/:postId" element={<QnaDetail/>}/>
+                <Route path="/communication/require" element={<Require/>}/>
+                <Route path="/communication/require/write" element={<RequireWrite/>}/>
+                <Route path="/communication/require/:id" element={<RequireDetail/>}/>
+                <Route path="/resources/bylaws" element={<Bylaws/>}/>
+                <Route path="/resources/bylaws/:id" element={<BylawsDetail/>}/>
+                <Route path="/resources/proceeding" element={<Proceeding/>}/>
+                <Route path="/resources/audit" element={<Audit/>}/>
+                <Route path="/welfare/promotion" element={<Promotion/>}/>
+                <Route path="/welfare/promotion/:postId" element={<PromotionDetail/>}/>
+                <Route path="/welfare/rental" element={<Rental/>}/>
+                <Route path="/acentia/intro" element={<Intro/>}/>
+                <Route path="/acentia/goods" element={<Goods/>}/>
+                <Route path="/acentia/record" element={<Record/>}/>
+                <Route path="/profile" element={<Profile/>}/>
             </Routes>
         </>
     );
