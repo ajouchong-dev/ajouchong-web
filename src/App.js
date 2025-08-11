@@ -36,8 +36,6 @@ import History from "./history";
 import Intro from "./pages/Acentia/intro"
 import Goods from "./pages/Acentia/goods";
 import Record from "./pages/Acentia/Record";
-import Acentia from "./acentia";
-import CouncilDetail from "./history/CouncilDetail";
 
 function App() {
     return (
