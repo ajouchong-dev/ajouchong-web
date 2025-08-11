@@ -34,6 +34,7 @@ import Profile from "./pages/Profile";
 import History from "./history";
 import Intro from "./pages/Acentia/intro"
 import Goods from "./pages/Acentia/goods";
+import Record from "./pages/Acentia/Record";
 
 function App() {
     return (
@@ -86,6 +87,7 @@ const Content = () => {
                 <Route path="/welfare/rental" element={<Rental/>}/>
                 <Route path="/acentia/intro" element={<Intro/>}/>
                 <Route path="/acentia/goods" element={<Goods/>}/>
+                <Route path="/acentia/record" element={<Record/>}/>
                 <Route path="/profile" element={<Profile/>}/>
             </Routes>
         </>
