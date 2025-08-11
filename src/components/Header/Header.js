@@ -73,7 +73,7 @@ const Header = () => {
     const isResourcesActive = ['/resources/bylaws',  '/resources/proceeding','/resources/audit'].includes(location.pathname);
     const isCommunicationActive = ['/communication/qna', '/communication/require'].includes(location.pathname);
     const isWelfareActive = ['/welfare/promotion', '/welfare/rental'].includes(location.pathname);
-    const isAcentiaActive = ['/acentia/intro', '/acentia/goods', '/acentia/history'].includes(location.pathname);
+    const isAcentiaActive = ['/acentia/intro', '/acentia/goods', '/acentia/record'].includes(location.pathname);
 
     return (
         <div>
@@ -194,7 +194,7 @@ const Header = () => {
                                     <ul className="dropdown-container">
                                         <li><a href="/acentia/intro">ACENTIA 소개</a></li>
                                         <li><a href="/Acentia/goods">ACENTIA 굿즈</a></li>
-                                        <li><a href="/acentia/history">역대 ACENTIA</a></li>
+                                        <li><a href="/Acentia/record">역대 ACENTIA</a></li>
                                     </ul>
                                 )}
                             </li>
@@ -269,7 +269,7 @@ const Header = () => {
                                     <ul className="dropdown">
                                         <li><a href="/acentia/intro">ACENTIA 소개</a></li>
                                         <li><a href="/Acentia/goods">ACENTIA 굿즈</a></li>
-                                        <li><a href="/acentia/history">역대 ACENTIA</a></li>
+                                        <li><a href="/Acentia/record">역대 ACENTIA</a></li>
                                     </ul>
                                 )}
                             </li>
