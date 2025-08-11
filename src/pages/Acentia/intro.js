@@ -1,7 +1,7 @@
-import "./style.css";
 import React from "react";
+import "./introStyle.css";
 
-const acentia = () => {
+const Intro = () => {
     return (
         <div className="context">
             <div className="contextTitle">2025 ACENTIA 영상</div>
@@ -15,4 +15,4 @@ const acentia = () => {
     );
 };
 
-export default acentia;
+export default Intro;
