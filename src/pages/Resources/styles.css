@@ -21,10 +21,10 @@
 
 .proceeding-container,
 .audit-container {
-    max-width: 30%;
-    align-content: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     justify-content: center;
-    padding-left: 35%;
     padding-top: var(--spacing-xl);
     padding-bottom: 100px;
 }
@@ -39,6 +39,10 @@
     padding: var(--spacing-xl);
     margin-bottom: var(--spacing-xl);
     transition: var(--transition-normal);
+    width: fit-content;
+    min-width: 300px;
+    max-width: 600px;
+    text-align: center;
 }
 
 .proceeding-container li:hover,
@@ -70,9 +74,14 @@
     
     .proceeding-container,
     .audit-container {
-        max-width: 90%;
-        padding-left: 5%;
         padding-top: var(--spacing-lg);
+    }
+    
+    .proceeding-container li,
+    .audit-container li {
+        min-width: 250px;
+        max-width: 90%;
+        padding: var(--spacing-md);
     }
     
     .announcement-table {
@@ -96,6 +105,14 @@
 }
 
 @media screen and (max-width: 480px) {
+    .proceeding-container li,
+    .audit-container li {
+        min-width: 200px;
+        max-width: 95%;
+        padding: var(--spacing-sm);
+        font-size: var(--font-sm);
+    }
+    
     .announcement-table {
         width: 100%;
         font-size: var(--font-xs);
