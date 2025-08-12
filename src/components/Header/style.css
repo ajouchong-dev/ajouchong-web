@@ -1,8 +1,20 @@
+:root {
+    --primary-color: #6aaa7d;
+    --secondary-color: #a7c898;
+    --text-color: #636363;
+    --text-light: #a0a0a0;
+    --text-dark: #4a7c59;
+    --background-color: #ffffff;
+    --border-color: #a7c898;
+    --header-height: 119px;
+    --transition: all 0.3s ease;
+}
+
 .breadcrumb {
     padding: 10px 50px;
     font-size: 14px;
-    border-bottom: 1px solid #a7c898;
-    margin-top: 119px;
+    border-bottom: 1px solid var(--border-color);
+    margin-top: var(--header-height);
 }
 
 .breadcrumb ul {
@@ -10,23 +22,24 @@
     padding-top: 15px;
     margin: 0;
     display: flex;
-    color: #636363;
+    color: var(--text-color);
 }
 
 .breadcrumb li {
     margin-right: 5px;
-    color: #636363;
+    color: var(--text-color);
     display: flex;
     align-items: center;
 }
 
 .breadcrumb li a {
     text-decoration: none;
-    color: #636363;
+    color: var(--text-color);
+    transition: var(--transition);
 }
 
 .breadcrumb li a:hover {
-    color: #4a7c59;
+    color: var(--text-dark);
     text-decoration: underline;
 }
 
@@ -34,7 +47,7 @@
     content: '>';
     margin-left: 5px;
     font-size: 12px;
-    color: #a0a0a0; /* 흐린 색 */
+    color: var(--text-light);
 }
 
 .breadcrumb li:last-child::after {
@@ -45,10 +58,11 @@
     background: none !important;
     border: none !important;
     padding: 0;
-    font-weight: bold; /* 마지막 요소 강조 */
-    color: #4a7c59; /* 마지막 요소 색상 변경 (선택 사항) */
+    font-weight: bold;
+    color: var(--text-dark);
 }
 
+/* 반응형 디자인 */
 @media screen and (max-width: 768px) {
     .breadcrumb {
         padding: 10px 20px;
