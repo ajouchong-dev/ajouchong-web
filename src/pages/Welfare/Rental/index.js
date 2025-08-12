@@ -12,7 +12,7 @@ const Rental = () => {
                     className="rental-button"
                     onClick={() => window.open("https://forms.gle/buMhGLbFYeVjcdTi8", "_blank")}
                 >
-                    대여사업 구글폼 바로가기
+                    &gt; 대여사업 구글폼 바로가기
                 </button>
                 {/*<div className="rental-subTitle">물품 대여 현황</div>*/}
                 {/*<div className="rental-box"></div>*/}
