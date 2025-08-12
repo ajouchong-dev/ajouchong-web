@@ -3,45 +3,37 @@ import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './styles.css';
 
+const API_BASE_URL = 'https://www.ajouchong.com/api';
+
 const AnnouncementDetail = () => {
     const { id } = useParams();
     const [postDetails, setPostDetails] = useState(null);
     const [isLiking, setIsLiking] = useState(false);
-    const navigate = useNavigate();
     const [currentIndex, setCurrentIndex] = useState(0);
+    const navigate = useNavigate();
     const didFetch = useRef(false);
 
-    useEffect(() => {
-        const fetchPostDetails = async () => {
-            try {
-                const response = await axios.get(`https://www.ajouchong.com/api/notice/${id}`, {
-                    withCredentials: true
+    const fetchPostDetails = async () => {
+        try {
+            const response = await axios.get(`${API_BASE_URL}/notice/${id}`, {
+                withCredentials: true
+            });
+
+            if (response.data.code === 1) {
+                const post = response.data.data;
+                setPostDetails({
+                    ...post,
+                    isLiked: post.likedByCurrentUser
                 });
-
-                console.log(response.data);
-
-                if (response.data.code === 1) {
-                    const post = response.data.data;
-                    setPostDetails({
-                        ...post,
-                        isLiked: post.likedByCurrentUser
-                    });
-                } else {
-                    console.log(response.data.message);
-                }
-            } catch (error) {
-                console.error('API request error:', error);
+            } else {
+                console.log(response.data.message);
             }
-        };
-
-        if (id && !didFetch.current) {
-            didFetch.current = true; // 중복 실행 방지
-            fetchPostDetails();
+        } catch (error) {
+            console.error('API request error:', error);
         }
-    }, [id]);
+    };
 
     const handleLikeToggle = async () => {
-
         const confirmMessage = postDetails.isLiked
             ? "해당 게시글의 공감을 취소 하시겠습니까?"
             : "해당 게시글에 공감하시겠습니까?";
@@ -53,7 +45,7 @@ const AnnouncementDetail = () => {
 
         try {
             const response = await axios.post(
-                `https://www.ajouchong.com/api/notice/${id}/like`,
+                `${API_BASE_URL}/notice/${id}/like`,
                 {},
                 { withCredentials: true }
             );
@@ -72,12 +64,10 @@ const AnnouncementDetail = () => {
             }
         } catch (error) {
             console.error("API request error:", error);
+        } finally {
+            setIsLiking(false);
         }
     };
-
-    if (!postDetails) {
-        return <div>Loading...</div>;
-    }
 
     const handleNext = () => {
         if (postDetails.imageUrls && currentIndex < postDetails.imageUrls.length - 1) {
@@ -91,48 +81,88 @@ const AnnouncementDetail = () => {
         }
     };
 
+    const handleBackToList = () => {
+        navigate(-1);
+    };
+
+    const formatDate = (dateString) => {
+        return new Date(dateString).toLocaleString();
+    };
+
+    const renderMetadata = () => (
+        <div className="post-metadata">
+            <span>작성일 | {formatDate(postDetails.npCreateTime)}</span>
+            <span>조회수 | {postDetails.npHitCnt}</span>
+        </div>
+    );
+
+    const renderImageGallery = () => {
+        if (postDetails.imageUrls && postDetails.imageUrls.length > 0) {
+            return (
+                <div className="image-container">
+                    {currentIndex > 0 && (
+                        <button className="prev-btn" onClick={handlePrev}>❮</button>
+                    )}
+                    <img
+                        src={postDetails.imageUrls[currentIndex]}
+                        alt={`Image ${currentIndex + 1}`}
+                        className="current-image"
+                    />
+                    {currentIndex < postDetails.imageUrls.length - 1 && (
+                        <button className="next-btn" onClick={handleNext}>❯</button>
+                    )}
+                </div>
+            );
+        }
+        
+        return (
+            <img 
+                src="/main/achim_square.jpeg" 
+                alt="Default" 
+                className="default-image"
+            />
+        );
+    };
+
+    const renderLikeSection = () => (
+        <div className="like-section">
+            <button onClick={handleLikeToggle} className="like-button" disabled={isLiking}>
+                <img
+                    src={postDetails.isLiked ? "/main/filled-heart.png" : "/main/heart.png"}
+                    alt="좋아요"
+                    className="like-icon"
+                />
+            </button>
+            <span className="like-count">{postDetails.npUserLikeCnt}</span>
+        </div>
+    );
+
+    useEffect(() => {
+        if (id && !didFetch.current) {
+            didFetch.current = true;
+            fetchPostDetails();
+        }
+    }, [id]);
+
+    if (!postDetails) {
+        return <div>Loading...</div>;
+    }
+
     return (
         <div className="post-detail">
             <h2 className="post-title">{postDetails.npTitle}</h2>
             <hr className="titleSeparator"/>
-            <div className="post-metadata">
-                <span>작성일 | {new Date(postDetails.npCreateTime).toLocaleString()}</span>
-                <span>조회수 | {postDetails.npHitCnt}</span>
-            </div>
+            {renderMetadata()}
             <p className="post-content">{postDetails.npContent}</p>
 
             <div className="post-images">
-                {postDetails.imageUrls && postDetails.imageUrls.length > 0 ? (
-                    <div className="image-container">
-                        {currentIndex > 0 && (
-                            <button className="prev-btn" onClick={handlePrev}>❮</button>
-                        )}
-                        <img
-                            src={postDetails.imageUrls[currentIndex]}
-                            alt={`Image ${currentIndex + 1}`}
-                            className="current-image"
-                        />
-                        {currentIndex < postDetails.imageUrls.length - 1 && (
-                            <button className="next-btn" onClick={handleNext}>❯</button>
-                        )}
-                    </div>
-                ) : (
-                    <img src="/main/achim_square.jpeg" alt="Default" className="default-image"/>
-                )}
+                {renderImageGallery()}
             </div>
 
-            <div className="like-section">
-                <button onClick={handleLikeToggle} className="like-button">
-                    <img
-                        src={postDetails.isLiked ? "/main/filled-heart.png" : "/main/heart.png"}
-                        alt="좋아요"
-                        className="like-icon"
-                    />
-                </button>
-                <span className="like-count">{postDetails.npUserLikeCnt}</span>
-            </div>
-
-            <button onClick={() => navigate(-1)} className="back-button">목록으로 돌아가기</button>
+            {renderLikeSection()}
+            <button onClick={handleBackToList} className="back-button">
+                목록으로 돌아가기
+            </button>
         </div>
     );
 };
