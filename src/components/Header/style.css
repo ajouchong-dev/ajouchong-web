@@ -1,53 +1,41 @@
-:root {
-    --primary-color: #6aaa7d;
-    --secondary-color: #a7c898;
-    --text-color: #636363;
-    --text-light: #a0a0a0;
-    --text-dark: #4a7c59;
-    --background-color: #ffffff;
-    --border-color: #a7c898;
-    --header-height: 119px;
-    --transition: all 0.3s ease;
-}
-
 .breadcrumb {
-    padding: 10px 50px;
-    font-size: 14px;
-    border-bottom: 1px solid var(--border-color);
+    padding: var(--spacing-sm) var(--spacing-xl);
+    font-size: var(--font-sm);
+    border-bottom: 1px solid var(--border-primary);
     margin-top: var(--header-height);
 }
 
 .breadcrumb ul {
     list-style: none;
-    padding-top: 15px;
+    padding-top: var(--spacing-sm);
     margin: 0;
     display: flex;
-    color: var(--text-color);
+    color: var(--text-muted);
 }
 
 .breadcrumb li {
-    margin-right: 5px;
-    color: var(--text-color);
+    margin-right: var(--spacing-xs);
+    color: var(--text-muted);
     display: flex;
     align-items: center;
 }
 
 .breadcrumb li a {
     text-decoration: none;
-    color: var(--text-color);
-    transition: var(--transition);
+    color: var(--text-muted);
+    transition: var(--transition-normal);
 }
 
 .breadcrumb li a:hover {
-    color: var(--text-dark);
+    color: var(--accent-color);
     text-decoration: underline;
 }
 
 .breadcrumb li::after {
     content: '>';
-    margin-left: 5px;
-    font-size: 12px;
-    color: var(--text-light);
+    margin-left: var(--spacing-xs);
+    font-size: var(--font-xs);
+    color: var(--text-light-gray);
 }
 
 .breadcrumb li:last-child::after {
@@ -59,18 +47,18 @@
     border: none !important;
     padding: 0;
     font-weight: bold;
-    color: var(--text-dark);
+    color: var(--accent-color);
 }
 
 /* 반응형 디자인 */
 @media screen and (max-width: 768px) {
     .breadcrumb {
-        padding: 10px 20px;
-        font-size: 12px;
+        padding: var(--spacing-sm) var(--spacing-lg);
+        font-size: var(--font-xs);
     }
 
     .breadcrumb li::after {
-        margin-left: 5px;
+        margin-left: var(--spacing-xs);
         font-size: 10px;
     }
 }

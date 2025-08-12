@@ -71,7 +71,7 @@
 }
 
 .dot {
-    color: #889daa;
+    color: var(--text-light-gray);
     margin: 0 var(--spacing-xs);
 }
 
@@ -368,7 +368,7 @@
 .other-menu2 a {
     text-decoration: none;
     font-size: var(--font-sm);
-    color: #a3a1a1;
+    color: var(--text-light-gray);
     transition: var(--transition-normal);
 }
 
