@@ -1,114 +1,101 @@
+:root {
+    --primary-color: #6aaa7d;
+    --secondary-color: #a7c898;
+    --text-color: #565b61;
+    --text-light: #5d6b73;
+    --text-dark: #343a40;
+    --background-color: #ffffff;
+    --background-light: #f8f9fa;
+    --border-color: #a7c898;
+    --button-bg: #282c34;
+    --button-text: #e9ecef;
+    --button-hover-bg: #ffffff;
+    --button-hover-text: #353535;
+    --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    --transition: all 0.3s ease;
+    --border-radius: 10px;
+    --header-height: 119px;
+    --logo-height: 70px;
+    --dropdown-width: 200px;
+}
+
 .header {
     display: flex;
     flex-direction: column;
-    position: relative;
-    /*padding: 25px 25px;*/
-    position: fixed; /* 상단 고정 */
-    top: 0; /* 화면 상단에 고정 */
-    width: 100%; /* 화면 전체 너비를 차지하도록 설정 */
-    z-index: 1000; /* 다른 요소들 위에 표시되도록 설정 */
-    /*background: rgba(255, 255, 255, 0.2);*/
-
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
     background: linear-gradient(
-            to bottom,
-            rgba(255, 255, 255, 0.2), /* 상단에서 60% 불투명도 */
-            rgba(255, 255, 255, 0.1), /* 중간에서 40% 불투명도 */
-            rgba(255, 255, 255, 0)    /* 하단에서 완전 투명 */
+        to bottom,
+        rgba(255, 255, 255, 0.2),
+        rgba(255, 255, 255, 0.1),
+        rgba(255, 255, 255, 0)
     );
     backdrop-filter: blur(5px);
     -webkit-backdrop-filter: blur(5px);
-}
-.dot{
-    color: #889daa;
-    margin: 0 5px;
+    transition: var(--transition);
 }
 
 .header.scrolled {
-    background: rgba(255, 255, 255, 1); /* 스크롤 시 흰색 배경 */
-    border-bottom: 2px solid #a7c898; /* 스크롤 시 테두리 변경 */
-    z-index: 1000;
-    .upper{
-        background-color: #a7c898;
-    }
-
+    background: var(--background-color);
+    border-bottom: 2px solid var(--border-color);
 }
 
+.header.scrolled .upper {
+    background-color: var(--secondary-color);
+}
 
-.upper{
+.upper {
     padding: 8px 50px;
-    /*background-color: rgb(198, 225, 251);*/
-    width:100%;
-    top: 0;
-    /*padding: 10px 0;*/
+    width: 100%;
     box-sizing: border-box;
-    /*justify-content: center;*/
-    /*align-items: center;*/
-
-}
-
-
-.upper .upnav-menu  ul li {
-    list-style: none;
     display: flex;
-    justify-content: center;
-    padding: 0;
-    margin: 0;
-}
-.upnav-menu a {
-    text-decoration: none;
-    color: #5d6b73;
-}
-.upnav-menu a:hover {
-    text-decoration: none;
-    color: #6aaa7d;
+    justify-content: space-between;
+    align-items: center;
 }
 
-.upnav-menu ul {
-    list-style: none;
-    display: flex;
-    margin: 0;
-    padding: 0;
-}
-
-.upper .upnav-menu2  ul li {
-    list-style: none;
-    display: flex;
-    justify-content: center;
-    padding: 0;
-    margin: 0;
-}
-.upnav-menu2 a{
-    text-decoration: none;
-    color: #5d6b73;
-}
+.upnav-menu ul,
 .upnav-menu2 ul {
     list-style: none;
     display: flex;
     margin: 0;
     padding: 0;
+    align-items: center;
+}
+
+.upnav-menu ul li,
+.upnav-menu2 ul li {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    padding: 0;
+    margin: 0;
+}
+
+.upnav-menu a,
+.upnav-menu2 a {
+    text-decoration: none;
+    color: var(--text-light);
+    transition: var(--transition);
+}
+
+.upnav-menu a:hover,
+.upnav-menu2 a:hover {
+    color: var(--primary-color);
+}
+
+.upnav-menu2 ul {
     position: absolute;
     right: 20px;
     top: 8px;
 }
-.upnav-menu2 a:hover {
-    text-decoration: none;
-    color: #6aaa7d;
+
+.dot {
+    color: #889daa;
+    margin: 0 5px;
 }
 
-/*.lower{*/
-/*    padding: 25px 25px;*/
-/*    width:100%;*/
-/*    justify-content: center;*/
-/*    align-items: center;*/
-/*    background-color: #f8f9fa;*/
-/*!*}*!*/
-/*.upper {*/
-/*    display: flex;*/
-/*    justify-content: flex-end; !* 오른쪽 정렬 *!*/
-/*    padding: 10px 25px;*/
-/*    background-color:#E1BEE1;*/
-/*    width: 100%;*/
-/*}*/
 .lower {
     display: flex;
     justify-content: center;
@@ -118,19 +105,14 @@
     position: relative;
 }
 
-
 .logo {
     position: absolute;
     left: 50px;
-
 }
 
 .logo img {
-    height:70px;
-
+    height: var(--logo-height);
 }
-
-
 
 .nav-menu ul {
     list-style: none;
@@ -138,7 +120,6 @@
     margin: 0;
     padding: 0;
 }
-
 
 .nav-menu li {
     margin-right: 40px;
@@ -149,143 +130,49 @@
     margin-right: 0;
 }
 
-.nav-menu li:hover .dropdown-container,
-.dropdown-container:hover {
-    display: flex;
-}
-.nav-menu li:hover{
-    display: flex; /* 드롭다운 메뉴가 보이도록 설정 */
-}
-.dropdown-container{
-    display: flex; /* 드롭다운 메뉴가 보이도록 설정 */
-}
 .nav-menu a {
     text-decoration: none;
-    color: #565b61;
+    color: var(--text-color);
     font-weight: bold;
-
+    transition: var(--transition);
 }
 
-
+.nav-menu a:hover {
+    color: var(--primary-color);
+}
 
 .navtitle {
-    color: rgb(0, 0, 0);
+    color: var(--text-dark);
     font-weight: bold;
     cursor: pointer;
-    /*filter: drop-shadow(0 0 2px rgba(255, 255, 255, 0.7))*/
-    /*drop-shadow(0 0 2px rgba(255, 255, 255, 0.7))*/
-    /*drop-shadow(0 0 2px rgba(255, 255, 255, 0.7));*/
-    position: relative; /* ::after 가상 요소를 사용하기 위해 position을 relative로 설정 */
+    position: relative;
+    transition: var(--transition);
 }
 
 .navtitle::after {
-    content: ''; /* 내용 없이 가상 요소 생성 */
+    content: '';
     position: absolute;
-    bottom: -40px; /* 아래로 20px 확장 */
+    bottom: -40px;
     left: 0;
     right: 0;
-    height: 20px; /* 20px의 hover 영역 추가 */
-    /* 확장된 영역에 마우스를 올리면 드롭다운이 보이도록 설정 */
+    height: 20px;
 }
 
 .navtitle:hover,
 .navtitle::after:hover {
-    color: #6aaa7d; /* hover 시 색상 변경 */
-}
-
-.navtitle:hover .dropdown-container,
-.navtitle::after:hover .dropdown-container {
-    display: flex; /* 드롭다운 메뉴가 보이도록 설정 */
-}
-
-.nav-menu a:hover {
-    color: #6aaa7d;
-}
-.nav-menu li:hover .navtitle,
-.nav-menu li:hover .dropdown-container:hover {
-    color: #6aaa7d; /* 드롭다운 위로 커서를 옮겼을 때에도 navtitle 색상 유지 */
+    color: var(--primary-color);
 }
 
 .navtitle.active {
-    color: #6aaa7d; /* Highlight color for active state */
-}
-.button a{
-    width: 135px;
-    height: 35px;
-    color: #e9ecef;
-    text-decoration: none;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-
-}
-.button:hover {
-    background-color: #ffffff;;
-
-}
-.button {
-    background-color: #282c34;
-    width: 135px;
-    height: 35px;
-    text-align: center;
-    justify-content: center;
-    align-items: center;
-    position: absolute;
-    right: 20px;
-    border-radius: 10px;
-    display: flex;
-    margin-right: 30px;
-    padding: 0;
-    cursor: pointer;
-    transition: background-color 0.3s ease, color 0.3s ease;
-    border: none; /* 테두리 제거 */
-}
-
-.button a {
-    width: 100%;
-    height: 100%;
-    color: #e9ecef;
-    text-decoration: none;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 16px;
-    border: none; /* a 요소의 테두리 제거 */
-}
-.auth-button {
-    width: 100%; /* 부모 .button 요소의 너비에 맞춤 */
-    height: 100%; /* 부모 .button 요소의 높이에 맞춤 */
-    color: #e9ecef;
-    text-decoration: none;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 16px;
-    background: none; /* 버튼 배경 투명 */
-    border: none; /* 기본 버튼 테두리 제거 */
-    cursor: pointer;
-    border-radius: 10px; /* 버튼 모서리 둥글게 */
-}
-
-.auth-button:hover {
-    background-color: #ffffff; /* 호버 시 배경색 변경 */
-    color: #282c34; /* 호버 시 텍스트 색상 변경 */
-}
-.button:hover {
-    background-color: #ffffff;
-}
-
-.button:hover a {
-    color: #353535;
+    color: var(--primary-color);
 }
 
 .dropdown-container {
     background-color: rgba(255, 255, 255, 0.96);
-    border-top: 2px solid #a7c898;
+    border-top: 2px solid var(--border-color);
     flex-direction: column;
     position: absolute;
-    width: 200px;
+    width: var(--dropdown-width);
     top: 100%;
     display: none;
     justify-content: center;
@@ -300,15 +187,19 @@
     -moz-osx-font-smoothing: grayscale;
 }
 
-/* 드롭다운 메뉴와 상단 메뉴 사이의 보이지 않는 연결 영역 */
 .dropdown-container::before {
     content: '';
     position: absolute;
-    top: -20px; /* 상단 메뉴와의 간격만큼 위로 확장 */
+    top: -20px;
     left: 0;
     right: 0;
-    height: 20px; /* 상단 메뉴와의 간격 */
+    height: 20px;
     background: transparent;
+}
+
+.nav-menu li:hover .dropdown-container,
+.dropdown-container:hover {
+    display: flex;
 }
 
 .dropdown-container li {
@@ -332,11 +223,11 @@
 }
 
 .dropdown-container li:hover::before {
-    background-color: #a7c898;
+    background-color: var(--secondary-color);
 }
 
 .dropdown-container li a {
-    color: #343a40;
+    color: var(--text-dark);
     text-decoration: none;
     font-weight: 500;
     display: block;
@@ -350,121 +241,160 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-align: center;
+    transition: var(--transition);
 }
 
 .dropdown-container li:hover a {
-    color: #ffffff;
+    color: var(--background-color);
 }
 
-.dropdown-container li:hover {
-    background-color: transparent;
-}
-
-.custom-button {
-    background-color: #282c34; /* 원하는 배경색 */
-    color: #e9ecef; /* 텍스트 색상 */
-    border: none; /* 기본 버튼 테두리 제거 */
-    padding: 5px 5%; /* 패딩을 추가해 크기 조정 */
-    border-radius: 10px; /* 모서리 둥글게 */
-    cursor: pointer;
+.button {
+    background-color: var(--button-bg);
     width: 135px;
     height: 35px;
-    font-size: 16px; /* 폰트 크기 */
-    font-weight: normal;
-    transition: background-color 0.3s ease, color 0.3s ease; /* 호버 효과 전환 */
-}
-
-.custom-button:hover {
-    background-color: #ffffff; /* 호버 시 배경색 */
-    color: #353535; /* 호버 시 텍스트 색상 */
-}
-
-.custom-button:focus {
-    outline: none; /* 포커스 시 기본 아웃라인 제거 */
-}
-
-nav ul li {
-    font-weight: bold;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    right: 20px;
+    border-radius: var(--border-radius);
+    display: flex;
+    margin-right: 30px;
+    padding: 0;
     cursor: pointer;
-    padding: 10px;
-    transition: color 0.3s ease-in-out;
+    transition: var(--transition);
+    border: none;
 }
 
-/* 선택된 상위 메뉴 스타일 */
-nav ul li.active {
-    color: #6aaa7d; /* 선택된 메뉴 색상 */
-    background: #e9ecef;
+.button:hover {
+    background-color: var(--button-hover-bg);
 }
 
-/* 드롭다운 내부 항목은 기본 폰트 */
-nav ul li ul li {
-    font-weight: normal;
-    color: black;
+.button a,
+.auth-button {
+    width: 100%;
+    height: 100%;
+    color: var(--button-text);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    border: none;
+    background: none;
+    cursor: pointer;
+    border-radius: var(--border-radius);
+    transition: var(--transition);
 }
+
+.button:hover a,
+.auth-button:hover {
+    background-color: var(--button-hover-bg);
+    color: var(--button-hover-text);
+}
+
 .hamburger-menu {
     display: none;
     cursor: pointer;
     position: absolute;
     right: 80px;
-    /*top: 45px;*/
-
     z-index: 100;
-
 }
 
-/* 모바일 메뉴 스타일 */
+/* 모바일 메뉴 */
 .mobile-menu {
     display: none;
     position: absolute;
-    /*top: 100px;*/
     left: 0;
     width: 100%;
-
-    background: #f8f9fa; /* 드롭다운 배경색 변경 */
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    padding: 100px 0 100px 0;
-
-
+    background: var(--background-light);
+    box-shadow: var(--shadow);
+    padding: 100px 0;
     z-index: 99;
     cursor: pointer;
 }
 
-.mobile-menu ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    padding-top: 10px;
-    /*padding-bottom: 80px;*/
-
-}
-
-.mobile-menu li {
-    padding: 10px 20px;
-    /*border-bottom: 1px solid #ddd;*/
-    transition: background 0.3s ease-in-out;
-}
-
-/* hover 시 배경색 변경 */
-.mobile-menu li:hover {
-    /*background: #e9ecef;*/
-}
-
-.mobile-menu li a {
-    text-decoration: none;
-    color: black;
-    transition: color 0.3s ease-in-out;
-}
-
-/* hover 시 글자색 변경 */
-.mobile-menu li a:hover {
-    color: #6aaa7d;
-}
-
-/* 활성화 시 메뉴 표시 */
 .mobile-menu.open {
     display: block;
 }
 
+.mobile-menu ul {
+    list-style: none;
+    padding: 10px 0 0 0;
+    margin: 0;
+}
+
+.mobile-menu li {
+    padding: 10px 20px;
+    transition: var(--transition);
+}
+
+.mobile-menu li a {
+    text-decoration: none;
+    color: var(--text-dark);
+    transition: var(--transition);
+}
+
+.mobile-menu li a:hover {
+    color: var(--primary-color);
+}
+
+.mobile-menu li.active {
+    color: var(--primary-color);
+    background: var(--background-light);
+}
+
+.mobile-menu .dropdown {
+    list-style: none;
+    padding-left: 20px;
+    margin-top: 10px;
+}
+
+.mobile-menu .dropdown li {
+    padding: 8px 0;
+    font-size: 14px;
+}
+
+.other-menu,
+.other-menu2 {
+    display: flex;
+    justify-content: center;
+    padding: 10px 0;
+}
+
+.other-menu {
+    margin-top: 80px;
+}
+
+.other-menu ul,
+.other-menu2 ul {
+    display: flex;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    color: var(--text-light);
+}
+
+.other-menu li,
+.other-menu2 li {
+    padding: 5px 10px;
+    color: var(--text-light);
+}
+
+.other-menu a,
+.other-menu2 a {
+    text-decoration: none;
+    font-size: 14px;
+    color: #a3a1a1;
+    transition: var(--transition);
+}
+
+.other-menu a:hover,
+.other-menu2 a:hover {
+    color: var(--primary-color);
+}
+
+/* 반응형 디자인 */
 @media (max-width: 768px) {
     .nav-menu {
         display: none;
@@ -473,9 +403,9 @@ nav ul li ul li {
     .upper {
         display: none;
     }
-    .header{
-        margin: -15px 0;
 
+    .header {
+        margin: -15px 0;
     }
 
     .hamburger-menu {
@@ -492,75 +422,10 @@ nav ul li ul li {
     .logo {
         position: static;
         margin-bottom: 5px;
-        margin-left: 10px; /* 왼쪽 정렬 */
+        margin-left: 10px;
     }
 
     .button {
         display: none;
     }
-
-    }
-
-
-/* 상단 링크 스타일 */
-.other-menu {
-    display: flex;
-    justify-content: center;
-    padding: 10px 0;
-    margin-top: 80px;
-
-
-}
- .other-menu2{
-    display: flex;
-    justify-content: center;
-
-
-}
-
-.other-menu ul, .other-menu2 ul {
-    display: flex;
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    color: #5c5c5c;
-}
-
-.other-menu li, .other-menu2 li {
-    padding: 5px 10px;
-    color: #5c5c5c;
-}
-
-.other-menu a, .other-menu2 a {
-    text-decoration: none;
-    font-size: 14px;
-    color: #a3a1a1;
-}
-
-.other-menu a:hover, .other-menu2 a:hover {
-    color: #6aaa7d;
-}
-
-/* 구분점 스타일 */
-.dot {
-    color: #999;
-    margin: 0 5px;
-}
-
-/* 모바일 메뉴 스타일 */
-.mobile-menu {
-    display: none;
-    position: absolute;
-    top: 60px;
-    left: 0;
-    width: 100%;
-    background: white;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    padding: 20px 0;
-    z-index: 99;
-    cursor: pointer;
-}
-
-.mobile-menu.open {
-    display: block;
 }
