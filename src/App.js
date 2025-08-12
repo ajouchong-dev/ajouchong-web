@@ -19,7 +19,6 @@ import Campusmap from './pages/Introduction/Campusmap';
 
 import Announcement from './pages/News/Announcement/index';
 import AnnouncementDetail from './pages/News/Announcement/AnnouncementDetail';
-import Planning from './pages/News/Planning';
 
 import Qna from './pages/Communication/Qna';
 import QnaDetail from './pages/Communication/Qna/QnaDetail';
@@ -81,7 +80,6 @@ const Content = () => {
                         
                 <Route path="/news/notice" element={<Announcement/>}/>
                 <Route path="/notice/:id" element={<AnnouncementDetail/>}/>
-                <Route path="/news/planning" element={<Planning/>}/>
                 
                 <Route path="/communication/qna" element={<Qna/>}/>
                 <Route path="/communication/qna/write" element={<WritePage/>}/>
