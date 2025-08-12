@@ -2,35 +2,82 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    padding: var(--spacing-sm);
 }
 
 .user-info {
     display: flex;
     align-items: center;
     gap: var(--spacing-sm);
+    margin-right: var(--spacing-md);
 }
 
 .greeting {
     color: var(--text-white);
     font-size: var(--font-sm);
+    font-weight: 500;
 }
 
-.login-button,
-.logout-button {
+.login-container button.auth-button {
+    all: unset;
+    width: 135px;
+    height: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     background-color: var(--button-primary);
     color: var(--button-primary-text);
-    font-weight: 300;
-    padding: var(--spacing-sm) var(--spacing-lg);
-    border-radius: var(--radius-large);
+    border-radius: var(--radius-normal);
+    font-family: 'Lexend', sans-serif;
+    font-size: var(--font-base);
+    font-weight: 500;
+    cursor: pointer;
+    transition: var(--transition-normal);
     border: none;
     outline: none;
-    cursor: pointer;
-    font-family: 'Lexend', sans-serif;
-    transition: var(--transition-normal);
+    box-shadow: none;
 }
 
-.login-button:hover,
-.logout-button:hover {
+.login-container button.auth-button:hover {
     background-color: var(--button-hover);
     color: var(--button-hover-text);
+}
+
+.login-container button.auth-button:focus,
+.login-container button.auth-button:focus-visible {
+    outline: none;
+}
+
+.login-container button.auth-button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+/* 반응형 디자인 */
+@media screen and (max-width: 768px) {
+    .login-container {
+        padding: var(--spacing-xs);
+    }
+    
+    .login-container button.auth-button {
+        width: 120px;
+        height: 32px;
+        font-size: var(--font-sm);
+    }
+    
+    .greeting {
+        font-size: var(--font-xs);
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .login-container button.auth-button {
+        width: 100px;
+        height: 30px;
+        font-size: var(--font-xs);
+    }
+    
+    .user-info {
+        margin-right: var(--spacing-sm);
+    }
 }
