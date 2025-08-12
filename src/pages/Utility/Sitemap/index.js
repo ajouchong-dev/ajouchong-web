@@ -18,7 +18,7 @@ const Sitemap = () => {
         },
         {
             title: '소식',
-            path: '/news',
+            path: '/news/notice',
             items: [
                 { name: '공지사항', path: '/news/notice' }
             ]
