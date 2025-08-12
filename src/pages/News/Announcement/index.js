@@ -114,7 +114,12 @@ const Announcement = () => {
                 {currentPosts.length > 0 ? (
                     currentPosts.map(renderPostCard)
                 ) : (
-                    <div className="no-results">일치하는 게시물이 없습니다.</div>
+                    <div className="no-results">
+                        {posts.length === 0 
+                            ? "공지사항이 없습니다." 
+                            : "일치하는 게시글이 없습니다."
+                        }
+                    </div>
                 )}
             </div>
         );
