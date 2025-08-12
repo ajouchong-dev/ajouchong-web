@@ -1,6 +1,8 @@
 import React, {useState} from 'react';
 import {BrowserRouter as Router, Routes, Route, useLocation, Navigate} from 'react-router-dom';
 import { AuthProvider } from './contexts/AuthContext';
+import './styles/variables.css';
+import './styles/utilities.css';
 import './App.css';
 import Header from './components/Header/Header';
 import Breadcrumb from './components/Header/Breadcrumb';
