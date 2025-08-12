@@ -1,28 +1,9 @@
-.context{
-    font-family: Arial, sans-serif;
-    margin: 0;
-    margin-top: 10%;
-    padding: 0;
-}
+@import '../styles.css';
 
-.contextTitle{
-    font-size: 25px;
-    font-weight: bolder;
-}
-
-.titleSeparator {
-     max-width: 30%;
-     border: none; /* 기본 테두리 제거 */
-     height: 2px; /* 선의 두께 */
-     background-color: #a7c898; /* 선의 색상 */
-     margin-top: 15px; /* 제목과 선 사이의 여백 */
- }
-
-
-.promiseImg{
+.promiseImg {
     max-width: 40%;
-    margin-top: 60px;
+    margin-top: var(--spacing-xl);
     height: auto;
-    margin-bottom: 100px;
+    margin-bottom: var(--spacing-xl);
 }
 

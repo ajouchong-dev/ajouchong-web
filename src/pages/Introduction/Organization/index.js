@@ -1,7 +1,7 @@
 import './styles.css';
-import React, { useEffect } from 'react';
+import React from 'react';
 
-const Organization = (props, context) => {
+const Organization = () => {
     return (
         <div className="context">
             <div className="contextTitle">조직도</div>
@@ -9,9 +9,10 @@ const Organization = (props, context) => {
             <img
                 className="organizationImg"
                 src="/main/organization.png"
-                alt="ajouchong"
+                alt="아주대학교 총학생회 조직도"
             />
         </div>
     );
-}
+};
+
 export default Organization;

@@ -13,6 +13,6 @@ const PromiseComponent = () => {
             />
         </div>
     );
-}
+};
 
 export default PromiseComponent;

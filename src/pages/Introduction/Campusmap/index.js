@@ -1,7 +1,7 @@
 import './styles.css';
-import React, { useEffect } from 'react';
+import React from 'react';
 
-const Campusmap = (props, context) => {
+const Campusmap = () => {
     return (
         <div className="context">
             <div className="contextTitle">캠퍼스 맵</div>
@@ -9,9 +9,10 @@ const Campusmap = (props, context) => {
             <img
                 className="campusImg"
                 src='/campusmap_page-0001.jpg'
-                alt="ajouchong"
+                alt="아주대학교 캠퍼스 맵"
             />
         </div>
     );
-}
+};
+
 export default Campusmap;
