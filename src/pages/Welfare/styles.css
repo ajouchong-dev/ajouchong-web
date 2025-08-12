@@ -1,0 +1,29 @@
+.context {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    margin-top: 10%;
+    padding: 0;
+}
+
+.contextTitle {
+    font-size: var(--font-xl);
+    font-weight: bold;
+    color: var(--text-primary);
+}
+
+.titleSeparator {
+    max-width: 30%;
+    border: none;
+    height: 2px;
+    background-color: var(--secondary-color);
+    margin-top: var(--spacing-sm);
+}
+
+.contentSeparator {
+    max-width: 60%;
+    border: none;
+    height: 1px;
+    background-color: rgba(183, 210, 245, 0.75);
+    margin-top: var(--spacing-sm);
+    margin-bottom: var(--spacing-xl);
+} 
