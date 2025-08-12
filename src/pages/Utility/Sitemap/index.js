@@ -3,68 +3,95 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 const Sitemap = () => {
+    const sitemapData = [
+        {
+            title: '소개',
+            path: '/introduction/about',
+            items: [
+                { name: '총학생회 소개', path: '/introduction/about' },
+                { name: '공약 소개', path: '/introduction/promise' },
+                { name: '조직도', path: '/introduction/organization' },
+                { name: '역대 총학생회 소개', path: '/introduction/history' },
+                { name: '오시는 길', path: '/introduction/map' },
+                { name: '캠퍼스 맵', path: '/introduction/campusmap' }
+            ]
+        },
+        {
+            title: '소식',
+            path: '/news',
+            items: [
+                { name: '공지사항', path: '/news/notice' }
+            ]
+        },
+        {
+            title: '소통',
+            path: '/communication/qna',
+            items: [
+                { name: 'Q&A', path: '/communication/qna' },
+                { name: '100인 안건 상정제', path: '/communication/require' },
+                { name: '통합 소통 창구', path: 'https://forms.gle/V1hH3Gf5uyuC7CVp6' }
+            ]
+        },
+        {
+            title: '자료실',
+            path: '/resources/bylaws',
+            items: [
+                { name: '세칙 및 회칙', path: '/resources/bylaws' },
+                { name: '회의록', path: '/resources/proceeding' },
+                { name: '감사자료', path: '/resources/audit' }
+            ]
+        },
+        {
+            title: '학생복지',
+            path: '/welfare/promotion',
+            items: [
+                { name: '제휴백과', path: '/welfare/promotion' },
+                { name: '대여사업', path: '/welfare/rental' }
+            ]
+        },
+        {
+            title: 'ACENTIA',
+            path: '/acentia/intro',
+            items: [
+                { name: 'ACENTIA 소개', path: '/acentia/intro' },
+                { name: 'ACENTIA 굿즈', path: '/acentia/goods' },
+                { name: '역대 ACENTIA', path: '/acentia/record' }
+            ]
+        }
+    ];
+
+    const renderSitemapSection = (section) => (
+        <li key={section.title} className="list-container">
+            <Link className="sitemapTitle" to={section.path}>
+                {section.title}
+            </Link>
+            <hr className="listSeparator"/>
+            <ul>
+                {section.items.map((item) => (
+                    <li key={item.path}>
+                        <Link to={item.path}>{item.name}</Link>
+                    </li>
+                ))}
+            </ul>
+        </li>
+    );
+
+    const renderSitemapList = () => (
+        <ul className="sitemap-list">
+            {sitemapData.map(renderSitemapSection)}
+        </ul>
+    );
+
     return (
         <div className="context">
             <div className="contextTitle">사이트맵</div>
             <hr className="titleSeparator"/>
 
             <div className="sitemap">
-                <ul className="sitemap-list">
-                    <div className="list-container">
-                        <Link className="sitemapTitle" to="/introduction/about">소개</Link>
-                        <hr className="listSeparator"/>
-                        <ul>
-                            <li><Link to="/introduction/about">총학생회 소개</Link></li>
-                            <li><Link to="/introduction/promise">공약 소개</Link></li>
-                            <li><Link to="/introduction/organization">조직도</Link></li>
-                            <li><Link to="/introduction/map">오시는 길</Link></li>
-                            <li><Link to="/introduction/campusmap">캠퍼스 맵</Link></li>
-                        </ul>
-                    </div>
-                    {/*<hr className="listSeparator"/>*/}
-                    <li className="list-container">
-                        <Link className="sitemapTitle" to="/news">소식</Link>
-                        <hr className="listSeparator"/>
-                        <ul>
-                            <li><Link to="/news/announcement">공지사항</Link></li>
-                            {/*<li><Link to="/news/planning">학사일정</Link></li>*/}
-                        </ul>
-                    </li>
-
-                    <li className="list-container">
-                        <Link className="sitemapTitle" to="/communication/qna">소통</Link>
-                        <hr className="listSeparator"/>
-                        <ul>
-                            <li><Link to="/communication/qna">Q&A</Link></li>
-                            <li><Link to="/communication/require">100인 안건 상정제</Link></li>
-                            <li><Link to="/communication/commu">통합 소통 창구</Link></li>
-                        </ul>
-                    </li>
-
-                    <li className="list-container">
-                        <Link className="sitemapTitle" to="/resources/bylaws">자료실</Link>
-                        <hr className="listSeparator"/>
-                        <ul>
-                            <li><Link to="/resources/bylaws">세칙 및 회칙</Link></li>
-                            <li><Link to="/resources/proceeding">회의록</Link></li>
-                            <li><Link to="/resources/audit">감사자료</Link></li>
-                        </ul>
-                    </li>
-
-                    <li className="list-container">
-                        <Link className="sitemapTitle" to="/welfare/promotion">학생복지</Link>
-                        <hr className="listSeparator"/>
-                        <ul>
-                            <li><Link to="/welfare/promotion">제휴백과</Link></li>
-                            <li><Link to="/welfare/rental">대여사업</Link></li>
-                        </ul>
-                    </li>
-                </ul>
+                {renderSitemapList()}
             </div>
-
         </div>
-
     );
-}
+};
 
 export default Sitemap;
