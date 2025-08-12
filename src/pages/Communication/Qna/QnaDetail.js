@@ -3,42 +3,37 @@ import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './styles.css';
 
+const API_BASE_URL = 'https://www.ajouchong.com/api';
+
 const QnaDetail = () => {
     const { postId } = useParams();
     const [postDetails, setPostDetails] = useState(null);
     const [loading, setLoading] = useState(true);
     const [isLiking, setIsLiking] = useState(false);
     const navigate = useNavigate();
-    const didFetch = useRef(false); // 첫 실행 여부를 추적하는 useRef
+    const didFetch = useRef(false);
 
-    useEffect(() => {
-        const fetchPostDetails = async () => {
-            setLoading(true);
-            try {
-                const response = await axios.get(`https://www.ajouchong.com/api/qna/${postId}`, {
-                    withCredentials: true
+    const fetchPostDetails = async () => {
+        setLoading(true);
+        try {
+            const response = await axios.get(`${API_BASE_URL}/qna/${postId}`, {
+                withCredentials: true
+            });
+
+            if (response.data.code === 1) {
+                setPostDetails({
+                    ...response.data.data,
+                    isLiked: response.data.data.likedByCurrentMember
                 });
-
-                if (response.data.code === 1) {
-                    setPostDetails({
-                        ...response.data.data,
-                        isLiked: response.data.data.likedByCurrentMember
-                    });
-                } else {
-                    console.error('Error fetching post details:', response.data.message);
-                }
-            } catch (error) {
-                console.error('API request error:', error);
-            } finally {
-                setLoading(false);
+            } else {
+                console.error('Error fetching post details:', response.data.message);
             }
-        };
-
-        if (postId && !didFetch.current) {
-            didFetch.current = true; // 중복 실행 방지
-            fetchPostDetails();
+        } catch (error) {
+            console.error('API request error:', error);
+        } finally {
+            setLoading(false);
         }
-    }, [postId]);
+    };
 
     const handleLike = async () => {
         if (isLiking) return;
@@ -54,7 +49,7 @@ const QnaDetail = () => {
 
         try {
             const response = await axios.post(
-                `https://www.ajouchong.com/api/qna/${postId}/like`,
+                `${API_BASE_URL}/qna/${postId}/like`,
                 {},
                 { withCredentials: true }
             );
@@ -78,6 +73,49 @@ const QnaDetail = () => {
         }
     };
 
+    const handleBackToList = () => {
+        navigate(-1);
+    };
+
+    const formatDate = (dateString) => {
+        return new Date(dateString).toLocaleString();
+    };
+
+    const renderMetadata = () => (
+        <div className="post-metadata">
+            <span>작성일 | {formatDate(postDetails.qpCreateTime)}</span>
+            <span>조회수 | {postDetails.qpHitCnt}</span>
+            <span>좋아요 | {postDetails.qpUserLikeCnt}</span>
+        </div>
+    );
+
+    const renderAnswerSection = () => (
+        <div className="post-answer">
+            <strong>상태:</strong> {postDetails.replied ? '답변 완료' : '대기 중'}
+            <p>{postDetails.answer || '답변이 아직 없습니다.'}</p>
+        </div>
+    );
+
+    const renderLikeSection = () => (
+        <div className="like-section">
+            <button onClick={handleLike} className="like-button" disabled={isLiking}>
+                <img
+                    src={postDetails.isLiked ? "/main/filled-heart.png" : "/main/heart.png"}
+                    alt="좋아요"
+                    className="like-icon"
+                />
+            </button>
+            <span className="like-count">{postDetails.qpUserLikeCnt}</span>
+        </div>
+    );
+
+    useEffect(() => {
+        if (postId && !didFetch.current) {
+            didFetch.current = true;
+            fetchPostDetails();
+        }
+    }, [postId]);
+
     if (loading) {
         return <div>Loading...</div>;
     }
@@ -90,31 +128,11 @@ const QnaDetail = () => {
         <div className="post-detail">
             <h2 className="post-title">{postDetails.qpTitle}</h2>
             <hr className="titleSeparator"/>
-            <div className="post-metadata">
-                <span>작성일 | {new Date(postDetails.qpCreateTime).toLocaleString()}</span>
-                <span>조회수 | {postDetails.qpHitCnt}</span>
-                <span>좋아요 | {postDetails.qpUserLikeCnt}</span>
-            </div>
+            {renderMetadata()}
             <p className="post-content">{postDetails.qpContent}</p>
-
-            {/* Status and Answer */}
-            <div className="post-answer">
-                <strong>상태:</strong> {postDetails.replied ? '답변 완료' : '대기 중'}
-                <p>{postDetails.answer || '답변이 아직 없습니다.'}</p>
-            </div>
-
-            <div className="like-section">
-                <button onClick={handleLike} className="like-button" disabled={isLiking}>
-                    <img
-                        src={postDetails.isLiked ? "/main/filled-heart.png" : "/main/heart.png"}
-                        alt="좋아요"
-                        className="like-icon"
-                    />
-                </button>
-                <span className="like-count">{postDetails.qpUserLikeCnt}</span>
-            </div>
-
-            <button onClick={() => navigate(-1)} className="back-button">
+            {renderAnswerSection()}
+            {renderLikeSection()}
+            <button onClick={handleBackToList} className="back-button">
                 목록으로 돌아가기
             </button>
         </div>

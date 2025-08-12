@@ -3,23 +3,21 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './styles.css';
 
+const API_BASE_URL = 'https://www.ajouchong.com/api';
+
 const RequireWrite = () => {
     const [form, setForm] = useState({ title: '', content: '' });
     const [message, setMessage] = useState({ success: '', error: '' });
     const navigate = useNavigate();
 
-    useEffect(() => {
-        const checkLoginStatus = async () => {
-            try {
-                await axios.get('https://www.ajouchong.com/api/login/auth/info', { withCredentials: true });
-            } catch {
-                alert('로그인이 필요합니다.');
-                navigate('/communication/require'); // 로그인 페이지로 이동
-            }
-        };
-
-        checkLoginStatus();
-    }, [navigate]);
+    const checkLoginStatus = async () => {
+        try {
+            await axios.get(`${API_BASE_URL}/login/auth/info`, { withCredentials: true });
+        } catch {
+            alert('로그인이 필요합니다.');
+            navigate('/communication/require');
+        }
+    };
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -32,7 +30,7 @@ const RequireWrite = () => {
 
         try {
             const response = await axios.post(
-                'https://www.ajouchong.com/api/agora',
+                `${API_BASE_URL}/agora`,
                 { apTitle: form.title, apContent: form.content },
                 { withCredentials: true, headers: { "Content-Type": "application/json" } }
             );
@@ -51,22 +49,53 @@ const RequireWrite = () => {
         }
     };
 
+    const renderMessage = () => (
+        <>
+            {message.success && <div className="message success">{message.success}</div>}
+            {message.error && <div className="message error">{message.error}</div>}
+        </>
+    );
+
+    const renderForm = () => (
+        <form onSubmit={handleSubmit} className="qna-form">
+            <div className="form-group">
+                <label htmlFor="title">제목</label>
+                <input 
+                    type="text" 
+                    id="title"
+                    name="title" 
+                    value={form.title} 
+                    onChange={handleChange} 
+                    required 
+                    placeholder="제목을 입력하세요"
+                />
+            </div>
+            <div className="form-group">
+                <label htmlFor="content">내용</label>
+                <textarea 
+                    id="content"
+                    name="content" 
+                    value={form.content} 
+                    onChange={handleChange} 
+                    required 
+                    placeholder="내용을 입력하세요"
+                />
+            </div>
+            <button type="submit" className="submit-button">게시</button>
+        </form>
+    );
+
+    useEffect(() => {
+        checkLoginStatus();
+    }, [navigate]);
+
     return (
         <div className="context">
             <div className="contextTitle">안건 상정 글 작성</div>
             <hr className="titleSeparator"/>
 
-            <form onSubmit={handleSubmit} className="qna-form">
-                <div className="form-group">
-                    <label>제목</label>
-                    <input type="text" name="title" value={form.title} onChange={handleChange} required />
-                </div>
-                <div className="form-group">
-                    <label>내용</label>
-                    <textarea name="content" value={form.content} onChange={handleChange} required />
-                </div>
-                <button type="submit" className="submit-button">게시</button>
-            </form>
+            {renderForm()}
+            {renderMessage()}
         </div>
     );
 };
