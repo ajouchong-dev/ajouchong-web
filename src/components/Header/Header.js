@@ -139,7 +139,7 @@ const Header = () => {
 
     const renderUpperLinks = (links, isRight = false) => (
         <nav className={isRight ? "upnav-menu2" : "upnav-menu"}>
-            <ul>
+            <ul className="flex items-center">
                 {links.map((link, index) => (
                     <React.Fragment key={index}>
                         <li>
@@ -169,9 +169,9 @@ const Header = () => {
                         <img src="/achim_header.svg" alt="로고"/>
                     </a>
                 </div>
-                
+
                 <nav className="nav-menu">
-                    <ul>
+                    <ul className="flex">
                         {Object.entries(NAVIGATION_MENUS).map(([key, menu]) => (
                             <li 
                                 key={key}
@@ -191,17 +191,17 @@ const Header = () => {
                     </ul>
                 </nav>
 
-                <div className="hamburger-menu" onClick={toggleMobileMenu}>
+                <div className="hamburger-menu cursor-pointer" onClick={toggleMobileMenu}>
                     {isMobileMenuOpen ? <X size={28}/> : <Menu size={28}/>}
                 </div>
 
                 <nav className={`mobile-menu ${isMobileMenuOpen ? 'open' : ''}`}>
-                    <ul>
+                    <ul className="list-none">
                         {Object.entries(NAVIGATION_MENUS).map(([key, menu]) => (
                             <li 
                                 key={key}
                                 onClick={() => toggleMobileDropdown(key)}
-                                className={dropdown === key ? 'active' : ''}
+                                className={`${dropdown === key ? 'active' : ''} cursor-pointer`}
                             >
                                 {menu.title}
                                 {dropdown === key && renderDropdownMenu(key, true)}
@@ -210,7 +210,7 @@ const Header = () => {
                     </ul>
                     
                     <nav className="other-menu">
-                        <ul>
+                        <ul className="flex justify-center">
                             {UPPER_LINKS.map((link, index) => (
                                 <React.Fragment key={index}>
                                     <li><a href={link.url}>{link.label}</a></li>
@@ -220,7 +220,7 @@ const Header = () => {
                         </ul>
                     </nav>
                     <nav className="other-menu2">
-                        <ul>
+                        <ul className="flex justify-center">
                             {UPPER_LINKS_RIGHT.map((link, index) => (
                                 <React.Fragment key={index}>
                                     <li><a href={link.path}>{link.label}</a></li>
