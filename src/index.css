@@ -1,3 +1,4 @@
+/* 전역 기본 스타일 */
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -5,10 +6,42 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-
+  color: var(--text-primary);
+  background-color: var(--bg-primary);
 }
 
+/* 코드 블록 스타일 */
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+/* 전역 링크 스타일 */
+a {
+  color: var(--primary-color);
+  text-decoration: none;
+  transition: var(--transition-normal);
+}
+
+a:hover {
+  color: var(--accent-color);
+}
+
+/* 전역 버튼 리셋 */
+button {
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+/* 전역 포커스 스타일 */
+*:focus {
+  outline: 2px solid var(--primary-color);
+  outline-offset: 2px;
+}
+
+/* 전역 박스 사이징 */
+* {
+  box-sizing: border-box;
 }
