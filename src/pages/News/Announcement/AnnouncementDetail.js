@@ -3,8 +3,6 @@ import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './styles.css';
 
-const API_BASE_URL = 'https://www.ajouchong.com/api';
-
 const AnnouncementDetail = () => {
     const { id } = useParams();
     const [postDetails, setPostDetails] = useState(null);
@@ -15,7 +13,7 @@ const AnnouncementDetail = () => {
 
     const fetchPostDetails = async () => {
         try {
-            const response = await axios.get(`${API_BASE_URL}/notice/${id}`, {
+            const response = await axios.get(`/api/notice/${id}`, {
                 withCredentials: true
             });
 
@@ -45,7 +43,7 @@ const AnnouncementDetail = () => {
 
         try {
             const response = await axios.post(
-                `${API_BASE_URL}/notice/${id}/like`,
+                `/api/notice/${id}/like`,
                 {},
                 { withCredentials: true }
             );

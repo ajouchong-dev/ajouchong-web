@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import './styles.css';
 
-const API_BASE_URL = 'https://www.ajouchong.com/api';
 const POSTS_PER_PAGE = 9;
 
 const Announcement = () => {
@@ -21,7 +20,7 @@ const Announcement = () => {
 
     const fetchPosts = async () => {
         try {
-            const response = await axios.get(`${API_BASE_URL}/notice`, {
+            const response = await axios.get(`/api/notice`, {
                 headers: { 'Content-Type': 'application/json' },
                 withCredentials: true,
             });
@@ -73,7 +72,7 @@ const Announcement = () => {
 
     const renderPostCard = (post) => (
         <div className="post-box" key={post.id}>
-            <Link to={`/notice/${post.id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
+            <Link to={`/api/notice/${post.id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
                 <img
                     src={post.imageUrl}
                     alt={post.title || '공지사항 이미지'}
@@ -82,7 +81,7 @@ const Announcement = () => {
                     style={{ cursor: 'pointer' }}
                 />
             </Link>
-            <Link to={`/notice/${post.id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
+            <Link to={`/api/notice/${post.id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
                 <div className="post-title" style={{ cursor: 'pointer' }}>
                     {post.title}
                 </div>
