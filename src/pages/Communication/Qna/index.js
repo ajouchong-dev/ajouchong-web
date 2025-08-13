@@ -4,7 +4,6 @@ import { useNavigate } from 'react-router-dom';
 import QnaDetail from './QnaDetail';
 import axios from "axios";
 
-const API_BASE_URL = 'https://www.ajouchong.com/api';
 const POSTS_PER_PAGE = 9;
 
 const Qna = () => {
@@ -39,7 +38,7 @@ const Qna = () => {
 
     const fetchPosts = async () => {
         try {
-            const response = await fetch(`${API_BASE_URL}/qna`);
+            const response = await fetch(`/api/qna`);
             const result = await response.json();
 
             if (result.code === 1) {
@@ -63,11 +62,12 @@ const Qna = () => {
             );
             setFilteredPosts(matchedPosts);
         }
+        setCurrentPage(1);
     };
 
     const goToWritePage = async () => {
         try {
-            const response = await axios.get(`${API_BASE_URL}/login/auth/info`, {
+            const response = await axios.get(`/api/login/auth/info`, {
                 withCredentials: true,
             });
 
@@ -75,11 +75,9 @@ const Qna = () => {
                 navigate('/communication/qna/write');
             } else {
                 alert('로그인이 필요합니다.');
-                navigate('/communication/qna');
             }
         } catch (error) {
             alert('로그인이 필요합니다.');
-            navigate('/communication/qna');
         }
     };
 
