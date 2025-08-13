@@ -13,7 +13,7 @@ const Announcement = () => {
 
     const formatPostData = (post) => ({
         id: post.npost_id,
-        imageUrl: post.imageUrls[0] || '/aurum_square.jpeg',
+        imageUrl: post.imageUrls[0] || '/images/main/achim_square.jpeg',
         title: post.npTitle,
         date: new Date(post.npCreateTime).toLocaleDateString(),
     });

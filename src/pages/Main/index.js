@@ -5,12 +5,12 @@ import { useNavigate, Link } from 'react-router-dom';
 import './styles.css';
 
 const SLIDER_IMAGES = [
-    "/main/main_7.jpg",
-    "/main/spring_1.jpeg",
-    "/main/spring_2.jpeg",
-    "/main/acentia_1.jpeg",
-    "/main/acentia_2.jpeg",
-    "/main/acentia_3.jpeg",
+    "/images/banner/main_7.jpg",
+    "/images/banner/spring_1.jpeg",
+    "/images/banner/spring_2.jpeg",
+    "/images/banner/acentia_1.jpeg",
+    "/images/banner/acentia_2.jpeg",
+    "/images/banner/acentia_3.jpeg",
 ];
 
 const Main = () => {
@@ -33,7 +33,7 @@ const Main = () => {
         content: notice.npContent,
         image: notice.imageUrls && notice.imageUrls.length > 0 
             ? notice.imageUrls[0] 
-            : '/main/achim_square.jpeg',
+            : '/images/main/achim_square.jpeg',
         date: new Date(notice.npCreateTime).toLocaleDateString(),
     });
 
@@ -62,7 +62,7 @@ const Main = () => {
 
     const handleImageError = (e) => {
         e.target.onerror = null;
-        e.target.src = '/main/achim_square.jpeg';
+        e.target.src = '/images/main/achim_square.jpeg';
     };
 
     const renderSlider = () => (

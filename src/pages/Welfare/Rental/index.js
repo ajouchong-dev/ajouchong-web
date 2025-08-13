@@ -6,8 +6,8 @@ const Rental = () => {
     const SPREADSHEET_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTJHth6JF5fzylhaW_6Rx6ZkqEd6iweJEyRzkM9DwbEfA23-B90roLf91PWLTXEX0PTwH7lNGQS_3sd/pubhtml?widget=true&amp;headers=false";
     
     const rentalImages = [
-        { src: "/main/rental_1.png", alt: "대여사업 안내 이미지 1" },
-        { src: "/main/rental_2.png", alt: "대여사업 안내 이미지 2" }
+        { src: "/images/rental/rental_1.png", alt: "대여사업 안내 이미지 1" },
+        { src: "/images/rental/rental_2.png", alt: "대여사업 안내 이미지 2" }
     ];
 
     const handleOpenRentalForm = () => {
