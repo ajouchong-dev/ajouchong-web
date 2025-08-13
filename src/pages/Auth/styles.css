@@ -1,6 +1,3 @@
-/* Auth 공통 스타일 */
-
-/* 로그인 컨테이너 */
 .login-container {
     display: flex;
     align-items: center;
@@ -8,7 +5,6 @@
     padding: var(--spacing-sm);
 }
 
-/* 사용자 정보 */
 .user-info {
     display: flex;
     align-items: center;
@@ -22,7 +18,6 @@
     font-weight: 500;
 }
 
-/* 인증 버튼 공통 스타일 */
 .login-container button.auth-button,
 .auth-button {
     all: unset;
@@ -63,7 +58,6 @@
     cursor: not-allowed;
 }
 
-/* 프로필 컨테이너 */
 .profile-container {
     max-width: 500px;
     margin: 50px auto;
