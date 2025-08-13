@@ -8,7 +8,7 @@ const Campusmap = () => {
             <hr className="titleSeparator"/>
             <img
                 className="campusImg"
-                src='/campusmap_page-0001.jpg'
+                src='/images/main/campusmap.jpg'
                 alt="아주대학교 캠퍼스 맵"
             />
         </div>
