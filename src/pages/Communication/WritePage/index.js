@@ -1,21 +1,59 @@
-import './styles.css';
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import axios from 'axios';
+import './styles.css';
 
-const API_BASE_URL = 'https://www.ajouchong.com/api';
-
-const QnAPost = () => {
+const WritePage = () => {
     const [form, setForm] = useState({ title: '', content: '' });
     const [message, setMessage] = useState({ success: '', error: '' });
     const navigate = useNavigate();
+    const location = useLocation();
+
+    // URL 경로로부터 타입 구분
+    const getTypeFromPath = () => {
+        if (location.pathname.includes('/qna/write')) return 'qna';
+        if (location.pathname.includes('/require/write')) return 'require';
+        return 'qna'; 
+    };
+
+    const type = getTypeFromPath();
+
+    const getConfig = () => {
+        switch (type) {
+            case 'qna':
+                return {
+                    apiEndpoint: '/api/qna',
+                    requestData: { qpTitle: form.title, qpContent: form.content },
+                    title: 'QnA 작성',
+                    redirectPath: '/communication/qna',                    
+                };
+            case 'require':
+                return {
+                    apiEndpoint: '/api/agora',
+                    requestData: { apTitle: form.title, apContent: form.content },
+                    title: '안건 상정 글 작성',
+                    redirectPath: '/communication/require',
+                };
+            default:
+                return {
+                    apiEndpoint: '/api/qna',
+                    requestData: { qpTitle: form.title, qpContent: form.content },
+                    title: 'QnA 작성',
+                    redirectPath: '/communication/qna',                    
+                };
+        }
+    };
+
+    const config = getConfig();
 
     const checkLoginStatus = async () => {
         try {
-            await axios.get(`${API_BASE_URL}/login/auth/info`, { withCredentials: true });
+            await axios.get("/api/login/auth/info", {
+                withCredentials: true,
+            });
         } catch {
             alert('로그인이 필요합니다.');
-            navigate('/');
+            navigate(config.redirectPath);
         }
     };
 
@@ -30,15 +68,17 @@ const QnAPost = () => {
 
         try {
             const response = await axios.post(
-                `${API_BASE_URL}/qna`,
-                { qpTitle: form.title, qpContent: form.content },
-                { withCredentials: true, headers: { "Content-Type": "application/json" } }
+                config.apiEndpoint,
+                config.requestData,
+                { 
+                    withCredentials: true, 
+                    headers: { "Content-Type": "application/json" } 
+                }
             );
 
             if (response.data.code === 1) {
-                setMessage({ success: '게시글이 성공적으로 작성되었습니다.', error: '' });
-                setForm({ title: '', content: '' });
-                navigate('/communication/qna');
+                alert('게시글이 성공적으로 작성되었습니다.');
+                navigate(config.redirectPath);
             } else {
                 setMessage({ success: '', error: '게시글 작성에 실패했습니다.' });
             }
@@ -51,7 +91,7 @@ const QnAPost = () => {
     };
 
     const handleBackToList = () => {
-        navigate('/communication/qna');
+        navigate(config.redirectPath);
     };
 
     const renderMessage = () => (
@@ -96,17 +136,17 @@ const QnAPost = () => {
 
     return (
         <div className="context">
-            <div className="contextTitle">QnA 작성</div>
+            <div className="contextTitle">{config.title}</div>
             <hr className="titleSeparator" />
 
             {renderForm()}
             {renderMessage()}
 
             <button onClick={handleBackToList} className="back-button">
-                게시글 목록으로 돌아가기
+                    게시글 목록으로 돌아가기
             </button>
         </div>
     );
 };
 
-export default QnAPost;
+export default WritePage;
