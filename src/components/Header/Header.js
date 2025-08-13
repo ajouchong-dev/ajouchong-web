@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
-import { useAuth } from '../../contexts/AuthContext';
 import Login from '../../pages/Auth/Login/login';
 import './Header.css';
 import { Menu, X } from 'lucide-react';
@@ -77,7 +76,6 @@ const Header = () => {
     const [dropdown, setDropdown] = useState(null);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const location = useLocation();
-    const { auth } = useAuth();
 
     useEffect(() => {
         const header = document.querySelector('.header');
