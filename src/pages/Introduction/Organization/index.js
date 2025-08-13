@@ -8,7 +8,7 @@ const Organization = () => {
             <hr className="titleSeparator"/>
             <img
                 className="organizationImg"
-                src="/main/organization.png"
+                src="/images/main/organization.png"
                 alt="아주대학교 총학생회 조직도"
             />
         </div>
