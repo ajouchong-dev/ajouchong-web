@@ -1,3 +1,6 @@
+/* Auth 공통 스타일 */
+
+/* 로그인 컨테이너 */
 .login-container {
     display: flex;
     align-items: center;
@@ -5,6 +8,7 @@
     padding: var(--spacing-sm);
 }
 
+/* 사용자 정보 */
 .user-info {
     display: flex;
     align-items: center;
@@ -18,7 +22,9 @@
     font-weight: 500;
 }
 
-.login-container button.auth-button {
+/* 인증 버튼 공통 스타일 */
+.login-container button.auth-button,
+.auth-button {
     all: unset;
     width: 135px;
     height: 35px;
@@ -38,19 +44,61 @@
     box-shadow: none;
 }
 
-.login-container button.auth-button:hover {
+.login-container button.auth-button:hover,
+.auth-button:hover {
     background-color: var(--button-hover);
     color: var(--button-hover-text);
 }
 
 .login-container button.auth-button:focus,
-.login-container button.auth-button:focus-visible {
+.login-container button.auth-button:focus-visible,
+.auth-button:focus,
+.auth-button:focus-visible {
     outline: none;
 }
 
-.login-container button.auth-button:disabled {
+.login-container button.auth-button:disabled,
+.auth-button:disabled {
     opacity: 0.6;
     cursor: not-allowed;
+}
+
+/* 프로필 컨테이너 */
+.profile-container {
+    max-width: 500px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    font-family: "Arial", sans-serif;
+}
+
+.profile-container h1 {
+    font-size: 25px;
+    font-weight: bolder;
+}
+
+.titleSeparator {
+    max-width: 50%;
+    border: none;
+    height: 2px;
+    background-color: #a7c898;
+    margin-top: 15px;
+}
+
+.profile-info {
+    font-size: 16px;
+    color: #555;
+    margin: 8px 0;
+}
+
+.loading-text {
+    font-size: 18px;
+    color: #888;
+    font-weight: bold;
+    margin-bottom: 40px;
 }
 
 /* 반응형 디자인 */
@@ -59,7 +107,8 @@
         padding: var(--spacing-xs);
     }
     
-    .login-container button.auth-button {
+    .login-container button.auth-button,
+    .auth-button {
         width: 120px;
         height: 32px;
         font-size: var(--font-sm);
@@ -68,10 +117,16 @@
     .greeting {
         font-size: var(--font-xs);
     }
+    
+    .profile-container {
+        margin: 30px auto;
+        padding: 15px;
+    }
 }
 
 @media screen and (max-width: 480px) {
-    .login-container button.auth-button {
+    .login-container button.auth-button,
+    .auth-button {
         width: 100px;
         height: 30px;
         font-size: var(--font-xs);
@@ -80,4 +135,13 @@
     .user-info {
         margin-right: var(--spacing-sm);
     }
-}
+    
+    .profile-container {
+        margin: 20px auto;
+        padding: 10px;
+    }
+    
+    .profile-container h1 {
+        font-size: 20px;
+    }
+} 
