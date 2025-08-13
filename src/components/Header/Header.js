@@ -56,8 +56,8 @@ const NAVIGATION_MENUS = {
         path: '/acentia/intro',
         items: [
             { label: 'ACENTIA 소개', path: '/acentia/intro' },
-            { label: 'ACENTIA 굿즈', path: '/Acentia/goods' },
-            { label: '역대 ACENTIA', path: '/Acentia/record' }
+            { label: 'ACENTIA 굿즈', path: '/acentia/goods' },
+            { label: '역대 ACENTIA', path: '/acentia/record' }
         ]
     }
 };
