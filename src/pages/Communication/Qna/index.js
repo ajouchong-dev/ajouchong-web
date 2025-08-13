@@ -43,8 +43,12 @@ const Qna = () => {
 
             if (result.code === 1) {
                 const formattedPosts = result.data.map(formatPostData);
-                setPosts(formattedPosts);
-                setFilteredPosts(formattedPosts);
+                
+                const sortedPosts = formattedPosts.sort((a, b) => 
+                    new Date(b.date) - new Date(a.date)
+                );
+                setPosts(sortedPosts);
+                setFilteredPosts(sortedPosts);
             } else {
                 console.error('데이터를 불러오는 중 오류 발생:', result.message);
             }
@@ -112,9 +116,9 @@ const Qna = () => {
         const indexOfFirstPost = indexOfLastPost - POSTS_PER_PAGE;
         const currentPosts = filteredPosts.slice(indexOfFirstPost, indexOfLastPost);
 
-        return currentPosts.map((post) => (
+        return currentPosts.map((post, index) => (
             <tr key={post.id} onClick={() => handlePostClick(post.id)}>
-                <td>{post.id}</td>
+                <td>{filteredPosts.length - (indexOfFirstPost + index)}</td>
                 <td>{post.title}</td>
                 <td>{post.author || '익명'}</td>
                 <td>{post.date}</td>
