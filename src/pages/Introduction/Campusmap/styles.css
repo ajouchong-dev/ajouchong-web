@@ -1,0 +1,8 @@
+@import "../styles.css";
+
+.campusImg {
+    max-width: 60%;
+    margin-top: var(--spacing-xl);
+    height: auto;
+    margin-bottom: var(--spacing-xl);
+}

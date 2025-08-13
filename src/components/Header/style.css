@@ -1,40 +1,41 @@
 .breadcrumb {
-    padding: 10px 50px;
-    font-size: 14px;
-    border-bottom: 1px solid #a7c898;
-    margin-top: 119px;
+    padding: var(--spacing-sm) var(--spacing-xl);
+    font-size: var(--font-sm);
+    border-bottom: 1px solid var(--border-primary);
+    margin-top: var(--header-height);
 }
 
 .breadcrumb ul {
     list-style: none;
-    padding-top: 15px;
+    padding-top: var(--spacing-sm);
     margin: 0;
     display: flex;
-    color: #636363;
+    color: var(--text-muted);
 }
 
 .breadcrumb li {
-    margin-right: 5px;
-    color: #636363;
+    margin-right: var(--spacing-xs);
+    color: var(--text-muted);
     display: flex;
     align-items: center;
 }
 
 .breadcrumb li a {
     text-decoration: none;
-    color: #636363;
+    color: var(--text-muted);
+    transition: var(--transition-normal);
 }
 
 .breadcrumb li a:hover {
-    color: #4a7c59;
+    color: var(--accent-color);
     text-decoration: underline;
 }
 
 .breadcrumb li::after {
     content: '>';
-    margin-left: 5px;
-    font-size: 12px;
-    color: #a0a0a0; /* 흐린 색 */
+    margin-left: var(--spacing-xs);
+    font-size: var(--font-xs);
+    color: var(--text-light-gray);
 }
 
 .breadcrumb li:last-child::after {
@@ -45,18 +46,19 @@
     background: none !important;
     border: none !important;
     padding: 0;
-    font-weight: bold; /* 마지막 요소 강조 */
-    color: #4a7c59; /* 마지막 요소 색상 변경 (선택 사항) */
+    font-weight: bold;
+    color: var(--accent-color);
 }
 
+/* 반응형 디자인 */
 @media screen and (max-width: 768px) {
     .breadcrumb {
-        padding: 10px 20px;
-        font-size: 12px;
+        padding: var(--spacing-sm) var(--spacing-lg);
+        font-size: var(--font-xs);
     }
 
     .breadcrumb li::after {
-        margin-left: 5px;
+        margin-left: var(--spacing-xs);
         font-size: 10px;
     }
 }

@@ -1,7 +1,7 @@
 .footer {
-    background-color: #a7c898;
-    padding: 30px 20px;
-    border-top: 1px solid #e9ecef;
+    background-color: var(--secondary-color);
+    padding: var(--spacing-xl) var(--spacing-lg);
+    border-top: 1px solid var(--border-light);
     height: auto;
     position: relative;
     transform: translateY(0);
@@ -12,49 +12,46 @@
 .main {
     display: flex;
     flex-direction: row;
-    justify-content: space-between; /* 좌우 정렬 */
+    justify-content: space-between;
     align-items: center;
     text-align: left;
-    width: 60%; /* 최대 너비 설정 */
-    max-width: 1200px; /* 원하는 최대 크기 */
+    width: 60%;
+    max-width: var(--max-width);
     margin: 0 auto;
-    color: #e2e6ea;
+    color: var(--text-white);
 }
 
 .mainleft {
     display: flex;
     flex-direction: column;
-    /*padding-left: 20%;*/
-    align-items: flex-start; /* 왼쪽 정렬 */
+    align-items: flex-start;
     text-align: left;
-    margin-right: auto; /* 왼쪽 정렬 유지 */
+    margin-right: auto;
 }
 
 .mainright {
     display: flex;
     flex-direction: column;
-    align-items: flex-start; /* 오른쪽 정렬 */
+    align-items: flex-start;
     text-align: right;
-    /*padding-right: 20%;*/
-    /*margin-left: auto; !* 오른쪽 정렬 유지 *!*/
 }
 
 .main_logo {
-    color: white;
+    color: var(--text-white);
     display: flex;
     flex-direction: column;
 }
 
 .column {
-    margin: 10px 0;
+    margin: var(--spacing-sm) 0;
     display: flex;
     flex-direction: column;
 }
 
 .title {
-    font-size: 24px;
+    font-size: var(--font-xl);
     font-weight: bold;
-    margin: 20px;
+    margin: var(--spacing-lg);
 }
 
 .mainleft img {
@@ -66,29 +63,40 @@
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;
-    margin: 10px 0;
-
+    margin: var(--spacing-sm) 0;
 }
 
 .infotext {
-    font-size: 14px;
-    color: #f8f9fa;
+    font-size: var(--font-sm);
+    color: var(--bg-secondary);
 }
 
 .infotext a {
-    color: #f8f9fa;
+    color: var(--bg-secondary);
     text-decoration: none;
+    transition: var(--transition-normal);
 }
-.developer a{
-    color: #f8f9fa;
+
+.infotext a:hover {
+    color: var(--text-white);
+}
+
+.developer a {
+    color: var(--bg-secondary);
     text-decoration: none;
+    transition: var(--transition-normal);
+}
+
+.developer a:hover {
+    color: var(--text-white);
 }
 
 .address, .developer, .copyright {
-    font-size: 12px;
+    font-size: var(--font-xs);
     text-align: left;
 }
 
+/* 반응형 디자인 */
 @media (max-width: 768px) {
     .main {
         flex-direction: column;
@@ -98,7 +106,6 @@
 
     .mainleft {
         margin: 0;
-        /*padding: 0;*/
     }
 
     .mainright {
@@ -111,6 +118,6 @@
     }
 
     .infotext, .address, .developer, .copyright {
-        font-size: 12px;
+        font-size: var(--font-xs);
     }
 }

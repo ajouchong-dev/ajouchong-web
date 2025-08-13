@@ -1,21 +1,81 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
-import { useAuth } from '../../contexts/AuthContext';
-import Breadcrumb from './Breadcrumb';
-import Login from '../Login/login';
+import { useLocation } from 'react-router-dom';
+import Login from '../../pages/Auth/Login/login';
 import './Header.css';
 import { Menu, X } from 'lucide-react';
 
+const NAVIGATION_MENUS = {
+    introduction: {
+        title: '소개',
+        path: '/introduction/about',
+        items: [
+            { label: '총학생회 소개', path: '/introduction/about' },
+            { label: '공약 소개', path: '/introduction/promise' },
+            { label: '조직도', path: '/introduction/organization' },
+            { label: '역대 총학생회 소개', path: '/introduction/history' },
+            { label: '오시는 길', path: '/introduction/map' },
+            { label: '캠퍼스 맵', path: '/introduction/campusmap' }
+        ]
+    },
+    news: {
+        title: '소식',
+        path: '/news/notice',
+        items: [
+            { label: '공지사항', path: '/news/notice' }
+        ]
+    },
+    communication: {
+        title: '소통',
+        path: '/communication/qna',
+        items: [
+            { label: 'Q&A', path: '/communication/qna' },
+            { label: '100인 안건 상정제', path: '/communication/require' },
+            { label: '통합 소통 창구', path: 'https://forms.gle/V1hH3Gf5uyuC7CVp6', external: true }
+        ]
+    },
+    resources: {
+        title: '자료실',
+        path: '/resources/bylaws',
+        items: [
+            { label: '세칙 및 회칙', path: '/resources/bylaws' },
+            { label: '회의록', path: '/resources/proceeding' },
+            { label: '감사자료', path: '/resources/audit' }
+        ]
+    },
+    welfare: {
+        title: '학생복지',
+        path: '/welfare/promotion',
+        items: [
+            { label: '제휴백과', path: '/welfare/promotion' },
+            { label: '대여사업', path: '/welfare/rental' }
+        ]
+    },
+    acentia: {
+        title: 'ACENTIA',
+        path: '/acentia/intro',
+        items: [
+            { label: 'ACENTIA 소개', path: '/acentia/intro' },
+            { label: 'ACENTIA 굿즈', path: '/acentia/goods' },
+            { label: '역대 ACENTIA', path: '/acentia/record' }
+        ]
+    }
+};
+
+const UPPER_LINKS = [
+    { label: '아주대학교', url: 'https://www.ajou.ac.kr/' },
+    { label: '아주대 포탈', url: 'https://mportal.ajou.ac.kr/' },
+    { label: '아주BB', url: 'https://eclass2.ajou.ac.kr/' }
+];
+
+const UPPER_LINKS_RIGHT = [
+    { label: '사이트맵', path: '/sitemap' },
+    { label: 'profile', path: '/profile' }
+];
+
 const Header = () => {
     const [dropdown, setDropdown] = useState(null);
+    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const location = useLocation();
-    const { auth } = useAuth();
-    const [user, setUser] = useState(auth.user);
-    const [menuOpen, setMenuOpen] = useState(false);
-    const [mobileDropdown, setMobileDropdown] = useState(null);
-    const handleToggleMenu = () => {
-        setMenuOpen(!menuOpen);
-    };
 
     useEffect(() => {
         const header = document.querySelector('.header');
@@ -32,302 +92,148 @@ const Header = () => {
         }
 
         window.addEventListener('scroll', handleScroll);
-        return () => {
-            window.removeEventListener('scroll', handleScroll);
-        };
+        return () => window.removeEventListener('scroll', handleScroll);
     }, [location]);
+
+    // 현재 활성 메뉴 확인
+    const getActiveMenu = () => {
+        const path = location.pathname;
+        return Object.keys(NAVIGATION_MENUS).find(menuKey => {
+            const menu = NAVIGATION_MENUS[menuKey];
+            return menu.items.some(item => item.path === path);
+        });
+    };
+
+    const activeMenu = getActiveMenu();
 
     const handleMouseEnter = (menu) => setDropdown(menu);
     const handleMouseLeave = () => setDropdown(null);
-
-
-    const getNavtitle = () => {
-        switch (location.pathname) {
-            case '/about':
-                return '총학생회 소개';
-            case '/promise':
-                return '공약 소개';
-            case '/organization':
-                return '조직도';
-            case '/map':
-                return '오시는 길';
-            case '/greeting':
-                return '인사말';
-
-            default:
-                return '';
-        }
-    };
-    const currentPath = location.pathname;
-
-    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-
-    const toggleMobileMenu = () => {
-        setIsMobileMenuOpen(!isMobileMenuOpen);
+    const toggleMobileMenu = () => setIsMobileMenuOpen(!isMobileMenuOpen);
+    const toggleMobileDropdown = (menu) => {
+        setDropdown(dropdown === menu ? null : menu);
     };
 
-    // const isMainPage = currentPath === '/';
-    // const isIntroductionActive = ['/about', '/promise', '/organization', '/map'].includes(currentPath);
-    // const isNewsActive = ['/announcement', '/planning'].includes(currentPath);
-    // const isResourcesActive = ['/bylaws', '/proceeding', '/audit'].includes(currentPath);
-    // const isCommunicationActive = ['/qna', '/require'].includes(currentPath);
-    // const isWelfareActive = ['/promotion', '/rental'].includes(currentPath);
+    const renderDropdownMenu = (menuKey, isMobile = false) => {
+        const menu = NAVIGATION_MENUS[menuKey];
+        if (!menu) return null;
 
-    const navtitle = getNavtitle();
-    const isMainPage = location.pathname === '/';
-    const isIntroductionActive = ['/introduction/about', '/introduction/promise', '/introduction/organization', '/introduction/map','/introduction/campusmap'].includes(location.pathname);
-    const isNewsActive = ['/news/announcement',  '/news/planning'].includes(location.pathname);
-    const isResourcesActive = ['/resources/bylaws',  '/resources/proceeding','/resources/audit'].includes(location.pathname);
-    const isCommunicationActive = ['/communication/qna', '/communication/require'].includes(location.pathname);
-    const isWelfareActive = ['/welfare/promotion', '/welfare/rental'].includes(location.pathname);
+        return (
+            <ul className={isMobile ? "dropdown" : "dropdown-container"}>
+                {menu.items.map((item, index) => (
+                    <li key={index}>
+                        {item.external ? (
+                            <a href={item.path} target="_blank" rel="noopener noreferrer">
+                                {item.label}
+                            </a>
+                        ) : (
+                            <a href={item.path}>{item.label}</a>
+                        )}
+                    </li>
+                ))}
+            </ul>
+        );
+    };
+
+    const renderUpperLinks = (links, isRight = false) => (
+        <nav className={isRight ? "upnav-menu2" : "upnav-menu"}>
+            <ul className="flex items-center">
+                {links.map((link, index) => (
+                    <React.Fragment key={index}>
+                        <li>
+                            {link.url ? (
+                                <a href={link.url}>{link.label}</a>
+                            ) : (
+                                <a href={link.path}>{link.label}</a>
+                            )}
+                        </li>
+                        {index < links.length - 1 && <span className="dot"> • </span>}
+                    </React.Fragment>
+                ))}
+            </ul>
+        </nav>
+    );
 
     return (
-        <div>
-            <header className="header">
-                <div className="upper">
-                    <nav className="upnav-menu">
-                        <ul>
-                            <li><a href="https://www.ajou.ac.kr/">아주대학교</a></li>
-                            <span className="dot"> • </span>
-                            <li><a href="https://mportal.ajou.ac.kr/">아주대 포탈</a></li>
-                            <span className="dot"> • </span>
-                            <li><a href="https://eclass2.ajou.ac.kr/">아주BB</a></li>
-                        </ul>
-                    </nav>
-                    <nav className="upnav-menu2">
-                        <ul>
-                            <li><a href="/sitemap">사이트맵</a></li>
-                            <span className="dot"> • </span>
-                            <li><a href="/profile">profile</a></li>
-                        </ul>
-                    </nav>
+        <header className="header">
+            <div className="upper">
+                {renderUpperLinks(UPPER_LINKS)}
+                {renderUpperLinks(UPPER_LINKS_RIGHT, true)}
+            </div>
+
+            <div className="lower">
+                <div className="logo">
+                    <a href="/">
+                        <img src="/images/logos/achim_header.svg" alt="로고"/>
+                    </a>
                 </div>
 
-                <div className="lower">
-                    <div className="logo">
-                        <a href="/">
-                            <img src="/achim_header.svg" alt="로고"/>
-                        </a>
-                    </div>
-
-                    <nav className="nav-menu">
-                        <ul>
-                            <li className="menu-container"
-                                onMouseEnter={() => handleMouseEnter('introduction')}
+                <nav className="nav-menu">
+                    <ul className="flex">
+                        {Object.entries(NAVIGATION_MENUS).map(([key, menu]) => (
+                            <li 
+                                key={key}
+                                className="menu-container"
+                                onMouseEnter={() => handleMouseEnter(key)}
                                 onMouseLeave={handleMouseLeave}
                             >
-                                <div className={`navtitle ${isIntroductionActive ? 'active' : ''}`}
-                                     href="/introduction">소개
+                                <div 
+                                    className={`navtitle ${activeMenu === key ? 'active' : ''}`}
+                                    onClick={() => window.location.href = menu.path}
+                                >
+                                    {menu.title}
                                 </div>
-                                {dropdown === 'introduction' && (
-                                    <ul className="dropdown-container">
-                                        <li><a href="/introduction/about">총학생회 소개</a></li>
-                                        <li><a href="/introduction/promise">공약 소개</a></li>
-                                        {/*<li><a href="/introduction/organization">조직도</a></li>*/}
-                                        <li><a href="/introduction/map">오시는 길</a></li>
-                                        <li><a href="/introduction/campusmap">캠퍼스 맵</a></li>
-                                    </ul>
-                                )}
+                                {dropdown === key && renderDropdownMenu(key)}
                             </li>
-                            <li
-                                onMouseEnter={() => handleMouseEnter('news')}
-                                onMouseLeave={handleMouseLeave}
-                            >
-                                <div className={`navtitle ${isNewsActive ? 'active' : ''}`} href="/news">소식</div>
-                                {dropdown === 'news' && (
-                                    <ul className="dropdown-container">
-                                        <li><a href="/news/notice">공지사항</a></li>
-                                        {/*<li><a href="/news/planning">학사일정</a></li>*/}
-                                    </ul>
-                                )}
-                            </li>
-                            <li
-                                onMouseEnter={() => handleMouseEnter('communication')}
-                                onMouseLeave={handleMouseLeave}
-                            >
-                                <div className={`navtitle ${isCommunicationActive ? 'active' : ''}`}
-                                     href="/communication">소통
-                                </div>
-                                {dropdown === 'communication' && (
-                                    <ul className="dropdown-container">
-                                        <li><a href="/communication/qna">Q&A</a></li>
-                                        <li><a href="/communication/require">100인 안건 상정제</a></li>
-                                        <li><a href="https://forms.gle/V1hH3Gf5uyuC7CVp6" target="_blank"
-                                               rel="noopener noreferrer">
-                                            통합 소통 창구</a></li>
-                                    </ul>
-                                )}
-                            </li>
-                            <li
-                                onMouseEnter={() => handleMouseEnter('resources')}
-                                onMouseLeave={handleMouseLeave}
-                            >
-                                <div className={`navtitle ${isResourcesActive ? 'active' : ''}`} href="/resources">자료실
-                                </div>
-                                {dropdown === 'resources' && (
-                                    <ul className="dropdown-container">
-                                        <li><a href="/resources/bylaws">세칙 및 회칙</a></li>
-                                        <li><a href="/resources/proceeding">회의록</a></li>
-                                        <li><a href="/resources/audit">감사자료</a></li>
-                                    </ul>
-                                )}
-                            </li>
-                            <li
-                                onMouseEnter={() => handleMouseEnter('welfare')}
-                                onMouseLeave={handleMouseLeave}
-                            >
-                                <div className={`navtitle ${isWelfareActive ? 'active' : ''}`}
-                                     href="/student-welfare">학생복지
-                                </div>
-                                {dropdown === 'welfare' && (
-                                    <ul className="dropdown-container">
-                                        <li><a href="/welfare/promotion">제휴백과</a></li>
-                                        <li><a href="/welfare/rental">대여사업</a></li>
-                                    </ul>
-                                )}
-                            </li>
-                        </ul>
-                    </nav>
+                        ))}
+                    </ul>
+                </nav>
 
-                    <div className="hamburger-menu" onClick={toggleMobileMenu}>
-                        {isMobileMenuOpen ? <X size={28} /> : <Menu size={28} />}
-                    </div>
-
-                    <nav className={`mobile-menu ${isMobileMenuOpen ? 'open' : ''}`}>
-                        <ul>
-                            <li onClick={() => setDropdown(dropdown === 'introduction' ? null : 'introduction')}  className={dropdown === 'introduction' ? 'active' : ''}>
-                                소개
-                                {dropdown === 'introduction' && (
-                                    <ul className="dropdown">
-                                        <li><a href="/introduction/about">총학생회 소개</a></li>
-                                        <li><a href="/introduction/promise">공약 소개</a></li>
-                                        <li><a href="/introduction/organization">조직도</a></li>
-                                        <li><a href="/introduction/map">오시는 길</a></li>
-                                        <li><a href="/introduction/campusmap">캠퍼스 맵</a></li>
-                                    </ul>
-                                )}
-                            </li>
-                            <li onClick={() => setDropdown(dropdown === 'news' ? null : 'news')}  className={dropdown === 'news' ? 'active' : ''} >
-                                소식
-                                {dropdown === 'news' && (
-                                    <ul className="dropdown">
-                                        <li><a href="/news/notice">공지사항</a></li>
-                                    </ul>
-                                )}
-                            </li>
-                            <li onClick={() => setDropdown(dropdown === 'communication' ? null : 'communication')}  className={dropdown === 'communication' ? 'active' : ''}>
-                                소통
-                                {dropdown === 'communication' && (
-                                    <ul className="dropdown">
-                                        <li><a href="/communication/qna">Q&A</a></li>
-                                        <li><a href="/communication/require">100인 안건 상정제</a></li>
-                                        <li><a href="https://forms.gle/V1hH3Gf5uyuC7CVp6" target="_blank" rel="noopener noreferrer">통합 소통 창구</a></li>
-                                    </ul>
-                                )}
-                            </li>
-                            <li onClick={() => setDropdown(dropdown === 'resources' ? null : 'resources')}  className={dropdown === 'resources' ? 'active' : ''}>
-                                자료실
-                                {dropdown === 'resources' && (
-                                    <ul className="dropdown">
-                                        <li><a href="/resources/bylaws">세칙 및 회칙</a></li>
-                                        <li><a href="/resources/proceeding">회의록</a></li>
-                                        <li><a href="/resources/audit">감사자료</a></li>
-                                    </ul>
-                                )}
-                            </li>
-                            <li onClick={() => setDropdown(dropdown === 'welfare' ? null : 'welfare')}  className={dropdown === 'welfare' ? 'active' : ''}>
-                                학생복지
-                                {dropdown === 'welfare' && (
-                                    <ul className="dropdown">
-                                        <li><a href="/welfare/promotion">제휴백과</a></li>
-                                        <li><a href="/welfare/rental">대여사업</a></li>
-                                    </ul>
-                                )}
-                            </li>
-                        </ul>
-                        <nav className="other-menu">
-                            <ul>
-                                <li><a href="https://www.ajou.ac.kr/">아주대학교</a></li>
-                                <span className="dot"> • </span>
-                                <li><a href="https://mportal.ajou.ac.kr/">아주대 포탈</a></li>
-                                <span className="dot"> • </span>
-                                <li><a href="https://eclass2.ajou.ac.kr/">아주BB</a></li>
-                            </ul>
-                        </nav>
-                        <nav className="other-menu2">
-                            <ul>
-                                <li><a href="/sitemap">사이트맵</a></li>
-                                <span className="dot"> • </span>
-                                <li><a href="/profile">profile</a></li>
-                            </ul>
-                        </nav>
-
-
-                    </nav>
-
-
-                    {/*<nav className={`mobile-menu ${menuOpen ? 'open' : ''}`}>*/}
-                    {/*    <ul>*/}
-                    {/*        <li onClick={() => setDropdown(dropdown === 'introduction' ? null : 'introduction')}>*/}
-                    {/*            소개*/}
-                    {/*            {dropdown === 'introduction' && (*/}
-                    {/*                <ul className="dropdown">*/}
-                    {/*                    <li><a href="/introduction/about">총학생회 소개</a></li>*/}
-                    {/*                    <li><a href="/introduction/promise">공약 소개</a></li>*/}
-                    {/*                    <li><a href="/introduction/organization">조직도</a></li>*/}
-                    {/*                    <li><a href="/introduction/map">오시는 길</a></li>*/}
-                    {/*                    <li><a href="/introduction/campusmap">캠퍼스 맵</a></li>*/}
-                    {/*                </ul>*/}
-                    {/*            )}*/}
-                    {/*        </li>*/}
-                    {/*        <li onClick={() => setDropdown(dropdown === 'news' ? null : 'news')}>*/}
-                    {/*            소식*/}
-                    {/*            {dropdown === 'news' && (*/}
-                    {/*                <ul className="dropdown">*/}
-                    {/*                    <li><a href="/news/announcement">공지사항</a></li>*/}
-                    {/*                </ul>*/}
-                    {/*            )}*/}
-                    {/*        </li>*/}
-                    {/*        <li onClick={() => setDropdown(dropdown === 'communication' ? null : 'communication')}>*/}
-                    {/*            소통*/}
-                    {/*            {dropdown === 'communication' && (*/}
-                    {/*                <ul className="dropdown">*/}
-                    {/*                    <li><a href="/communication/qna">Q&A</a></li>*/}
-                    {/*                    <li><a href="/communication/require">100인 안건 상정제</a></li>*/}
-                    {/*                    <li><a href="https://forms.gle/V1hH3Gf5uyuC7CVp6" target="_blank" rel="noopener noreferrer">통합 소통 창구</a></li>*/}
-                    {/*                </ul>*/}
-                    {/*            )}*/}
-                    {/*        </li>*/}
-                    {/*        <li onClick={() => setDropdown(dropdown === 'resources' ? null : 'resources')}>*/}
-                    {/*            자료실*/}
-                    {/*            {dropdown === 'resources' && (*/}
-                    {/*                <ul className="dropdown">*/}
-                    {/*                    <li><a href="/resources/bylaws">세칙 및 회칙</a></li>*/}
-                    {/*                    <li><a href="/resources/proceeding">회의록</a></li>*/}
-                    {/*                    <li><a href="/resources/audit">감사자료</a></li>*/}
-                    {/*                </ul>*/}
-                    {/*            )}*/}
-                    {/*        </li>*/}
-                    {/*        <li onClick={() => setDropdown(dropdown === 'welfare' ? null : 'welfare')}>*/}
-                    {/*            학생복지*/}
-                    {/*            {dropdown === 'welfare' && (*/}
-                    {/*                <ul className="dropdown">*/}
-                    {/*                    <li><a href="/welfare/promotion">제휴백과</a></li>*/}
-                    {/*                    <li><a href="/welfare/rental">대여사업</a></li>*/}
-                    {/*                </ul>*/}
-                    {/*            )}*/}
-                    {/*        </li>*/}
-                    {/*    </ul>*/}
-                    {/*</nav>*/}
-
-
-                    <div className="button">
-                        <Login user={user} setUser={setUser} />
-                    </div>
+                <div className="hamburger-menu cursor-pointer" onClick={toggleMobileMenu}>
+                    {isMobileMenuOpen ? <X size={28}/> : <Menu size={28}/>}
                 </div>
-            </header>
-        </div>
+
+                <nav className={`mobile-menu ${isMobileMenuOpen ? 'open' : ''}`}>
+                    <ul className="list-none">
+                        {Object.entries(NAVIGATION_MENUS).map(([key, menu]) => (
+                            <li 
+                                key={key}
+                                onClick={() => toggleMobileDropdown(key)}
+                                className={`${dropdown === key ? 'active' : ''} cursor-pointer`}
+                            >
+                                {menu.title}
+                                {dropdown === key && renderDropdownMenu(key, true)}
+                            </li>
+                        ))}
+                    </ul>
+                    
+                    <nav className="other-menu">
+                        <ul className="flex justify-center">
+                            {UPPER_LINKS.map((link, index) => (
+                                <React.Fragment key={index}>
+                                    <li><a href={link.url}>{link.label}</a></li>
+                                    {index < UPPER_LINKS.length - 1 && <span className="dot"> • </span>}
+                                </React.Fragment>
+                            ))}
+                        </ul>
+                    </nav>
+                    <nav className="other-menu2">
+                        <ul className="flex justify-center">
+                            {UPPER_LINKS_RIGHT.map((link, index) => (
+                                <React.Fragment key={index}>
+                                    <li><a href={link.path}>{link.label}</a></li>
+                                    {index < UPPER_LINKS_RIGHT.length - 1 && <span className="dot"> • </span>}
+                                </React.Fragment>
+                            ))}
+                        </ul>
+                    </nav>
+                </nav>
+
+                <div className="button">
+                    <Login />
+                </div>
+            </div>
+        </header>
     );
-}
+};
 
 export default Header;

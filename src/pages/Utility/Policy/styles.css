@@ -1,0 +1,54 @@
+@import '../styles.css';
+
+.terms-content {
+    line-height: 1.6;
+    color: var(--text-primary);
+    padding: var(--spacing-xl) 100px;
+    margin: auto;
+    text-align: start;
+    max-width: 1200px;
+}
+
+.terms-content h2 {
+    margin: var(--spacing-sm) 0;
+    color: var(--text-primary);
+    font-size: var(--font-lg);
+    font-weight: bold;
+}
+
+.terms-content h3 {
+    margin: var(--spacing-sm) 0;
+    color: var(--text-primary);
+    font-size: var(--font-base);
+    font-weight: bold;
+}
+
+.terms-content p {
+    margin: var(--spacing-sm) 0;
+    color: var(--text-secondary);
+    font-size: var(--font-base);
+}
+
+.terms-content ol {
+    margin: var(--spacing-sm) 0;
+    color: var(--text-secondary);
+    font-size: var(--font-base);
+}
+
+.terms-content ol li {
+    margin: var(--spacing-sm) 0;
+    color: var(--text-secondary);
+    font-size: var(--font-base);
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}
+
+.terms-content ol ol {
+    margin: var(--spacing-xs) 0 0 20px;
+}
+
+.terms-content ol ol li {
+    margin: var(--spacing-xs) 0;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}

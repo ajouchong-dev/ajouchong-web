@@ -1,0 +1,9 @@
+@import '../styles.css';
+
+.organizationImg {
+    max-width: 30%;
+    margin-top: var(--spacing-xl);
+    height: auto;
+    margin-bottom: var(--spacing-xl);
+}
+

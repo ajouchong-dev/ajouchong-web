@@ -1,0 +1,39 @@
+@import '../styles.css';
+
+.status.approved {
+    color: #007bff;
+    font-weight: bold;
+}
+
+.status.rejected {
+    color: var(--primary-color);
+    font-weight: bold;
+}
+
+.approval-approved {
+    color: #007bff;
+    font-weight: bold;
+}
+
+.approval-denied {
+    color: var(--primary-color);
+}
+
+.comment-section {
+    margin-top: 80px;
+    padding-top: var(--spacing-lg);
+    border-top: 1px solid var(--border-light);
+}
+
+.comment-item {
+    padding: var(--spacing-sm) 100px;
+    border-bottom: 1px solid var(--border-light);
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+    display: flex;
+}
+
+.comment-item strong {
+    margin-right: var(--spacing-sm);
+    color: var(--text-primary);
+}

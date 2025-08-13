@@ -1,0 +1,23 @@
+@import '../styles.css';
+
+.aboutImg {
+    max-width: 30%;
+    margin-top: var(--spacing-xl);
+    height: auto;
+    margin-bottom: var(--spacing-xl);
+}
+
+.aboutText {
+    line-height: 1.6;
+    font-size: var(--font-base);
+    color: var(--text-secondary);
+    max-width: 40%;
+    margin: var(--spacing-sm) auto;
+    text-align: start;
+}
+
+.space2 {
+    display: inline-block;
+    width: 1em;
+}
+

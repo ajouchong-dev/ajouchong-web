@@ -1,0 +1,9 @@
+@import '../styles.css';
+
+.promiseImg {
+    max-width: 40%;
+    margin-top: var(--spacing-xl);
+    height: auto;
+    margin-bottom: var(--spacing-xl);
+}
+
