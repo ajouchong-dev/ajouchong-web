@@ -3,12 +3,7 @@ import { useParams } from 'react-router-dom';
 import './detail.css';
 
 const councilData = {
-    "2025": {
-        title: "2025년 제44대 총학생회 '아침'",
-        출사표: "/assets/2025/정책집.pdf",
-        조직도: "/assets/2025/출사표.png",
-        단체사진: "/assets/2025/단체사진.jpg"
-    },
+    
     "2024": {
         title: "2024년 제43대 총학생회 '아우름'",
         출사표: "/assets/2024/출사표.pdf",
@@ -59,7 +54,7 @@ const CouncilDetail = () => {
                     rel="noreferrer" 
                     className="download-link"
                 >
-                    📄 출사표 다운로드
+                    📄 정책집 다운로드
                 </a>
 
                 <div className="image-gallery">

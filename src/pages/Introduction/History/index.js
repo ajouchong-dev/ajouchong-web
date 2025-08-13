@@ -3,7 +3,6 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const councilList = [
-    { year: "2025", title: "2025년 제44대 총학생회 '아침'", leaders: "이재건(건축), 송재원(산공)" },
     { year: "2024", title: "2024년 제43대 총학생회 '아우름'", leaders: "이홍서(경제), 이원재(산공)" },
     { year: "2023", title: "2023년 제42대 총학생회 '위아'", leaders: "이효성(환안공), 이동현(전자)" },
     { year: "2022", title: "2022년 제41대 총학생회 '담아'", leaders: "김형우(불문), 박시연(산공)" },
