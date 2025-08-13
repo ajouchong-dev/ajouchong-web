@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './styles.css';
 
-const API_BASE_URL = 'https://www.ajouchong.com/api';
 const POSTS_PER_PAGE = 9;
 
 const Bylaws = () => {
@@ -20,7 +19,7 @@ const Bylaws = () => {
 
     const fetchPosts = async () => {
         try {
-            const response = await axios.get(`${API_BASE_URL}/data?type=${ruleType}`);
+            const response = await axios.get(`/api/data?type=${ruleType}`);
             if (response.data.code === 1) {
                 const fetchedPosts = response.data.data.map(formatPostData);
                 setPosts(fetchedPosts);

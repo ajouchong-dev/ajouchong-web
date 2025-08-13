@@ -3,8 +3,6 @@ import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './styles.css';
 
-const API_BASE_URL = 'https://www.ajouchong.com/api';
-
 const BylawsDetail = () => {
     const { id } = useParams();
     const [postDetails, setPostDetails] = useState(null);
@@ -12,7 +10,7 @@ const BylawsDetail = () => {
 
     const fetchPostDetails = async () => {
         try {
-            const response = await axios.get(`${API_BASE_URL}/data/${id}`);
+            const response = await axios.get(`/api/data/${id}`);
             if (response.data.code === 1) {
                 setPostDetails(response.data.data);
             } else {
