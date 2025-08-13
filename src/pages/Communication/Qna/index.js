@@ -4,7 +4,6 @@ import { useNavigate } from 'react-router-dom';
 import QnaDetail from './QnaDetail';
 import axios from "axios";
 
-const API_BASE_URL = 'https://www.ajouchong.com/api';
 const POSTS_PER_PAGE = 9;
 
 const Qna = () => {
@@ -39,13 +38,17 @@ const Qna = () => {
 
     const fetchPosts = async () => {
         try {
-            const response = await fetch(`${API_BASE_URL}/qna`);
+            const response = await fetch(`/api/qna`);
             const result = await response.json();
 
             if (result.code === 1) {
                 const formattedPosts = result.data.map(formatPostData);
-                setPosts(formattedPosts);
-                setFilteredPosts(formattedPosts);
+                
+                const sortedPosts = formattedPosts.sort((a, b) => 
+                    new Date(b.date) - new Date(a.date)
+                );
+                setPosts(sortedPosts);
+                setFilteredPosts(sortedPosts);
             } else {
                 console.error('데이터를 불러오는 중 오류 발생:', result.message);
             }
@@ -63,11 +66,12 @@ const Qna = () => {
             );
             setFilteredPosts(matchedPosts);
         }
+        setCurrentPage(1);
     };
 
     const goToWritePage = async () => {
         try {
-            const response = await axios.get(`${API_BASE_URL}/login/auth/info`, {
+            const response = await axios.get(`/api/login/auth/info`, {
                 withCredentials: true,
             });
 
@@ -75,11 +79,9 @@ const Qna = () => {
                 navigate('/communication/qna/write');
             } else {
                 alert('로그인이 필요합니다.');
-                navigate('/communication/qna');
             }
         } catch (error) {
             alert('로그인이 필요합니다.');
-            navigate('/communication/qna');
         }
     };
 
@@ -114,9 +116,9 @@ const Qna = () => {
         const indexOfFirstPost = indexOfLastPost - POSTS_PER_PAGE;
         const currentPosts = filteredPosts.slice(indexOfFirstPost, indexOfLastPost);
 
-        return currentPosts.map((post) => (
+        return currentPosts.map((post, index) => (
             <tr key={post.id} onClick={() => handlePostClick(post.id)}>
-                <td>{post.id}</td>
+                <td>{filteredPosts.length - (indexOfFirstPost + index)}</td>
                 <td>{post.title}</td>
                 <td>{post.author || '익명'}</td>
                 <td>{post.date}</td>

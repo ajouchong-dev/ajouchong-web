@@ -6,7 +6,7 @@ const Footer = (props) => (
             <div className="mainleft">
                 <div className="main_logo">
                     <span className="title">AJOU UNIV</span>
-                    <img src="/achim_subLogo.svg" alt="로고" />
+                    <img src="/images/logos/achim_subLogo.svg" alt="로고" />
                 </div>
             </div>
             <div className="mainright">

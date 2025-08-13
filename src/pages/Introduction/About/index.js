@@ -1,23 +1,7 @@
+import React from 'react';
 import './styles.css';
-import axios from "axios";
-import React, { useEffect, useState } from 'react';
 
 const About = () => {
-    const [imageUrl, setImageUrl] = useState('');
-
-    useEffect(() => {
-        const fetchImageUrl = async () => {
-            try {
-                const response = await axios.get('/about/introduce');
-                setImageUrl(response.data.imageUrl);
-            } catch (error) {
-                console.error('Error fetching the image URL:', error);
-            }
-        };
-
-        fetchImageUrl();
-    }, []);
-
     const aboutTexts = [
         "안녕하십니까, 아주대학교 1만 학우 여러분.",
         "아주대학교 제44대 총학생회 '아침'의 총학생회장 이재건, 부총학생회장 송재원입니다.",
@@ -44,7 +28,7 @@ const About = () => {
             <hr className="titleSeparator"/>
             <img
                 className="aboutImg"
-                src='/chairman.jpeg'
+                src='/images/main/chairman.jpeg'
                 alt="ajouchong_chairman"
             />
             <div className="aboutTextBox">

@@ -3,8 +3,6 @@ import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './styles.css';
 
-const API_BASE_URL = 'https://www.ajouchong.com/api';
-
 const QnaDetail = () => {
     const { postId } = useParams();
     const [postDetails, setPostDetails] = useState(null);
@@ -16,7 +14,7 @@ const QnaDetail = () => {
     const fetchPostDetails = async () => {
         setLoading(true);
         try {
-            const response = await axios.get(`${API_BASE_URL}/qna/${postId}`, {
+            const response = await axios.get(`/api/qna/${postId}`, {
                 withCredentials: true
             });
 
@@ -49,7 +47,7 @@ const QnaDetail = () => {
 
         try {
             const response = await axios.post(
-                `${API_BASE_URL}/qna/${postId}/like`,
+                `/api/qna/${postId}/like`,
                 {},
                 { withCredentials: true }
             );
@@ -89,12 +87,29 @@ const QnaDetail = () => {
         </div>
     );
 
-    const renderAnswerSection = () => (
-        <div className="post-answer">
-            <strong>상태:</strong> {postDetails.replied ? '답변 완료' : '대기 중'}
-            <p>{postDetails.answer || '답변이 아직 없습니다.'}</p>
-        </div>
-    );
+    const renderAnswerSection = () => {
+        const answerContent = postDetails.answer?.content || '답변이 아직 없습니다.';
+        const answerCreateTime = postDetails.answer?.createTime;
+
+        return (
+            <div className="answer-container">
+                <div className="answer-header">
+                    <h3>답변</h3>
+                    <span className={`answer-status ${postDetails.replied ? 'completed' : 'pending'}`}>
+                        {postDetails.replied ? '답변 완료' : '대기 중'}
+                    </span>
+                </div>
+                <div className="answer-content">
+                    <p>{answerContent}</p>
+                    {answerCreateTime && (
+                        <div className="answer-meta">
+                            <small>답변일: {formatDate(answerCreateTime)}</small>
+                        </div>
+                    )}
+                </div>
+            </div>
+        );
+    };
 
     const renderLikeSection = () => (
         <div className="like-section">
@@ -109,24 +124,17 @@ const QnaDetail = () => {
         </div>
     );
 
-    useEffect(() => {
-        if (postId && !didFetch.current) {
-            didFetch.current = true;
-            fetchPostDetails();
-        }
-    }, [postId]);
+    const renderLoading = () => (
+        <div>Loading...</div>
+    );
 
-    if (loading) {
-        return <div>Loading...</div>;
-    }
+    const renderError = () => (
+        <div>No post details found.</div>
+    );
 
-    if (!postDetails) {
-        return <div>No post details found.</div>;
-    }
-
-    return (
-        <div className="post-detail">
-            <h2 className="post-title">{postDetails.qpTitle}</h2>
+    const renderPostContent = () => (
+        <div className="context">
+            <div className="contextTitle">{postDetails.qpTitle}</div>
             <hr className="titleSeparator"/>
             {renderMetadata()}
             <p className="post-content">{postDetails.qpContent}</p>
@@ -137,6 +145,23 @@ const QnaDetail = () => {
             </button>
         </div>
     );
+
+    useEffect(() => {
+        if (postId && !didFetch.current) {
+            didFetch.current = true;
+            fetchPostDetails();
+        }
+    }, [postId]);
+
+    if (loading) {
+        return renderLoading();
+    }
+
+    if (!postDetails) {
+        return renderError();
+    }
+
+    return renderPostContent();
 };
 
 export default QnaDetail;

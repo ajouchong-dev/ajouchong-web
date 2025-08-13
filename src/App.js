@@ -23,7 +23,6 @@ import AnnouncementDetail from './pages/News/Announcement/AnnouncementDetail';
 import Qna from './pages/Communication/Qna';
 import QnaDetail from './pages/Communication/Qna/QnaDetail';
 import Require from './pages/Communication/Require';
-import RequireWrite from './pages/Communication/Require/requireWrite';
 import RequireDetail from './pages/Communication/Require/RequireDetail';
 import WritePage from './pages/Communication/WritePage';
 
@@ -85,7 +84,7 @@ const Content = () => {
                 <Route path="/communication/qna/write" element={<WritePage/>}/>
                 <Route path="/communication/qna/:postId" element={<QnaDetail/>}/>
                 <Route path="/communication/require" element={<Require/>}/>
-                <Route path="/communication/require/write" element={<RequireWrite/>}/>
+                <Route path="/communication/require/write" element={<WritePage/>}/>
                 <Route path="/communication/require/:id" element={<RequireDetail/>}/>
                 
                 <Route path="/resources/bylaws" element={<Bylaws/>}/>

@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import './styles.css';
 
-const API_BASE_URL = 'https://www.ajouchong.com/api';
 const POSTS_PER_PAGE = 9;
 
 const Announcement = () => {
@@ -14,14 +13,14 @@ const Announcement = () => {
 
     const formatPostData = (post) => ({
         id: post.npost_id,
-        imageUrl: post.imageUrls[0] || '/aurum_square.jpeg',
+        imageUrl: post.imageUrls[0] || '/images/main/achim_square.jpeg',
         title: post.npTitle,
         date: new Date(post.npCreateTime).toLocaleDateString(),
     });
 
     const fetchPosts = async () => {
         try {
-            const response = await axios.get(`${API_BASE_URL}/notice`, {
+            const response = await axios.get(`/api/notice`, {
                 headers: { 'Content-Type': 'application/json' },
                 withCredentials: true,
             });

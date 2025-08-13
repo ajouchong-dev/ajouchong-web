@@ -3,8 +3,6 @@ import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './styles.css';
 
-const API_BASE_URL = 'https://www.ajouchong.com/api/partnership';
-
 const PromotionDetail = () => {
     const { postId } = useParams();
     const [postDetails, setPostDetails] = useState(null);
@@ -15,7 +13,7 @@ const PromotionDetail = () => {
 
     const fetchPostDetails = async () => {
         try {
-            const response = await axios.get(`${API_BASE_URL}/${postId}`, {
+            const response = await axios.get(`/api/partnership/${postId}`, {
                 withCredentials: true
             });
 
@@ -44,7 +42,7 @@ const PromotionDetail = () => {
 
         try {
             const response = await axios.post(
-                `${API_BASE_URL}/${postId}/like`,
+                `/api/partnership/${postId}/like`,
                 {},
                 { withCredentials: true }
             );

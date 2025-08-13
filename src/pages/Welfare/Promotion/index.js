@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import './styles.css';
 
-const API_BASE_URL = 'https://www.ajouchong.com/api/partnership';
 const POSTS_PER_PAGE = 9;
 
 const Promotion = () => {
@@ -21,7 +20,7 @@ const Promotion = () => {
 
     const fetchPosts = async () => {
         try {
-            const response = await axios.get(API_BASE_URL, {
+            const response = await axios.get('/api/partnership', {
                 id: 'your_id',
                 password: 'your_password'
             });

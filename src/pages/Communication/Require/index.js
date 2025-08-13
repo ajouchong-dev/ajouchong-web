@@ -3,7 +3,6 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
 import axios from 'axios';
 
-const API_BASE_URL = 'https://www.ajouchong.com/api';
 const POSTS_PER_PAGE = 9;
 
 const Require = () => {
@@ -23,11 +22,14 @@ const Require = () => {
 
     const fetchPosts = async () => {
         try {
-            const response = await axios.get(`${API_BASE_URL}/agora`);
+            const response = await axios.get(`/api/agora`);
             if (response.data.code === 1) {
                 const fetchedPosts = response.data.data.map(formatPostData);
-                setPosts(fetchedPosts);
-                setFilteredPosts(fetchedPosts);
+                const sortedPosts = fetchedPosts.sort((a, b) => 
+                    new Date(b.date) - new Date(a.date)
+                );
+                setPosts(sortedPosts);
+                setFilteredPosts(sortedPosts);
             } else {
                 console.error('데이터를 불러오는 중 오류 발생:', response.data.message);
             }
@@ -54,7 +56,7 @@ const Require = () => {
 
     const goToWritePage = async () => {
         try {
-            const response = await axios.get(`${API_BASE_URL}/login/auth/info`, {
+            const response = await axios.get(`/api/login/auth/info`, {
                 withCredentials: true,
             });
 
@@ -95,9 +97,9 @@ const Require = () => {
         const indexOfFirstPost = indexOfLastPost - POSTS_PER_PAGE;
         const currentPosts = filteredPosts.slice(indexOfFirstPost, indexOfLastPost);
 
-        return currentPosts.map(post => (
+        return currentPosts.map((post, index) => (
             <tr key={post.id}>
-                <td>{post.id}</td>
+                <td>{filteredPosts.length - (indexOfFirstPost + index)}</td>
                 <td>
                     <span
                         className="title-link"

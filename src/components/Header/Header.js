@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
-import { useAuth } from '../../contexts/AuthContext';
-import Login from '../Login/login';
+import Login from '../../pages/Auth/Login/login';
 import './Header.css';
 import { Menu, X } from 'lucide-react';
 
@@ -56,8 +55,8 @@ const NAVIGATION_MENUS = {
         path: '/acentia/intro',
         items: [
             { label: 'ACENTIA 소개', path: '/acentia/intro' },
-            { label: 'ACENTIA 굿즈', path: '/Acentia/goods' },
-            { label: '역대 ACENTIA', path: '/Acentia/record' }
+            { label: 'ACENTIA 굿즈', path: '/acentia/goods' },
+            { label: '역대 ACENTIA', path: '/acentia/record' }
         ]
     }
 };
@@ -77,8 +76,6 @@ const Header = () => {
     const [dropdown, setDropdown] = useState(null);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const location = useLocation();
-    const { auth } = useAuth();
-    const [user, setUser] = useState(auth.user);
 
     useEffect(() => {
         const header = document.querySelector('.header');
@@ -166,7 +163,7 @@ const Header = () => {
             <div className="lower">
                 <div className="logo">
                     <a href="/">
-                        <img src="/achim_header.svg" alt="로고"/>
+                        <img src="/images/logos/achim_header.svg" alt="로고"/>
                     </a>
                 </div>
 
@@ -232,7 +229,7 @@ const Header = () => {
                 </nav>
 
                 <div className="button">
-                    <Login user={user} setUser={setUser} />
+                    <Login />
                 </div>
             </div>
         </header>
