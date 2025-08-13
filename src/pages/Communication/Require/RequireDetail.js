@@ -3,8 +3,6 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
-const API_BASE_URL = 'https://www.ajouchong.com/api';
-
 const RequireDetail = () => {
     const { id } = useParams();
     const [postDetails, setPostDetails] = useState(null);
@@ -14,7 +12,7 @@ const RequireDetail = () => {
 
     const fetchPostDetails = async () => {
         try {
-            const response = await axios.get(`${API_BASE_URL}/agora/${id}`, {
+            const response = await axios.get(`/api/agora/${id}`, {
                 withCredentials: true
             });
             
@@ -46,7 +44,7 @@ const RequireDetail = () => {
 
         try {
             const response = await axios.post(
-                `${API_BASE_URL}/agora/${id}/like`,
+                `/api/agora/${id}/like`,
                 {},
                 { withCredentials: true }
             );
@@ -92,9 +90,6 @@ const RequireDetail = () => {
                 <span className={postDetails.approve ? 'approval-approved' : 'approval-denied'}>
                     {postDetails.approve ? '가결' : '진행중'}
                 </span>
-            </div>
-            <div className="comment-item">
-                <strong>답변:</strong> {postDetails.answer || '답변 없음'}
             </div>
         </div>
     );
