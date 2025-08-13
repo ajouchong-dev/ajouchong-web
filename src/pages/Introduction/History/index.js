@@ -17,7 +17,7 @@ const History = () => {
     const navigate = useNavigate();
 
     const handleRowClick = (year) => {
-        navigate(`/history/${year}`);
+        navigate(`/introduction/history/${year}`);
     };
 
     const renderTableRow = ({ year, title, leaders }) => (
