@@ -57,7 +57,7 @@ const Main = () => {
     };
 
     const handleNoticeClick = (id) => {
-        navigate(`/api/notice/${id}`);
+        navigate(`/notice/${id}`);
     };
 
     const handleImageError = (e) => {
