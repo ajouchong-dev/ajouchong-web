@@ -72,7 +72,7 @@ const Announcement = () => {
 
     const renderPostCard = (post) => (
         <div className="post-box" key={post.id}>
-            <Link to={`/api/notice/${post.id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
+            <Link to={`/notice/${post.id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
                 <img
                     src={post.imageUrl}
                     alt={post.title || '공지사항 이미지'}
@@ -81,7 +81,7 @@ const Announcement = () => {
                     style={{ cursor: 'pointer' }}
                 />
             </Link>
-            <Link to={`/api/notice/${post.id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
+            <Link to={`/notice/${post.id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
                 <div className="post-title" style={{ cursor: 'pointer' }}>
                     {post.title}
                 </div>
