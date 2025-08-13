@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
-import Login from '../Login/login';
+import Login from '../../pages/Auth/Login/login';
 import './Header.css';
 import { Menu, X } from 'lucide-react';
 
@@ -78,7 +78,6 @@ const Header = () => {
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const location = useLocation();
     const { auth } = useAuth();
-    const [user, setUser] = useState(auth.user);
 
     useEffect(() => {
         const header = document.querySelector('.header');
@@ -232,7 +231,7 @@ const Header = () => {
                 </nav>
 
                 <div className="button">
-                    <Login user={user} setUser={setUser} />
+                    <Login />
                 </div>
             </div>
         </header>

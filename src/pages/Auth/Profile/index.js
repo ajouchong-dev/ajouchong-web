@@ -1,26 +1,36 @@
 import React, { useEffect, useState, useCallback } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../../contexts/AuthContext";
 import "./styles.css";
 import {googleLogout, useGoogleLogin} from "@react-oauth/google";
 import Cookies from "js-cookie";
 
 const Profile = () => {
-    const [user, setUser] = useState(null);
-    const [isLoading, setIsLoading] = useState(true); // 로딩 상태 추가
+    const [isLoading, setIsLoading] = useState(true);
     const navigate = useNavigate();
+    const { auth, login, logout } = useAuth();
 
-    const handleLogout = useCallback(() => {
-        googleLogout();
-        setUser(null);
-
+    const clearCookies = () => {
         Cookies.remove("accessToken");
         Cookies.remove("refreshToken");
         localStorage.removeItem("user");
+    };
 
-        navigate("/");
-        setTimeout(() => window.location.reload(), 500);
-    }, [navigate]);
+    const handleLogout = useCallback(async () => {
+        try {            
+            await axios.post(`/api/login/auth/logout`, {}, {
+                withCredentials: true
+            });
+        } catch (error) {
+            console.error("Backend logout error:", error);            
+        } finally {            
+            googleLogout();
+            clearCookies();
+            logout();
+            navigate("/");
+        }
+    }, [navigate, logout]);
 
     const signInWithGoogle = useGoogleLogin({
         onSuccess: async (tokenResponse) => {
@@ -31,8 +41,6 @@ const Profile = () => {
                         headers: { Authorization: `Bearer ${tokenResponse.access_token}` },
                     }
                 );
-
-                // console.log("Google User Info:", userInfo);
 
                 const refreshToken = Cookies.get("refreshToken") || null;
 
@@ -48,14 +56,11 @@ const Profile = () => {
                     }
                 );
 
-                const { status, data } = backendData;
+                const { data } = backendData;
                 const jwtToken = data.jwtToken;
 
                 if (jwtToken) {
-
-                    setUser(userInfo);
-                    localStorage.setItem("user", JSON.stringify(userInfo));
-
+                    login(jwtToken, userInfo);
                     navigate("/profile");
                 } else {
                     console.error("JWT가 존재하지 않습니다.");
@@ -78,33 +83,36 @@ const Profile = () => {
 
     useEffect(() => {
         const fetchUserInfo = async () => {
+            if (auth.isAuthenticated && auth.user) {
+                setIsLoading(false);
+                return;
+            }
+
             try {
                 const response = await axios.get("/api/login/auth/info", {
-                    withCredentials: true, // 쿠키 기반 인증
+                    withCredentials: true,
                 });
 
-                console.log("API 응답:", response.data);
-                console.log("응답 데이터:", response.data.data);
-
                 if (response.data.code === 1 && response.data.data) {
-                    setUser(response.data.data);
+                    // AuthContext의 user 정보 업데이트
+                    if (auth.token) {
+                        // JWT 토큰이 있으면 AuthContext의 login 함수를 사용하여 업데이트
+                        login(auth.token, response.data.data);
+                    }
                 } else {
                     console.warn("서버에서 사용자 정보를 제공하지 않음:", response.data.message);
-                    setUser(null);
+                    if (auth.isAuthenticated) {
+                        logout();
+                    }
                 }
 
             } catch (error) {
                 console.error("사용자 정보를 불러오는 중 오류 발생:", error);
 
-                if (error.response) {
-                    // console.error("서버 응답 상태 코드:", error.response.status);
-                    // console.error("서버 응답 데이터:", error.response.data);
-
-                    if (error.response.status === 401) {
-                        console.warn("세션이 만료됨. 로그아웃 처리.");
-                        alert("세션이 만료되었습니다. 다시 로그인해주세요.");
-                        handleLogout();
-                    }
+                if (error.response?.status === 401) {
+                    console.warn("세션이 만료됨. 로그아웃 처리.");
+                    alert("세션이 만료되었습니다. 다시 로그인해주세요.");
+                    handleLogout();
                 }
             } finally {
                 setIsLoading(false);
@@ -112,7 +120,7 @@ const Profile = () => {
         };
 
         fetchUserInfo();
-    }, []);
+    }, [auth.token, auth.isAuthenticated, auth.user, login, logout, handleLogout]);
 
     if (isLoading) {
         return <p className="loading-text">로딩 중...</p>;
@@ -122,23 +130,23 @@ const Profile = () => {
         <div className="profile-container">
             <h1>Profile</h1>
             <hr className="titleSeparator"/>
-            {user ? (
+            {auth.isAuthenticated && auth.user ? (
                 <div className="profile-info">
-                    <p>이름: {user.name}</p>
-                    <p>이메일: {user.email}</p>
-                    <p>역할: {user.role}</p>
+                    <p>이름: {auth.user.name}</p>
+                    <p>이메일: {auth.user.email}</p>
+                    <p>역할: {auth.user.role}</p>
                 </div>
             ) : (
                 <p className="loading-text">로그인이 필요한 서비스입니다.</p>
             )}
 
             <div className="login-container">
-                {user ? (
+                {auth.isAuthenticated && auth.user ? (
                     <button className="auth-button" onClick={handleLogout}>
                         Logout
                     </button>
                 ) : (
-                    <button onClick={signInWithGoogle} className="auth-button">
+                    <button className="auth-button" onClick={signInWithGoogle}>
                         Login
                     </button>
                 )}

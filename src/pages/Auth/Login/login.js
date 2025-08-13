@@ -3,27 +3,19 @@ import { useNavigate } from "react-router-dom";
 import { googleLogout, useGoogleLogin } from "@react-oauth/google";
 import Cookies from "js-cookie";
 import axios from "axios";
+import { useAuth } from "../../../contexts/AuthContext";
 import "./login.css";
 
 const GOOGLE_API_URL = "https://www.googleapis.com/oauth2/v3/userinfo";
 
-const Login = ({ user, setUser }) => {
+const Login = () => {
     const navigate = useNavigate();
-
-    const saveUserToStorage = (userData) => {
-        localStorage.setItem("user", JSON.stringify(userData));
-    };
-
-    const loadUserFromStorage = () => {
-        const storedUser = localStorage.getItem("user");
-        if (storedUser) {
-            setUser(JSON.parse(storedUser));
-        }
-    };
+    const { auth, login, logout } = useAuth();
 
     const clearCookies = () => {
         Cookies.remove("refreshToken");
         Cookies.remove("accessToken");
+        localStorage.removeItem("user");
     };
 
     const authenticateWithBackend = async (accessToken, refreshToken) => {
@@ -58,8 +50,8 @@ const Login = ({ user, setUser }) => {
             const jwtToken = data.jwtToken;
 
             if (jwtToken) {
-                setUser(userInfo);
-                saveUserToStorage(userInfo);
+                // AuthContext를 통해 로그인 처리
+                login(jwtToken, userInfo);
                 navigate("/profile");
             } else {
                 console.error("JWT가 존재하지 않습니다.");
@@ -80,17 +72,21 @@ const Login = ({ user, setUser }) => {
 
     const handleLogout = async () => {
         try {
-            await axios.post(`/login/auth/logout`, {}, {
+            await axios.post(`/api/login/auth/logout`, {}, {
                 withCredentials: true
             });
 
             googleLogout();
-            setUser(null);
-            localStorage.removeItem("user");
             clearCookies();
+            logout(); 
             navigate("/");
         } catch (error) {
             console.error("Logout error:", error);
+            // 에러가 발생해도 클라이언트 측 로그아웃은 진행
+            googleLogout();
+            clearCookies();
+            logout();
+            navigate("/");
         }
     };
 
@@ -103,18 +99,8 @@ const Login = ({ user, setUser }) => {
         hosted_domain: "ajou.ac.kr",
     });
 
-    useEffect(() => {
-        if (user) {
-            saveUserToStorage(user);
-        }
-    }, [user]);
-
-    useEffect(() => {
-        loadUserFromStorage();
-    }, [setUser]);
-
     const renderAuthButton = () => {
-        if (user) {
+        if (auth.isAuthenticated && auth.user) {
             return (
                 <button className="auth-button logout-button" onClick={handleLogout}>
                     Logout
