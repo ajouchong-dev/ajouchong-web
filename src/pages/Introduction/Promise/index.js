@@ -8,7 +8,7 @@ const PromiseComponent = () => {
             <hr className="titleSeparator" />
             <img
                 className="promiseImg"
-                src='/promise.png'
+                src='/images/main/promise.png'
                 alt="공약 소개"
             />
         </div>
