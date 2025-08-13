@@ -1,4 +1,4 @@
-import "./style.css";
+import "./styles.css";
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -30,26 +30,29 @@ const History = () => {
         </tr>
     );
 
+    const renderTable = () => (
+        <table className="council-history">
+            <colgroup>
+                <col style={{ width: "65%" }} />
+                <col style={{ width: "35%" }} />
+            </colgroup>
+            <thead>
+                <tr>
+                    <th>해당연도</th>
+                    <th>총, 부학생회장</th>
+                </tr>
+            </thead>
+            <tbody>
+                {councilList.map(renderTableRow)}
+            </tbody>
+        </table>
+    );
+
     return (
         <div className="context">
             <div className="contextTitle">역대 총학생회 소개</div>
             <hr className="titleSeparator" />
-
-            <table className="council-history">
-                <colgroup>
-                    <col style={{ width: "65%" }} />
-                    <col style={{ width: "35%" }} />
-                </colgroup>
-                <thead>
-                    <tr>
-                        <th>해당연도</th>
-                        <th>총, 부학생회장</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {councilList.map(renderTableRow)}
-                </tbody>
-            </table>
+            {renderTable()}
         </div>
     );
 };

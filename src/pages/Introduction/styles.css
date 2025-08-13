@@ -86,39 +86,6 @@
     padding-left: var(--spacing-xl);
 }
 
-.council-history {
-    width: 80%;
-    max-width: 800px;
-    margin: 2rem auto;
-    border-collapse: collapse;
-    font-size: 1rem;
-    text-align: center;
-    background-color: var(--bg-primary);
-    box-shadow: var(--shadow-light);
-}
-
-.council-history thead {
-    background-color: var(--secondary-color);
-    color: var(--text-primary);
-}
-
-.council-history th,
-.council-history td {
-    padding: 1rem;
-    text-align: center;
-    border-bottom: 1px solid var(--border-light);
-}
-
-.council-history th:first-child,
-.council-history td:first-child {
-    border-right: 1px solid var(--border-light);
-}
-
-.council-history td:first-child {
-    font-weight: 600;
-    color: var(--text-primary);
-}
-
 .clickable-row {
     cursor: pointer;
     transition: var(--transition-normal);
@@ -126,79 +93,6 @@
 
 .clickable-row:hover {
     background-color: var(--bg-light);
-}
-    
-.council-detail-wrapper {
-    display: flex;
-    justify-content: center;
-    padding: 3rem 1rem;
-    background-color: var(--bg-secondary);
-}
-
-.council-card {
-    background-color: var(--bg-primary);
-    padding: 2rem 2.5rem;
-    max-width: 800px;
-    width: 100%;
-    border-radius: var(--radius-normal);
-    box-shadow: var(--shadow-light);
-    text-align: center;
-}
-
-.council-card h2 {
-    font-size: 1.8rem;
-    margin-bottom: 0.5rem;
-    color: var(--text-primary);
-}
-
-.council-card .description {
-    color: var(--text-muted);
-    margin-bottom: 1.5rem;
-}
-
-.download-link {
-    display: inline-block;
-    background-color: #e6e6fa;
-    padding: 0.6rem 1.2rem;
-    margin-bottom: 2rem;
-    border-radius: var(--radius-normal);
-    text-decoration: none;
-    color: #4b0082;
-    font-weight: bold;
-    transition: var(--transition-normal);
-}
-
-.download-link:hover {
-    background-color: #d8d8f0;
-}
-
-.image-gallery {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1.5rem;
-    justify-content: center;
-    margin-top: 1rem;
-}
-
-.image-box {
-    flex: 1 1 100%;
-    max-width: 600px;
-    text-align: center;
-}
-
-.image-box img {
-    width: 100%;
-    max-width: 600px;
-    height: auto;
-    border-radius: var(--radius-normal);
-    box-shadow: var(--shadow-light);
-    margin-bottom: 0.5rem;
-}
-
-.image-box p {
-    margin: 0;
-    font-weight: 500;
-    color: var(--text-secondary);
 }
 
 /* 반응형 디자인 */

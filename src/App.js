@@ -16,7 +16,7 @@ import PromiseComponent from './pages/Introduction/Promise';
 import Map from './pages/Introduction/Map';
 import History from './pages/Introduction/History';
 import Campusmap from './pages/Introduction/Campusmap';
-import CouncilDetail from './pages/Introduction/History/CouncilDetail'; // ✅ 경로 수정
+import CouncilDetail from './pages/Introduction/History/CouncilDetail';
 
 import Announcement from './pages/News/Announcement/index';
 import AnnouncementDetail from './pages/News/Announcement/AnnouncementDetail';
