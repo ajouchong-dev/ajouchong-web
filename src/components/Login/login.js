@@ -5,7 +5,6 @@ import Cookies from "js-cookie";
 import axios from "axios";
 import "./login.css";
 
-const API_BASE_URL = "https://www.ajouchong.com/api";
 const GOOGLE_API_URL = "https://www.googleapis.com/oauth2/v3/userinfo";
 
 const Login = ({ user, setUser }) => {
@@ -29,7 +28,7 @@ const Login = ({ user, setUser }) => {
 
     const authenticateWithBackend = async (accessToken, refreshToken) => {
         const response = await axios.post(
-            `${API_BASE_URL}/login/auth/oauth`,
+            `/api/login/auth/oauth`,
             {
                 accessToken: accessToken,
                 refreshToken: refreshToken,
@@ -81,7 +80,7 @@ const Login = ({ user, setUser }) => {
 
     const handleLogout = async () => {
         try {
-            await axios.post(`${API_BASE_URL}/login/auth/logout`, {}, {
+            await axios.post(`/login/auth/logout`, {}, {
                 withCredentials: true
             });
 

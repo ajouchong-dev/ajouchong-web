@@ -37,7 +37,7 @@ const Profile = () => {
                 const refreshToken = Cookies.get("refreshToken") || null;
 
                 const { data: backendData } = await axios.post(
-                    "https://www.ajouchong.com/api/login/auth/oauth",
+                    '/api/login/auth/oauth',
                     {
                         accessToken: tokenResponse.access_token,
                         refreshToken: refreshToken,
@@ -79,7 +79,7 @@ const Profile = () => {
     useEffect(() => {
         const fetchUserInfo = async () => {
             try {
-                const response = await axios.get("https://www.ajouchong.com/api/login/auth/info", {
+                const response = await axios.get("/api/login/auth/info", {
                     withCredentials: true, // 쿠키 기반 인증
                 });
 
