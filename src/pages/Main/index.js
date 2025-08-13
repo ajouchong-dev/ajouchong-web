@@ -4,7 +4,6 @@ import axios from 'axios';
 import { useNavigate, Link } from 'react-router-dom';
 import './styles.css';
 
-const API_BASE_URL = 'https://www.ajouchong.com/api';
 const SLIDER_IMAGES = [
     "/main/main_7.jpg",
     "/main/spring_1.jpeg",
@@ -34,13 +33,13 @@ const Main = () => {
         content: notice.npContent,
         image: notice.imageUrls && notice.imageUrls.length > 0 
             ? notice.imageUrls[0] 
-            : '/main/aurum_square.jpeg',
+            : '/main/achim_square.jpeg',
         date: new Date(notice.npCreateTime).toLocaleDateString(),
     });
 
     const fetchNotices = async () => {
         try {
-            const response = await axios.get(`${API_BASE_URL}/notice`);
+            const response = await axios.get(`/api/notice`);
 
             if (response.data.code === 1 && Array.isArray(response.data.data)) {
                 const sortedNotices = response.data.data
@@ -58,7 +57,7 @@ const Main = () => {
     };
 
     const handleNoticeClick = (id) => {
-        navigate(`/notice/${id}`);
+        navigate(`/api/notice/${id}`);
     };
 
     const handleImageError = (e) => {
