@@ -1,9 +1,18 @@
-import React, { useMemo } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import React, { useMemo, useEffect } from 'react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import './Header.css';
 
+const REDIRECT_MAPPINGS = {
+    introduction: '/introduction/about',
+    news: '/news/notice',
+    communication: '/communication/qna',
+    resources: '/resources/bylaws',
+    welfare: '/welfare/promotion',
+    acentia: '/acentia/intro',
+    utility: '/utility/policy'
+};
+
 const BREADCRUMB_LABELS = {
-    introduction: '소개',
     about: '총학생회 소개',
     promise: '공약 소개',
     organization: '조직도',
@@ -11,31 +20,46 @@ const BREADCRUMB_LABELS = {
     map: '오시는 길',
     campusmap: '캠퍼스 맵',
 
-    news: '소식',
     notice: '공지사항',
 
-    communication: '소통',
     qna: 'Q&A',
     require: '100인 안건 상정제',
     write: '글 작성',
 
-    resources: '자료실',
     bylaws: '세칙 및 회칙',
     proceeding: '회의록',
     audit: '감사자료',
 
-    welfare: '학생복지',
     promotion: '제휴백과',
     rental: '대여사업',
 
-    policy: '개인정보처리방침',
-    termsofservice: '이용약관',
+    intro: 'ACENTIA 소개',
+    goods: 'ACENTIA 굿즈',
+    record: '역대 ACENTIA',
+
+    termsofservice: '개인정보처리방침',
+    policy: '이용약관',
     sitemap: '사이트맵',
     profile: '프로필',
 };
 
 const Breadcrumb = () => {
     const location = useLocation();
+    const navigate = useNavigate();
+    
+    useEffect(() => {
+        const pathname = location.pathname;
+        const segments = pathname.split('/').filter(Boolean);
+        
+        if (segments.length === 1) {
+            const firstSegment = segments[0];
+            const redirectPath = REDIRECT_MAPPINGS[firstSegment];
+            
+            if (redirectPath && pathname !== redirectPath) {
+                navigate(redirectPath, { replace: true });
+            }
+        }
+    }, [location.pathname, navigate]);
     
     const breadcrumbItems = useMemo(() => {
         const pathnames = location.pathname.split('/').filter(Boolean);
