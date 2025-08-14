@@ -1,6 +1,6 @@
 import React from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import './detail.css';
+import './style.css';
 
 const councilData = {
     "2024": {
