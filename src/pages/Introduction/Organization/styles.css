@@ -1,6 +1,6 @@
 :root{
-  --aj-green: #3a7b50;
-  --aj-green-2:#6aa975;
+  --aj-green: #a4c49c;   /* 상단바 배경색과 동일 */
+  --aj-green-2: #b9d0ad; /* 상단바보다 조금 더 밝게 */
   --aj-mint:  #e9f3ec;
   --aj-white: #ffffff;
   --ink-1:    #173823;
@@ -26,8 +26,14 @@
   border-radius: 16px;
   box-shadow: var(--shadow);
   overflow: hidden;
+
+  /* 높이 맞춤을 위한 컬럼 레이아웃 */
+  display: flex;
+  flex-direction: column;
 }
-.group-box + .group-box{ margin-top: 22px; }
+
+/* 리더십 박스 다음에만 여백 */
+.org-panel > .group-box + .group-box { margin-top: 22px; }
 
 .group-box__title{
   background: linear-gradient(180deg, var(--aj-green-2), var(--aj-green));
@@ -66,14 +72,14 @@
   font-size: 12px;
   font-weight: 800;
   color: var(--aj-white);
-  background: linear-gradient(180deg, var(--aj-green), #2e6d45);
+  background: linear-gradient(180deg, var(--aj-green-2), var(--aj-green));
   width: fit-content;
 }
 .role-name-line{ font-size: 15px; }
 .role-name{ font-weight: 800; color: var(--ink-1); }
 .role-dept{ color: var(--ink-2); }
 
-/* 2) 국 소개 */
+/* 2) 소개 */
 .group-desc{
   padding: 4px 16px 10px;
   font-size: 14px;
@@ -82,13 +88,23 @@
   border-top: 1px dashed rgba(58,123,80,.18);
 }
 
-/* 3) 국원 칩 */
+/* 3) 국원 섹션: 제목 + 칩 */
+.member-section{
+  margin-top: auto;                 /* 내용이 짧아도 아래로 붙게 */
+  border-top: 1px dashed rgba(58,123,80,.18);
+  padding: 10px 12px 14px 12px;
+}
+.member-title{
+  font-size: 12px;
+  font-weight: 800;
+  color: #2b5f42;
+  margin: 0 0 8px 2px;
+  letter-spacing: .2px;
+}
 .member-list{
-  padding: 6px 12px 14px 12px;
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
-  border-top: 1px dashed rgba(58,123,80,.18);
 }
 .chip{
   display: inline-block;
@@ -104,12 +120,18 @@
 .division-grid{
   margin-top: 22px;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 18px;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 20px;
+  align-items: stretch;             /* 같은 행에서 높이 동일 */
+}
+.division-grid .group-box{
+  margin-top: 0;
+  min-height: 360px;                /* 모든 국 박스 최소 높이 통일 */
 }
 
 /* 반응형 */
 @media (max-width: 560px){
   .roles-row{ grid-template-columns: 1fr; }
   .avatar{ width: 56px; height: 56px; }
+  .division-grid .group-box{ min-height: 0; }
 }
