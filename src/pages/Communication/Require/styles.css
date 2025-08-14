@@ -20,20 +20,68 @@
 }
 
 .comment-section {
-    margin-top: 80px;
-    padding-top: var(--spacing-lg);
+    width: 55%;
+    max-width: 800px;
+    margin: var(--spacing-xl) auto var(--spacing-lg);
     border-top: 1px solid var(--border-light);
 }
 
 .comment-item {
-    padding: var(--spacing-sm) 100px;
+    padding: var(--spacing-md) var(--spacing-lg);
     border-bottom: 1px solid var(--border-light);
-    font-size: 0.95rem;
+    font-size: var(--font-base);
     color: var(--text-secondary);
     display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+}
+
+.comment-item:last-child {
+    border-bottom: none;
 }
 
 .comment-item strong {
-    margin-right: var(--spacing-sm);
     color: var(--text-primary);
+    font-weight: var(--font-weight-semibold);
+    min-width: 80px;
+}
+
+/* 반응형 디자인 */
+@media screen and (max-width: 768px) {
+    .comment-section {
+        width: 85%;
+        max-width: 95%;
+        margin: var(--spacing-lg) auto var(--spacing-md);
+        padding: var(--spacing-md);
+    }
+    
+    .comment-item {
+        padding: var(--spacing-sm) var(--spacing-md);
+        font-size: var(--font-sm);
+    }
+    
+    .comment-item strong {
+        min-width: 60px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .comment-section {
+        width: 95%;
+        max-width: 98%;
+        margin: var(--spacing-md) auto var(--spacing-sm);
+        padding: var(--spacing-sm);
+    }
+    
+    .comment-item {
+        padding: var(--spacing-xs) var(--spacing-sm);
+        font-size: var(--font-sm);
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--spacing-xs);
+    }
+    
+    .comment-item strong {
+        min-width: auto;
+    }
 }

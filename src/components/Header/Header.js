@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useLocation } from 'react-router-dom';
 import Login from '../../pages/Auth/Login/login';
 import './Header.css';
@@ -77,43 +77,31 @@ const Header = () => {
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const location = useLocation();
 
-    useEffect(() => {
+    const handleScroll = useCallback(() => {
         const header = document.querySelector('.header');
-        const handleScroll = () => {
-            if (window.scrollY > 0) {
-                header.classList.add('scrolled');
-            } else {
-                header.classList.remove('scrolled');
-            }
-        };
-
-        if (location.pathname !== '/') {
+        if (window.scrollY > 0) {
             header.classList.add('scrolled');
+        } else {
+            header.classList.remove('scrolled');
         }
+    }, []);
 
-        window.addEventListener('scroll', handleScroll);
-        return () => window.removeEventListener('scroll', handleScroll);
-    }, [location]);
-
-    // 현재 활성 메뉴 확인
-    const getActiveMenu = () => {
+    const getActiveMenu = useCallback(() => {
         const path = location.pathname;
         return Object.keys(NAVIGATION_MENUS).find(menuKey => {
             const menu = NAVIGATION_MENUS[menuKey];
             return menu.items.some(item => item.path === path);
         });
-    };
+    }, [location.pathname]);
 
-    const activeMenu = getActiveMenu();
+    const handleMouseEnter = useCallback((menu) => setDropdown(menu), []);
+    const handleMouseLeave = useCallback(() => setDropdown(null), []);
+    const toggleMobileMenu = useCallback(() => setIsMobileMenuOpen(prev => !prev), []);
+    const toggleMobileDropdown = useCallback((menu) => {
+        setDropdown(prev => prev === menu ? null : menu);
+    }, []);
 
-    const handleMouseEnter = (menu) => setDropdown(menu);
-    const handleMouseLeave = () => setDropdown(null);
-    const toggleMobileMenu = () => setIsMobileMenuOpen(!isMobileMenuOpen);
-    const toggleMobileDropdown = (menu) => {
-        setDropdown(dropdown === menu ? null : menu);
-    };
-
-    const renderDropdownMenu = (menuKey, isMobile = false) => {
+    const renderDropdownMenu = useCallback((menuKey, isMobile = false) => {
         const menu = NAVIGATION_MENUS[menuKey];
         if (!menu) return null;
 
@@ -132,9 +120,9 @@ const Header = () => {
                 ))}
             </ul>
         );
-    };
+    }, []);
 
-    const renderUpperLinks = (links, isRight = false) => (
+    const renderUpperLinks = useCallback((links, isRight = false) => (
         <nav className={isRight ? "upnav-menu2" : "upnav-menu"}>
             <ul className="flex items-center">
                 {links.map((link, index) => (
@@ -151,7 +139,79 @@ const Header = () => {
                 ))}
             </ul>
         </nav>
-    );
+    ), []);
+
+    const renderNavigationMenu = useCallback(() => (
+        <nav className="nav-menu">
+            <ul className="flex">
+                {Object.entries(NAVIGATION_MENUS).map(([key, menu]) => (
+                    <li 
+                        key={key}
+                        className="menu-container"
+                        onMouseEnter={() => handleMouseEnter(key)}
+                        onMouseLeave={handleMouseLeave}
+                    >
+                        <div 
+                            className={`navtitle ${getActiveMenu() === key ? 'active' : ''}`}
+                            onClick={() => window.location.href = menu.path}
+                        >
+                            {menu.title}
+                        </div>
+                        {dropdown === key && renderDropdownMenu(key)}
+                    </li>
+                ))}
+            </ul>
+        </nav>
+    ), [dropdown, getActiveMenu, handleMouseEnter, handleMouseLeave, renderDropdownMenu]);
+
+    const renderMobileMenu = useCallback(() => (
+        <nav className={`mobile-menu ${isMobileMenuOpen ? 'open' : ''}`}>
+            <ul className="list-none">
+                {Object.entries(NAVIGATION_MENUS).map(([key, menu]) => (
+                    <li 
+                        key={key}
+                        onClick={() => toggleMobileDropdown(key)}
+                        className={`${dropdown === key ? 'active' : ''} cursor-pointer`}
+                    >
+                        {menu.title}
+                        {dropdown === key && renderDropdownMenu(key, true)}
+                    </li>
+                ))}
+            </ul>
+            
+            <nav className="other-menu">
+                <ul className="flex justify-center">
+                    {UPPER_LINKS.map((link, index) => (
+                        <React.Fragment key={index}>
+                            <li><a href={link.url}>{link.label}</a></li>
+                            {index < UPPER_LINKS.length - 1 && <span className="dot"> • </span>}
+                        </React.Fragment>
+                    ))}
+                </ul>
+            </nav>
+            <nav className="other-menu2">
+                <ul className="flex justify-center">
+                    {UPPER_LINKS_RIGHT.map((link, index) => (
+                        <React.Fragment key={index}>
+                            <li><a href={link.path}>{link.label}</a></li>
+                            {index < UPPER_LINKS_RIGHT.length - 1 && <span className="dot"> • </span>}
+                        </React.Fragment>
+                    ))}
+                </ul>
+            </nav>
+        </nav>
+    ), [isMobileMenuOpen, dropdown, toggleMobileDropdown, renderDropdownMenu]);
+
+    useEffect(() => {
+        const header = document.querySelector('.header');
+        
+        if (location.pathname !== '/') {
+            header.classList.add('scrolled');
+        }
+
+        window.addEventListener('scroll', handleScroll);
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, [location.pathname, handleScroll]);
 
     return (
         <header className="header">
@@ -167,66 +227,13 @@ const Header = () => {
                     </a>
                 </div>
 
-                <nav className="nav-menu">
-                    <ul className="flex">
-                        {Object.entries(NAVIGATION_MENUS).map(([key, menu]) => (
-                            <li 
-                                key={key}
-                                className="menu-container"
-                                onMouseEnter={() => handleMouseEnter(key)}
-                                onMouseLeave={handleMouseLeave}
-                            >
-                                <div 
-                                    className={`navtitle ${activeMenu === key ? 'active' : ''}`}
-                                    onClick={() => window.location.href = menu.path}
-                                >
-                                    {menu.title}
-                                </div>
-                                {dropdown === key && renderDropdownMenu(key)}
-                            </li>
-                        ))}
-                    </ul>
-                </nav>
+                {renderNavigationMenu()}
 
                 <div className="hamburger-menu cursor-pointer" onClick={toggleMobileMenu}>
                     {isMobileMenuOpen ? <X size={28}/> : <Menu size={28}/>}
                 </div>
 
-                <nav className={`mobile-menu ${isMobileMenuOpen ? 'open' : ''}`}>
-                    <ul className="list-none">
-                        {Object.entries(NAVIGATION_MENUS).map(([key, menu]) => (
-                            <li 
-                                key={key}
-                                onClick={() => toggleMobileDropdown(key)}
-                                className={`${dropdown === key ? 'active' : ''} cursor-pointer`}
-                            >
-                                {menu.title}
-                                {dropdown === key && renderDropdownMenu(key, true)}
-                            </li>
-                        ))}
-                    </ul>
-                    
-                    <nav className="other-menu">
-                        <ul className="flex justify-center">
-                            {UPPER_LINKS.map((link, index) => (
-                                <React.Fragment key={index}>
-                                    <li><a href={link.url}>{link.label}</a></li>
-                                    {index < UPPER_LINKS.length - 1 && <span className="dot"> • </span>}
-                                </React.Fragment>
-                            ))}
-                        </ul>
-                    </nav>
-                    <nav className="other-menu2">
-                        <ul className="flex justify-center">
-                            {UPPER_LINKS_RIGHT.map((link, index) => (
-                                <React.Fragment key={index}>
-                                    <li><a href={link.path}>{link.label}</a></li>
-                                    {index < UPPER_LINKS_RIGHT.length - 1 && <span className="dot"> • </span>}
-                                </React.Fragment>
-                            ))}
-                        </ul>
-                    </nav>
-                </nav>
+                {renderMobileMenu()}
 
                 <div className="button">
                     <Login />

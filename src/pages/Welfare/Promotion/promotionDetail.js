@@ -118,7 +118,7 @@ const PromotionDetail = () => {
         }
         
         return (
-            <img src="/main/achim_square.jpeg" alt="Default" className="default-image"/>
+            <img src="/images/main/achim_square.jpeg" alt="Default" className="default-image"/>
         );
     };
     
@@ -126,7 +126,7 @@ const PromotionDetail = () => {
         <div className="like-section">
             <button onClick={handleLike} className="like-button" disabled={isLiking}>
                 <img
-                    src={postDetails.isLiked ? "/main/filled-heart.png" : "/main/heart.png"}
+                    src={postDetails.isLiked ? "/images/main/filled-heart.png" : "/images/main/heart.png"}
                     alt="좋아요"
                     className="like-icon"
                 />
@@ -147,18 +147,17 @@ const PromotionDetail = () => {
     }
 
     return (
-        <div className="post-detail">
-            <h2>{postDetails.psTitle}</h2>
+        <div className="context">
+            <div className="contextTitle">{postDetails.psTitle}</div>
             <hr className="titleSeparator"/>
             {renderMetadata()}
-            <p className="post-content">{postDetails.psContent}</p>
 
+            <div className="post-content">{postDetails.psContent}</div>
             <div className="post-images">
                 {renderImageGallery()}
             </div>
             
             {renderLikeSection()}
-            
             <button onClick={handleBackToList} className="back-button">
                 목록으로 돌아가기
             </button>

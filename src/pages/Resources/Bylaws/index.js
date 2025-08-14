@@ -48,7 +48,7 @@ const Bylaws = () => {
 
     const renderPagination = () => {
         const totalPages = Math.ceil(posts.length / POSTS_PER_PAGE);
-        
+
         return Array.from({ length: totalPages }, (_, index) => (
             <button
                 key={index + 1}
@@ -100,7 +100,7 @@ const Bylaws = () => {
     );
 
     const renderPostsList = () => (
-        <table className="announcement-table">
+        <table className="table">
             <thead>
                 <tr>
                     <th>번호</th>
@@ -121,10 +121,12 @@ const Bylaws = () => {
     return (
         <div className="context">
             <div className="contextTitle">세칙 및 회칙</div>
-            <hr className="titleSeparator"/>
+            <hr className="titleSeparator" />
 
             {renderButtonGroup()}
-            {renderPostsList()}
+            <div className="table-container">
+                {renderPostsList()}
+            </div>
 
             <div className="pagination">
                 {renderPagination()}
