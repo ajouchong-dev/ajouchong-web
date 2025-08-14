@@ -115,7 +115,7 @@ const AnnouncementDetail = () => {
         
         return (
             <img 
-                src="/main/achim_square.jpeg" 
+                src="/images/main/achim_square.jpeg" 
                 alt="Default" 
                 className="default-image"
             />
@@ -126,7 +126,7 @@ const AnnouncementDetail = () => {
         <div className="like-section">
             <button onClick={handleLikeToggle} className="like-button" disabled={isLiking}>
                 <img
-                    src={postDetails.isLiked ? "/main/filled-heart.png" : "/main/heart.png"}
+                    src={postDetails.isLiked ? "/images/main/filled-heart.png" : "/images/main/heart.png"}
                     alt="좋아요"
                     className="like-icon"
                 />
