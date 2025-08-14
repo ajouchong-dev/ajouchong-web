@@ -16,18 +16,6 @@ html, body {
   overflow-x: hidden;
 }
 
-.content {
-  flex-grow: 1;
-  width: 100%;
-  padding-bottom: var(--footer-height);
-}
-
-.wrapper {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-}
-
 footer {
   background: var(--secondary-color);
   padding: var(--spacing-xl) var(--spacing-lg);

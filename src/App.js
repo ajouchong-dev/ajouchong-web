@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-route
 import { AuthProvider } from './contexts/AuthContext';
 import './styles/variables.css';
 import './styles/utilities.css';
+import './styles/common.css';
 import './App.css';
 import Header from './components/Header/Header';
 import Breadcrumb from './components/Header/Breadcrumb';
