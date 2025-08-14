@@ -57,11 +57,11 @@ const BylawsDetail = () => {
     }
 
     return (
-        <div className="post-detail">
-            <h2 className="post-title">{postDetails.rpTitle}</h2>
-            <hr className="titleSeparator"/>
+        <div className="context">
+            <div className="contextTitle">{postDetails.rpTitle}</div>
+            <hr className="titleSeparator" />
             {renderMetadata()}
-            <p className="post-content">{postDetails.rpContent}</p>
+            <div className="post-content">{postDetails.rpContent}</div>
             {renderAttachment()}
             <button onClick={handleBackToList} className="back-button">
                 목록으로 돌아가기
