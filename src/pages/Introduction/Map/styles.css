@@ -1,1 +1,57 @@
 @import '../styles.css';
+
+.map-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: var(--spacing-xs);
+    margin: var(--spacing-xl) auto;
+    width: 90%;
+}
+
+.map {
+    width: 400px;
+    height: 400px;
+    background-color: var(--bg-light);
+}
+
+.map-info {
+    background-color: rgba(211, 230, 202, 0.3);
+    width: 400px;
+    height: 400px;
+    font-family: Arial, sans-serif;
+    font-size: var(--font-sm);
+    line-height: 1.6;
+    text-align: start;
+    color: var(--text-secondary);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.map-subinfo {
+    margin-bottom: var(--spacing-sm);
+    padding-left: var(--spacing-xl);
+}
+
+/* 반응형 디자인 */
+@media screen and (max-width: 768px) {
+    .map-container {
+        flex-direction: column;
+        gap: var(--spacing-lg);
+    }
+
+    .map,
+    .map-info {
+        width: 100%;
+        max-width: 400px;
+        height: 300px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .map,
+    .map-info {
+        height: 250px;
+    }
+} 
