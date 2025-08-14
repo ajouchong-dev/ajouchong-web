@@ -1,9 +1,115 @@
-@import '../styles.css';
-
-.organizationImg {
-    max-width: 30%;
-    margin-top: var(--spacing-xl);
-    height: auto;
-    margin-bottom: var(--spacing-xl);
+:root{
+  --aj-green: #3a7b50;
+  --aj-green-2:#6aa975;
+  --aj-mint:  #e9f3ec;
+  --aj-white: #ffffff;
+  --ink-1:    #173823;
+  --ink-2:    #2f4a38;
+  --line:     rgba(58,123,80,.22);
+  --shadow:   0 8px 18px rgba(0,0,0,.06);
 }
 
+/* 패널 */
+.org-panel{
+  margin: 24px auto 64px;
+  max-width: 1100px;
+  padding: 28px 20px 36px;
+  border-radius: 18px;
+  background: linear-gradient(180deg, var(--aj-mint) 0%, #f7fbf8 100%);
+  box-shadow: 0 1px 0 rgba(58,123,80,.15) inset, 0 2px 14px rgba(0,0,0,.03);
+}
+
+/* 그룹 박스 */
+.group-box{
+  background: var(--aj-white);
+  border: 1.5px solid var(--line);
+  border-radius: 16px;
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+.group-box + .group-box{ margin-top: 22px; }
+
+.group-box__title{
+  background: linear-gradient(180deg, var(--aj-green-2), var(--aj-green));
+  color: var(--aj-white);
+  font-weight: 800;
+  letter-spacing: .3px;
+  text-align: center;
+  padding: 10px 14px;
+  font-size: 15px;
+}
+
+/* 1) 역할 + 사진 (가로) */
+.roles-row{
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 14px 18px;
+  padding: 14px 16px 6px;
+}
+.role-item{
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.avatar{
+  width: 64px; height: 64px;
+  border-radius: 12px;
+  object-fit: cover;
+  border: 1px solid var(--line);
+  background: #dfe9e4;
+}
+.role-meta{ display: grid; gap: 4px; }
+.role-badge{
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 800;
+  color: var(--aj-white);
+  background: linear-gradient(180deg, var(--aj-green), #2e6d45);
+  width: fit-content;
+}
+.role-name-line{ font-size: 15px; }
+.role-name{ font-weight: 800; color: var(--ink-1); }
+.role-dept{ color: var(--ink-2); }
+
+/* 2) 국 소개 */
+.group-desc{
+  padding: 4px 16px 10px;
+  font-size: 14px;
+  color: #214733;
+  line-height: 1.6;
+  border-top: 1px dashed rgba(58,123,80,.18);
+}
+
+/* 3) 국원 칩 */
+.member-list{
+  padding: 6px 12px 14px 12px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  border-top: 1px dashed rgba(58,123,80,.18);
+}
+.chip{
+  display: inline-block;
+  padding: 6px 10px;
+  font-size: 12px;
+  border-radius: 999px;
+  background: #eef6f1;
+  color: #204f35;
+  border: 1px solid var(--line);
+}
+
+/* 7개 국 그리드 */
+.division-grid{
+  margin-top: 22px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 18px;
+}
+
+/* 반응형 */
+@media (max-width: 560px){
+  .roles-row{ grid-template-columns: 1fr; }
+  .avatar{ width: 56px; height: 56px; }
+}
