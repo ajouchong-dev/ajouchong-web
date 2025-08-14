@@ -111,6 +111,39 @@
     transform: translateY(-2px);
 }
 
+/* ============ like section ============ */
+.like-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: var(--spacing-xl);
+}
+
+.like-button {
+    background-color: transparent;
+    border: none;
+    color: #e63946;
+    font-size: var(--font-base);
+    cursor: pointer;
+    padding: var(--spacing-xs) var(--spacing-sm);
+    transition: transform 0.2s ease;
+}
+
+.like-button:hover {
+    transform: scale(1.1);
+}
+
+.like-count {
+    margin-left: var(--spacing-sm);
+    font-size: var(--font-base);
+    color: var(--text-muted);
+}
+
+.like-icon {
+    width: 24px;
+    height: 24px;
+}
+
 /* 기본 이미지 */
 .intro-image {
     max-width: 30%;
