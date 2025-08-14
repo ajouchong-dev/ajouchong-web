@@ -147,18 +147,17 @@ const PromotionDetail = () => {
     }
 
     return (
-        <div className="post-detail">
-            <h2>{postDetails.psTitle}</h2>
+        <div className="context">
+            <div className="contextTitle">{postDetails.psTitle}</div>
             <hr className="titleSeparator"/>
             {renderMetadata()}
-            <p className="post-content">{postDetails.psContent}</p>
 
+            <div className="post-content">{postDetails.psContent}</div>
             <div className="post-images">
                 {renderImageGallery()}
             </div>
             
             {renderLikeSection()}
-            
             <button onClick={handleBackToList} className="back-button">
                 목록으로 돌아가기
             </button>

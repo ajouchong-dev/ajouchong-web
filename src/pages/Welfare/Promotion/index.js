@@ -13,7 +13,7 @@ const Promotion = () => {
 
     const formatPostData = (post) => ({
         id: post.psPostId,
-        imageUrl: post.imageUrls[0] || '/main/achim_square.jpeg',
+        imageUrl: post.imageUrls[0] || '/images/main/achim_square.jpeg',
         title: post.psTitle,
         date: new Date(post.psCreateTime).toLocaleDateString(),
     });
@@ -52,6 +52,11 @@ const Promotion = () => {
         setCurrentPage(1);
     };
 
+    const handleImageError = (e) => {
+        e.target.onerror = null;
+        e.target.src = '/images/main/achim_square.jpeg';
+    };
+
     const handlePageChange = (pageNumber) => setCurrentPage(pageNumber);
 
     const renderPagination = () => {
@@ -69,14 +74,25 @@ const Promotion = () => {
     };
 
     const renderPostCard = (post) => (
-        <Link to={`/welfare/promotion/${post.id}`} key={post.id} style={{ textDecoration: 'none', color: 'inherit' }}>
-            <div className="post-box">
-                <img src={post.imageUrl} alt={post.title} className="post-image"/>
-                <div className="post-title">{post.title}</div>
-                <div className="post-date">{post.date}</div>
-            </div>
-        </Link>
+        <div className="post-box" key={post.id}>
+            <Link to={`/welfare/promotion/${post.id}`} key={post.id} style={{ textDecoration: 'none', color: 'inherit' }}>
+                <img
+                    src={post.imageUrl}
+                    alt={post.title || '제휴백과 이미지'}
+                    className="post-image"
+                    onError={handleImageError}
+                    style={{ cursor: 'pointer' }}
+                />
+            </Link>
+            <Link to={`/welfare/promotion/${post.id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
+                <div className="post-title" style={{ cursor: 'pointer' }}>
+                    {post.title}
+                </div>
+            </Link>
+            <div className="post-date">{post.date}</div>
+        </div>
     );
+
 
     const renderSearchForm = () => (
         <div className="search-container">
