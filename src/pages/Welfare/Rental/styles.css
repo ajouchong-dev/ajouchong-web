@@ -1,5 +1,3 @@
-@import '../styles.css';
-
 .rental-container {
     display: flex;
     flex-direction: column;
