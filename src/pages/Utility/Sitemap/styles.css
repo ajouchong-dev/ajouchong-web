@@ -1,5 +1,3 @@
-@import '../styles.css';
-
 .sitemap {
     margin: var(--spacing-lg) auto;
     font-family: Arial, sans-serif;
@@ -81,4 +79,62 @@
 
 .sitemap-list a:hover {
     color: var(--secondary-color);
+}
+
+/* 반응형 디자인 */
+@media screen and (max-width: 768px) {
+    .sitemap {
+        margin: var(--spacing-md) auto;
+    }
+    
+    .listSeparator {
+        max-width: 85%;
+    }
+    
+    .list-container {
+        width: 250px;
+        min-width: 250px;
+        padding: var(--spacing-md);
+    }
+    
+    .sitemap-list {
+        grid-template-columns: repeat(2, 1fr);
+        gap: var(--spacing-md);
+        max-width: 600px;
+    }
+    
+    .sitemap-list ul li {
+        margin-bottom: var(--spacing-xs);
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .sitemap {
+        margin: var(--spacing-sm) auto;
+    }
+    
+    .listSeparator {
+        max-width: 95%;
+    }
+    
+    .list-container {
+        width: 200px;
+        min-width: 200px;
+        padding: var(--spacing-sm);
+    }
+    
+    .sitemap-list {
+        grid-template-columns: 1fr;
+        gap: var(--spacing-sm);
+        max-width: 300px;
+    }
+    
+    .sitemap-list ul {
+        margin-top: var(--spacing-sm);
+    }
+    
+    .sitemap-list ul li {
+        margin-bottom: var(--spacing-xs);
+        font-size: var(--font-sm);
+    }
 }
