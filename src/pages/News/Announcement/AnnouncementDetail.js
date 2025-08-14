@@ -147,12 +147,12 @@ const AnnouncementDetail = () => {
     }
 
     return (
-        <div className="post-detail">
-            <h2 className="post-title">{postDetails.npTitle}</h2>
+        <div className="context">
+            <div className="contextTitle">{postDetails.npTitle}</div>
             <hr className="titleSeparator"/>
             {renderMetadata()}
-            <p className="post-content">{postDetails.npContent}</p>
 
+            <div className="post-content">{postDetails.npContent}</div>
             <div className="post-images">
                 {renderImageGallery()}
             </div>
