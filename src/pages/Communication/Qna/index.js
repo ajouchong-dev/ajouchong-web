@@ -142,19 +142,32 @@ const Qna = () => {
 
     const renderPostList = () => (
         <>
-            <div className="write-container">
-                <button className="write-button" onClick={goToWritePage}>
-                    글 작성하기
-                </button>
+            <div className="controls-container">
+                <div className="search-container">
+                    <input
+                        type="text"
+                        placeholder="제목을 입력하여 검색"
+                        value={searchQuery}
+                        onChange={(e) => setSearchQuery(e.target.value)}
+                        className="search-input"
+                    />
+                    <button onClick={handleSearch} className="search-button">검색</button>
+                </div>
+
+                <div className="write-container">
+                    <button className="write-button" onClick={goToWritePage}>
+                        글 작성하기
+                    </button>
+                </div>
             </div>
 
-            <table className="announcement-table">
+            <table className="table">
                 <thead>
                     <tr>
                         <th>번호</th>
                         <th>제목</th>
                         <th>작성자</th>
-                        <th>날짜</th>
+                        <th>작성일</th>
                         <th>상태</th>
                     </tr>
                 </thead>
@@ -178,12 +191,12 @@ const Qna = () => {
             <div className="contextTitle">Q&A</div>
             <hr className="titleSeparator" />
 
-            {!selectedPostId && renderSearchForm()}
-
             {selectedPostId ? (
                 <QnaDetail postId={selectedPostId} onBack={handleBackToList} />
             ) : (
-                renderPostList()
+                <div className="table-container">
+                    {renderPostList()}
+                </div>
             )}
         </div>
     );

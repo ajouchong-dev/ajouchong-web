@@ -1,69 +1,21 @@
-.context {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    margin-top: 10%;
-    padding: 0;
-}
-
-.contextTitle {
-    font-size: var(--font-xl);
-    font-weight: bold;
-    color: var(--text-primary);
-}
-
-.titleSeparator {
-    max-width: 30%;
-    border: none;
-    height: 2px;
-    background-color: var(--secondary-color);
-    margin-top: var(--spacing-sm);
-}
-
-.contentSeparatorBox {
-    max-width: 60%;
-    height: 50px;
-    border: none;
-    background-color: rgba(183, 210, 245, 0.75);
-    margin-top: var(--spacing-sm);
-    margin-bottom: var(--spacing-xl);
-    display: flex;
-}
-
-.pagination {
-    display: flex;
-    justify-content: center;
-    margin-top: var(--spacing-lg);
-    margin-bottom: 90px;
-}
-
-.pagination-button {
-    border: 1px solid var(--bg-primary);
-    padding: var(--spacing-sm) var(--spacing-md);
-    margin: 0 var(--spacing-xs);
-    cursor: pointer;
-    font-size: var(--font-sm);
-    color: var(--text-muted);
-    transition: var(--transition-normal);
-    border-radius: var(--radius-small);
-}
-
-.pagination-button.active {
-    color: var(--text-white);
-    border: none;
-    background-color: var(--primary-color);
-}
-
-.pagination-button:hover {
-    background-color: var(--bg-light);
-}
-
-.write-container {
+.controls-container {
     display: flex;
     justify-content: flex-end;
     align-items: center;
     margin-bottom: var(--spacing-lg);
     margin-top: var(--spacing-xl);
-    margin-right: 15%;
+    gap: var(--spacing-lg);
+}
+
+.controls-container .search-container {
+    flex: 0 0 auto;
+    max-width: 400px;
+    margin: 0;
+}
+
+.controls-container .write-container {
+    margin: 0;
+    flex-shrink: 0;
 }
 
 .write-button {
@@ -87,90 +39,49 @@ textarea {
     height: 150px;
 }
 
-.submit-button {
-    padding: var(--spacing-sm) var(--spacing-md);
-    background-color: var(--bg-dark);
-    color: var(--text-white);
-    font-size: var(--font-base);
-    font-weight: normal;
-    width: 100%;
-    border: none;
-    border-radius: var(--radius-normal);
-    cursor: pointer;
-    transition: var(--transition-normal);
-    align-self: center;
-}
-
-.submit-button:hover {
-    background-color: var(--bg-light);
-    color: var(--text-primary);
-}
-
-.message {
-    margin-top: var(--spacing-sm);
-    padding: var(--spacing-sm);
-    border-radius: var(--radius-small);
-    color: var(--text-primary);
-    font-weight: bold;
-    text-align: center;
-}
-
-.message.success {
-    background-color: rgba(83, 153, 255, 0.69);
-}
-
-.message.error {
-    background-color: #dc3545;
-    color: var(--text-white);
-}
-
-/* 반응형 디자인 */
 @media screen and (max-width: 768px) {
-    .context {
-        margin-top: 5%;
+    .controls-container {
+        flex-direction: column;
+        align-items: stretch;
+        gap: var(--spacing-md);
     }
     
-    .contextTitle {
-        font-size: var(--font-lg);
+    .controls-container .search-container {
+        max-width: none;
     }
     
-    .announcement-table {
-        width: 95%;
+    .controls-container .write-container {
+        align-self: center;
+    }
+    
+    .write-button {
+        padding: var(--spacing-sm) var(--spacing-lg);
         font-size: var(--font-sm);
     }
     
-    .announcement-table th,
-    .announcement-table td {
-        padding: var(--spacing-xs);
-    }
-    
-    .write-container {
-        margin-right: 5%;
-        justify-content: flex-end;
-    }
-    
-    .qna-form {
-        width: 95%;
-    }
-    
-    .comment-item {
-        padding: var(--spacing-sm) var(--spacing-md);
+    textarea {
+        height: 120px;
     }
 }
 
 @media screen and (max-width: 480px) {
-    .announcement-table {
-        width: 100%;
-        font-size: var(--font-xs);
+    .controls-container {
+        gap: var(--spacing-sm);
+        margin-top: var(--spacing-lg);
+        margin-bottom: var(--spacing-md);
     }
     
-    .pagination-button {
-        padding: var(--spacing-xs) var(--spacing-sm);
-        font-size: var(--font-xs);
+    .controls-container .search-container {
+        max-width: 100%;
     }
     
     .write-button {
         padding: var(--spacing-xs) var(--spacing-md);
         font-size: var(--font-sm);
+        min-width: 100px;
+    }
+    
+    textarea {
+        height: 100px;
     }
 } 

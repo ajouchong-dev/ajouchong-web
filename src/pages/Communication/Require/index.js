@@ -25,7 +25,7 @@ const Require = () => {
             const response = await axios.get(`/api/agora`);
             if (response.data.code === 1) {
                 const fetchedPosts = response.data.data.map(formatPostData);
-                const sortedPosts = fetchedPosts.sort((a, b) => 
+                const sortedPosts = fetchedPosts.sort((a, b) =>
                     new Date(b.date) - new Date(a.date)
                 );
                 setPosts(sortedPosts);
@@ -80,7 +80,7 @@ const Require = () => {
 
     const renderPagination = () => {
         const totalPages = Math.ceil(filteredPosts.length / POSTS_PER_PAGE);
-        
+
         return Array.from({ length: totalPages }, (_, index) => (
             <button
                 key={index + 1}
@@ -134,13 +134,25 @@ const Require = () => {
 
     const renderPostList = () => (
         <>
-            <div className="write-container">
-                <button className="write-button" onClick={goToWritePage}>
-                    글 작성하기
-                </button>
+            <div className="controls-container">
+                <div className="search-container">
+                    <input
+                        type="text"
+                        placeholder="제목을 입력하여 검색"
+                        value={searchQuery}
+                        onChange={handleSearchChange}
+                        className="search-input"
+                    />
+                    <button onClick={handleSearch} className="search-button">검색</button>
+                </div>
+                <div className="write-container">
+                    <button className="write-button" onClick={goToWritePage}>
+                        글 작성하기
+                    </button>
+                </div>
             </div>
 
-            <table className="announcement-table">
+            <table className="table">
                 <thead>
                     <tr>
                         <th>번호</th>
@@ -168,10 +180,11 @@ const Require = () => {
     return (
         <div className="context">
             <div className="contextTitle">100인 안건 상정제</div>
-            <hr className="titleSeparator"/>
+            <hr className="titleSeparator" />
 
-            {renderSearchForm()}
-            {renderPostList()}
+            <div className="table-container">
+                {renderPostList()}
+            </div>
         </div>
     );
 };

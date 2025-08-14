@@ -119,11 +119,11 @@ const RequireDetail = () => {
     }
 
     return (
-        <div className="post-detail">
-            <h2>{postDetails.apTitle}</h2>
+        <div className="context">
+            <div className="contextTitle">{postDetails.apTitle}</div>
             <hr className="titleSeparator" />
             {renderMetadata()}
-            <p>{postDetails.apContent}</p>
+            <p className="post-content">{postDetails.apContent}</p>
             {renderCommentSection()}
             {renderLikeSection()}
             <button onClick={handleBackToList} className="back-button">

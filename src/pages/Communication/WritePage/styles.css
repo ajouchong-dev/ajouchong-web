@@ -1,6 +1,6 @@
 @import '../styles.css';
 
-.qna-form {
+.write-form {
     display: flex;
     flex-direction: column;
     width: 80%;
@@ -62,7 +62,7 @@
     background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
     color: white;
     border: none;
-    padding: var(--spacing-md) var(--spacing-xl);
+    padding: var(--spacing-sm) var(--spacing-md);
     border-radius: var(--radius-normal);
     font-size: var(--font-base);
     font-weight: 600;

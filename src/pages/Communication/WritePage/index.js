@@ -102,7 +102,7 @@ const WritePage = () => {
     );
 
     const renderForm = () => (
-        <form onSubmit={handleSubmit} className="qna-form">
+        <form onSubmit={handleSubmit} className="write-form">
             <div className="form-group">
                 <label htmlFor="title">제목</label>
                 <input
