@@ -7,34 +7,34 @@
   --ink-2:    #2f4a38;
   --line:     rgba(58,123,80,.22);
   --shadow:   0 8px 18px rgba(0,0,0,.06);
+
+  /* 균일 행 레이아웃용 튜닝 포인트 */
+  --member-max-h: 160px; /* 국원 목록 최대 높이(넘치면 스크롤) */
 }
 
 /* 패널 */
 .org-panel{
-  margin: 24px auto 64px;
+  margin: 24px auto 48px;
   max-width: 1100px;
-  padding: 28px 20px 36px;
+  padding: 24px 20px 28px;
   border-radius: 18px;
   background: linear-gradient(180deg, var(--aj-mint) 0%, #f7fbf8 100%);
   box-shadow: 0 1px 0 rgba(58,123,80,.15) inset, 0 2px 14px rgba(0,0,0,.03);
 }
 
-/* 그룹 박스 */
+/* 그룹 박스(카드) */
 .group-box{
   background: var(--aj-white);
   border: 1.5px solid var(--line);
   border-radius: 16px;
   box-shadow: var(--shadow);
   overflow: hidden;
-
-  /* 높이 맞춤을 위한 컬럼 레이아웃 */
   display: flex;
   flex-direction: column;
 }
+.org-panel > .group-box + .group-box { margin-top: 20px; }
 
-/* 리더십 박스 다음에만 여백 */
-.org-panel > .group-box + .group-box { margin-top: 22px; }
-
+/* 타이틀 바 */
 .group-box__title{
   background: linear-gradient(180deg, var(--aj-green-2), var(--aj-green));
   color: var(--aj-white);
@@ -45,93 +45,105 @@
   font-size: 15px;
 }
 
-/* 1) 역할 + 사진 (가로) */
+/* 1) 역할 — 기본은 2열, 3명짜리는 3열로 */
 .roles-row{
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 14px 18px;
-  padding: 14px 16px 6px;
+  gap: 12px 18px;
+  padding: 14px 16px 10px;
+  justify-items: center;
+  grid-template-columns: repeat(2, minmax(140px, 1fr)); /* 기본 2열 */
+}
+.roles-row.cols-3{
+  grid-template-columns: repeat(3, minmax(100px, 1fr)); /* 3명짜리 가로 3열 */
 }
 .role-item{
   display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 12px;
+  text-align: center;
 }
 .avatar{
-  width: 64px; height: 64px;
-  border-radius: 12px;
+  width: 102px;
+  height: 122px;
+  border-radius: 6px;
   object-fit: cover;
-  border: 1px solid var(--line);
+  border: 1px solid rgba(0,0,0,.08);
   background: #dfe9e4;
+  margin-bottom: 6px;
 }
-.role-meta{ display: grid; gap: 4px; }
+/* 3열 카드에서는 조금 더 컴팩트하게 */
+.roles-row.cols-3 .avatar{ width: 90px; height: 108px; }
 .role-badge{
   display: inline-block;
-  padding: 4px 10px;
+  padding: 3px 10px;
   border-radius: 999px;
   font-size: 12px;
   font-weight: 800;
   color: var(--aj-white);
   background: linear-gradient(180deg, var(--aj-green-2), var(--aj-green));
-  width: fit-content;
 }
-.role-name-line{ font-size: 15px; }
-.role-name{ font-weight: 800; color: var(--ink-1); }
-.role-dept{ color: var(--ink-2); }
-
-/* 2) 소개 */
-.group-desc{
-  padding: 4px 16px 10px;
+.role-name{
+  margin-top: 4px;
+  font-weight: 800;
   font-size: 14px;
+  color: var(--ink-1);
+}
+.roles-row.cols-3 .role-name{ font-size: 13px; }
+.role-dept{
+  margin-top: 1px;
+  font-size: 12px;
+  color: var(--ink-2);
+}
+.roles-row.cols-3 .role-dept{ font-size: 11px; }
+
+/* 2) 소개 박스 (윗·아랫쪽 점선) */
+.group-desc{
+  padding: 8px 12px;
+  font-size: 13px;
   color: #214733;
-  line-height: 1.6;
+  line-height: 1.5;
   border-top: 1px dashed rgba(58,123,80,.18);
+  border-bottom: 1px dashed rgba(58,123,80,.18);
+  text-align: center;
 }
 
-/* 3) 국원 섹션: 제목 + 칩 */
+/* 3) 국원 — 목록 형태 + 최대 높이 제한(넘치면 스크롤) */
 .member-section{
-  margin-top: auto;                 /* 내용이 짧아도 아래로 붙게 */
-  border-top: 1px dashed rgba(58,123,80,.18);
-  padding: 10px 12px 14px 12px;
+  padding: 8px 12px 12px;
 }
 .member-title{
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 800;
   color: #2b5f42;
-  margin: 0 0 8px 2px;
-  letter-spacing: .2px;
+  margin-bottom: 6px;
 }
 .member-list{
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
+  margin: 0;
+  padding-left: 18px;       /* 점 목록 들여쓰기 */
+  font-size: 13px;
+  line-height: 1.45;
+  max-height: var(--member-max-h);
+  overflow: auto;           /* 내용 많으면 내부 스크롤 */
+  overscroll-behavior: contain;
 }
-.chip{
-  display: inline-block;
-  padding: 6px 10px;
-  font-size: 12px;
-  border-radius: 999px;
-  background: #eef6f1;
-  color: #204f35;
-  border: 1px solid var(--line);
-}
+.member-list li{ margin: 2px 0; }
 
-/* 7개 국 그리드 */
+/* ===== 균일 행 그리드(방법 B) ===== */
 .division-grid{
-  margin-top: 22px;
+  margin-top: 18px;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-  gap: 20px;
-  align-items: stretch;             /* 같은 행에서 높이 동일 */
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 16px;
+  align-items: stretch;      /* 같은 행에서 카드 높이 동일 */
 }
 .division-grid .group-box{
-  margin-top: 0;
-  min-height: 360px;                /* 모든 국 박스 최소 높이 통일 */
+  height: 100%;              /* 트랙 높이에 맞춰 늘어나도록 */
+  display: flex;
+  flex-direction: column;
 }
 
 /* 반응형 */
-@media (max-width: 560px){
-  .roles-row{ grid-template-columns: 1fr; }
-  .avatar{ width: 56px; height: 56px; }
-  .division-grid .group-box{ min-height: 0; }
+@media (max-width: 680px){
+  .roles-row{ grid-template-columns: 1fr !important; } /* 모바일은 1열 고정 */
+  .avatar{ width: 94px; height: 112px; }
 }
