@@ -207,7 +207,7 @@ const Organization = () => {
           role: "국장",
           name: "허준호",
           dept: "전자공학과(20)",
-          photo: "/images/history/organization/members/minji.jpeg",
+          photo: "/images/history/organization/members/junho.jpeg",
         },
         {
           role: "차장",
@@ -262,13 +262,13 @@ const Organization = () => {
           role: "국장",
           name: "권민지",
           dept: "건축학과(22)",
-          photo: "/images/history/organization/members/minji.jpeg",
+          photo: "/images/history/organization/members/minji.png",
         },
         {
           role: "차장",
           name: "박수경",
           dept: "건축학과(22)",
-          photo: "/images/history/organization/members/sogyong.jpeg",
+          photo: "/images/history/organization/members/sogyong.jpg",
         },
         {
           role: "차장",
