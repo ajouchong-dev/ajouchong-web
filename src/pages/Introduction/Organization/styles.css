@@ -1,149 +1,364 @@
-:root{
-  --aj-green: #a4c49c;   /* 상단바 배경색과 동일 */
-  --aj-green-2: #b9d0ad; /* 상단바보다 조금 더 밝게 */
-  --aj-mint:  #e9f3ec;
-  --aj-white: #ffffff;
-  --ink-1:    #173823;
-  --ink-2:    #2f4a38;
-  --line:     rgba(58,123,80,.22);
-  --shadow:   0 8px 18px rgba(0,0,0,.06);
-
-  /* 균일 행 레이아웃용 튜닝 포인트 */
-  --member-max-h: 160px; /* 국원 목록 최대 높이(넘치면 스크롤) */
-}
-
-/* 패널 */
 .org-panel{
-  margin: 24px auto 48px;
-  max-width: 1100px;
-  padding: 24px 20px 28px;
-  border-radius: 18px;
-  background: linear-gradient(180deg, var(--aj-mint) 0%, #f7fbf8 100%);
-  box-shadow: 0 1px 0 rgba(58,123,80,.15) inset, 0 2px 14px rgba(0,0,0,.03);
+  margin: var(--spacing-lg) auto var(--spacing-xxl);
+  max-width: 900px;
+  padding: var(--spacing-lg) var(--spacing-md) var(--spacing-xl);
+  border-radius: var(--radius-normal);
 }
 
-/* 그룹 박스(카드) */
+.org-grid{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto auto auto auto auto;
+  gap: var(--spacing-md);
+  align-items: start;
+}
+
+/* 회장단 - 첫 번째 행, 첫 번째 열에 배치 */
+.org-grid .group-box:first-child{
+  grid-column: 1;
+  grid-row: 1;
+  border-color: var(--primary-color);
+}
+
+/* 나머지 국들 - 2개씩 배치 */
+.org-grid .group-box:nth-child(2){
+  grid-column: 2;
+  grid-row: 1;
+}
+
+.org-grid .group-box:nth-child(3){
+  grid-column: 1;
+  grid-row: 2;
+}
+
+.org-grid .group-box:nth-child(4){
+  grid-column: 2;
+  grid-row: 2;
+}
+
+.org-grid .group-box:nth-child(5){
+  grid-column: 1;
+  grid-row: 3;
+}
+
+.org-grid .group-box:nth-child(6){
+  grid-column: 2;
+  grid-row: 3;
+}
+
+.org-grid .group-box:nth-child(7){
+  grid-column: 1;
+  grid-row: 4;
+}
+
+.org-grid .group-box:nth-child(8){
+  grid-column: 2;
+  grid-row: 4;
+}
+
 .group-box{
-  background: var(--aj-white);
-  border: 1.5px solid var(--line);
-  border-radius: 16px;
-  box-shadow: var(--shadow);
+  background: var(--bg-primary);
+  border: 1px solid var(--secondary-color);
+  border-radius: var(--radius-small);
+  box-shadow: var(--shadow-light);
   overflow: hidden;
   display: flex;
   flex-direction: column;
+  padding: var(--spacing-md);
+  height: fit-content;
+  transition: var(--transition-normal);
 }
-.org-panel > .group-box + .group-box { margin-top: 20px; }
 
-/* 타이틀 바 */
+.org-grid .group-box:not(:first-child){
+  display: flex;
+  flex-direction: column;
+}
+
+.org-grid .group-box:first-child{
+  height: fit-content;
+}
+
 .group-box__title{
-  background: linear-gradient(180deg, var(--aj-green-2), var(--aj-green));
-  color: var(--aj-white);
-  font-weight: 800;
-  letter-spacing: .3px;
+  color: var(--text-primary);
+  font-weight: bold;
   text-align: center;
-  padding: 10px 14px;
-  font-size: 15px;
+  padding: 0 0 var(--spacing-md) 0;
+  font-size: var(--font-lg);
 }
 
-/* 1) 역할 — 기본은 2열, 3명짜리는 3열로 */
-.roles-row{
-  display: grid;
-  gap: 12px 18px;
-  padding: 14px 16px 10px;
-  justify-items: center;
-  grid-template-columns: repeat(2, minmax(140px, 1fr)); /* 기본 2열 */
+.roles-container{
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-start;
+  gap: var(--spacing-md);
+  margin-bottom: var(--spacing-md);
 }
-.roles-row.cols-3{
-  grid-template-columns: repeat(3, minmax(100px, 1fr)); /* 3명짜리 가로 3열 */
-}
+
 .role-item{
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
+  flex: 1;
+  max-width: 200px;
 }
-.avatar{
-  width: 102px;
-  height: 122px;
-  border-radius: 6px;
-  object-fit: cover;
-  border: 1px solid rgba(0,0,0,.08);
-  background: #dfe9e4;
-  margin-bottom: 6px;
-}
-/* 3열 카드에서는 조금 더 컴팩트하게 */
-.roles-row.cols-3 .avatar{ width: 90px; height: 108px; }
-.role-badge{
-  display: inline-block;
-  padding: 3px 10px;
-  border-radius: 999px;
-  font-size: 12px;
-  font-weight: 800;
-  color: var(--aj-white);
-  background: linear-gradient(180deg, var(--aj-green-2), var(--aj-green));
-}
-.role-name{
-  margin-top: 4px;
-  font-weight: 800;
-  font-size: 14px;
-  color: var(--ink-1);
-}
-.roles-row.cols-3 .role-name{ font-size: 13px; }
-.role-dept{
-  margin-top: 1px;
-  font-size: 12px;
-  color: var(--ink-2);
-}
-.roles-row.cols-3 .role-dept{ font-size: 11px; }
 
-/* 2) 소개 박스 (윗·아랫쪽 점선) */
-.group-desc{
-  padding: 8px 12px;
-  font-size: 13px;
-  color: #214733;
-  line-height: 1.5;
-  border-top: 1px dashed rgba(58,123,80,.18);
-  border-bottom: 1px dashed rgba(58,123,80,.18);
+.avatar-container{
+  margin-bottom: var(--spacing-sm);
+}
+
+.avatar{
+  width: 120px;
+  height: 120px;
+  border-radius: var(--radius-small);
+  object-fit: cover;
+  border: 1px solid rgba(0,0,0,.1);
+  background: var(--bg-secondary);
+}
+
+.role-info{
   text-align: center;
 }
 
-/* 3) 국원 — 목록 형태 + 최대 높이 제한(넘치면 스크롤) */
-.member-section{
-  padding: 8px 12px 12px;
+.role-name{
+  font-weight: bold;
+  font-size: var(--font-base);
+  color: var(--text-primary);
+  margin-bottom: var(--spacing-xs);
 }
-.member-title{
-  font-size: 13px;
-  font-weight: 800;
-  color: #2b5f42;
-  margin-bottom: 6px;
-}
-.member-list{
-  margin: 0;
-  padding-left: 18px;       /* 점 목록 들여쓰기 */
-  font-size: 13px;
-  line-height: 1.45;
-  max-height: var(--member-max-h);
-  overflow: auto;           /* 내용 많으면 내부 스크롤 */
-  overscroll-behavior: contain;
-}
-.member-list li{ margin: 2px 0; }
 
-/* ===== 균일 행 그리드(방법 B) ===== */
-.division-grid{
-  margin-top: 18px;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 16px;
-  align-items: stretch;      /* 같은 행에서 카드 높이 동일 */
+.role-dept{
+  font-size: var(--font-sm);
+  color: var(--text-secondary);
 }
-.division-grid .group-box{
-  height: 100%;              /* 트랙 높이에 맞춰 늘어나도록 */
+
+.description-section{
+  margin: var(--spacing-sm) 0;
+  flex-shrink: 0;
+}
+
+.description-line{
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+}
+
+.line-bar{
+  width: 4px;
+  height: 16px;
+  background-color: var(--text-primary);
+  border-radius: 2px;
+}
+
+.description-text{
+  font-size: var(--font-sm);
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+.member-section{
+  margin-top: var(--spacing-md);
+  flex-grow: 1;
   display: flex;
   flex-direction: column;
 }
 
-/* 반응형 */
-@media (max-width: 680px){
-  .roles-row{ grid-template-columns: 1fr !important; } /* 모바일은 1열 고정 */
-  .avatar{ width: 94px; height: 112px; }
+.member-box{
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-small);
+  padding: var(--spacing-md);
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  max-height: fit-content;
+}
+
+.member-title{
+  font-weight: bold;
+  font-size: var(--font-base);
+  color: var(--text-primary);
+  margin-bottom: var(--spacing-sm);
+  text-align: left;
+}
+
+.member-list{
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex-grow: 1;
+  overflow-y: auto;
+  min-height: fit-content;
+}
+
+/* 2열 배치 스타일 */
+.member-list.two-columns{
+  flex-direction: row;
+  gap: var(--spacing-xs);
+  justify-content: space-between;
+}
+
+.member-column{
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex: 1;
+}
+
+.member-item{
+  font-size: var(--font-sm);
+  color: var(--text-secondary);
+  line-height: 1.4;
+  text-align: left;
+  word-break: keep-all;
+  white-space: nowrap;
+}
+
+/* 반응형 디자인 */
+@media (max-width: 1024px) {
+  .org-grid{
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto auto auto auto;
+  }
+  
+  .org-grid .group-box:first-child{
+    grid-column: 1;
+    grid-row: 1;
+  }
+  
+  .org-grid .group-box:nth-child(2){
+    grid-column: 2;
+    grid-row: 1;
+  }
+  
+  .org-grid .group-box:nth-child(3){
+    grid-column: 1;
+    grid-row: 2;
+  }
+  
+  .org-grid .group-box:nth-child(4){
+    grid-column: 2;
+    grid-row: 2;
+  }
+  
+  .org-grid .group-box:nth-child(5){
+    grid-column: 1;
+    grid-row: 3;
+  }
+  
+  .org-grid .group-box:nth-child(6){
+    grid-column: 2;
+    grid-row: 3;
+  }
+  
+  .org-grid .group-box:nth-child(7){
+    grid-column: 1;
+    grid-row: 4;
+  }
+  
+  .org-grid .group-box:nth-child(8){
+    grid-column: 2;
+    grid-row: 4;
+  }
+  
+  .org-grid .group-box:not(:first-child){
+    height: 350px;
+  }
+}
+
+@media (max-width: 768px) {
+  .org-grid{
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+  }
+  
+  .org-grid .group-box:first-child{
+    grid-column: 1;
+    grid-row: 1;
+  }
+  
+  .org-grid .group-box:nth-child(2),
+  .org-grid .group-box:nth-child(3),
+  .org-grid .group-box:nth-child(4),
+  .org-grid .group-box:nth-child(5),
+  .org-grid .group-box:nth-child(6),
+  .org-grid .group-box:nth-child(7),
+  .org-grid .group-box:nth-child(8){
+    grid-column: 1;
+  }
+  
+  .org-grid .group-box:nth-child(2){ grid-row: 2; }
+  .org-grid .group-box:nth-child(3){ grid-row: 3; }
+  .org-grid .group-box:nth-child(4){ grid-row: 4; }
+  .org-grid .group-box:nth-child(5){ grid-row: 5; }
+  .org-grid .group-box:nth-child(6){ grid-row: 6; }
+  .org-grid .group-box:nth-child(7){ grid-row: 7; }
+  .org-grid .group-box:nth-child(8){ grid-row: 8; }
+  
+
+  .org-grid .group-box:not(:first-child){
+    height: fit-content;
+  }
+
+  .member-list.two-columns{
+    flex-direction: column;
+    gap: 6px;
+  }
+  
+  .member-column{
+    flex: none;
+  }
+  
+  .roles-container{
+    flex-direction: column;
+    align-items: center;
+    gap: var(--spacing-md);
+  }
+  
+  .role-item{
+    max-width: 100%;
+  }
+  
+  .avatar{
+    width: 100px;
+    height: 100px;
+  }
+  
+  .group-box{
+    padding: var(--spacing-md);
+  }
+  
+  .member-box{
+    padding: var(--spacing-sm);
+  }
+}
+
+@media (max-width: 480px) {
+  .org-panel{
+    padding: var(--spacing-md) var(--spacing-sm) var(--spacing-lg);
+  }
+  
+  .group-box{
+    padding: var(--spacing-sm);
+  }
+  
+  .avatar{
+    width: 80px;
+    height: 80px;
+  }
+  
+  .role-name{
+    font-size: var(--font-sm);
+  }
+  
+  .role-dept{
+    font-size: var(--font-xs);
+  }
+  
+  .description-text{
+    font-size: 13px;
+  }
+  
+  .member-item{
+    font-size: 13px;
+  }
 }
