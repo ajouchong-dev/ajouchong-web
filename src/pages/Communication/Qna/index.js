@@ -1,7 +1,6 @@
 import './styles.css';
 import React from 'react';
 import PostList from '../PostList';
-import QnaDetail from './QnaDetail';
 
 const Qna = () => {
     const maskName = (name) => {
@@ -35,7 +34,6 @@ const Qna = () => {
             formatPostData={formatPostData}
             writePagePath="/communication/qna/write"
             detailPagePath="/communication/qna"
-            DetailComponent={QnaDetail}
             tableHeaders={tableHeaders}
             maskName={maskName}
         />

@@ -69,11 +69,7 @@ const PostList = ({
     };
 
     const handlePostClick = (postId) => {
-        if (DetailComponent) {
-            setSelectedPostId(postId);
-        } else {
-            navigate(`${detailPagePath}/${postId}`);
-        }
+        navigate(`${detailPagePath}/${postId}`);
     };
 
     const handleBackToList = () => {
