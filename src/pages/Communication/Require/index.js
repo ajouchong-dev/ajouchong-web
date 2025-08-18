@@ -12,7 +12,7 @@ const Require = () => {
     });
 
     const renderStatusCell = (post) => (
-        <span className={`status ${post.status === '가결' ? 'approved' : 'rejected'}`}>
+        <span className={`status ${post.status === '가결' ? 'completed' : 'pending'}`}>
             {post.status}
         </span>
     );

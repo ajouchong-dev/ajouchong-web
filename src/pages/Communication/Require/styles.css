@@ -1,5 +1,25 @@
 @import '../styles.css';
 
+.status {
+    padding: var(--spacing-xs) var(--spacing-sm);
+    border-radius: var(--radius-small);
+    font-size: var(--font-sm);
+    font-weight: 500;
+    display: inline-block;
+    min-width: 60px;
+    text-align: center;
+}
+
+.status.pending {
+    background-color: #ffc107;
+    color: #212529;
+}
+
+.status.completed {
+    background-color: var(--primary-color);
+    color: white;
+}
+
 .status.approved {
     color: #007bff;
     font-weight: bold;
@@ -11,7 +31,7 @@
 }
 
 .approval-approved {
-    color: #007bff;
+    color: #dc3545;
     font-weight: bold;
 }
 

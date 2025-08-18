@@ -1,5 +1,25 @@
 @import '../styles.css';
 
+.status {
+    padding: var(--spacing-xs) var(--spacing-sm);
+    border-radius: var(--radius-small);
+    font-size: var(--font-sm);
+    font-weight: 500;
+    display: inline-block;
+    min-width: 60px;
+    text-align: center;
+}
+
+.status.pending {
+    background-color: #ffc107;
+    color: #212529;
+}
+
+.status.completed {
+    background-color: var(--primary-color);
+    color: white;
+}
+
 .answer-container {
     width: 40%;
     margin: var(--spacing-xl) auto var(--spacing-xxl);

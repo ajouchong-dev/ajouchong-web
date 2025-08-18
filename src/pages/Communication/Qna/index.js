@@ -25,6 +25,12 @@ const Qna = () => {
         status: post.replied ? '답변완료' : '대기중'
     });
 
+    const renderStatusCell = (post) => (
+        <span className={`status ${post.status === '답변완료' ? 'completed' : 'pending'}`}>
+            {post.status}
+        </span>
+    );
+
     const tableHeaders = ['번호', '제목', '작성자', '작성일', '상태'];
 
     return (
@@ -36,6 +42,7 @@ const Qna = () => {
             detailPagePath="/communication/qna"
             tableHeaders={tableHeaders}
             maskName={maskName}
+            renderStatusCell={renderStatusCell}
         />
     );
 };
