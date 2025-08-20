@@ -213,7 +213,7 @@ const Organization = () => {
           role: "차장",
           name: "이예은",
           dept: "지능형반도체공학과(23)",
-          photo: "/images/history/organization/members/yeeun.jpeg",
+          photo: "/images/history/organization/members/yeeun.jpg",
         },
       ],
       desc: "학생 편의 및 혜택 제공을 위한 복지사업 진행",
