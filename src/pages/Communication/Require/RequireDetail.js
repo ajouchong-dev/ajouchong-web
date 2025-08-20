@@ -98,7 +98,7 @@ const RequireDetail = () => {
         <div className="like-section">
             <button onClick={handleLike} className="like-button" disabled={isLiking}>
                 <img
-                    src={postDetails.isLiked ? "/main/filled-heart.png" : "/main/heart.png"}
+                    src={postDetails.isLiked ? "/images/main/filled-heart.png" : "/images/main/heart.png"}
                     alt="좋아요"
                     className="like-icon"
                 />
@@ -119,11 +119,11 @@ const RequireDetail = () => {
     }
 
     return (
-        <div className="post-detail">
-            <h2>{postDetails.apTitle}</h2>
+        <div className="context">
+            <div className="contextTitle">{postDetails.apTitle}</div>
             <hr className="titleSeparator" />
             {renderMetadata()}
-            <p>{postDetails.apContent}</p>
+            <p className="post-content">{postDetails.apContent}</p>
             {renderCommentSection()}
             {renderLikeSection()}
             <button onClick={handleBackToList} className="back-button">

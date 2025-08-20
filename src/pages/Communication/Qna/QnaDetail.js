@@ -115,7 +115,7 @@ const QnaDetail = () => {
         <div className="like-section">
             <button onClick={handleLike} className="like-button" disabled={isLiking}>
                 <img
-                    src={postDetails.isLiked ? "/main/filled-heart.png" : "/main/heart.png"}
+                    src={postDetails.isLiked ? "/images/main/filled-heart.png" : "/images/main/heart.png"}
                     alt="좋아요"
                     className="like-icon"
                 />

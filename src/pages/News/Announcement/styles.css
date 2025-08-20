@@ -95,35 +95,6 @@
     margin-top: 0;
 }
 
-.pagination {
-    display: flex;
-    justify-content: center;
-    margin-top: var(--spacing-lg);
-    margin-bottom: 90px;
-}
-
-.pagination-button {
-    border: 1px solid var(--bg-primary);
-    padding: var(--spacing-sm) var(--spacing-md);
-    margin: 0 var(--spacing-xs);
-    background-color: var(--bg-primary);
-    cursor: pointer;
-    font-size: var(--font-sm);
-    color: var(--text-muted);
-    border-radius: var(--radius-small);
-    transition: var(--transition-normal);
-}
-
-.pagination-button.active {
-    background-color: var(--primary-color);
-    color: var(--text-white);
-    border: none;
-}
-
-.pagination-button:hover {
-    background-color: var(--bg-light);
-}
-
 .post-detail {
     max-width: 800px;
     margin: var(--spacing-lg) auto;
@@ -133,27 +104,6 @@
 .post-detail .post-title {
     font-size: var(--font-xl);
     margin-bottom: var(--spacing-lg);
-}
-
-.post-metadata {
-    display: flex;
-    justify-content: center;
-    font-size: var(--font-sm);
-    color: var(--text-secondary);
-    margin-top: var(--spacing-sm);
-    margin-bottom: var(--spacing-xl);
-}
-
-.post-metadata span {
-    margin-right: var(--spacing-sm);
-}
-
-.post-content {
-    font-size: var(--font-lg);
-    line-height: 1.6;
-    color: var(--text-primary);
-    margin-top: var(--spacing-xl);
-    white-space: pre-wrap;
 }
 
 .post-images {
@@ -216,55 +166,6 @@
     background: rgba(0, 0, 0, 0.8);
 }
 
-.like-section {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: var(--spacing-xl);
-}
-
-.like-button {
-    background-color: transparent;
-    border: none;
-    color: #e63946;
-    font-size: var(--font-base);
-    cursor: pointer;
-    padding: var(--spacing-xs) var(--spacing-sm);
-    transition: transform 0.2s ease;
-}
-
-.like-button:hover {
-    transform: scale(1.1);
-}
-
-.like-count {
-    margin-left: var(--spacing-sm);
-    font-size: var(--font-base);
-    color: var(--text-muted);
-}
-
-.like-icon {
-    width: 24px;
-    height: 24px;
-}
-
-.back-button {
-    margin-top: 100px;
-    padding: var(--spacing-sm) var(--spacing-xl);
-    font-size: var(--font-base);
-    background-color: var(--bg-primary);
-    color: var(--text-secondary);
-    border: 1px solid var(--border-light);
-    border-radius: var(--radius-normal);
-    cursor: pointer;
-    transition: var(--transition-normal);
-}
-
-.back-button:hover {
-    background-color: var(--bg-light);
-    color: var(--text-primary);
-}
-
 .no-results {
     text-align: center;
     color: var(--text-muted);
@@ -274,14 +175,6 @@
 
 /* 반응형 디자인 */
 @media screen and (max-width: 768px) {
-    .context {
-        margin-top: 5%;
-    }
-    
-    .contextTitle {
-        font-size: var(--font-lg);
-    }
-    
     .search-container {
         margin-right: 5%;
         justify-content: center;
@@ -319,10 +212,5 @@
     
     .search-input {
         width: 150px;
-    }
-    
-    .pagination-button {
-        padding: var(--spacing-xs) var(--spacing-sm);
-        font-size: var(--font-xs);
     }
 } 

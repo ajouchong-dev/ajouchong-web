@@ -120,7 +120,6 @@
     color: var(--primary-color);
 }
 
-/* 네비게이션 타이틀 */
 .navtitle {
     color: var(--text-primary);
     font-weight: bold;
@@ -147,7 +146,6 @@
     color: var(--primary-color);
 }
 
-/* 드롭다운 메뉴 */
 .dropdown-container {
     background-color: rgba(255, 255, 255, 0.96);
     border-top: 2px solid var(--border-primary);
@@ -229,7 +227,6 @@
     color: var(--bg-primary);
 }
 
-/* 로그인 버튼 */
 .button {
     background-color: var(--button-primary);
     width: 135px;
@@ -283,7 +280,6 @@
     z-index: var(--z-dropdown);
 }
 
-/* 모바일 메뉴 */
 .mobile-menu {
     display: none;
     position: absolute;
@@ -326,7 +322,6 @@
     background: var(--bg-secondary);
 }
 
-/* 모바일 드롭다운 */
 .mobile-menu .dropdown {
     list-style: none;
     padding-left: var(--spacing-lg);
@@ -377,7 +372,58 @@
     color: var(--primary-color);
 }
 
-/* 반응형 디자인 */
+.breadcrumb {
+    padding: var(--spacing-sm) var(--spacing-xl);
+    font-size: var(--font-sm);
+    border-bottom: 1px solid var(--border-primary);
+    margin-top: var(--header-height);
+}
+
+.breadcrumb ul {
+    list-style: none;
+    padding-top: var(--spacing-sm);
+    margin: 0;
+    display: flex;
+    color: var(--text-muted);
+}
+
+.breadcrumb li {
+    margin-right: var(--spacing-xs);
+    color: var(--text-muted);
+    display: flex;
+    align-items: center;
+}
+
+.breadcrumb li a {
+    text-decoration: none;
+    color: var(--text-muted);
+    transition: var(--transition-normal);
+}
+
+.breadcrumb li a:hover {
+    color: var(--accent-color);
+    text-decoration: underline;
+}
+
+.breadcrumb li::after {
+    content: '>';
+    margin-left: var(--spacing-xs);
+    font-size: var(--font-xs);
+    color: var(--text-light-gray);
+}
+
+.breadcrumb li:last-child::after {
+    content: '';
+}
+
+.breadcrumb-item.active {
+    background: none !important;
+    border: none !important;
+    padding: 0;
+    font-weight: bold;
+    color: var(--accent-color);
+}
+
 @media (max-width: 768px) {
     .nav-menu {
         display: none;
@@ -410,5 +456,15 @@
 
     .button {
         display: none;
+    }
+    
+    .breadcrumb {
+        padding: var(--spacing-sm) var(--spacing-lg);
+        font-size: var(--font-xs);
+    }
+
+    .breadcrumb li::after {
+        margin-left: var(--spacing-xs);
+        font-size: 10px;
     }
 }

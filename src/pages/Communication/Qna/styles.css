@@ -1,49 +1,23 @@
 @import '../styles.css';
 
-.announcement-table {
-    width: 70%;
-    border-collapse: collapse;
-    margin: var(--spacing-xl) auto var(--spacing-xxl);
-}
-
-.announcement-table th,
-.announcement-table td {
-    padding: var(--spacing-sm);
+.status {
+    padding: var(--spacing-xs) var(--spacing-sm);
+    border-radius: var(--radius-small);
+    font-size: var(--font-sm);
+    font-weight: 500;
+    display: inline-block;
+    min-width: 60px;
     text-align: center;
-    border-bottom: 1px solid var(--border-light);
 }
 
-.announcement-table th {
-    background-color: var(--bg-light);
-    font-weight: bold;
-    color: var(--text-primary);
+.status.pending {
+    background-color: #ffc107;
+    color: #212529;
 }
 
-.announcement-table tr:hover {
-    background-color: var(--bg-secondary);
-    cursor: pointer;
-    transition: var(--transition-normal);
-}
-
-.announcement-table td {
-    font-size: var(--font-base);
-}
-
-.announcement-table td a {
-    color: var(--primary-color);
-    text-decoration: none;
-    transition: var(--transition-normal);
-}
-
-.announcement-table td a:hover {
-    text-decoration: underline;
-}
-
-.post-content {
-    width: 70%;
-    margin: var(--spacing-xl) auto var(--spacing-xxl);
-    line-height: 1.6;
-    color: var(--text-primary);
+.status.completed {
+    background-color: var(--primary-color);
+    color: white;
 }
 
 .answer-container {
@@ -110,50 +84,4 @@
 .answer-meta small {
     color: var(--text-muted);
     font-size: var(--font-sm);
-}
-
-/* 반응형 디자인 */
-@media screen and (max-width: 768px) {
-    .announcement-table,
-    .post-content,
-    .answer-container {
-        width: 90%;
-        margin: var(--spacing-md) auto;
-    }
-    
-    .answer-header {
-        padding: var(--spacing-sm) var(--spacing-md);
-        flex-direction: column;
-        gap: var(--spacing-xs);
-        text-align: center;
-    }
-    
-    .answer-header h3 {
-        font-size: var(--font-sm);
-    }
-    
-    .answer-content {
-        padding: var(--spacing-sm);
-    }
-    
-    .answer-status {
-        font-size: var(--font-xs);
-    }
-}
-
-@media screen and (max-width: 480px) {
-    .announcement-table,
-    .post-content,
-    .answer-container {
-        width: 95%;
-        margin: var(--spacing-sm) auto;
-    }
-    
-    .answer-header {
-        padding: var(--spacing-xs) var(--spacing-sm);
-    }
-    
-    .answer-content {
-        padding: var(--spacing-xs);
-    }
 }

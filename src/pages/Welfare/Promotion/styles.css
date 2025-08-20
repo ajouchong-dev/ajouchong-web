@@ -1,5 +1,3 @@
-@import '../styles.css';
-
 .search-container {
     display: flex;
     justify-content: flex-end;
@@ -85,7 +83,7 @@
     text-overflow: ellipsis;
     display: -webkit-box;
     -webkit-box-orient: vertical;
-    max-height: 2.8em;
+    max-height: 2.8em; 
 }
 
 .post-date {
@@ -95,93 +93,46 @@
     margin-top: 0;
 }
 
-.pagination {
-    display: flex;
-    justify-content: center;
-    margin-top: var(--spacing-lg);
-    margin-bottom: 90px;
-}
-
-.pagination-button {
-    border: 1px solid var(--bg-primary);
-    padding: var(--spacing-sm) var(--spacing-md);
-    margin: 0 var(--spacing-xs);
-    background-color: var(--bg-primary);
-    cursor: pointer;
-    font-size: var(--font-sm);
-    color: var(--text-muted);
-    border-radius: var(--radius-small);
-    transition: var(--transition-normal);
-}
-
-.pagination-button.active {
-    background-color: var(--secondary-color);
-    color: var(--text-white);
-    border: none;
-}
-
-.pagination-button:hover {
-    background-color: var(--bg-light);
-}
-
 .post-detail {
     max-width: 800px;
     margin: var(--spacing-lg) auto;
     padding: var(--spacing-lg);
 }
 
-.post-detail h2 {
+.post-detail .post-title {
     font-size: var(--font-xl);
-    color: var(--text-primary);
     margin-bottom: var(--spacing-lg);
-    text-align: center;
-}
-
-.post-metadata {
-    display: flex;
-    justify-content: center;
-    gap: var(--spacing-lg);
-    font-size: var(--font-sm);
-    color: var(--text-secondary);
-    margin: var(--spacing-sm) 0 var(--spacing-xl);
-}
-
-.post-metadata span {
-    display: flex;
-    align-items: center;
-}
-
-.post-content {
-    font-size: var(--font-base);
-    line-height: 1.6;
-    color: var(--text-secondary);
-    margin-bottom: var(--spacing-xl);
-    white-space: pre-wrap;
 }
 
 .post-images {
-    margin: var(--spacing-xl) 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+    overflow: hidden;
 }
 
 .image-container {
     position: relative;
     display: flex;
-    align-items: center;
     justify-content: center;
-    max-width: 100%;
-    margin: 0 auto;
+    align-items: center;
 }
 
 .current-image {
-    max-width: 100%;
+    width: 100%;
     height: auto;
+    object-fit: contain;
     border-radius: var(--radius-normal);
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
 }
 
 .default-image {
-    max-width: 100%;
-    height: auto;
+    width: 100%;
+    height: 250px;
+    background-color: var(--bg-dark);
     border-radius: var(--radius-normal);
 }
 
@@ -190,16 +141,14 @@
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    background-color: rgba(0, 0, 0, 0.5);
+    background: rgba(0, 0, 0, 0.3);
     color: var(--text-white);
     border: none;
-    border-radius: 50%;
-    width: 40px;
-    height: 40px;
+    padding: var(--spacing-sm);
     cursor: pointer;
-    font-size: var(--font-lg);
+    border-radius: 50%;
+    font-size: var(--font-base);
     transition: var(--transition-normal);
-    z-index: 10;
 }
 
 .prev-btn {
@@ -212,97 +161,36 @@
 
 .prev-btn:hover,
 .next-btn:hover {
-    background-color: rgba(0, 0, 0, 0.7);
-}
-
-.like-section {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: var(--spacing-sm);
-    margin: var(--spacing-xl) 0;
-}
-
-.like-button {
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: var(--spacing-xs);
-    border-radius: 50%;
-    transition: var(--transition-normal);
-}
-
-.like-button:hover {
-    background-color: var(--bg-light);
-}
-
-.like-icon {
-    width: 24px;
-    height: 24px;
-    transition: var(--transition-normal);
-}
-
-.like-count {
-    font-size: var(--font-base);
-    color: var(--text-primary);
-    font-weight: bold;
-}
-
-.back-button {
-    margin-top: var(--spacing-xl);
-    padding: var(--spacing-sm) var(--spacing-xl);
-    font-size: var(--font-base);
-    background-color: var(--bg-primary);
-    color: var(--text-secondary);
-    border: 1px solid var(--border-light);
-    border-radius: var(--radius-normal);
-    cursor: pointer;
-    transition: var(--transition-normal);
-}
-
-.back-button:hover {
-    background-color: var(--bg-light);
-    color: var(--text-primary);
+    background: rgba(0, 0, 0, 0.8);
 }
 
 .no-results {
     text-align: center;
     color: var(--text-muted);
     font-size: var(--font-lg);
-    margin: var(--spacing-xl) 0;
+    margin: var(--spacing-xxl) 0;
 }
 
+/* 반응형 디자인 */
 @media screen and (max-width: 768px) {
-    .context {
-        margin-top: 5%;
-    }
-    
-    .contextTitle {
-        font-size: var(--font-lg);
-    }
-    
     .search-container {
+        margin-right: 5%;
         justify-content: center;
-        margin-right: 0;
-        flex-direction: column;
-        gap: var(--spacing-sm);
     }
     
     .search-input {
-        width: 100%;
-        max-width: 300px;
+        width: 200px;
     }
     
     .posts-container {
+        width: 95%;
         grid-template-columns: repeat(2, 1fr);
-        gap: var(--spacing-md);
-        width: 90%;
-        padding: var(--spacing-md);
+        gap: var(--spacing-sm);
+        padding: var(--spacing-sm);
     }
     
     .post-box {
         width: 100%;
-        max-width: 200px;
         height: 300px;
     }
     
@@ -313,35 +201,14 @@
     .post-detail {
         padding: var(--spacing-sm);
     }
-    
-    .post-metadata {
-        flex-direction: column;
-        gap: var(--spacing-sm);
-    }
 }
 
 @media screen and (max-width: 480px) {
     .posts-container {
         grid-template-columns: 1fr;
-        width: 95%;
-        padding: var(--spacing-sm);
-    }
-    
-    .post-box {
-        max-width: 250px;
     }
     
     .search-input {
-        font-size: var(--font-sm);
-    }
-    
-    .search-button {
-        font-size: var(--font-xs);
-        padding: var(--spacing-xs) var(--spacing-md);
-    }
-    
-    .pagination-button {
-        padding: var(--spacing-xs) var(--spacing-sm);
-        font-size: var(--font-xs);
+        width: 150px;
     }
 } 

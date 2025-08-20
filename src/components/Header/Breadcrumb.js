@@ -1,53 +1,90 @@
-import React from 'react';
-import { Link, useLocation } from 'react-router-dom';
-import './style.css';
+import React, { useMemo, useEffect } from 'react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import './Header.css';
+
+const REDIRECT_MAPPINGS = {
+    introduction: '/introduction/about',
+    news: '/news/notice',
+    communication: '/communication/qna',
+    resources: '/resources/bylaws',
+    welfare: '/welfare/promotion',
+    acentia: '/acentia/intro',
+    utility: '/utility/policy'
+};
 
 const BREADCRUMB_LABELS = {
-    introduction: '소개',
     about: '총학생회 소개',
     promise: '공약 소개',
     organization: '조직도',
-    greeting: '인사말',
+    history: '역대 총학생회',
     map: '오시는 길',
+    campusmap: '캠퍼스 맵',
+
     notice: '공지사항',
-    planning: '학사일정',
-    news: '소식',
-    sitemap: '사이트맵',
-    communication: '소통',
+
     qna: 'Q&A',
-    write: '글 작성',
     require: '100인 안건 상정제',
-    resources: '자료실',
+    write: '글 작성',
+
     bylaws: '세칙 및 회칙',
     proceeding: '회의록',
     audit: '감사자료',
-    welfare: '학생복지',
+
     promotion: '제휴백과',
     rental: '대여사업',
-    signin: '로그인',
-    join: '회원가입',
-    policy: '개인정보처리방침',
-    termsofservice: '이용약관',
-    campusmap: '캠퍼스 맵',
-    commu: '통합 소통 창구',
+
+    intro: 'ACENTIA 소개',
+    goods: 'ACENTIA 굿즈',
+    record: '역대 ACENTIA',
+
+    termsofservice: '개인정보처리방침',
+    policy: '이용약관',
+    sitemap: '사이트맵',
+    profile: '프로필',
 };
 
 const Breadcrumb = () => {
     const location = useLocation();
-    const pathnames = location.pathname.split('/').filter(Boolean);
+    const navigate = useNavigate();
+    
+    useEffect(() => {
+        const pathname = location.pathname;
+        const segments = pathname.split('/').filter(Boolean);
+        
+        if (segments.length === 1) {
+            const firstSegment = segments[0];
+            const redirectPath = REDIRECT_MAPPINGS[firstSegment];
+            
+            if (redirectPath && pathname !== redirectPath) {
+                navigate(redirectPath, { replace: true });
+            }
+        }
+    }, [location.pathname, navigate]);
+    
+    const breadcrumbItems = useMemo(() => {
+        const pathnames = location.pathname.split('/').filter(Boolean);
+        
+        return pathnames.map((value, index) => {
+            const to = `/${pathnames.slice(0, index + 1).join('/')}`;
+            const isLast = index === pathnames.length - 1;
+            const label = BREADCRUMB_LABELS[value] || value;
 
-    const renderBreadcrumbItem = (value, index) => {
-        const to = `/${pathnames.slice(0, index + 1).join('/')}`;
-        const isLast = index === pathnames.length - 1;
-        const label = BREADCRUMB_LABELS[value] || value;
+            return {
+                to,
+                label,
+                isLast
+            };
+        });
+    }, [location.pathname]);
 
-        return isLast ? (
-            <li key={to} className="breadcrumb-item active">
-                {label}
+    const renderBreadcrumbItem = (item) => {
+        return item.isLast ? (
+            <li key={item.to} className="breadcrumb-item active">
+                {item.label}
             </li>
         ) : (
-            <li key={to} className="breadcrumb-item">
-                <Link to={to}>{label}</Link>
+            <li key={item.to} className="breadcrumb-item">
+                <Link to={item.to}>{item.label}</Link>
             </li>
         );
     };
@@ -55,10 +92,10 @@ const Breadcrumb = () => {
     return (
         <nav className="breadcrumb">
             <ul>
-                <li>
+                <li className="breadcrumb-item">
                     <Link to="/">Home</Link>
                 </li>
-                {pathnames.map(renderBreadcrumbItem)}
+                {breadcrumbItems.map(renderBreadcrumbItem)}
             </ul>
         </nav>
     );

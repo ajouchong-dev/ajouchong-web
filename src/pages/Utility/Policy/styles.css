@@ -1,5 +1,3 @@
-@import '../styles.css';
-
 .terms-content {
     line-height: 1.6;
     color: var(--text-primary);
@@ -51,4 +49,63 @@
     margin: var(--spacing-xs) 0;
     word-wrap: break-word;
     overflow-wrap: break-word;
+}
+
+/* 반응형 디자인 */
+@media screen and (max-width: 768px) {
+    .terms-content {
+        padding: var(--spacing-lg) var(--spacing-md);
+        max-width: 95%;
+    }
+    
+    .terms-content h2 {
+        font-size: var(--font-base);
+        margin: var(--spacing-xs) 0;
+    }
+    
+    .terms-content h3 {
+        font-size: var(--font-sm);
+        margin: var(--spacing-xs) 0;
+    }
+    
+    .terms-content p,
+    .terms-content ol,
+    .terms-content ol li {
+        font-size: var(--font-sm);
+        margin: var(--spacing-xs) 0;
+    }
+    
+    .terms-content ol ol {
+        margin: var(--spacing-xs) 0 0 15px;
+    }
+    
+    .terms-content ol ol li {
+        margin: var(--spacing-xs) 0;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .terms-content {
+        padding: var(--spacing-md) var(--spacing-sm);
+        max-width: 98%;
+    }
+    
+    .terms-content h2 {
+        font-size: var(--font-sm);
+    }
+    
+    .terms-content h3 {
+        font-size: var(--font-xs);
+    }
+    
+    .terms-content p,
+    .terms-content ol,
+    .terms-content ol li {
+        font-size: var(--font-xs);
+        line-height: 1.4;
+    }
+    
+    .terms-content ol ol {
+        margin: var(--spacing-xs) 0 0 10px;
+    }
 }

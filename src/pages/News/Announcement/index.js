@@ -51,7 +51,7 @@ const Announcement = () => {
 
     const handleImageError = (e) => {
         e.target.onerror = null;
-        e.target.src = '/main/achim_square.jpeg';
+        e.target.src = '/images/main/achim_square.jpeg';
     };
 
     const handlePageChange = (pageNumber) => setCurrentPage(pageNumber);
