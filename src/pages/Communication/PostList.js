@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
@@ -22,7 +22,7 @@ const PostList = ({
     const [selectedPostId, setSelectedPostId] = useState(null);
     const navigate = useNavigate();
 
-    const fetchPosts = async () => {
+    const fetchPosts = useCallback(async () => {
         try {
             const response = await axios.get(apiEndpoint);
             if (response.data.code === 1) {
@@ -38,7 +38,7 @@ const PostList = ({
         } catch (error) {
             console.error('API 요청 오류:', error);
         }
-    };
+    }, [apiEndpoint, formatPostData]);
 
     const handleSearch = () => {
         if (searchQuery.trim() === '') {
@@ -50,6 +50,27 @@ const PostList = ({
             setFilteredPosts(matchedPosts);
         }
         setCurrentPage(1);
+    };
+
+    const handleSearchChange = (e) => {
+        const query = e.target.value;
+        setSearchQuery(query);
+        
+        if (query.trim() === '') {
+            setFilteredPosts(posts);
+        } else {
+            const matchedPosts = posts.filter(post =>
+                post.title.toLowerCase().includes(query.toLowerCase())
+            );
+            setFilteredPosts(matchedPosts);
+        }
+        setCurrentPage(1);
+    };
+
+    const handleKeyPress = (e) => {
+        if (e.key === 'Enter') {
+            handleSearch();
+        }
     };
 
     const goToWritePage = async () => {
@@ -120,7 +141,8 @@ const PostList = ({
                         type="text"
                         placeholder="제목을 입력하여 검색"
                         value={searchQuery}
-                        onChange={(e) => setSearchQuery(e.target.value)}
+                        onChange={handleSearchChange}
+                        onKeyPress={handleKeyPress}
                         className="search-input"
                     />
                     <button onClick={handleSearch} className="search-button">검색</button>
@@ -154,7 +176,7 @@ const PostList = ({
 
     useEffect(() => {
         fetchPosts();
-    }, []);
+    }, [fetchPosts]);
 
     return (
         <div className="context">
