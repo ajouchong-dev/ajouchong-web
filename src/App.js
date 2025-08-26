@@ -34,7 +34,6 @@ import Proceeding from './pages/Resources/Proceeding';
 import Audit from './pages/Resources/Audit';
 
 import Promotion from './pages/Welfare/Promotion';
-import PromotionDetail from './pages/Welfare/Promotion/promotionDetail';
 import Rental from './pages/Welfare/Rental';
 
 import Profile from './pages/Auth/Profile';
@@ -101,8 +100,7 @@ const Content = () => {
         <Route path="/resources/audit" element={<Audit />} />
 
         {/* Welfare */}
-        <Route path="/welfare/promotion" element={<Promotion />} />
-        <Route path="/welfare/promotion/:postId" element={<PromotionDetail />} />
+        <Route path="/welfare/promotion" element={<Promotion />} />        
         <Route path="/welfare/rental" element={<Rental />} />
 
         {/* Acentia */}
