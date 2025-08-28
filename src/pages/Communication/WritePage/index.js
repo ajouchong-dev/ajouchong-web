@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import axios from 'axios';
 import './styles.css';
@@ -46,7 +46,7 @@ const WritePage = () => {
 
     const config = getConfig();
 
-    const checkLoginStatus = async () => {
+    const checkLoginStatus = useCallback(async () => {
         try {
             await axios.get("/api/login/auth/info", {
                 withCredentials: true,
@@ -55,7 +55,7 @@ const WritePage = () => {
             alert('로그인이 필요합니다.');
             navigate(config.redirectPath);
         }
-    };
+    }, [navigate, config.redirectPath]);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -132,7 +132,7 @@ const WritePage = () => {
 
     useEffect(() => {
         checkLoginStatus();
-    }, [navigate]);
+    }, [checkLoginStatus]);
 
     return (
         <div className="context">

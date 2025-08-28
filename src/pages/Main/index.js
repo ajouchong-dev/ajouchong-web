@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import Slider from 'react-slick';
 import axios from 'axios';
 import { useNavigate, Link } from 'react-router-dom';
@@ -37,7 +37,7 @@ const Main = () => {
         date: new Date(notice.npCreateTime).toLocaleDateString(),
     });
 
-    const fetchNotices = async () => {
+    const fetchNotices = useCallback(async () => {
         try {
             const response = await axios.get(`/api/notice`);
 
@@ -54,7 +54,7 @@ const Main = () => {
         } catch (error) {
             console.error('API request error:', error);
         }
-    };
+    }, []);
 
     const handleNoticeClick = (id) => {
         navigate(`/notice/${id}`);
@@ -148,7 +148,7 @@ const Main = () => {
 
     useEffect(() => {
         fetchNotices();
-    }, []);
+    }, [fetchNotices]);
 
     return (
         <div className="root">

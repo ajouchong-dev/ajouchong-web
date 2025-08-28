@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef, useCallback } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './styles.css';
@@ -11,7 +11,7 @@ const QnaDetail = () => {
     const navigate = useNavigate();
     const didFetch = useRef(false);
 
-    const fetchPostDetails = async () => {
+    const fetchPostDetails = useCallback(async () => {
         setLoading(true);
         try {
             const response = await axios.get(`/api/qna/${postId}`, {
@@ -31,7 +31,7 @@ const QnaDetail = () => {
         } finally {
             setLoading(false);
         }
-    };
+    }, [postId]);
 
     const handleLike = async () => {
         if (isLiking) return;
@@ -151,7 +151,7 @@ const QnaDetail = () => {
             didFetch.current = true;
             fetchPostDetails();
         }
-    }, [postId]);
+    }, [postId, fetchPostDetails]);
 
     if (loading) {
         return renderLoading();

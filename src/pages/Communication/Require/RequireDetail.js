@@ -1,5 +1,5 @@
 import './styles.css';
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
@@ -10,7 +10,7 @@ const RequireDetail = () => {
     const navigate = useNavigate();
     const didFetch = useRef(false);
 
-    const fetchPostDetails = async () => {
+    const fetchPostDetails = useCallback(async () => {
         try {
             const response = await axios.get(`/api/agora/${id}`, {
                 withCredentials: true
@@ -28,7 +28,7 @@ const RequireDetail = () => {
         } catch (error) {
             console.error('API 요청 오류:', error);
         }
-    };
+    }, [id]);
 
     const handleLike = async () => {
         if (isLiking || !postDetails) return;
@@ -112,7 +112,7 @@ const RequireDetail = () => {
             didFetch.current = true;
             fetchPostDetails();
         }
-    }, [id]);
+    }, [id, fetchPostDetails]);
 
     if (!postDetails) {
         return <div>Loading...</div>;
