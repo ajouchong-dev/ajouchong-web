@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-route
 import { AuthProvider } from './contexts/AuthContext';
 import './styles/variables.css';
 import './styles/utilities.css';
+import './styles/common.css';
 import './App.css';
 import Header from './components/Header/Header';
 import Breadcrumb from './components/Header/Breadcrumb';
@@ -16,7 +17,7 @@ import PromiseComponent from './pages/Introduction/Promise';
 import Map from './pages/Introduction/Map';
 import History from './pages/Introduction/History';
 import Campusmap from './pages/Introduction/Campusmap';
-import CouncilDetail from './pages/Introduction/History/CouncilDetail'; // ✅ 경로 수정
+import CouncilDetail from './pages/Introduction/History/CouncilDetail';
 
 import Announcement from './pages/News/Announcement/index';
 import AnnouncementDetail from './pages/News/Announcement/AnnouncementDetail';
@@ -33,7 +34,6 @@ import Proceeding from './pages/Resources/Proceeding';
 import Audit from './pages/Resources/Audit';
 
 import Promotion from './pages/Welfare/Promotion';
-import PromotionDetail from './pages/Welfare/Promotion/promotionDetail';
 import Rental from './pages/Welfare/Rental';
 
 import Profile from './pages/Auth/Profile';
@@ -100,8 +100,7 @@ const Content = () => {
         <Route path="/resources/audit" element={<Audit />} />
 
         {/* Welfare */}
-        <Route path="/welfare/promotion" element={<Promotion />} />
-        <Route path="/welfare/promotion/:postId" element={<PromotionDetail />} />
+        <Route path="/welfare/promotion" element={<Promotion />} />        
         <Route path="/welfare/rental" element={<Rental />} />
 
         {/* Acentia */}

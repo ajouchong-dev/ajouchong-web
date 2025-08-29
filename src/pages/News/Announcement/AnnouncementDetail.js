@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './styles.css';
@@ -11,7 +11,7 @@ const AnnouncementDetail = () => {
     const navigate = useNavigate();
     const didFetch = useRef(false);
 
-    const fetchPostDetails = async () => {
+    const fetchPostDetails = useCallback(async () => {
         try {
             const response = await axios.get(`/api/notice/${id}`, {
                 withCredentials: true
@@ -29,7 +29,7 @@ const AnnouncementDetail = () => {
         } catch (error) {
             console.error('API request error:', error);
         }
-    };
+    }, [id]);
 
     const handleLikeToggle = async () => {
         const confirmMessage = postDetails.isLiked
@@ -101,11 +101,11 @@ const AnnouncementDetail = () => {
                     {currentIndex > 0 && (
                         <button className="prev-btn" onClick={handlePrev}>❮</button>
                     )}
-                    <img
-                        src={postDetails.imageUrls[currentIndex]}
-                        alt={`Image ${currentIndex + 1}`}
-                        className="current-image"
-                    />
+                                    <img
+                    src={postDetails.imageUrls[currentIndex]}
+                    alt={`${currentIndex + 1}`}
+                    className="current-image"
+                />
                     {currentIndex < postDetails.imageUrls.length - 1 && (
                         <button className="next-btn" onClick={handleNext}>❯</button>
                     )}
@@ -115,7 +115,7 @@ const AnnouncementDetail = () => {
         
         return (
             <img 
-                src="/main/achim_square.jpeg" 
+                src="/images/main/achim_square.jpeg" 
                 alt="Default" 
                 className="default-image"
             />
@@ -126,7 +126,7 @@ const AnnouncementDetail = () => {
         <div className="like-section">
             <button onClick={handleLikeToggle} className="like-button" disabled={isLiking}>
                 <img
-                    src={postDetails.isLiked ? "/main/filled-heart.png" : "/main/heart.png"}
+                    src={postDetails.isLiked ? "/images/main/filled-heart.png" : "/images/main/heart.png"}
                     alt="좋아요"
                     className="like-icon"
                 />
@@ -140,19 +140,19 @@ const AnnouncementDetail = () => {
             didFetch.current = true;
             fetchPostDetails();
         }
-    }, [id]);
+    }, [id, fetchPostDetails]);
 
     if (!postDetails) {
         return <div>Loading...</div>;
     }
 
     return (
-        <div className="post-detail">
-            <h2 className="post-title">{postDetails.npTitle}</h2>
+        <div className="context">
+            <div className="contextTitle">{postDetails.npTitle}</div>
             <hr className="titleSeparator"/>
             {renderMetadata()}
-            <p className="post-content">{postDetails.npContent}</p>
 
+            <div className="post-content">{postDetails.npContent}</div>
             <div className="post-images">
                 {renderImageGallery()}
             </div>

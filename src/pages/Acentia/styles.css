@@ -1,31 +1,8 @@
-.context {
-    font-family: Arial, sans-serif;
-    padding: 0;
-    margin-top: var(--spacing-xl);
-    margin-left: auto;
-    margin-right: auto;
-}
-
-.contextTitle {
-    font-size: var(--font-xl);
-    font-weight: bold;
-}
-
-.titleSeparator {
-    max-width: 30%;
-    border: none;
-    height: 2px;
-    background-color: var(--secondary-color);
-    margin-top: var(--spacing-sm);
-}
-
-/* ===== Acentia Intro ===== */
 .acentia-info {
     text-align: left;
-    max-width: 650px;
+    max-width: 660px;
     margin: auto;
-    padding-left: var(--spacing-xl);
-    padding-top: var(--spacing-xs);
+    padding-top: var(--spacing-sm);
 }
 
 .acentia-name {
@@ -48,7 +25,7 @@
 
 .video-title {
     font-size: 1.15rem;
-    margin-bottom: var(--spacing-xs);
+    margin-bottom: var(--spacing-sm);
 }
 
 .video-wrapper {
@@ -68,16 +45,7 @@
     transform: scale(1.01);
 }
 
-/* ===== Acentia Goods ===== */
-.goods-container .context {
-    margin: var(--spacing-xl) auto 0;
-    max-width: 1000px;
-    text-align: center;
-}
-
-.goods-container .titleSeparator {
-    margin: var(--spacing-sm) auto;
-}
+/* ============ goods =============== */
 
 .goods-grid {
     margin-top: 2.5rem;
@@ -129,37 +97,3 @@
 .goodsImg:hover {
     transform: scale(1.03);
 }
-
-/* ===== Acentia Record ===== */
-.record-container .context {
-    margin: var(--spacing-xl) auto 0;
-    max-width: 1000px;
-    text-align: center;
-}
-
-.record-container .titleSeparator {
-    margin: var(--spacing-sm) auto;
-}
-
-.acentia-record {
-    width: 100%;
-    max-width: 800px;
-    margin: 2rem auto;
-    border-collapse: collapse;
-    font-size: var(--font-base);
-    text-align: center;
-    background-color: var(--bg-primary);
-    box-shadow: var(--shadow-light);
-}
-
-.acentia-record th,
-.acentia-record td {
-    padding: var(--spacing-sm);
-    border: 1px solid var(--border-light);
-    text-align: center;
-}
-
-.acentia-record thead {
-    background-color: var(--secondary-color);
-    color: var(--text-primary);
-} 

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './styles.css';
@@ -17,7 +17,7 @@ const Bylaws = () => {
         attachmentUrl: post.attachmentUrl,
     });
 
-    const fetchPosts = async () => {
+    const fetchPosts = useCallback(async () => {
         try {
             const response = await axios.get(`/api/data?type=${ruleType}`);
             if (response.data.code === 1) {
@@ -30,7 +30,7 @@ const Bylaws = () => {
         } catch (error) {
             console.error('API 요청 오류:', error);
         }
-    };
+    }, [ruleType]);
 
     const handleOfficialClick = () => {
         setRuleType('OFFICIAL');
@@ -48,7 +48,7 @@ const Bylaws = () => {
 
     const renderPagination = () => {
         const totalPages = Math.ceil(posts.length / POSTS_PER_PAGE);
-        
+
         return Array.from({ length: totalPages }, (_, index) => (
             <button
                 key={index + 1}
@@ -100,7 +100,7 @@ const Bylaws = () => {
     );
 
     const renderPostsList = () => (
-        <table className="announcement-table">
+        <table className="table">
             <thead>
                 <tr>
                     <th>번호</th>
@@ -116,15 +116,17 @@ const Bylaws = () => {
 
     useEffect(() => {
         fetchPosts();
-    }, [ruleType]);
+    }, [ruleType, fetchPosts]);
 
     return (
         <div className="context">
             <div className="contextTitle">세칙 및 회칙</div>
-            <hr className="titleSeparator"/>
+            <hr className="titleSeparator" />
 
             {renderButtonGroup()}
-            {renderPostsList()}
+            <div className="table-container">
+                {renderPostsList()}
+            </div>
 
             <div className="pagination">
                 {renderPagination()}

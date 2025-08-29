@@ -1,5 +1,5 @@
 import './styles.css';
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
@@ -10,7 +10,7 @@ const RequireDetail = () => {
     const navigate = useNavigate();
     const didFetch = useRef(false);
 
-    const fetchPostDetails = async () => {
+    const fetchPostDetails = useCallback(async () => {
         try {
             const response = await axios.get(`/api/agora/${id}`, {
                 withCredentials: true
@@ -28,7 +28,7 @@ const RequireDetail = () => {
         } catch (error) {
             console.error('API 요청 오류:', error);
         }
-    };
+    }, [id]);
 
     const handleLike = async () => {
         if (isLiking || !postDetails) return;
@@ -98,7 +98,7 @@ const RequireDetail = () => {
         <div className="like-section">
             <button onClick={handleLike} className="like-button" disabled={isLiking}>
                 <img
-                    src={postDetails.isLiked ? "/main/filled-heart.png" : "/main/heart.png"}
+                    src={postDetails.isLiked ? "/images/main/filled-heart.png" : "/images/main/heart.png"}
                     alt="좋아요"
                     className="like-icon"
                 />
@@ -112,18 +112,18 @@ const RequireDetail = () => {
             didFetch.current = true;
             fetchPostDetails();
         }
-    }, [id]);
+    }, [id, fetchPostDetails]);
 
     if (!postDetails) {
         return <div>Loading...</div>;
     }
 
     return (
-        <div className="post-detail">
-            <h2>{postDetails.apTitle}</h2>
+        <div className="context">
+            <div className="contextTitle">{postDetails.apTitle}</div>
             <hr className="titleSeparator" />
             {renderMetadata()}
-            <p>{postDetails.apContent}</p>
+            <p className="post-content">{postDetails.apContent}</p>
             {renderCommentSection()}
             {renderLikeSection()}
             <button onClick={handleBackToList} className="back-button">

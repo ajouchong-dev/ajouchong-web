@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import './styles.css';
@@ -18,7 +18,7 @@ const Announcement = () => {
         date: new Date(post.npCreateTime).toLocaleDateString(),
     });
 
-    const fetchPosts = async () => {
+    const fetchPosts = useCallback(async () => {
         try {
             const response = await axios.get(`/api/notice`, {
                 headers: { 'Content-Type': 'application/json' },
@@ -35,7 +35,7 @@ const Announcement = () => {
         } catch (error) {
             console.error('API request error:', error);
         }
-    };
+    }, []);
 
     const handleSearch = () => {
         if (searchQuery === '') {
@@ -51,7 +51,7 @@ const Announcement = () => {
 
     const handleImageError = (e) => {
         e.target.onerror = null;
-        e.target.src = '/main/achim_square.jpeg';
+        e.target.src = '/images/main/achim_square.jpeg';
     };
 
     const handlePageChange = (pageNumber) => setCurrentPage(pageNumber);
@@ -126,7 +126,7 @@ const Announcement = () => {
 
     useEffect(() => {
         fetchPosts();
-    }, []);
+    }, [fetchPosts]);
 
     return (
         <div className="context">

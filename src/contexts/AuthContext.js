@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect } from "react";
+import React, { createContext, useContext, useState, useEffect, useCallback } from "react";
 import { googleLogout, useGoogleLogin } from "@react-oauth/google";
 import Cookies from "js-cookie";
 import axios from "axios";
@@ -87,7 +87,7 @@ export const AuthProvider = ({ children }) => {
         }
     };
 
-    const fetchUser = async (token) => {
+    const fetchUser = useCallback(async (token) => {
         try {
             const response = await fetch("/api/login/auth/info", {
                 method: "GET",
@@ -117,7 +117,7 @@ export const AuthProvider = ({ children }) => {
             console.error("Error fetching user:", error);
             logout();
         }
-    };
+    }, []);
 
     useEffect(() => {
         const token = localStorage.getItem("jwtToken");
@@ -129,7 +129,7 @@ export const AuthProvider = ({ children }) => {
                 loading: false,
             }));
         }
-    }, []);
+    }, [fetchUser]);
 
     const login = (token, user) => {
         localStorage.setItem("jwtToken", token);

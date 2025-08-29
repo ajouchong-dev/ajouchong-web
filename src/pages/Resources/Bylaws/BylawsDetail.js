@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './styles.css';
@@ -8,7 +8,7 @@ const BylawsDetail = () => {
     const [postDetails, setPostDetails] = useState(null);
     const navigate = useNavigate();
 
-    const fetchPostDetails = async () => {
+    const fetchPostDetails = useCallback(async () => {
         try {
             const response = await axios.get(`/api/data/${id}`);
             if (response.data.code === 1) {
@@ -19,7 +19,7 @@ const BylawsDetail = () => {
         } catch (error) {
             console.error('API 요청 오류:', error);
         }
-    };
+    }, [id]);
 
     const handleBackToList = () => {
         navigate(-1);
@@ -50,18 +50,18 @@ const BylawsDetail = () => {
 
     useEffect(() => {
         fetchPostDetails();
-    }, [id]);
+    }, [id, fetchPostDetails]);
 
     if (!postDetails) {
         return <div>Loading...</div>;
     }
 
     return (
-        <div className="post-detail">
-            <h2 className="post-title">{postDetails.rpTitle}</h2>
-            <hr className="titleSeparator"/>
+        <div className="context">
+            <div className="contextTitle">{postDetails.rpTitle}</div>
+            <hr className="titleSeparator" />
             {renderMetadata()}
-            <p className="post-content">{postDetails.rpContent}</p>
+            <div className="post-content">{postDetails.rpContent}</div>
             {renderAttachment()}
             <button onClick={handleBackToList} className="back-button">
                 목록으로 돌아가기

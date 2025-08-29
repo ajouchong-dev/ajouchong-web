@@ -1,6 +1,6 @@
-import "./style.css";
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import "./style.css";
 
 const councilList = [
     { year: "2024", title: "2024년 제43대 총학생회 '아우름'", leaders: "이홍서(경제), 이원재(산공)" },
@@ -30,26 +30,32 @@ const History = () => {
         </tr>
     );
 
+    const renderTable = () => (
+        <table className="table">
+            <colgroup>
+                <col style={{ width: "65%" }} />
+                <col style={{ width: "35%" }} />
+            </colgroup>
+            <thead>
+                <tr>
+                    <th>해당연도</th>
+                    <th>총, 부학생회장</th>
+                </tr>
+            </thead>
+            <tbody>
+                {councilList.map(renderTableRow)}
+            </tbody>
+        </table>
+    );
+
     return (
         <div className="context">
             <div className="contextTitle">역대 총학생회 소개</div>
             <hr className="titleSeparator" />
 
-            <table className="council-history">
-                <colgroup>
-                    <col style={{ width: "65%" }} />
-                    <col style={{ width: "35%" }} />
-                </colgroup>
-                <thead>
-                    <tr>
-                        <th>해당연도</th>
-                        <th>총, 부학생회장</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {councilList.map(renderTableRow)}
-                </tbody>
-            </table>
+            <div className="table-container">
+                {renderTable()}
+            </div>
         </div>
     );
 };
