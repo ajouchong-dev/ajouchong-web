@@ -3,6 +3,10 @@ import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
+const apiClient = axios.create({
+    baseURL: process.env.REACT_APP_API_URL || 'https://api.ajouchong.com'
+});
+
 const RequireDetail = () => {
     const { id } = useParams();
     const [postDetails, setPostDetails] = useState(null);
@@ -12,7 +16,7 @@ const RequireDetail = () => {
 
     const fetchPostDetails = useCallback(async () => {
         try {
-            const response = await axios.get(`/api/agora/${id}`, {
+            const response = await apiClient.get(`/api/agora/${id}`, {
                 withCredentials: true
             });
             
@@ -43,7 +47,7 @@ const RequireDetail = () => {
         setIsLiking(true);
 
         try {
-            const response = await axios.post(
+            const response = await apiClient.post(
                 `/api/agora/${id}/like`,
                 {},
                 { withCredentials: true }

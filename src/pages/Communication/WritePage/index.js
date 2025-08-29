@@ -3,6 +3,10 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import axios from 'axios';
 import './styles.css';
 
+const apiClient = axios.create({
+    baseURL: process.env.REACT_APP_API_URL || 'https://api.ajouchong.com'
+});
+
 const WritePage = () => {
     const [form, setForm] = useState({ title: '', content: '' });
     const [message, setMessage] = useState({ success: '', error: '' });
@@ -48,7 +52,7 @@ const WritePage = () => {
 
     const checkLoginStatus = useCallback(async () => {
         try {
-            await axios.get("/api/login/auth/info", {
+            await apiClient.get("/api/login/auth/info", {
                 withCredentials: true,
             });
         } catch {
@@ -67,7 +71,7 @@ const WritePage = () => {
         setMessage({ success: '', error: '' });
 
         try {
-            const response = await axios.post(
+            const response = await apiClient.post(
                 config.apiEndpoint,
                 config.requestData,
                 { 

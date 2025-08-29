@@ -3,6 +3,10 @@ import { googleLogout, useGoogleLogin } from "@react-oauth/google";
 import Cookies from "js-cookie";
 import axios from "axios";
 
+const apiClient = axios.create({
+    baseURL: process.env.REACT_APP_API_URL || 'https://api.ajouchong.com'
+});
+
 const AuthContext = createContext();
 
 const GOOGLE_API_URL = "https://www.googleapis.com/oauth2/v3/userinfo";
@@ -26,8 +30,8 @@ export const AuthProvider = ({ children }) => {
     };
 
     const authenticateWithBackend = async (accessToken, refreshToken) => {
-        const response = await axios.post(
-            `/api/login/auth/oauth`,
+        const response = await apiClient.post(
+            '/api/login/auth/oauth',
             {
                 accessToken: accessToken,
                 refreshToken: refreshToken,
@@ -74,7 +78,7 @@ export const AuthProvider = ({ children }) => {
 
     const handleLogout = async (navigate) => {
         try {
-            await axios.post(`/api/login/auth/logout`, {}, {
+            await apiClient.post('/api/login/auth/logout', {}, {
                 withCredentials: true
             });
         } catch (error) {
@@ -89,27 +93,21 @@ export const AuthProvider = ({ children }) => {
 
     const fetchUser = useCallback(async (token) => {
         try {
-            const response = await fetch("/api/login/auth/info", {
-                method: "GET",
+            const response = await apiClient.get('/api/login/auth/info', {
                 headers: {
                     Authorization: `Bearer ${token}`,
                     "Content-Type": "application/json"
                 },
-                credentials: 'include'
+                withCredentials: true
             });
 
-            if (response.ok) {
-                const userData = await response.json();
-                if (userData.code === 1 && userData.data) {                    
-                    localStorage.setItem("user", JSON.stringify(userData.data));
-                    setAuth((prev) => ({
-                        ...prev,
-                        user: userData.data,
-                        loading: false,
-                    }));
-                } else {
-                    throw new Error("유저 정보를 불러올 수 없습니다.");
-                }
+            if (response.data.code === 1 && response.data.data) {                    
+                localStorage.setItem("user", JSON.stringify(response.data.data));
+                setAuth((prev) => ({
+                    ...prev,
+                    user: response.data.data,
+                    loading: false,
+                }));
             } else {
                 throw new Error("유저 정보를 불러올 수 없습니다.");
             }

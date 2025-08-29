@@ -4,6 +4,10 @@ import axios from 'axios';
 import { useNavigate, Link } from 'react-router-dom';
 import './styles.css';
 
+const apiClient = axios.create({
+    baseURL: process.env.REACT_APP_API_URL || 'https://api.ajouchong.com'
+});
+
 const SLIDER_IMAGES = [
     "/images/banner/main_7.jpg",
     "/images/banner/spring_1.jpeg",
@@ -39,7 +43,8 @@ const Main = () => {
 
     const fetchNotices = useCallback(async () => {
         try {
-            const response = await axios.get(`/api/notice`);
+            console.log('API URL:', '/api/notice');
+            const response = await apiClient.get('/api/notice');
 
             if (response.data.code === 1 && Array.isArray(response.data.data)) {
                 const sortedNotices = response.data.data
