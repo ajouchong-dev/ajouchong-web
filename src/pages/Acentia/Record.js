@@ -3,10 +3,11 @@ import "./styles.css";
 
 const Record = () => {
     return (
-        <div className="context table-container">
+        <div className="context">
             <div className="contextTitle">역대 ACENTIA</div>
             <hr className="titleSeparator"/>
-            <table className="table">
+            <div className="table-container">
+                <table className="table">
                 <colgroup>
                     <col style={{width: "35%"}}/>
                     <col style={{width: "65%"}}/>
@@ -29,7 +30,8 @@ const Record = () => {
                     <td> &lt;ACENTIA&gt;日出(일출): 파란 물결의 찬란한 시작</td>
                 </tr>
                 </tbody>
-            </table>
+                </table>
+            </div>
         </div>
     );
 };
