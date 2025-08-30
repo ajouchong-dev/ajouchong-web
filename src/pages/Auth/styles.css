@@ -59,14 +59,25 @@
 }
 
 .profile-container {
-    max-width: 500px;
     margin: 50px auto;
-    padding: 20px;
-    background-color: #f9f9f9;
-    border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 30px; 
     text-align: center;
     font-family: "Arial", sans-serif;
+    min-height: calc(100vh - 300px); 
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.profile-content {
+    width: 100%;
+    max-width: 400px;
+    background-color: var(--bg-primary);
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
+    padding: 30px; 
+    border: 1px solid var(--border-light); 
 }
 
 .profile-container h1 {
@@ -92,7 +103,7 @@
     font-size: 18px;
     color: #888;
     font-weight: bold;
-    margin-bottom: 40px;
+    margin-bottom: 32px;
 }
 
 /* 반응형 디자인 */
