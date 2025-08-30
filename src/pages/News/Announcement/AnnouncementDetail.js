@@ -92,6 +92,16 @@ const AnnouncementDetail = () => {
         return new Date(dateString).toLocaleString();
     };
 
+    const formatContent = (content) => {
+        if (!content) return '';
+        return content.split('\n').map((line, index) => (
+            <React.Fragment key={index}>
+                {line}
+                {index < content.split('\n').length - 1 && <br />}
+            </React.Fragment>
+        ));
+    };
+
     const renderMetadata = () => (
         <div className="post-metadata">
             <span>작성일 | {formatDate(postDetails.npCreateTime)}</span>
@@ -157,7 +167,7 @@ const AnnouncementDetail = () => {
             <hr className="titleSeparator"/>
             {renderMetadata()}
 
-            <div className="post-content">{postDetails.npContent}</div>
+            <div className="post-content">{formatContent(postDetails.npContent)}</div>
             <div className="post-images">
                 {renderImageGallery()}
             </div>
