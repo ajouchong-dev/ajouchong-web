@@ -52,11 +52,14 @@
 
 .post-box {
     width: 250px;
-    height: 350px;
+    height: 400px; 
     overflow: hidden;
     text-align: center;
     padding-bottom: var(--spacing-xl);
     transition: var(--transition-normal);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 .post-box:hover {
@@ -64,11 +67,13 @@
 }
 
 .post-image {
-    width: 100%;
-    height: 250px;
+    width: 90%;
+    height: 280px;
     object-fit: cover;
     border-radius: var(--radius-small);
     transition: var(--transition-normal);
+    display: block;
+    margin: 0 auto;
 }
 
 .post-image:hover {
@@ -79,20 +84,24 @@
     font-size: var(--font-base);
     font-weight: bold;
     color: var(--text-primary);
-    margin: var(--spacing-sm) 0;
+    margin: var(--spacing-md) 0 var(--spacing-sm) 0; 
     line-height: 1.4;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    max-height: 2.8em; 
+    overflow: visible; 
+    text-overflow: unset; 
+    display: block;
+    max-height: none;
+    text-align: center;
+    word-wrap: break-word;
+    word-break: break-all;
 }
 
 .post-date {
     color: var(--text-muted);
     font-size: var(--font-sm);
-    margin-bottom: var(--spacing-xl);
-    margin-top: 0;
+    margin-bottom: 0;
+    margin-top: auto; 
+    text-align: center;
+    padding-bottom: var(--spacing-sm);
 }
 
 .post-detail {
