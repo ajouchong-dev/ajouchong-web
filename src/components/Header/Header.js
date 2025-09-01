@@ -180,6 +180,10 @@ const Header = () => {
                 ))}
             </ul>
             
+            <div className="mobile-login-section">
+                <Login />
+            </div>
+            
             <nav className="other-menu">
                 <ul className="flex justify-center">
                     {UPPER_LINKS.map((link, index) => (
