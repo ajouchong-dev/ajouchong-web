@@ -206,13 +206,13 @@
     backdrop-filter: blur(5px);
     -webkit-backdrop-filter: blur(5px);
     border: 1px solid rgba(255, 255, 255, 0.3);
-    width: 20%;
-    height: 370px;
+    width: 18%;
+    height: 300px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     transition: opacity 0.8s ease, transform 0.8s ease;
     transform: translateY(20px);
-    padding-bottom: var(--spacing-xl);
-    margin-bottom: var(--spacing-xl);
+    padding-bottom: var(--spacing-lg);
+    margin-bottom: var(--spacing-lg);
     cursor: pointer;
 }
 
@@ -228,7 +228,7 @@
 
 .notice-image {
     width: 100%;
-    height: 150px;
+    height: 120px;
     object-fit: cover;
     border-radius: var(--radius-normal) var(--radius-normal) 0 0;
     margin-bottom: var(--spacing-sm);
@@ -265,7 +265,12 @@
     
     .notice-card {
         width: 45%;
-        min-width: 280px;
+        min-width: 250px;
+        height: 280px;
+    }
+    
+    .notice-image {
+        height: 110px;
     }
     
     .division-line.visible {
@@ -368,12 +373,14 @@
     .notices-container {
         width: 98%;
         margin: var(--spacing-md) auto;
+        max-width: 350px;
     }
     
     .notice-card {
         max-width: 100%;
-        min-height: 280px;
+        min-height: 250px;
         margin-bottom: var(--spacing-sm);
+        height: auto;
     }
     
     .card-wrapper {
@@ -396,7 +403,7 @@
     }
     
     .notice-image {
-        height: 120px;
+        height: 100px;
     }
     
     .notice-card h3 {
@@ -429,15 +436,19 @@
         font-size: 1.8rem;
     }
     
+    .notices-container {
+        max-width: 300px;
+    }
+    
     .card-title p {
         font-size: 1.2rem;
     }
     
     .notice-card {
-        min-height: 250px;
+        min-height: 220px;
     }
     
     .notice-image {
-        height: 100px;
+        height: 80px;
     }
 }
