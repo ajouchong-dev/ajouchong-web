@@ -18,9 +18,7 @@ const LinkHub = () => {
         try {
             setLoading(true);
             const response = await apiClient.get('/api/link');
-            console.log(response.data);
 
-            // API 응답 구조에 따라 links 데이터 추출
             let linksData = [];
             if (response.data && Array.isArray(response.data)) {
                 linksData = response.data;
@@ -29,21 +27,21 @@ const LinkHub = () => {
             } else if (response.data && Array.isArray(response.data.data)) {
                 linksData = response.data.data;
             } else {
-                console.log('API 응답 구조:', response.data);
+                // console.log('API 응답 구조:', response.data);
                 linksData = [];
             }
 
             setLinks(linksData);    
         } catch (err) {
-            console.error('링크 목록을 가져오는 중 오류가 발생했습니다:', err);            
+            // console.error('링크 목록을 가져오는 중 오류가 발생했습니다:', err);            
         } finally {
             setLoading(false);
         }
     };
 
-    const handleLinkClick = (url) => {
-        if (url) {
-            window.open(url, '_blank', 'noopener,noreferrer');
+    const handleLinkClick = (link) => {
+        if (link) {
+            window.open(link, '_blank', 'noopener,noreferrer');
         }
     };
 
@@ -64,7 +62,7 @@ const LinkHub = () => {
                     <div
                         key={index}
                         className="link-card"
-                        onClick={() => handleLinkClick(link.url)}
+                        onClick={() => handleLinkClick(link.link)}
                     >
                         <h3 className="link-title">{link.title}</h3>
                     </div>
