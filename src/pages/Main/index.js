@@ -43,7 +43,7 @@ const Main = () => {
 
     const fetchNotices = useCallback(async () => {
         try {
-            console.log('API URL:', '/api/notice');
+            // console.log('API URL:', '/api/notice');
             const response = await apiClient.get('/api/notice');
 
             if (response.data.code === 1 && Array.isArray(response.data.data)) {
@@ -81,7 +81,7 @@ const Main = () => {
                     ))}
                 </Slider>
                 <div className="overlay">
-                    <p>아주대학교 제 44대 총학생회 아침</p>
+                    <p>아주대학교 제44대 총학생회 아침</p>
                 </div>
                 <div className="title2">
                     <p>AJOU UNIV.</p>

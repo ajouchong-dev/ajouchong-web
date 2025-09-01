@@ -37,6 +37,7 @@ import Promotion from './pages/Welfare/Promotion';
 import Rental from './pages/Welfare/Rental';
 
 import Profile from './pages/Auth/Profile';
+import LinkHub from './pages/LinkHub';
 
 import Sitemap from './pages/Utility/Sitemap';
 import Termsofservice from './pages/Utility/Policy/termsofservice';
@@ -110,6 +111,7 @@ const Content = () => {
 
         {/* Etc */}
         <Route path="/profile" element={<Profile />} />
+        <Route path="/linkHub" element={<LinkHub />} />
         <Route path="/sitemap" element={<Sitemap />} />
         <Route path="/policy/termsofservice" element={<Termsofservice />} />
         <Route path="/policy" element={<Policy />} />
