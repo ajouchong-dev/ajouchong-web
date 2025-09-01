@@ -97,3 +97,239 @@
 .goodsImg:hover {
     transform: scale(1.03);
 }
+
+/* 반응형 디자인 */
+@media screen and (max-width: 1024px) {
+    .acentia-info {
+        max-width: 600px;
+        padding-top: var(--spacing-xs);
+    }
+    
+    .acentia-name {
+        font-size: 1.2rem;
+    }
+    
+    .acentia-description {
+        font-size: 1rem;
+        line-height: 1.4;
+    }
+    
+    .video-section {
+        margin-top: 2.5rem;
+    }
+    
+    .video-title {
+        font-size: 1.1rem;
+    }
+    
+    .video-player {
+        max-width: 700px;
+    }
+    
+    .goods-grid {
+        margin-top: 2rem;
+    }
+    
+    .goods-row {
+        gap: 1.5rem;
+        margin-bottom: var(--spacing-xs);
+    }
+    
+    .goodsImg {
+        max-width: 280px;
+    }
+    
+    .goods-row.top-row .goodsImg {
+        max-width: 280px;
+    }
+    
+    .goods-row.bottom-row .goodsImg {
+        max-width: 280px;
+        height: 180px;
+    }
+    
+    .goods-row.bottom-row .slogan-img {
+        max-width: 450px;
+        height: 180px;
+    }
+    
+    .goods-text {
+        font-size: var(--font-sm);
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .acentia-info {
+        max-width: 100%;
+        padding: var(--spacing-sm) var(--spacing-md);
+        text-align: center;
+    }
+    
+    .acentia-name {
+        font-size: 1.1rem;
+    }
+    
+    .acentia-description {
+        font-size: 0.95rem;
+        line-height: 1.5;
+    }
+    
+    .video-section {
+        margin-top: 2rem;
+    }
+    
+    .video-title {
+        font-size: 1rem;
+    }
+    
+    .video-player {
+        max-width: 100%;
+    }
+    
+    .goods-grid {
+        margin-top: 1.5rem;
+    }
+    
+    .goods-row {
+        flex-direction: column;
+        gap: var(--spacing-md);
+        margin-bottom: var(--spacing-md);
+        align-items: center;
+    }
+    
+    .goodsImg {
+        max-width: 100%;
+        width: 100%;
+        max-width: 350px;
+    }
+    
+    .goods-row.top-row .goodsImg {
+        max-width: 350px;
+        width: 100%;
+    }
+    
+    .goods-row.bottom-row .goodsImg {
+        max-width: 350px;
+        width: 100%;
+        height: auto;
+        aspect-ratio: 3/2;
+    }
+    
+    .goods-row.bottom-row .slogan-img {
+        max-width: 100%;
+        width: 100%;
+        max-width: 400px;
+        height: auto;
+        aspect-ratio: 5/2;
+    }
+    
+    .goods-text {
+        font-size: var(--font-sm);
+        margin-top: var(--spacing-xs);
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .acentia-info {
+        padding: var(--spacing-sm) var(--spacing-sm);
+    }
+    
+    .acentia-name {
+        font-size: 1rem;
+    }
+    
+    .acentia-description {
+        font-size: 0.9rem;
+        line-height: 1.6;
+    }
+    
+    .video-section {
+        margin-top: 1.5rem;
+    }
+    
+    .video-title {
+        font-size: 0.95rem;
+    }
+    
+    .goods-grid {
+        margin-top: 1rem;
+    }
+    
+    .goods-row {
+        gap: var(--spacing-sm);
+        margin-bottom: var(--spacing-sm);
+    }
+    
+    .goodsImg {
+        max-width: 300px;
+    }
+    
+    .goods-row.top-row .goodsImg {
+        max-width: 300px;
+    }
+    
+    .goods-row.bottom-row .goodsImg {
+        max-width: 300px;
+    }
+    
+    .goods-row.bottom-row .slogan-img {
+        max-width: 350px;
+    }
+    
+    .goods-text {
+        font-size: var(--font-xs);
+    }
+}
+
+@media screen and (max-width: 360px) {
+    .acentia-info {
+        padding: var(--spacing-xs) var(--spacing-xs);
+    }
+    
+    .acentia-name {
+        font-size: 0.95rem;
+    }
+    
+    .acentia-description {
+        font-size: 0.85rem;
+        line-height: 1.7;
+    }
+    
+    .video-section {
+        margin-top: 1rem;
+    }
+    
+    .video-title {
+        font-size: 0.9rem;
+    }
+    
+    .goods-grid {
+        margin-top: 0.8rem;
+    }
+    
+    .goods-row {
+        gap: var(--spacing-xs);
+        margin-bottom: var(--spacing-xs);
+    }
+    
+    .goodsImg {
+        max-width: 280px;
+    }
+    
+    .goods-row.top-row .goodsImg {
+        max-width: 280px;
+    }
+    
+    .goods-row.bottom-row .goodsImg {
+        max-width: 280px;
+    }
+    
+    .goods-row.bottom-row .slogan-img {
+        max-width: 320px;
+    }
+    
+    .goods-text {
+        font-size: var(--font-xs);
+        margin-top: var(--spacing-xs);
+    }
+}
