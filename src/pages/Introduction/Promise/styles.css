@@ -7,3 +7,36 @@
     margin-bottom: var(--spacing-xl);
 }
 
+/* 반응형 디자인 */
+@media screen and (max-width: 1024px) {
+    .promiseImg {
+        max-width: 50%;
+        margin-top: var(--spacing-lg);
+        margin-bottom: var(--spacing-lg);
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .promiseImg {
+        max-width: 60%;
+        margin-top: var(--spacing-md);
+        margin-bottom: var(--spacing-md);
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .promiseImg {
+        max-width: 75%;
+        margin-top: var(--spacing-sm);
+        margin-bottom: var(--spacing-sm);
+    }
+}
+
+@media screen and (max-width: 360px) {
+    .promiseImg {
+        max-width: 85%;
+        margin-top: var(--spacing-xs);
+        margin-bottom: var(--spacing-xs);
+    }
+}
+
