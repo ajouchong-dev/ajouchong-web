@@ -72,8 +72,43 @@
 }
 
 /* 반응형 디자인 */
+@media screen and (max-width: 1024px) {
+    .rental-container {
+        max-width: 1000px;
+        padding: var(--spacing-lg);
+    }
+    
+    .rental-button {
+        font-size: var(--font-base);
+        padding: var(--spacing-sm) var(--spacing-lg);
+        margin-top: var(--spacing-sm);
+    }
+    
+    .rental-box {
+        max-width: 700px;
+        height: 600px;
+        margin-top: var(--spacing-lg);
+    }
+    
+    #rental-title {
+        font-size: var(--font-base);
+        margin-top: var(--spacing-lg);
+        margin-bottom: var(--spacing-xs);
+    }
+    
+    .rental-images {
+        gap: var(--spacing-md);
+    }
+    
+    .rentalImg {
+        width: 320px;
+        height: 400px;
+    }
+}
+
 @media screen and (max-width: 768px) {
     .rental-container {
+        max-width: 100%;
         padding: var(--spacing-md);
     }
     
@@ -81,9 +116,11 @@
         font-size: var(--font-base);
         padding: var(--spacing-sm) var(--spacing-lg);
         margin-top: var(--spacing-lg);
+        width: auto;
     }
     
     .rental-box {
+        max-width: 95%;
         height: 500px;
         margin-top: var(--spacing-lg);
     }
@@ -91,10 +128,13 @@
     #rental-title {
         font-size: var(--font-base);
         margin-top: var(--spacing-lg);
+        margin-bottom: var(--spacing-xs);
     }
     
     .rental-images {
         gap: var(--spacing-md);
+        flex-wrap: wrap;
+        justify-content: center;
     }
     
     .rentalImg {
@@ -114,10 +154,19 @@
         font-size: var(--font-sm);
         padding: var(--spacing-xs) var(--spacing-md);
         width: 90%;
+        margin-top: var(--spacing-md);
     }
     
     .rental-box {
+        max-width: 98%;
         height: 400px;
+        margin-top: var(--spacing-md);
+    }
+    
+    #rental-title {
+        font-size: var(--font-sm);
+        margin-top: var(--spacing-md);
+        margin-bottom: var(--spacing-xs);
     }
     
     .rental-images {
@@ -128,6 +177,49 @@
     
     .rentalImg {
         max-width: 300px;
+        width: 100%;
+    }
+    
+    .rental-info {
+        margin-top: var(--spacing-lg);
+    }
+}
+
+@media screen and (max-width: 360px) {
+    .rental-container {
+        padding: var(--spacing-xs);
+    }
+    
+    .rental-button {
+        font-size: var(--font-xs);
+        padding: var(--spacing-xs) var(--spacing-sm);
+        width: 95%;
+        margin-top: var(--spacing-sm);
+    }
+    
+    .rental-box {
+        max-width: 100%;
+        height: 350px;
+        margin-top: var(--spacing-sm);
+    }
+    
+    #rental-title {
+        font-size: var(--font-xs);
+        margin-top: var(--spacing-sm);
+        margin-bottom: var(--spacing-xs);
+    }
+    
+    .rental-images {
+        gap: var(--spacing-xs);
+    }
+    
+    .rentalImg {
+        max-width: 280px;
+        width: 100%;
+    }
+    
+    .rental-info {
+        margin-top: var(--spacing-md);
     }
 }
 

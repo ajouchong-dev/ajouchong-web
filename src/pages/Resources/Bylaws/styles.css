@@ -68,3 +68,123 @@
     margin-top: var(--spacing-xl);
     font-style: italic;
 }
+
+/* 반응형 디자인 */
+@media screen and (max-width: 1024px) {
+    .bylaw-button {
+        padding: var(--spacing-sm) 80px;
+        font-size: var(--font-base);
+        margin: 5px 2px;
+    }
+    
+    .post-detail {
+        max-width: 700px;
+        margin: var(--spacing-md) auto;
+        padding: var(--spacing-md);
+    }
+    
+    .post-detail .post-title {
+        font-size: var(--font-lg);
+        margin-bottom: var(--spacing-md);
+    }
+    
+    .post-attachment {
+        margin-top: var(--spacing-md);
+        font-size: var(--font-base);
+    }
+    
+    .post-attachment strong,
+    .post-attachment a,
+    .post-attachment span {
+        margin-top: var(--spacing-lg);
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .bylaw-button {
+        padding: var(--spacing-sm) 60px;
+        font-size: var(--font-sm);
+        margin: 4px 2px;
+    }
+    
+    .post-detail {
+        max-width: 600px;
+        margin: var(--spacing-sm) auto;
+        padding: var(--spacing-sm);
+    }
+    
+    .post-detail .post-title {
+        font-size: var(--font-base);
+        margin-bottom: var(--spacing-sm);
+    }
+    
+    .post-attachment {
+        margin-top: var(--spacing-sm);
+        font-size: var(--font-sm);
+        flex-direction: column;
+        gap: var(--spacing-xs);
+    }
+    
+    .post-attachment strong,
+    .post-attachment a,
+    .post-attachment span {
+        margin-top: var(--spacing-md);
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .bylaw-button {
+        padding: var(--spacing-xs) 40px;
+        font-size: var(--font-xs);
+        margin: 3px 1px;
+    }
+    
+    .post-detail {
+        max-width: 100%;
+        margin: var(--spacing-xs) auto;
+        padding: var(--spacing-xs);
+    }
+    
+    .post-detail .post-title {
+        font-size: var(--font-sm);
+        margin-bottom: var(--spacing-xs);
+    }
+    
+    .post-attachment {
+        margin-top: var(--spacing-xs);
+        font-size: var(--font-xs);
+        gap: var(--spacing-xs);
+    }
+    
+    .post-attachment strong,
+    .post-attachment a,
+    .post-attachment span {
+        margin-top: var(--spacing-sm);
+    }
+}
+
+@media screen and (max-width: 360px) {
+    .bylaw-button {
+        padding: var(--spacing-xs) 30px;
+        font-size: var(--font-xs);
+        margin: 2px 1px;
+    }
+    
+    .post-detail {
+        padding: var(--spacing-xs);
+    }
+    
+    .post-detail .post-title {
+        font-size: var(--font-xs);
+    }
+    
+    .post-attachment {
+        font-size: var(--font-xs);
+    }
+    
+    .post-attachment strong,
+    .post-attachment a,
+    .post-attachment span {
+        margin-top: var(--spacing-xs);
+    }
+}

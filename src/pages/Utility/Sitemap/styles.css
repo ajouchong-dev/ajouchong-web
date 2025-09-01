@@ -1,6 +1,9 @@
 .sitemap {
     margin: var(--spacing-lg) auto;
     font-family: Arial, sans-serif;
+    text-align: center;
+    max-width: 1200px;
+    padding: 0 var(--spacing-md);
 }
 
 .listSeparator {
@@ -18,6 +21,9 @@
     color: var(--text-primary);
     text-decoration: none;
     transition: var(--transition-normal);
+    font-size: var(--font-xl);
+    margin-bottom: var(--spacing-sm);
+    display: block;
 }
 
 .sitemapTitle:hover {
@@ -25,7 +31,7 @@
 }
 
 .list-container {
-    margin-bottom: var(--spacing-lg);
+    margin: 0 auto var(--spacing-lg) auto;
     width: 300px;
     min-width: 300px;
     padding: var(--spacing-lg);
@@ -36,6 +42,7 @@
     border-radius: var(--radius-normal);
     box-sizing: border-box;
     transition: var(--transition-normal);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 .list-container:hover {
@@ -46,13 +53,13 @@
 .sitemap-list {
     list-style-type: none;
     padding: 0;
-    margin: 0;
+    margin: 0 auto;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: var(--spacing-lg);
+    gap: var(--spacing-xl);
     justify-content: center;
     max-width: 1000px;
-    margin: 0 auto;
+    align-items: start;
 }
 
 .sitemap-list li {
@@ -64,10 +71,16 @@
     list-style-type: none;
     padding-left: 0;
     margin-top: var(--spacing-md);
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
 }
 
-.sitemap-list ul li {
-    margin-bottom: var(--spacing-sm);
+.sitemap-list > li {
+    color: var(--text-primary);
+    font-size: var(--font-lg);
+    margin-bottom: var(--spacing-md);
+    padding: var(--spacing-sm);
 }
 
 .sitemap-list a {
@@ -75,13 +88,50 @@
     color: var(--text-secondary);
     transition: var(--transition-normal);
     display: block;
+    padding: var(--spacing-xs) 0;
+    line-height: 1.5;
+    font-size: var(--font-base);
 }
 
 .sitemap-list a:hover {
     color: var(--secondary-color);
+    transform: translateX(5px);
 }
 
-/* 반응형 디자인 */
+.sitemap-list ul {
+    list-style-type: none;
+    padding-left: 0;
+    margin-top: var(--spacing-md);
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    width: 100%;
+}
+
+/* 태블릿 반응형 디자인 */
+@media screen and (max-width: 1024px) {
+    .sitemap {
+        margin: var(--spacing-md) auto;
+    }
+    
+    .listSeparator {
+        max-width: 80%;
+    }
+    
+    .list-container {
+        width: 280px;
+        min-width: 280px;
+        padding: var(--spacing-md);
+    }
+    
+    .sitemap-list {
+        grid-template-columns: repeat(3, 1fr);
+        gap: var(--spacing-md);
+        max-width: 800px;
+    }
+}
+
+/* 모바일 반응형 디자인 */
 @media screen and (max-width: 768px) {
     .sitemap {
         margin: var(--spacing-md) auto;
@@ -104,10 +154,16 @@
     }
     
     .sitemap-list ul li {
-        margin-bottom: var(--spacing-xs);
+    margin-bottom: var(--spacing-xs);
+    text-align: center;
+}
+    
+    .sitemapTitle {
+        font-size: var(--font-lg);
     }
 }
 
+/* 작은 모바일 반응형 디자인 */
 @media screen and (max-width: 480px) {
     .sitemap {
         margin: var(--spacing-sm) auto;
@@ -134,7 +190,43 @@
     }
     
     .sitemap-list ul li {
-        margin-bottom: var(--spacing-xs);
+    margin-bottom: var(--spacing-xs);
+    font-size: var(--font-sm);
+    text-align: center;
+}
+    
+    .sitemapTitle {
+        font-size: var(--font-base);
+    }
+}
+
+/* 매우 작은 화면 */
+@media screen and (max-width: 360px) {
+    .sitemap {
+        margin: var(--spacing-xs) auto;
+    }
+    
+    .listSeparator {
+        max-width: 98%;
+    }
+    
+    .list-container {
+        width: 180px;
+        min-width: 180px;
+        padding: var(--spacing-xs);
+    }
+    
+    .sitemap-list {
+        gap: var(--spacing-xs);
+        max-width: 250px;
+    }
+    
+    .sitemap-list ul li {
+    font-size: var(--font-xs);
+    text-align: center;
+}
+    
+    .sitemapTitle {
         font-size: var(--font-sm);
     }
 }

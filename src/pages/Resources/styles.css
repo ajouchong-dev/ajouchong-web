@@ -6,11 +6,13 @@
     justify-content: center;
     padding-top: var(--spacing-xl);
     padding-bottom: 100px;
+    width: 100%;
+    text-align: center;
 }
 
 .proceeding-container li,
 .audit-container li {
-    margin: var(--spacing-xl);
+    margin: var(--spacing-xl) auto;
     text-decoration: none;
     background-color: var(--bg-dark);
     border-radius: var(--radius-small);
@@ -22,6 +24,7 @@
     min-width: 300px;
     max-width: 600px;
     text-align: center;
+    display: block;
 }
 
 .proceeding-container li:hover,
@@ -39,9 +42,38 @@
     text-decoration: none;
     color: var(--text-white);
     transition: var(--transition-normal);
+    display: block;
+    text-align: center;
 }
 
 /* 반응형 디자인 */
+@media screen and (max-width: 1024px) {
+    .proceeding-container,
+    .audit-container {
+        width: 100%;
+        text-align: center;
+        padding-top: var(--spacing-lg);
+        padding-bottom: 80px;
+    }
+    
+    .proceeding-container li,
+    .audit-container li {
+        min-width: 280px;
+        max-width: 550px;
+        padding: var(--spacing-lg);
+        margin: var(--spacing-lg) auto;
+        display: block;
+    }
+    
+    .context {
+        margin-top: 4%;
+    }
+    
+    .contextTitle {
+        font-size: var(--font-lg);
+    }
+}
+
 @media screen and (max-width: 768px) {
     .context {
         margin-top: 5%;
@@ -54,6 +86,8 @@
     .proceeding-container,
     .audit-container {
         padding-top: var(--spacing-lg);
+        width: 100%;
+        text-align: center;
     }
     
     .proceeding-container li,
@@ -61,6 +95,8 @@
         min-width: 250px;
         max-width: 90%;
         padding: var(--spacing-md);
+        margin: var(--spacing-md) auto;
+        display: block;
     }
     
     .announcement-table {
@@ -84,12 +120,20 @@
 }
 
 @media screen and (max-width: 480px) {
+    .proceeding-container,
+    .audit-container {
+        width: 100%;
+        text-align: center;
+    }
+    
     .proceeding-container li,
     .audit-container li {
         min-width: 200px;
         max-width: 95%;
         padding: var(--spacing-sm);
         font-size: var(--font-sm);
+        margin: var(--spacing-sm) auto;
+        display: block;
     }
     
     .announcement-table {
@@ -104,6 +148,49 @@
     
     .bylaw-button {
         padding: var(--spacing-xs) var(--spacing-md);
+        font-size: var(--font-xs);
+    }
+}
+
+@media screen and (max-width: 360px) {
+    .proceeding-container,
+    .audit-container {
+        width: 100%;
+        text-align: center;
+        padding-top: var(--spacing-sm);
+        padding-bottom: 40px;
+    }
+    
+    .proceeding-container li,
+    .audit-container li {
+        min-width: 180px;
+        max-width: 98%;
+        padding: var(--spacing-xs);
+        margin: var(--spacing-xs) auto;
+        display: block;
+        font-size: var(--font-xs);
+    }
+    
+    .context {
+        margin-top: 7%;
+    }
+    
+    .contextTitle {
+        font-size: var(--font-sm);
+    }
+    
+    .announcement-table {
+        width: 100%;
+        font-size: var(--font-xs);
+    }
+    
+    .pagination-button {
+        padding: var(--spacing-xs);
+        font-size: var(--font-xs);
+    }
+    
+    .bylaw-button {
+        padding: var(--spacing-xs) var(--spacing-sm);
         font-size: var(--font-xs);
     }
 } 
