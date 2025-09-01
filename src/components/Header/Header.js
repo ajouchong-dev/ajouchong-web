@@ -68,6 +68,7 @@ const UPPER_LINKS = [
 ];
 
 const UPPER_LINKS_RIGHT = [
+    { label: 'LinkHub', path: '/linkHub' },
     { label: '사이트맵', path: '/sitemap' },
     { label: 'profile', path: '/profile' }
 ];
