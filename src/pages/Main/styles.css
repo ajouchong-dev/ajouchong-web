@@ -255,59 +255,189 @@
     display: block;
 }
 
-/* 반응형 디자인 */
-@media (max-width: 768px) {
-    .slider {
-        display: flex;
-        flex-direction: column-reverse;
-        align-items: center;
-    }
-
-    .overlay {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        order: 1;
-        margin-bottom: var(--spacing-sm);
-    }
-
-    .title2 {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        order: 2;
-        font-size: 3rem;
-    }
-
+/* 태블릿 반응형 디자인 */
+@media (max-width: 1024px) {
     .notices-container {
-        width: 95%;
-        flex-direction: column;
+        width: 90%;
+        justify-content: center;
+        gap: var(--spacing-lg);
     }
-
+    
     .notice-card {
-        width: 100%;
-        margin-bottom: var(--spacing-lg);
+        width: 45%;
+        min-width: 280px;
     }
-
-    .card-wrapper {
-        padding: var(--spacing-lg) var(--spacing-lg) var(--spacing-xl) var(--spacing-lg);
+    
+    .division-line.visible {
+        width: 400px;
     }
 }
 
-@media (max-width: 480px) {
-    .title2 {
-        font-size: 2rem;
+/* 모바일 반응형 디자인 */
+@media (max-width: 768px) {
+    .slider {
+        height: 60vh;
     }
-
+    
     .overlay {
+        bottom: 60%;
         font-size: 1.2rem;
+        padding: 0 var(--spacing-md);
     }
-
+    
+    .title2 {
+        bottom: 40%;
+        font-size: 2.5rem;
+        padding: 0 var(--spacing-md);
+    }
+    
+    .notices-container {
+        width: 95%;
+        flex-direction: column;
+        align-items: center;
+        gap: var(--spacing-md);
+    }
+    
+    .notice-card {
+        width: 100%;
+        max-width: 400px;
+        height: auto;
+        min-height: 320px;
+        margin-bottom: var(--spacing-md);
+    }
+    
+    .card-wrapper {
+        padding: var(--spacing-md);
+    }
+    
     .card-title p {
         font-size: 1.5rem;
+        margin-bottom: var(--spacing-md);
     }
+    
+    .card-title span {
+        font-size: 0.9rem;
+        text-align: center;
+        padding: 0 var(--spacing-sm);
+    }
+    
+    .division-line.visible {
+        width: 80%;
+        max-width: 300px;
+    }
+    
+    .more-link {
+        font-size: 0.9rem;
+    }
+    
+    .notice-card h3 {
+        font-size: 1.1rem;
+        padding: var(--spacing-sm);
+    }
+    
+    .notice-card p {
+        font-size: 0.9rem;
+        padding: var(--spacing-sm);
+        line-height: 1.4;
+    }
+    
+    .notice-card span {
+        font-size: 0.8rem;
+        padding: 0 var(--spacing-sm);
+    }
+}
 
+/* 작은 모바일 반응형 디자인 */
+@media (max-width: 480px) {
+    .slider {
+        height: 50vh;
+    }
+    
+    .overlay {
+        bottom: 65%;
+        font-size: 1rem;
+        padding: 0 var(--spacing-sm);
+    }
+    
+    .title2 {
+        bottom: 35%;
+        font-size: 2rem;
+        padding: 0 var(--spacing-sm);
+    }
+    
+    .notices-container {
+        width: 98%;
+        margin: var(--spacing-md) auto;
+    }
+    
     .notice-card {
-        height: 300px;
+        max-width: 100%;
+        min-height: 280px;
+        margin-bottom: var(--spacing-sm);
+    }
+    
+    .card-wrapper {
+        padding: var(--spacing-sm);
+    }
+    
+    .card-title p {
+        font-size: 1.3rem;
+        margin-bottom: var(--spacing-sm);
+    }
+    
+    .card-title span {
+        font-size: 0.8rem;
+        padding: 0 var(--spacing-xs);
+    }
+    
+    .division-line.visible {
+        width: 90%;
+        max-width: 250px;
+    }
+    
+    .notice-image {
+        height: 120px;
+    }
+    
+    .notice-card h3 {
+        font-size: 1rem;
+        padding: var(--spacing-xs);
+    }
+    
+    .notice-card p {
+        font-size: 0.8rem;
+        padding: var(--spacing-xs);
+    }
+    
+    .notice-card span {
+        font-size: 0.7rem;
+        padding: 0 var(--spacing-xs);
+    }
+}
+
+/* 매우 작은 화면 */
+@media (max-width: 360px) {
+    .slider {
+        height: 45vh;
+    }
+    
+    .overlay {
+        font-size: 0.9rem;
+    }
+    
+    .title2 {
+        font-size: 1.8rem;
+    }
+    
+    .card-title p {
+        font-size: 1.2rem;
+    }
+    
+    .notice-card {
+        min-height: 250px;
+    }
+    
+    .notice-image {
+        height: 100px;
     }
 }
