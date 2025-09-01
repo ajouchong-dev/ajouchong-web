@@ -64,7 +64,7 @@ const LinkHub = () => {
                         className="link-card"
                         onClick={() => handleLinkClick(link.link)}
                     >
-                        <h3 className="link-title">{link.title}</h3>
+                        <span className="link-title">{link.title}</span>
                     </div>
                 ))}
             </div>
