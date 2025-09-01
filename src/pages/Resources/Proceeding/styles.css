@@ -1,1 +1,92 @@
 @import '../styles.css';
+
+/* 반응형 디자인 */
+@media screen and (max-width: 1024px) {
+    .proceeding-content {
+        max-width: 700px;
+        padding: var(--spacing-md);
+    }
+    
+    .proceeding-title {
+        font-size: var(--font-lg);
+        margin-bottom: var(--spacing-md);
+    }
+    
+    .proceeding-item {
+        padding: var(--spacing-sm);
+        margin-bottom: var(--spacing-sm);
+    }
+    
+    .proceeding-link {
+        font-size: var(--font-base);
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .proceeding-content {
+        max-width: 600px;
+        padding: var(--spacing-sm);
+    }
+    
+    .proceeding-title {
+        font-size: var(--font-base);
+        margin-bottom: var(--spacing-sm);
+    }
+    
+    .proceeding-item {
+        padding: var(--spacing-sm);
+        margin-bottom: var(--spacing-sm);
+    }
+    
+    .proceeding-link {
+        font-size: var(--font-sm);
+    }
+    
+    .proceeding-date {
+        font-size: var(--font-xs);
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .proceeding-content {
+        max-width: 100%;
+        padding: var(--spacing-xs);
+    }
+    
+    .proceeding-title {
+        font-size: var(--font-sm);
+        margin-bottom: var(--spacing-xs);
+    }
+    
+    .proceeding-item {
+        padding: var(--spacing-xs);
+        margin-bottom: var(--spacing-xs);
+    }
+    
+    .proceeding-link {
+        font-size: var(--font-xs);
+    }
+    
+    .proceeding-date {
+        font-size: var(--font-xs);
+        margin-top: var(--spacing-xs);
+    }
+}
+
+@media screen and (max-width: 360px) {
+    .proceeding-content {
+        padding: var(--spacing-xs);
+    }
+    
+    .proceeding-title {
+        font-size: var(--font-xs);
+    }
+    
+    .proceeding-item {
+        padding: var(--spacing-xs);
+    }
+    
+    .proceeding-link {
+        font-size: var(--font-xs);
+    }
+}
