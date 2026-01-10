@@ -81,7 +81,7 @@ const Main = () => {
                     ))}
                 </Slider>
                 <div className="overlay">
-                    <p>아주대학교 제44대 총학생회 아침</p>
+                    <p>아주대학교 총학생회 중앙비상대책위원회</p>
                 </div>
                 <div className="title2">
                     <p>AJOU UNIV.</p>
@@ -117,7 +117,7 @@ const Main = () => {
         <div className="card-wrapper">
             <div className="notices-container">
                 <div className="card-title">
-                    <p>아침 공지사항</p>
+                    <p>공지사항</p>
                     <span>다음 카드를 클릭하여 자세한 공지사항을 확인할 수 있습니다.</span>
                     <Link to="/news/notice" className="more-link">more &gt;</Link>
                     <div className="division-line" id="division-line"></div>

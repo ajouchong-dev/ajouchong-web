@@ -228,7 +228,7 @@ const Header = () => {
             <div className="lower">
                 <div className="logo">
                     <a href="/">
-                        <img src="/images/logos/achim_header.svg" alt="로고"/>
+                        <img src="/images/logos/ajouLogo_header.svg" alt="로고"/>
                     </a>
                 </div>
 

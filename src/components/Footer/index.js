@@ -42,7 +42,7 @@ const Footer = () => {
                 <div className="mainleft">
                     <div className="main_logo">
                         <span className="title">AJOU UNIV</span>
-                        <img src="/images/logos/achim_subLogo.svg" alt="로고" />
+                        <img src="/images/logos/ajouLogo.svg" alt="로고" />
                     </div>
                 </div>
                 <div className="mainright">

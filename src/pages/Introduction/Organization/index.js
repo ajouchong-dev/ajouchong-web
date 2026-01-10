@@ -316,7 +316,7 @@ const Organization = () => {
       <hr className="titleSeparator" />
 
       <div className="org-panel">
-        <div className="org-grid">
+        {/* <div className="org-grid">
           {allDivisions.map((division, index) => (
             <GroupBox
               key={index}
@@ -326,6 +326,12 @@ const Organization = () => {
               members={division.members}
             />
           ))}
+        </div> */}
+        <div className="organizationTextBox">
+            <div className="organizationText">
+              <p>중앙비상대책위원회 운영중입니다.</p>
+              <a href="/introduction/history" target="_blank" rel="noopener noreferrer">역대 학생회 소개 바로가기</a>
+            </div>
         </div>
       </div>
     </div>

@@ -32,6 +32,8 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    flex-wrap: wrap;
+    gap: var(--spacing-xs);
 }
 
 .upnav-menu ul,
@@ -41,6 +43,8 @@
     margin: 0;
     padding: 0;
     align-items: center;
+    flex-wrap: wrap;
+    gap: var(--spacing-xs);
 }
 
 .upnav-menu ul li,
@@ -50,6 +54,7 @@
     justify-content: center;
     padding: 0;
     margin: 0;
+    flex-shrink: 0;
 }
 
 .upnav-menu a,
@@ -57,6 +62,9 @@
     text-decoration: none;
     color: var(--text-light);
     transition: var(--transition-normal);
+    font-size: var(--font-sm);
+    white-space: nowrap;
+    line-height: 1.5;
 }
 
 .upnav-menu a:hover,
@@ -82,15 +90,24 @@
     width: 100%;
     padding: var(--spacing-xl) var(--spacing-lg);
     position: relative;
+    box-sizing: border-box;
+    min-height: 80px;
 }
 
 .logo {
     position: absolute;
     left: var(--spacing-xl);
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
 }
 
 .logo img {
     height: var(--logo-height);
+    width: auto;
+    max-width: 100%;
+    object-fit: contain;
+    display: block;
 }
 
 .nav-menu ul {
@@ -98,11 +115,14 @@
     display: flex;
     margin: 0;
     padding: 0;
+    flex-wrap: nowrap;
+    align-items: center;
 }
 
 .nav-menu li {
     margin-right: var(--spacing-xl);
     position: relative;
+    flex-shrink: 0;
 }
 
 .nav-menu li:last-child {
@@ -126,6 +146,9 @@
     cursor: pointer;
     position: relative;
     transition: var(--transition-normal);
+    white-space: nowrap;
+    font-size: var(--font-base);
+    line-height: 1.5;
 }
 
 .navtitle::after {
@@ -221,6 +244,10 @@
     -moz-osx-font-smoothing: grayscale;
     text-align: center;
     transition: var(--transition-normal);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: 1.5;
 }
 
 .dropdown-container li:hover a {
@@ -424,18 +451,52 @@
     color: var(--accent-color);
 }
 
+/* 중간 크기 화면 반응형 디자인 */
+@media (max-width: 1200px) {
+    .nav-menu li {
+        margin-right: var(--spacing-md);
+    }
+    
+    .navtitle {
+        font-size: calc(var(--font-base) * 0.98);
+    }
+}
+
 /* 태블릿 반응형 디자인 */
 @media (max-width: 1024px) {
     .lower {
         padding: var(--spacing-lg) var(--spacing-md);
+        min-height: 75px;
+    }
+    
+    .logo {
+        left: var(--spacing-md);
     }
     
     .logo img {
         height: calc(var(--logo-height) * 0.9);
+        width: auto;
+        max-width: 100%;
+        object-fit: contain;
     }
     
     .nav-menu li {
         margin-right: var(--spacing-lg);
+    }
+    
+    .navtitle {
+        font-size: calc(var(--font-base) * 0.95);
+    }
+    
+    .upnav-menu a,
+    .upnav-menu2 a {
+        font-size: calc(var(--font-sm) * 0.95);
+    }
+    
+    .button {
+        width: 120px;
+        height: 32px;
+        right: var(--spacing-md);
     }
 }
 
@@ -475,6 +536,9 @@
     .logo img {
         height: 40px;
         width: auto;
+        max-width: 120px;
+        object-fit: contain;
+        display: block;
     }
 
     .button {
@@ -514,6 +578,9 @@
         margin: 0;
         width: 100%;
         box-sizing: border-box;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+        line-height: 1.5;
     }
     
     .mobile-menu .dropdown {
@@ -533,6 +600,15 @@
         margin: 0;
         width: 100%;
         box-sizing: border-box;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+        line-height: 1.5;
+    }
+    
+    .mobile-menu .dropdown li a {
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+        white-space: normal;
     }
     
     .other-menu,
@@ -553,6 +629,15 @@
         gap: var(--spacing-xs);
         text-align: center;
         width: 100%;
+        box-sizing: border-box;
+    }
+    
+    .other-menu a,
+    .other-menu2 a {
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+        white-space: normal;
+        display: inline-block;
     }
     
     .other-menu li,
@@ -619,6 +704,9 @@
     
     .logo img {
         height: 35px;
+        width: auto;
+        max-width: 100px;
+        object-fit: contain;
     }
     
     .hamburger-menu {
@@ -637,6 +725,9 @@
         margin: 0;
         width: 100%;
         box-sizing: border-box;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+        line-height: 1.4;
     }
     
     .mobile-menu .dropdown li {
@@ -646,6 +737,13 @@
         margin: 0;
         width: 100%;
         box-sizing: border-box;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+        line-height: 1.4;
+    }
+    
+    .mobile-menu .dropdown li a {
+        white-space: normal;
     }
     
     .breadcrumb {
@@ -683,6 +781,9 @@
     
     .logo img {
         height: 30px;
+        width: auto;
+        max-width: 80px;
+        object-fit: contain;
     }
     
     .mobile-menu {
