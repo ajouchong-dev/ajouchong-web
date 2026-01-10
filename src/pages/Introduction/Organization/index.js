@@ -25,6 +25,7 @@ const Avatar = ({ src, alt }) => {
 };
 
 /** 하나의 박스 (회장단 or 각 국) */
+// eslint-disable-next-line no-unused-vars
 function GroupBox({ title, roles = [], desc, members }) {
   const isThreeRoles = roles.length === 3;
   const hasManyMembers = members && members.length >= 4;
@@ -99,6 +100,7 @@ function GroupBox({ title, roles = [], desc, members }) {
 
 const Organization = () => {
 
+  // eslint-disable-next-line no-unused-vars
   const allDivisions = [
     {
       title: "회장단",
