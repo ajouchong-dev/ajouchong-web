@@ -89,7 +89,7 @@
     max-width: 50%;
     border: none;
     height: 2px;
-    background-color: #a7c898;
+    background-color: var(--secondary-color);
     margin-top: 15px;
 }
 
