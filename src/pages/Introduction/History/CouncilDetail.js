@@ -3,6 +3,13 @@ import { useParams, useNavigate } from 'react-router-dom';
 import './style.css';
 
 const councilData = {
+    "2025": {
+        title: "2025년 제44대 총학생회 '아침'",
+        promise: "https://ajouchong-file.s3.ap-northeast-2.amazonaws.com/promise/promise_achim.pdf",
+        ticket: "/images/history/ticket/ticket_achim.jpg",
+        photo: "/images/history/photo/photo_achim.jpeg",
+        organization: "/images/history/organization/organization_achim.jpg",
+    },
     "2024": {
         title: "2024년 제43대 총학생회 '아우름'",
         promise: "https://ajouchong-file.s3.ap-northeast-2.amazonaws.com/promise/promise_aurum.pdf",
