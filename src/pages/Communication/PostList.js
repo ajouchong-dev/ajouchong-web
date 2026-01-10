@@ -2,6 +2,10 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
+const apiClient = axios.create({
+    baseURL: process.env.REACT_APP_API_URL || 'https://api.ajouchong.com'
+});
+
 const POSTS_PER_PAGE = 9;
 
 const PostList = ({ 
@@ -24,7 +28,7 @@ const PostList = ({
 
     const fetchPosts = useCallback(async () => {
         try {
-            const response = await axios.get(apiEndpoint);
+            const response = await apiClient.get(apiEndpoint);
             if (response.data.code === 1) {
                 const fetchedPosts = response.data.data.map(formatPostData);
                 const sortedPosts = fetchedPosts.sort((a, b) =>
@@ -75,7 +79,7 @@ const PostList = ({
 
     const goToWritePage = async () => {
         try {
-            const response = await axios.get(`/api/login/auth/info`, {
+            const response = await apiClient.get(`/api/login/auth/info`, {
                 withCredentials: true,
             });
 

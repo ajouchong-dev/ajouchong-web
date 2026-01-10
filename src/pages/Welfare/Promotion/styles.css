@@ -19,3 +19,54 @@
     margin-top: var(--spacing-xl);
     background-color: var(--bg-primary);
 }
+
+/* 반응형 디자인 */
+@media screen and (max-width: 1024px) {
+    .promotion-container {
+        max-width: 1000px;
+        padding: var(--spacing-lg);
+    }
+    
+    .promotion-box {
+        max-width: 1000px;
+        height: 550px;
+        margin-top: var(--spacing-lg);
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .promotion-container {
+        max-width: 100%;
+        padding: var(--spacing-md);
+    }
+    
+    .promotion-box {
+        max-width: 95%;
+        height: 500px;
+        margin-top: var(--spacing-md);
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .promotion-container {
+        padding: var(--spacing-sm);
+    }
+    
+    .promotion-box {
+        max-width: 98%;
+        height: 400px;
+        margin-top: var(--spacing-sm);
+    }
+}
+
+@media screen and (max-width: 360px) {
+    .promotion-container {
+        padding: var(--spacing-xs);
+    }
+    
+    .promotion-box {
+        max-width: 100%;
+        height: 350px;
+        margin-top: var(--spacing-xs);
+    }
+}

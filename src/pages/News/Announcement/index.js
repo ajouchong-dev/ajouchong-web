@@ -3,6 +3,10 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import './styles.css';
 
+const apiClient = axios.create({
+    baseURL: process.env.REACT_APP_API_URL || 'https://api.ajouchong.com'
+});
+
 const POSTS_PER_PAGE = 9;
 
 const Announcement = () => {
@@ -20,7 +24,7 @@ const Announcement = () => {
 
     const fetchPosts = useCallback(async () => {
         try {
-            const response = await axios.get(`/api/notice`, {
+            const response = await apiClient.get(`/api/notice`, {
                 headers: { 'Content-Type': 'application/json' },
                 withCredentials: true,
             });

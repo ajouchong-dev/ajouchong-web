@@ -3,6 +3,10 @@ import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './styles.css';
 
+const apiClient = axios.create({
+    baseURL: process.env.REACT_APP_API_URL || 'https://api.ajouchong.com'
+});
+
 const QnaDetail = () => {
     const { postId } = useParams();
     const [postDetails, setPostDetails] = useState(null);
@@ -14,7 +18,7 @@ const QnaDetail = () => {
     const fetchPostDetails = useCallback(async () => {
         setLoading(true);
         try {
-            const response = await axios.get(`/api/qna/${postId}`, {
+            const response = await apiClient.get(`/api/qna/${postId}`, {
                 withCredentials: true
             });
 
@@ -46,7 +50,7 @@ const QnaDetail = () => {
         setIsLiking(true);
 
         try {
-            const response = await axios.post(
+            const response = await apiClient.post(
                 `/api/qna/${postId}/like`,
                 {},
                 { withCredentials: true }

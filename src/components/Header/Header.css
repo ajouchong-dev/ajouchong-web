@@ -32,6 +32,8 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    flex-wrap: wrap;
+    gap: var(--spacing-xs);
 }
 
 .upnav-menu ul,
@@ -41,6 +43,8 @@
     margin: 0;
     padding: 0;
     align-items: center;
+    flex-wrap: wrap;
+    gap: var(--spacing-xs);
 }
 
 .upnav-menu ul li,
@@ -50,6 +54,7 @@
     justify-content: center;
     padding: 0;
     margin: 0;
+    flex-shrink: 0;
 }
 
 .upnav-menu a,
@@ -57,6 +62,9 @@
     text-decoration: none;
     color: var(--text-light);
     transition: var(--transition-normal);
+    font-size: var(--font-sm);
+    white-space: nowrap;
+    line-height: 1.5;
 }
 
 .upnav-menu a:hover,
@@ -82,15 +90,24 @@
     width: 100%;
     padding: var(--spacing-xl) var(--spacing-lg);
     position: relative;
+    box-sizing: border-box;
+    min-height: 80px;
 }
 
 .logo {
     position: absolute;
     left: var(--spacing-xl);
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
 }
 
 .logo img {
     height: var(--logo-height);
+    width: auto;
+    max-width: 100%;
+    object-fit: contain;
+    display: block;
 }
 
 .nav-menu ul {
@@ -98,11 +115,14 @@
     display: flex;
     margin: 0;
     padding: 0;
+    flex-wrap: nowrap;
+    align-items: center;
 }
 
 .nav-menu li {
     margin-right: var(--spacing-xl);
     position: relative;
+    flex-shrink: 0;
 }
 
 .nav-menu li:last-child {
@@ -126,6 +146,9 @@
     cursor: pointer;
     position: relative;
     transition: var(--transition-normal);
+    white-space: nowrap;
+    font-size: var(--font-base);
+    line-height: 1.5;
 }
 
 .navtitle::after {
@@ -221,6 +244,10 @@
     -moz-osx-font-smoothing: grayscale;
     text-align: center;
     transition: var(--transition-normal);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: 1.5;
 }
 
 .dropdown-container li:hover a {
@@ -424,6 +451,56 @@
     color: var(--accent-color);
 }
 
+/* 중간 크기 화면 반응형 디자인 */
+@media (max-width: 1200px) {
+    .nav-menu li {
+        margin-right: var(--spacing-md);
+    }
+    
+    .navtitle {
+        font-size: calc(var(--font-base) * 0.98);
+    }
+}
+
+/* 태블릿 반응형 디자인 */
+@media (max-width: 1024px) {
+    .lower {
+        padding: var(--spacing-lg) var(--spacing-md);
+        min-height: 75px;
+    }
+    
+    .logo {
+        left: var(--spacing-md);
+    }
+    
+    .logo img {
+        height: calc(var(--logo-height) * 0.9);
+        width: auto;
+        max-width: 100%;
+        object-fit: contain;
+    }
+    
+    .nav-menu li {
+        margin-right: var(--spacing-lg);
+    }
+    
+    .navtitle {
+        font-size: calc(var(--font-base) * 0.95);
+    }
+    
+    .upnav-menu a,
+    .upnav-menu2 a {
+        font-size: calc(var(--font-sm) * 0.95);
+    }
+    
+    .button {
+        width: 120px;
+        height: 32px;
+        right: var(--spacing-md);
+    }
+}
+
+/* 모바일 반응형 디자인 */
 @media (max-width: 768px) {
     .nav-menu {
         display: none;
@@ -434,11 +511,12 @@
     }
 
     .header {
-        margin: -15px 0;
+        margin: 0;
     }
 
     .hamburger-menu {
         display: block;
+        right: var(--spacing-md);
     }
 
     .lower {
@@ -446,12 +524,21 @@
         flex-direction: row;
         justify-content: space-between;
         align-items: center;
+        padding: var(--spacing-md);
+        min-height: 60px;
     }
 
     .logo {
         position: static;
-        margin-bottom: var(--spacing-xs);
-        margin-left: var(--spacing-sm);
+        margin: 0;
+    }
+
+    .logo img {
+        height: 40px;
+        width: auto;
+        max-width: 120px;
+        object-fit: contain;
+        display: block;
     }
 
     .button {
@@ -461,10 +548,265 @@
     .breadcrumb {
         padding: var(--spacing-sm) var(--spacing-lg);
         font-size: var(--font-xs);
+        margin-top: 60px;
     }
 
     .breadcrumb li::after {
         margin-left: var(--spacing-xs);
+        font-size: 10px;
+    }
+    
+    .mobile-menu {
+        top: 60px;
+        padding: var(--spacing-lg) 0;
+        max-height: calc(100vh - 60px);
+        overflow-y: auto;
+    }
+    
+    .mobile-menu ul {
+        padding: var(--spacing-md) 0;
+        text-align: center;
+        width: 100%;
+    }
+    
+    .mobile-menu li {
+        padding: var(--spacing-md) var(--spacing-lg);
+        border-bottom: 1px solid var(--border-light);
+        font-size: var(--font-base);
+        font-weight: 500;
+        text-align: center;
+        margin: 0;
+        width: 100%;
+        box-sizing: border-box;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+        line-height: 1.5;
+    }
+    
+    .mobile-menu .dropdown {
+        padding: 0 var(--spacing-md);
+        margin-top: var(--spacing-xs);
+        text-align: center;
+        width: 100%;
+        box-sizing: border-box;
+    }
+    
+    .mobile-menu .dropdown li {
+        padding: var(--spacing-sm) var(--spacing-md);
+        font-size: var(--font-sm);
+        border-bottom: none;
+        text-align: center;
+        display: block;
+        margin: 0;
+        width: 100%;
+        box-sizing: border-box;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+        line-height: 1.5;
+    }
+    
+    .mobile-menu .dropdown li a {
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+        white-space: normal;
+    }
+    
+    .other-menu,
+    .other-menu2 {
+        padding: var(--spacing-md) 0;
+        border-top: 1px solid var(--border-light);
+        margin-top: var(--spacing-md);
+    }
+    
+    .other-menu {
+        margin-top: var(--spacing-md);
+    }
+    
+    .other-menu ul,
+    .other-menu2 ul {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: var(--spacing-xs);
+        text-align: center;
+        width: 100%;
+        box-sizing: border-box;
+    }
+    
+    .other-menu a,
+    .other-menu2 a {
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+        white-space: normal;
+        display: inline-block;
+    }
+    
+    .other-menu li,
+    .other-menu2 li {
+        padding: var(--spacing-xs);
+        text-align: center;
+        display: block;
+    }
+    
+    .mobile-login-section {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: var(--spacing-lg) var(--spacing-md);
+        border-top: 1px solid var(--border-light);
+        border-bottom: 1px solid var(--border-light);
+        margin: var(--spacing-md) 0;
+    }
+    
+    .mobile-login-section .button {
+        display: flex;
+        position: static;
+        width: 120px;
+        height: 40px;
+        margin: 0;
+        background-color: var(--button-primary);
+        border-radius: var(--radius-normal);
+    }
+    
+    .mobile-login-section .button a,
+    .mobile-login-section .auth-button {
+        width: 100%;
+        height: 100%;
+        color: var(--button-primary-text);
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: var(--font-sm);
+        border: none;
+        background: none;
+        cursor: pointer;
+        border-radius: var(--radius-normal);
+        transition: var(--transition-normal);
+    }
+    
+    .mobile-login-section .button:hover {
+        background-color: var(--button-hover);
+    }
+    
+    .mobile-login-section .button:hover a,
+    .mobile-login-section .auth-button:hover {
+        background-color: var(--button-hover);
+        color: var(--button-hover-text);
+    }
+}
+
+/* 작은 모바일 반응형 디자인 */
+@media (max-width: 480px) {
+    .lower {
+        padding: var(--spacing-sm);
+        min-height: 50px;
+    }
+    
+    .logo img {
+        height: 35px;
+        width: auto;
+        max-width: 100px;
+        object-fit: contain;
+    }
+    
+    .hamburger-menu {
+        right: var(--spacing-sm);
+    }
+    
+    .mobile-menu {
+        top: 50px;
+        max-height: calc(100vh - 50px);
+    }
+    
+    .mobile-menu li {
+        padding: var(--spacing-sm) var(--spacing-md);
+        font-size: var(--font-sm);
+        text-align: center;
+        margin: 0;
+        width: 100%;
+        box-sizing: border-box;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+        line-height: 1.4;
+    }
+    
+    .mobile-menu .dropdown li {
+        font-size: var(--font-xs);
+        text-align: center;
+        padding: var(--spacing-xs) var(--spacing-md);
+        margin: 0;
+        width: 100%;
+        box-sizing: border-box;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+        line-height: 1.4;
+    }
+    
+    .mobile-menu .dropdown li a {
+        white-space: normal;
+    }
+    
+    .breadcrumb {
+        margin-top: 50px;
+        padding: var(--spacing-xs) var(--spacing-sm);
+    }
+    
+    .other-menu ul,
+    .other-menu2 ul {
+        font-size: var(--font-xs);
+        text-align: center;
+        width: 100%;
+    }
+    
+    .mobile-login-section {
+        padding: var(--spacing-md) var(--spacing-sm);
+    }
+    
+    .mobile-login-section .button {
+        width: 100px;
+        height: 35px;
+    }
+    
+    .mobile-login-section .button a,
+    .mobile-login-section .auth-button {
+        font-size: var(--font-xs);
+    }
+}
+
+/* 매우 작은 화면 */
+@media (max-width: 360px) {
+    .lower {
+        min-height: 45px;
+    }
+    
+    .logo img {
+        height: 30px;
+        width: auto;
+        max-width: 80px;
+        object-fit: contain;
+    }
+    
+    .mobile-menu {
+        top: 45px;
+        max-height: calc(100vh - 45px);
+        text-align: center;
+    }
+    
+    .breadcrumb {
+        margin-top: 45px;
+    }
+    
+    .mobile-login-section {
+        padding: var(--spacing-sm);
+    }
+    
+    .mobile-login-section .button {
+        width: 90px;
+        height: 32px;
+    }
+    
+    .mobile-login-section .button a,
+    .mobile-login-section .auth-button {
         font-size: 10px;
     }
 }

@@ -68,6 +68,7 @@ const UPPER_LINKS = [
 ];
 
 const UPPER_LINKS_RIGHT = [
+    { label: 'LinkHub', path: '/linkHub' },
     { label: '사이트맵', path: '/sitemap' },
     { label: 'profile', path: '/profile' }
 ];
@@ -179,6 +180,10 @@ const Header = () => {
                 ))}
             </ul>
             
+            <div className="mobile-login-section">
+                <Login />
+            </div>
+            
             <nav className="other-menu">
                 <ul className="flex justify-center">
                     {UPPER_LINKS.map((link, index) => (
@@ -223,7 +228,7 @@ const Header = () => {
             <div className="lower">
                 <div className="logo">
                     <a href="/">
-                        <img src="/images/logos/achim_header.svg" alt="로고"/>
+                        <img src="/images/logos/ajouLogo_header.svg" alt="로고"/>
                     </a>
                 </div>
 

@@ -10,7 +10,7 @@ const AJOU_COORDINATES = {
 
 const MAP_INFO = [
     { label: '주소', content: '경기 수원시 원천동 아주대학교 신학생회관 208호' },
-    { label: '연락처', content: '총학생회장 이재건 010-9607-2128' },
+    { label: '연락처', content: '총학생회실 031-219-2870' },
     { label: '재실 시간', content: '10:00 ~ 16:30' }
 ];
 

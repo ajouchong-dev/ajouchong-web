@@ -3,6 +3,11 @@ import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './styles.css';
 
+// API 전용 axios 인스턴스 생성
+const apiClient = axios.create({
+    baseURL: process.env.REACT_APP_API_URL || 'https://api.ajouchong.com'
+});
+
 const AnnouncementDetail = () => {
     const { id } = useParams();
     const [postDetails, setPostDetails] = useState(null);
@@ -13,7 +18,7 @@ const AnnouncementDetail = () => {
 
     const fetchPostDetails = useCallback(async () => {
         try {
-            const response = await axios.get(`/api/notice/${id}`, {
+            const response = await apiClient.get(`/api/notice/${id}`, {
                 withCredentials: true
             });
 
@@ -42,7 +47,7 @@ const AnnouncementDetail = () => {
         setIsLiking(true);
 
         try {
-            const response = await axios.post(
+            const response = await apiClient.post(
                 `/api/notice/${id}/like`,
                 {},
                 { withCredentials: true }
@@ -85,6 +90,16 @@ const AnnouncementDetail = () => {
 
     const formatDate = (dateString) => {
         return new Date(dateString).toLocaleString();
+    };
+
+    const formatContent = (content) => {
+        if (!content) return '';
+        return content.split('\n').map((line, index) => (
+            <React.Fragment key={index}>
+                {line}
+                {index < content.split('\n').length - 1 && <br />}
+            </React.Fragment>
+        ));
     };
 
     const renderMetadata = () => (
@@ -152,7 +167,7 @@ const AnnouncementDetail = () => {
             <hr className="titleSeparator"/>
             {renderMetadata()}
 
-            <div className="post-content">{postDetails.npContent}</div>
+            <div className="post-content">{formatContent(postDetails.npContent)}</div>
             <div className="post-images">
                 {renderImageGallery()}
             </div>

@@ -59,14 +59,25 @@
 }
 
 .profile-container {
-    max-width: 500px;
     margin: 50px auto;
-    padding: 20px;
-    background-color: #f9f9f9;
-    border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 30px; 
     text-align: center;
     font-family: "Arial", sans-serif;
+    min-height: calc(100vh - 300px); 
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.profile-content {
+    width: 100%;
+    max-width: 400px;
+    background-color: var(--bg-primary);
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
+    padding: 30px; 
+    border: 1px solid var(--border-light); 
 }
 
 .profile-container h1 {
@@ -78,7 +89,7 @@
     max-width: 50%;
     border: none;
     height: 2px;
-    background-color: #a7c898;
+    background-color: var(--secondary-color);
     margin-top: 15px;
 }
 
@@ -92,10 +103,30 @@
     font-size: 18px;
     color: #888;
     font-weight: bold;
-    margin-bottom: 40px;
+    margin-bottom: 32px;
 }
 
 /* 반응형 디자인 */
+@media screen and (max-width: 1024px) {
+    .profile-container {
+        margin: 40px auto;
+        padding: 25px;
+    }
+    
+    .profile-content {
+        max-width: 350px;
+        padding: 25px;
+    }
+    
+    .profile-container h1 {
+        font-size: 23px;
+    }
+    
+    .titleSeparator {
+        max-width: 60%;
+    }
+}
+
 @media screen and (max-width: 768px) {
     .login-container {
         padding: var(--spacing-xs);
@@ -115,6 +146,31 @@
     .profile-container {
         margin: 30px auto;
         padding: 15px;
+        min-height: calc(100vh - 250px);
+    }
+    
+    .profile-content {
+        max-width: 320px;
+        padding: 20px;
+    }
+    
+    .profile-container h1 {
+        font-size: 22px;
+    }
+    
+    .titleSeparator {
+        max-width: 70%;
+        margin-top: 12px;
+    }
+    
+    .profile-info {
+        font-size: 15px;
+        margin: 6px 0;
+    }
+    
+    .loading-text {
+        font-size: 16px;
+        margin-bottom: 25px;
     }
 }
 
@@ -133,9 +189,69 @@
     .profile-container {
         margin: 20px auto;
         padding: 10px;
+        min-height: calc(100vh - 200px);
+    }
+    
+    .profile-content {
+        max-width: 280px;
+        padding: 15px;
     }
     
     .profile-container h1 {
         font-size: 20px;
+    }
+    
+    .titleSeparator {
+        max-width: 80%;
+        margin-top: 10px;
+    }
+    
+    .profile-info {
+        font-size: 14px;
+        margin: 5px 0;
+    }
+    
+    .loading-text {
+        font-size: 15px;
+        margin-bottom: 20px;
+    }
+}
+
+@media screen and (max-width: 360px) {
+    .login-container button.auth-button,
+    .auth-button {
+        width: 90px;
+        height: 28px;
+        font-size: var(--font-xs);
+    }
+    
+    .profile-container {
+        margin: 15px auto;
+        padding: 8px;
+        min-height: calc(100vh - 180px);
+    }
+    
+    .profile-content {
+        max-width: 250px;
+        padding: 12px;
+    }
+    
+    .profile-container h1 {
+        font-size: 18px;
+    }
+    
+    .titleSeparator {
+        max-width: 85%;
+        margin-top: 8px;
+    }
+    
+    .profile-info {
+        font-size: 13px;
+        margin: 4px 0;
+    }
+    
+    .loading-text {
+        font-size: 14px;
+        margin-bottom: 18px;
     }
 } 

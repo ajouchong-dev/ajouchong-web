@@ -52,11 +52,14 @@
 
 .post-box {
     width: 250px;
-    height: 350px;
+    height: 400px; 
     overflow: hidden;
     text-align: center;
     padding-bottom: var(--spacing-xl);
     transition: var(--transition-normal);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 .post-box:hover {
@@ -64,11 +67,13 @@
 }
 
 .post-image {
-    width: 100%;
-    height: 250px;
+    width: 90%;
+    height: 280px;
     object-fit: cover;
     border-radius: var(--radius-small);
     transition: var(--transition-normal);
+    display: block;
+    margin: 0 auto;
 }
 
 .post-image:hover {
@@ -79,20 +84,24 @@
     font-size: var(--font-base);
     font-weight: bold;
     color: var(--text-primary);
-    margin: var(--spacing-sm) 0;
+    margin: var(--spacing-md) 0 var(--spacing-sm) 0; 
     line-height: 1.4;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    max-height: 2.8em; 
+    overflow: visible; 
+    text-overflow: unset; 
+    display: block;
+    max-height: none;
+    text-align: center;
+    word-wrap: break-word;
+    word-break: break-all;
 }
 
 .post-date {
     color: var(--text-muted);
     font-size: var(--font-sm);
-    margin-bottom: var(--spacing-xl);
-    margin-top: 0;
+    margin-bottom: 0;
+    margin-top: auto; 
+    text-align: center;
+    padding-bottom: var(--spacing-sm);
 }
 
 .post-detail {
@@ -174,14 +183,62 @@
 }
 
 /* 반응형 디자인 */
+@media screen and (max-width: 1024px) {
+    .search-container {
+        margin-right: 10%;
+        margin-top: var(--spacing-lg);
+    }
+    
+    .search-input {
+        width: 250px;
+    }
+    
+    .posts-container {
+        width: 80%;
+        grid-template-columns: repeat(3, 1fr);
+        gap: var(--spacing-sm);
+        padding: var(--spacing-lg);
+    }
+    
+    .post-box {
+        width: 220px;
+        height: 380px;
+    }
+    
+    .post-image {
+        height: 260px;
+    }
+    
+    .post-title {
+        font-size: var(--font-sm);
+        margin: var(--spacing-sm) 0 var(--spacing-xs) 0;
+    }
+    
+    .post-detail {
+        max-width: 700px;
+        padding: var(--spacing-md);
+    }
+    
+    .post-detail .post-title {
+        font-size: var(--font-lg);
+    }
+}
+
 @media screen and (max-width: 768px) {
     .search-container {
         margin-right: 5%;
         justify-content: center;
+        margin-top: var(--spacing-md);
     }
     
     .search-input {
         width: 200px;
+        font-size: var(--font-sm);
+    }
+    
+    .search-button {
+        padding: var(--spacing-xs) var(--spacing-md);
+        font-size: var(--font-sm);
     }
     
     .posts-container {
@@ -194,23 +251,186 @@
     .post-box {
         width: 100%;
         height: 300px;
+        padding-bottom: var(--spacing-lg);
     }
     
     .post-image {
         height: 200px;
     }
     
+    .post-title {
+        font-size: var(--font-sm);
+        margin: var(--spacing-sm) 0 var(--spacing-xs) 0;
+    }
+    
+    .post-date {
+        font-size: var(--font-xs);
+    }
+    
     .post-detail {
         padding: var(--spacing-sm);
+        margin: var(--spacing-md) auto;
+    }
+    
+    .post-detail .post-title {
+        font-size: var(--font-base);
+        margin-bottom: var(--spacing-md);
+    }
+    
+    .post-images {
+        max-width: 500px;
+    }
+    
+    .default-image {
+        height: 200px;
     }
 }
 
 @media screen and (max-width: 480px) {
-    .posts-container {
-        grid-template-columns: 1fr;
+    .search-container {
+        margin-right: 2%;
+        margin-top: var(--spacing-sm);
+        flex-direction: column;
+        gap: var(--spacing-xs);
     }
     
     .search-input {
         width: 150px;
+        font-size: var(--font-sm);
+    }
+    
+    .search-button {
+        width: 100px;
+        padding: var(--spacing-xs) var(--spacing-sm);
+        font-size: var(--font-xs);
+    }
+    
+    .posts-container {
+        width: 98%;
+        grid-template-columns: 1fr;
+        gap: var(--spacing-xs);
+        padding: var(--spacing-xs);
+    }
+    
+    .post-box {
+        width: 100%;
+        height: 280px;
+        padding-bottom: var(--spacing-md);
+    }
+    
+    .post-image {
+        height: 180px;
+    }
+    
+    .post-title {
+        font-size: var(--font-xs);
+        margin: var(--spacing-xs) 0 var(--spacing-xs) 0;
+        line-height: 1.3;
+    }
+    
+    .post-date {
+        font-size: var(--font-xs);
+        padding-bottom: var(--spacing-xs);
+    }
+    
+    .post-detail {
+        padding: var(--spacing-xs);
+        margin: var(--spacing-sm) auto;
+    }
+    
+    .post-detail .post-title {
+        font-size: var(--font-sm);
+        margin-bottom: var(--spacing-sm);
+    }
+    
+    .post-images {
+        max-width: 400px;
+    }
+    
+    .default-image {
+        height: 180px;
+    }
+    
+    .prev-btn,
+    .next-btn {
+        padding: var(--spacing-xs);
+        font-size: var(--font-sm);
+    }
+    
+    .no-results {
+        font-size: var(--font-base);
+        margin: var(--spacing-lg) 0;
+    }
+}
+
+@media screen and (max-width: 360px) {
+    .search-container {
+        margin-right: 0;
+        margin-top: var(--spacing-xs);
+        margin-bottom: var(--spacing-xs);
+    }
+    
+    .search-input {
+        width: 120px;
+        font-size: var(--font-xs);
+        padding: var(--spacing-xs);
+    }
+    
+    .search-button {
+        width: 80px;
+        padding: var(--spacing-xs);
+        font-size: var(--font-xs);
+    }
+    
+    .posts-container {
+        width: 100%;
+        padding: var(--spacing-xs);
+    }
+    
+    .post-box {
+        height: 260px;
+        padding-bottom: var(--spacing-sm);
+    }
+    
+    .post-image {
+        height: 160px;
+    }
+    
+    .post-title {
+        font-size: var(--font-xs);
+        line-height: 1.2;
+    }
+    
+    .post-date {
+        font-size: var(--font-xs);
+    }
+    
+    .post-detail {
+        padding: var(--spacing-xs);
+        margin: var(--spacing-xs) auto;
+    }
+    
+    .post-detail .post-title {
+        font-size: var(--font-xs);
+        margin-bottom: var(--spacing-xs);
+    }
+    
+    .post-images {
+        max-width: 350px;
+    }
+    
+    .default-image {
+        height: 160px;
+    }
+    
+    .prev-btn,
+    .next-btn {
+        padding: var(--spacing-xs);
+        font-size: var(--font-xs);
+    }
+    
+    .no-results {
+        font-size: var(--font-sm);
+        margin: var(--spacing-md) 0;
     }
 } 
