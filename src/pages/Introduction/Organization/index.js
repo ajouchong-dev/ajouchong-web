@@ -318,7 +318,7 @@ const Organization = () => {
       <hr className="titleSeparator" />
 
       <div className="org-panel">
-        {/* <div className="org-grid">
+        <div className="org-grid">
           {allDivisions.map((division, index) => (
             <GroupBox
               key={index}
@@ -328,7 +328,7 @@ const Organization = () => {
               members={division.members}
             />
           ))}
-        </div> */}
+        </div>
         <div className="organizationTextBox">
             <div className="organizationText">
               <p>제45대 총학생회 AU:SUM 조직도 임시 반영 중입니다.</p>
