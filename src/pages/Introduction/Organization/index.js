@@ -331,7 +331,8 @@ const Organization = () => {
         </div> */}
         <div className="organizationTextBox">
             <div className="organizationText">
-              <p>중앙비상대책위원회 운영중입니다.</p>
+              <p>제45대 총학생회 AU:SUM 조직도 임시 반영 중입니다.</p>
+              <p>세부 직책 및 국원 정보는 추후 업데이트됩니다.</p>
               <a href="/introduction/history" target="_blank" rel="noopener noreferrer">역대 학생회 소개 바로가기</a>
             </div>
         </div>

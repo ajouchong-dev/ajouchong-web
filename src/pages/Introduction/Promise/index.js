@@ -13,7 +13,8 @@ const PromiseComponent = () => {
             /> */}
             <div className="promiseTextBox">
                 <div className="promiseText">
-                    <p>중앙비상대책위원회 운영으로 공약이 존재하지 않습니다.</p>
+                    <p>제45대 총학생회 AU:SUM 공약은 현재 임시 반영 상태입니다.</p>
+                    <p>정식 공약집과 세부 이행 계획은 추후 업데이트됩니다.</p>
                     <a href="/introduction/history" target="_blank" rel="noopener noreferrer">역대 학생회 소개 바로가기</a>
                 </div>
             </div>

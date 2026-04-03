@@ -81,7 +81,7 @@ const Main = () => {
                     ))}
                 </Slider>
                 <div className="overlay">
-                    <p>아주대학교 총학생회 중앙비상대책위원회</p>
+                    <p>아주대학교 제45대 총학생회 AU:SUM (임시)</p>
                 </div>
                 <div className="title2">
                     <p>AJOU UNIV.</p>
