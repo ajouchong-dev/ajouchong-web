@@ -59,9 +59,15 @@ export const AuthProvider = ({ children }) => {
             
             const { data } = backendData;
             const jwtToken = data.jwtToken;
+            const backendMember = data.member;
 
             if (jwtToken) {
-                login(jwtToken, userInfo);
+                const loginUser = {
+                    name: backendMember?.name || userInfo?.name,
+                    email: backendMember?.email || userInfo?.email,
+                    role: backendMember?.role || null,
+                };
+                login(jwtToken, loginUser);
                 if (navigate) navigate("/profile");
             } else {
                 console.error("JWT가 존재하지 않습니다.");

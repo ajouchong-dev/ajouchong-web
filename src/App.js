@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import { AuthProvider } from './contexts/AuthContext';
+import ProtectedRoute from './components/ProtectedRoute';
 import './styles/variables.css';
 import './styles/utilities.css';
 import './styles/common.css';
@@ -37,6 +38,7 @@ import Promotion from './pages/Welfare/Promotion';
 import Rental from './pages/Welfare/Rental';
 
 import Profile from './pages/Auth/Profile';
+import Admin from './pages/Admin';
 import LinkHub from './pages/LinkHub';
 
 import Sitemap from './pages/Utility/Sitemap';
@@ -111,6 +113,14 @@ const Content = () => {
 
         {/* Etc */}
         <Route path="/profile" element={<Profile />} />
+        <Route
+          path="/admin"
+          element={
+            <ProtectedRoute requiredRole="ADMIN">
+              <Admin />
+            </ProtectedRoute>
+          }
+        />
         <Route path="/linkHub" element={<LinkHub />} />
         <Route path="/sitemap" element={<Sitemap />} />
         <Route path="/policy/termsofservice" element={<Termsofservice />} />

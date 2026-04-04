@@ -131,6 +131,18 @@ const Main = () => {
         </div>
     );
 
+    const renderMobileRentalShortcut = () => (
+        <section className="mobile-rental-shortcut">
+            <div className="mobile-rental-inner">
+                <div>
+                    <h3>대여사업 바로가기</h3>
+                    <p>돗자리, 테이블, 의자 등 대여 가능 물품을 지금 확인해보세요.</p>
+                </div>
+                <Link to="/welfare/rental" className="mobile-rental-link">지금 보러가기</Link>
+            </div>
+        </section>
+    );
+
     useEffect(() => {
         const elements = document.querySelectorAll('.more-link, .division-line, .card-title');
 
@@ -158,6 +170,7 @@ const Main = () => {
     return (
         <div className="root">
             {renderSlider()}
+            {renderMobileRentalShortcut()}
             {renderNoticesSection()}
         </div>
     );
