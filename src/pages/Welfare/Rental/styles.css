@@ -42,9 +42,91 @@
     background-color: var(--bg-primary);
 }
 
+.rental-status-wrap {
+    width: 100%;
+    max-width: 980px;
+    margin-top: var(--spacing-xl);
+}
+
+.rental-notice-box {
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-normal);
+    background-color: var(--bg-primary);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+    overflow: hidden;
+}
+
+.rental-status-title {
+    text-align: left;
+    font-size: var(--font-lg);
+    font-weight: var(--font-weight-bold);
+    color: var(--text-primary);
+    margin: 0;
+    padding: var(--spacing-md) var(--spacing-lg);
+    border-bottom: 1px solid var(--border-light);
+}
+
+.rental-notice-content {
+    padding: var(--spacing-xl) var(--spacing-lg);
+    line-height: 1.9;
+    font-size: var(--font-base);
+    color: var(--text-primary);
+}
+
+.rental-notice-content p {
+    margin: 0 0 var(--spacing-sm);
+}
+
+.rental-notice-content p:last-child {
+    margin-bottom: 0;
+}
+
+.rental-table-scroll {
+    width: 100%;
+    overflow-x: auto;
+    margin-top: var(--spacing-lg);
+}
+
+.rental-status-table {
+    width: 100%;
+    min-width: 560px;
+    border-collapse: collapse;
+    background-color: var(--bg-primary);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+}
+
+.rental-status-table th,
+.rental-status-table td {
+    border: 1px solid var(--border-light);
+    padding: var(--spacing-sm) var(--spacing-md);
+    font-size: var(--font-base);
+    color: var(--text-primary);
+}
+
+.rental-status-table th {
+    background-color: #9fbe90;
+    font-weight: var(--font-weight-bold);
+}
+
+.rental-status-table td {
+    text-align: center;
+}
+
+.rental-status-table td:first-child {
+    text-align: left;
+}
+
 .rental-info {
     margin-top: var(--spacing-xl);
     text-align: center;
+}
+
+.tableSeparator {
+    max-width: 60%;
+    border: none;
+    height: 1px;
+    background-color: rgba(183, 210, 245, 0.75);
+    margin-top: var(--spacing-sm);
 }
 
 #rental-title {
@@ -84,16 +166,18 @@
         margin-top: var(--spacing-sm);
     }
     
-    .rental-box {
-        max-width: 700px;
-        height: 600px;
-        margin-top: var(--spacing-lg);
-    }
-    
     #rental-title {
         font-size: var(--font-base);
         margin-top: var(--spacing-lg);
         margin-bottom: var(--spacing-xs);
+    }
+
+    .rental-status-title {
+        font-size: var(--font-base);
+    }
+
+    .rental-notice-content {
+        padding: var(--spacing-lg);
     }
     
     .rental-images {
@@ -119,16 +203,24 @@
         width: auto;
     }
     
-    .rental-box {
-        max-width: 95%;
-        height: 500px;
-        margin-top: var(--spacing-lg);
-    }
-    
     #rental-title {
         font-size: var(--font-base);
         margin-top: var(--spacing-lg);
         margin-bottom: var(--spacing-xs);
+    }
+
+    .rental-status-wrap {
+        margin-top: var(--spacing-lg);
+    }
+
+    .rental-status-title {
+        padding: var(--spacing-sm) var(--spacing-md);
+    }
+
+    .rental-notice-content {
+        font-size: var(--font-sm);
+        line-height: 1.8;
+        padding: var(--spacing-md);
     }
     
     .rental-images {
@@ -157,16 +249,20 @@
         margin-top: var(--spacing-md);
     }
     
-    .rental-box {
-        max-width: 98%;
-        height: 400px;
-        margin-top: var(--spacing-md);
-    }
-    
     #rental-title {
         font-size: var(--font-sm);
         margin-top: var(--spacing-md);
         margin-bottom: var(--spacing-xs);
+    }
+
+    .rental-status-title {
+        font-size: var(--font-sm);
+    }
+
+    .rental-status-table th,
+    .rental-status-table td {
+        font-size: var(--font-sm);
+        padding: var(--spacing-xs) var(--spacing-sm);
     }
     
     .rental-images {
@@ -197,16 +293,18 @@
         margin-top: var(--spacing-sm);
     }
     
-    .rental-box {
-        max-width: 100%;
-        height: 350px;
-        margin-top: var(--spacing-sm);
-    }
-    
     #rental-title {
         font-size: var(--font-xs);
         margin-top: var(--spacing-sm);
         margin-bottom: var(--spacing-xs);
+    }
+
+    .rental-status-title {
+        font-size: var(--font-xs);
+    }
+
+    .rental-notice-content {
+        font-size: var(--font-xs);
     }
     
     .rental-images {
