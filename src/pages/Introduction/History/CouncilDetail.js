@@ -1,12 +1,12 @@
-import React from 'react';
+﻿import React from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import './style.css';
 
 const councilData = {
     "2026": {
-        title: "2026년 제45대 총학생회 'AU:SUM' (임시)",
-        ticket: "/images/main/achim_square.jpeg",
-        photo: "/images/main/achim_square.jpeg",
+        title: "2026년 제45대 총학생회 'AU:SUM' ",
+        ticket: "/images/history/ticket/ticket_ausum.jpg",
+        photo: "/images/history/photo/photo_ausum.jpg",
         organization: "/images/main/achim_square.jpeg",
     },
     "2025": {

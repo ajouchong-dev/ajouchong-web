@@ -1,4 +1,4 @@
-import React from "react";
+﻿import React from "react";
 import "./styles.css";
 
 const Record = () => {
@@ -20,7 +20,7 @@ const Record = () => {
                 </thead>
                 <tbody>
                 <tr>
-                    <td>2026년 제45대 총학생회 'AU:SUM' (임시)</td>
+                    <td>2026년 제45대 총학생회 'AU:SUM' </td>
                     <td>추후 업데이트 예정</td>
                 </tr>
                 <tr>

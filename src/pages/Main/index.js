@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from 'react';
+﻿import React, { useEffect, useState, useCallback } from 'react';
 import Slider from 'react-slick';
 import axios from 'axios';
 import { useNavigate, Link } from 'react-router-dom';
@@ -81,7 +81,7 @@ const Main = () => {
                     ))}
                 </Slider>
                 <div className="overlay">
-                    <p>아주대학교 제45대 총학생회 AU:SUM (임시)</p>
+                    <p>아주대학교 제45대 총학생회 AU:SUM </p>
                 </div>
                 <div className="title2">
                     <p>AJOU UNIV.</p>
