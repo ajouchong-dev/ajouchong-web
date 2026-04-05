@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+﻿import React, { useState } from "react";
 import "./styles.css";
 
 /** 이미지 에러 시 기본 아바타로 교체 */
@@ -127,7 +127,7 @@ const Organization = () => {
           role: "국장",
           name: "박준석",
           dept: "첨단신소재공학과(20)",
-          photo: "/images/logos/치토.jpeg",
+          photo: "/images/history/organization/members/박준석.jpg",
         },
         {
           role: "차장",
@@ -176,13 +176,13 @@ const Organization = () => {
           role: "차장",
           name: "권현우",
           dept: "전자공학과(21)",
-          photo: "/images/logos/치토.jpeg",
+          photo: "/images/history/organization/members/권현우.jpg",
         },
         {
           role: "차장",
           name: "정지호",
           dept: "정치외교학과(23)",
-          photo: "/images/logos/치토.jpeg",
+          photo: "/images/history/organization/members/정지호.jpg",
         },
       ],
       desc: "학내 문화행사 기획 및 총괄",
@@ -203,7 +203,7 @@ const Organization = () => {
           role: "차장",
           name: "맹준성",
           dept: "경제학과(21)",
-          photo: "/images/logos/치토.jpeg",
+          photo: "/images/history/organization/members/맹준성.jpg",
         },
       ],
       desc: "학생 편의 및 혜택 제공을 위한 복지사업 진행",
@@ -245,7 +245,7 @@ const Organization = () => {
           role: "차장",
           name: "김시은",
           dept: "디지털미디어학과(23)",
-          photo: "/images/logos/치토.jpeg",
+          photo: "/images/history/organization/members/김시은.jpg",
         },
       
       ],
@@ -273,7 +273,7 @@ const Organization = () => {
           role: "차장",
           name: "이진솔",
           dept: "산업공학과(23)",
-          photo: "/images/logos/치토.jpeg",
+          photo: "/images/history/organization/members/이진솔.jpg",
         },
       ],
       desc: "국 연계 사업 연결 및 조정",
