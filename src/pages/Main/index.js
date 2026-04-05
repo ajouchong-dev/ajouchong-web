@@ -1,4 +1,4 @@
-﻿import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import Slider from 'react-slick';
 import axios from 'axios';
 import { useNavigate, Link } from 'react-router-dom';
