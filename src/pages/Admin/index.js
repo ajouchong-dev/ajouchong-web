@@ -2,6 +2,7 @@ import React from "react";
 import { useAuth } from "../../contexts/AuthContext";
 import PromotionManager from "./PromotionManager";
 import RentalManager from "./RentalManager";
+import FeedbackManager from "./FeedbackManager";
 import "./styles.css";
 
 const Admin = () => {
@@ -28,6 +29,7 @@ const Admin = () => {
 
                 <PromotionManager />
                 <RentalManager />
+                <FeedbackManager />
             </div>
         </div>
     );

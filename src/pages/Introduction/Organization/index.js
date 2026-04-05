@@ -1,4 +1,4 @@
-﻿import React, { useState } from "react";
+import React, { useState } from "react";
 import "./styles.css";
 
 /** 이미지 에러 시 기본 아바타로 교체 */
@@ -170,7 +170,7 @@ const Organization = () => {
           role: "국장",
           name: "염혜영",
           dept: "전자공학과(23)",
-          photo: "/images/logos/치토.jpeg",
+          photo: "/images/history/organization/members/염혜영.jpg",
         },
         {
           role: "차장",

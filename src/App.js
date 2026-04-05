@@ -9,12 +9,12 @@ import './App.css';
 import Header from './components/Header/Header';
 import Breadcrumb from './components/Header/Breadcrumb';
 import Footer from './components/Footer';
+import FeedbackWidget from './components/FeedbackWidget';
 
 import Main from './pages/Main';
 
 import About from './pages/Introduction/About';
 import Organization from './pages/Introduction/Organization';
-import PromiseComponent from './pages/Introduction/Promise';
 import Map from './pages/Introduction/Map';
 import History from './pages/Introduction/History';
 import Campusmap from './pages/Introduction/Campusmap';
@@ -58,6 +58,7 @@ function App() {
           <div className="content">
             <Content />
           </div>
+          <FeedbackWidget />
           <Footer />
         </div>
       </Router>
@@ -78,7 +79,6 @@ const Content = () => {
         {/* Introduction */}
         <Route path="/introduction/about" element={<About />} />
         <Route path="/introduction/organization" element={<Organization />} />
-        <Route path="/introduction/promise" element={<PromiseComponent />} />
         <Route path="/introduction/history" element={<History />} />
         <Route path="/introduction/history/:year" element={<CouncilDetail />} /> {/* ✅ 상세 라우트 */}
         <Route path="/introduction/map" element={<Map />} />

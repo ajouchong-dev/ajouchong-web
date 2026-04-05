@@ -10,7 +10,6 @@ const NAVIGATION_MENUS = {
         path: '/introduction/about',
         items: [
             { label: '총학생회 소개', path: '/introduction/about' },
-            { label: '공약 소개', path: '/introduction/promise' },
             { label: '조직도', path: '/introduction/organization' },
             { label: '역대 총학생회 소개', path: '/introduction/history' },
             { label: '오시는 길', path: '/introduction/map' },

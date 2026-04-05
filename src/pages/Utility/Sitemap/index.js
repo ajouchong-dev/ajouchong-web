@@ -9,7 +9,6 @@ const Sitemap = () => {
             path: '/introduction/about',
             items: [
                 { name: '총학생회 소개', path: '/introduction/about' },
-                { name: '공약 소개', path: '/introduction/promise' },
                 { name: '조직도', path: '/introduction/organization' },
                 { name: '역대 총학생회 소개', path: '/introduction/history' },
                 { name: '오시는 길', path: '/introduction/map' },
