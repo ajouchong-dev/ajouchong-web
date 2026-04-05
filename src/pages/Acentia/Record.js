@@ -1,4 +1,4 @@
-import React from "react";
+﻿import React from "react";
 import "./styles.css";
 
 const Record = () => {
@@ -19,12 +19,10 @@ const Record = () => {
                 </tr>
                 </thead>
                 <tbody>
-                {/*<tr>*/}
-                {/*    <td>*/}
-                {/*        2026년 제45대 총학생회 ''*/}
-                {/*    </td>*/}
-                {/*    <td> </td>*/}
-                {/*</tr>*/}
+                <tr>
+                    <td>2026년 제45대 총학생회 'AU:SUM' </td>
+                    <td>추후 업데이트 예정</td>
+                </tr>
                 <tr>
                     <td>2025년 제44대 총학생회 '아침'</td>
                     <td> &lt;ACENTIA&gt;日出(일출): 파란 물결의 찬란한 시작</td>

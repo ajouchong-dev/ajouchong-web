@@ -10,7 +10,7 @@ const Footer = () => {
     ];
     
     const developerInfo = {
-        name: '소프트웨어학과 오태림(FE) 유수정(BE)',
+        name: '디지털미디어학과 정재훈(Full-Stack)',
         email: 'ajouchongdev@gmail.com'
     };
     

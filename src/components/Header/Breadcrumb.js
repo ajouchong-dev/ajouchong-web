@@ -41,6 +41,7 @@ const BREADCRUMB_LABELS = {
     policy: '이용약관',
     sitemap: '사이트맵',
     profile: '프로필',
+    admin: '관리자',
 };
 
 const Breadcrumb = () => {

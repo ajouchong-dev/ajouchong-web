@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+﻿import React, { useState } from "react";
 import "./styles.css";
 
 /** 이미지 에러 시 기본 아바타로 교체 */
@@ -107,40 +107,39 @@ const Organization = () => {
       roles: [
         {
           role: "총학생회장",
-          name: "이재건",
-          dept: "건축학과(22)",
-          photo: "/images/history/organization/members/jaegun.png",
+          name: "송재원",
+          dept: "산업공학과(20)",
+          photo: "/images/logos/치토.jpeg",
         },
         {
           role: "부총학생회장",
-          name: "송재원",
-          dept: "산업공학과(20)",
-          photo: "/images/history/organization/members/jaewon.png",
+          name: "송은기",
+          dept: "경영학과(22)",
+          photo: "/images/logos/치토.jpeg",
         },
       ],
       desc: "총학생회를 대표하여 모든 사업 및 대내외적인 업무 총괄",
     },
     {
-      title: "교육정책국",
+      title: "교육행정국",
       roles: [
         {
           role: "국장",
-          name: "박규진",
-          dept: "산업공학과(20)",
-          photo: "/images/history/organization/members/gyujin.jpeg",
+          name: "박준석",
+          dept: "첨단신소재공학과(20)",
+          photo: "/images/history/organization/members/박준석.jpg",
         },
         {
           role: "차장",
-          name: "오다빈",
-          dept: "경제학과(22)",
-          photo: "/images/history/organization/members/dabin.jpg",
+          name: "김찬호",
+          dept: "첨단신소재공학과(22)",
+          photo: "/images/logos/치토.jpeg",
         },
       ],
-      desc: "교내 학사 관련 사업 진행 및 의결기구 진행 보조",
+      desc: "교내 학사·행정 정책 기획 및 재정 관리·구매 업무 진행",
       members: [
-        "송은기, 경영학과(22)",
-        "유원희, 경영인텔리전스학과(23)",
-        "변선아, 산업공학과(23)",
+        "치토, 대기중",
+        
       ],
     },
     {
@@ -148,26 +147,20 @@ const Organization = () => {
       roles: [
         {
           role: "국장",
-          name: "박준석",
-          dept: "첨단신소재공학과(21)",
-          photo: "/images/history/organization/members/junstone.jpeg",
+          name: "박종현",
+          dept: "산업공학과(20)",
+          photo: "/images/logos/치토.jpeg",
         },
         {
           role: "차장",
-          name: "김혜성",
-          dept: "소프트웨어학과(20)",
-          photo: "/images/history/organization/members/hyesung.png",
+          name: "김정연",
+          dept: "미래모밀리티공학과(20)",
+          photo: "/images/logos/치토.jpeg",
         },
       ],
       desc: "교외 기관, 사업체와의 제휴 및 협력 진행",
       members: [
-        "김민주, 건설시스템공학과(24)",
-        "이해인, 건설시스템공학과(24)",
-        "정준기, 전자공학과(20)",
-        "조윤솔, 디지털미디어학과(24)",
-        "최서아, 영어영문학과(24)",
-        "권영준, 경영학과(24)",
-        "염지윤, 자유전공학부(25)",
+        "치토, 대기중",
       ],
     },
     {
@@ -175,31 +168,26 @@ const Organization = () => {
       roles: [
         {
           role: "국장",
-          name: "강돈희",
-          dept: "디지털미디어학과(22)",
-          photo: "/images/history/organization/members/donhee.png",
+          name: "염혜영",
+          dept: "전자공학과(23)",
+          photo: "/images/logos/치토.jpeg",
         },
         {
           role: "차장",
-          name: "윤창빈",
-          dept: "기계공학과(21)",
-          photo: "/images/history/organization/members/changbin.png",
+          name: "권현우",
+          dept: "전자공학과(21)",
+          photo: "/images/history/organization/members/권현우.jpg",
         },
         {
           role: "차장",
-          name: "이혜령",
-          dept: "산업공학과(23)",
-          photo: "/images/history/organization/members/hyereong.jpeg",
+          name: "정지호",
+          dept: "정치외교학과(23)",
+          photo: "/images/history/organization/members/정지호.jpg",
         },
       ],
       desc: "학내 문화행사 기획 및 총괄",
       members: [
-        "조현덕, 건축학과(24)",
-        "조우진, 경영인텔리전스학과(23)",
-        "김혜령, 디지털미디어학과(23)",
-        "채수현, 디지털미디어학과(23)",
-        "유서희, 환경안전공학과(25)",
-        "이예원, 문화콘텐츠학과(24)",
+        "치토, 대기중",
       ],
     },
     {
@@ -207,107 +195,90 @@ const Organization = () => {
       roles: [
         {
           role: "국장",
-          name: "허준호",
-          dept: "전자공학과(20)",
-          photo: "/images/history/organization/members/junho.jpeg",
+          name: "이예은",
+          dept: "지능형반도체공학과(23)",
+          photo: "/images/logos/치토.jpeg",
         },
         {
           role: "차장",
-          name: "이예은",
-          dept: "지능형반도체공학과(23)",
-          photo: "/images/history/organization/members/yeeun.jpg",
+          name: "맹준성",
+          dept: "경제학과(21)",
+          photo: "/images/history/organization/members/맹준성.jpg",
         },
       ],
       desc: "학생 편의 및 혜택 제공을 위한 복지사업 진행",
       members: [
-        "오경진, 전자공학과(20)",
-        "신준현, 건축학과(24)",
-        "이지훈, 건축학과(22)",
-        "김상겸, 기계공학과(21)",
-        "이강민, 건설시스템공학과(22)",
-        "권시윤, 교통시스템공학과(24)",
-        "김로아, 문화콘텐츠학과(24)",
-        "강승완, 국방디지털융합학과(25)",
-        "이가영, 첨단바이오융합대학(25)",
+        "치토, 대기중",
       ],
     },
     {
-      title: "소통발전국",
+      title: "소통개발국",
       roles: [
         {
           role: "국장",
-          name: "유수정",
-          dept: "소프트웨어학과(22)",
-          photo: "/images/history/organization/members/sujeong.jpg",
+          name: "정재훈",
+          dept: "디지털미디어학과(21)",
+          photo: "/images/logos/치토.jpeg",
         },
         {
           role: "차장",
-          name: "오태림",
-          dept: "소프트웨어학과(22)",
-          photo: "/images/history/organization/members/taelim.jpg",
+          name: "이서현",
+          dept: "산업공학과(23)",
+          photo: "/images/logos/치토.jpeg",
         },
       ],
-      desc: "총학생회 홈페이지 및 SNS를 통한 학우분들과 소통 진행",
+      desc: "다양한 앱·웹 기반의 소통 채널 운영 및 데이터베이스 시스템 개발",
       members: [
-        "정재훈, 디지털미디어학과(21)",
-        "조용진, 건축학과(23)",
-        "조은재, 소프트웨어학과(23)",
-        "윤채영, 정치외교학과(24)",
-        "김태호, 자유전공학부(25)",
-        "조성현, 자유전공학부(25)",
+        "치토, 대기중",
       ],
     },
     {
-      title: "콘텐츠제작국",
+      title: "미디어홍보국",
       roles: [
         {
           role: "국장",
-          name: "권민지",
+          name: "고명범",
           dept: "건축학과(22)",
-          photo: "/images/history/organization/members/minji.png",
+          photo: "/images/logos/치토.jpeg",
         },
         {
           role: "차장",
-          name: "박수경",
-          dept: "건축학과(22)",
-          photo: "/images/history/organization/members/sogyong.jpg",
+          name: "김시은",
+          dept: "디지털미디어학과(23)",
+          photo: "/images/history/organization/members/김시은.jpg",
         },
-        {
-          role: "차장",
-          name: "장하연",
-          dept: "건축학과(22)",
-          photo: "/images/history/organization/members/hayeon.jpg",
-        },
+      
       ],
-      desc: "총학생회 게시물 제작 총괄",
+      desc: "총학생회 인스타그램 게시물 및 축제 & 사업 홍보물 제작 및 총괄",
       members: [
-        "한상현, 건축학과(20)",
-        "김민선, 문화콘텐츠학과(24)",
-        "정도영, 불어불문학과(24)",
+        "치토, 대기중",
       ],
     },
     {
-      title: "행정자치국",
+      title: "중앙조정국",
       roles: [
         {
           role: "국장",
-          name: "이한구",
-          dept: "전자공학과(20)",
-          photo: "/images/history/organization/members/han9.jpeg",
+          name: "김혜성",
+          dept: "소프트웨어공학과(20)",
+          photo: "/images/logos/치토.jpeg",
         },
         {
           role: "차장",
-          name: "정윤수",
-          dept: "응용화학생명공학과(21)",
-          photo: "/images/history/organization/members/yunsu.jpg",
+          name: "이상민",
+          dept: "교통시스템공학과(21)",
+          photo: "/images/logos/치토.jpeg",
+        },
+        {
+          role: "차장",
+          name: "이진솔",
+          dept: "산업공학과(23)",
+          photo: "/images/history/organization/members/이진솔.jpg",
         },
       ],
-      desc: "학생 자치 체계 확립 및 행정관리",
+      desc: "국 연계 사업 연결 및 조정",
       members: [
-        "이승준, 건축학과(22)",
-        "김하은, 기계공학과(23)",
-        "임현진, 첨단바이오융합대학(25)",
-        "한영경, 자유전공학부(25)",        
+        "치토, 대기중",       
       ],
     },
   ];
@@ -318,7 +289,7 @@ const Organization = () => {
       <hr className="titleSeparator" />
 
       <div className="org-panel">
-        {/* <div className="org-grid">
+        <div className="org-grid">
           {allDivisions.map((division, index) => (
             <GroupBox
               key={index}
@@ -328,10 +299,11 @@ const Organization = () => {
               members={division.members}
             />
           ))}
-        </div> */}
+        </div>
         <div className="organizationTextBox">
             <div className="organizationText">
-              <p>중앙비상대책위원회 운영중입니다.</p>
+              <p>제45대 총학생회 AU:SUM 조직도 임시 반영 중입니다.</p>
+              <p>세부 직책 및 국원 정보는 추후 업데이트됩니다.</p>
               <a href="/introduction/history" target="_blank" rel="noopener noreferrer">역대 학생회 소개 바로가기</a>
             </div>
         </div>

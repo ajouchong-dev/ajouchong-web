@@ -106,6 +106,32 @@
     margin-bottom: 32px;
 }
 
+.admin-link-wrap {
+    margin-top: var(--spacing-md);
+    display: flex;
+    justify-content: center;
+}
+
+.admin-link-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 170px;
+    height: 36px;
+    padding: 0 var(--spacing-md);
+    border-radius: var(--radius-normal);
+    background-color: var(--secondary-color);
+    color: var(--text-primary);
+    text-decoration: none;
+    font-size: var(--font-sm);
+    font-weight: var(--font-weight-medium);
+    transition: var(--transition-normal);
+}
+
+.admin-link-button:hover {
+    filter: brightness(0.95);
+}
+
 /* 반응형 디자인 */
 @media screen and (max-width: 1024px) {
     .profile-container {

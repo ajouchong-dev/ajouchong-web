@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { useAuth } from "../../../contexts/AuthContext";
 import "../styles.css";
 
@@ -50,6 +50,12 @@ const Profile = () => {
                         </button>
                     )}
                 </div>
+
+                {auth.isAuthenticated && auth.user?.role === "ADMIN" && (
+                    <div className="admin-link-wrap">
+                        <Link to="/admin" className="admin-link-button">관리자 페이지 이동</Link>
+                    </div>
+                )}
             </div>
         </div>
     );
