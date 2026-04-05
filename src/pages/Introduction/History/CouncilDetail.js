@@ -7,7 +7,7 @@ const councilData = {
         title: "2026년 제45대 총학생회 'AU:SUM' ",
         ticket: "/images/history/ticket/ticket_ausum.jpg",
         photo: "/images/history/photo/photo_ausum.jpg",
-        organization: "/images/main/achim_square.jpeg",
+        organization: "/images/logos/AUSUM.jpg",
     },
     "2025": {
         title: "2025년 제44대 총학생회 '아침'",
