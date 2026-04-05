@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+﻿import React, { useState } from "react";
 import "./styles.css";
 
 /** 이미지 에러 시 기본 아바타로 교체 */
@@ -109,13 +109,13 @@ const Organization = () => {
           role: "총학생회장",
           name: "송재원",
           dept: "산업공학과(20)",
-          photo: "/images/logos/치토.jpeg",
+          photo: "/images/history/organization/members/jaewon.png",
         },
         {
           role: "부총학생회장",
           name: "송은기",
           dept: "경영학과(22)",
-          photo: "/images/logos/치토.jpeg",
+          photo: "/images/history/organization/members/송은기.jpg",
         },
       ],
       desc: "총학생회를 대표하여 모든 사업 및 대내외적인 업무 총괄",
@@ -149,12 +149,12 @@ const Organization = () => {
           role: "국장",
           name: "박종현",
           dept: "산업공학과(20)",
-          photo: "/images/logos/치토.jpeg",
+          photo: "/images/history/organization/members/박종현.jpg",
         },
         {
           role: "차장",
           name: "김정연",
-          dept: "미래모밀리티공학과(20)",
+          dept: "미래모밀리티공학과(23)",
           photo: "/images/logos/치토.jpeg",
         },
       ],
@@ -197,13 +197,13 @@ const Organization = () => {
           role: "국장",
           name: "이예은",
           dept: "지능형반도체공학과(23)",
-          photo: "/images/logos/치토.jpeg",
+          photo: "/images/history/organization/members/yeeun.jpg",
         },
         {
           role: "차장",
           name: "맹준성",
           dept: "경제학과(21)",
-          photo: "/images/history/organization/members/맹준성.jpg",
+          photo: "/images/history/organization/members/맹준성.png",
         },
       ],
       desc: "학생 편의 및 혜택 제공을 위한 복지사업 진행",
@@ -218,13 +218,13 @@ const Organization = () => {
           role: "국장",
           name: "정재훈",
           dept: "디지털미디어학과(21)",
-          photo: "/images/logos/치토.jpeg",
+          photo: "/images/history/organization/members/정재훈.jpg",
         },
         {
           role: "차장",
           name: "이서현",
           dept: "산업공학과(23)",
-          photo: "/images/logos/치토.jpeg",
+          photo: "/images/history/organization/members/이서현.jpg",
         },
       ],
       desc: "다양한 앱·웹 기반의 소통 채널 운영 및 데이터베이스 시스템 개발",
@@ -239,7 +239,7 @@ const Organization = () => {
           role: "국장",
           name: "고명범",
           dept: "건축학과(22)",
-          photo: "/images/logos/치토.jpeg",
+          photo: "/images/history/organization/members/고명범.jpg",
         },
         {
           role: "차장",
@@ -260,14 +260,14 @@ const Organization = () => {
         {
           role: "국장",
           name: "김혜성",
-          dept: "소프트웨어공학과(20)",
-          photo: "/images/logos/치토.jpeg",
+          dept: "소프트웨어학과(20)",
+          photo: "/images/history/organization/members/hyesung.png",
         },
         {
           role: "차장",
           name: "이상민",
           dept: "교통시스템공학과(21)",
-          photo: "/images/logos/치토.jpeg",
+          photo: "/images/history/organization/members/이상민.jpg",
         },
         {
           role: "차장",
