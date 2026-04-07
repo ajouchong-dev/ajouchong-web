@@ -3,6 +3,7 @@ import { useAuth } from "../../contexts/AuthContext";
 import PromotionManager from "./PromotionManager";
 import RentalManager from "./RentalManager";
 import FeedbackManager from "./FeedbackManager";
+import LinkHubManager from "./LinkHubManager";
 import "./styles.css";
 
 const Admin = () => {
@@ -29,6 +30,7 @@ const Admin = () => {
 
                 <PromotionManager />
                 <RentalManager />
+                <LinkHubManager />
                 <FeedbackManager />
             </div>
         </div>
