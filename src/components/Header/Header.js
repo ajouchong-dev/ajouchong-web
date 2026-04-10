@@ -29,7 +29,7 @@ const NAVIGATION_MENUS = {
         items: [
             { label: 'Q&A', path: '/communication/qna' },
             { label: '100인 안건 상정제', path: '/communication/require' },
-            { label: '통합 소통 창구', path: 'https://forms.gle/V1hH3Gf5uyuC7CVp6', external: true }
+            { label: '통합 소통 창구', path: 'https://docs.google.com/forms/d/e/1FAIpQLSfAtCkQTXki8tjigTkU_-WeSas8_DuGsiv9kTMno_AQQSBmKA/viewform', external: true }
         ]
     },
     resources: {
@@ -45,7 +45,7 @@ const NAVIGATION_MENUS = {
         title: '학생복지',
         path: '/welfare/promotion',
         items: [
-            { label: '제휴백과', path: '/welfare/promotion' },
+            { label: '제휴강좌', path: '/welfare/promotion' },
             { label: '대여사업', path: '/welfare/rental' }
         ]
     },
@@ -106,7 +106,7 @@ const Header = () => {
         if (!menu) return null;
 
         return (
-            <ul className={isMobile ? "dropdown" : "dropdown-container"}>
+            <ul className={isMobile ? 'dropdown' : 'dropdown-container'}>
                 {menu.items.map((item, index) => (
                     <li key={index}>
                         {item.external ? (
@@ -123,7 +123,7 @@ const Header = () => {
     }, []);
 
     const renderUpperLinks = useCallback((links, isRight = false) => (
-        <nav className={isRight ? "upnav-menu2" : "upnav-menu"}>
+        <nav className={isRight ? 'upnav-menu2' : 'upnav-menu'}>
             <ul className="flex items-center">
                 {links.map((link, index) => (
                     <React.Fragment key={index}>
@@ -134,7 +134,7 @@ const Header = () => {
                                 <a href={link.path}>{link.label}</a>
                             )}
                         </li>
-                        {index < links.length - 1 && <span className="dot"> • </span>}
+                        {index < links.length - 1 && <span className="dot"> ··</span>}
                     </React.Fragment>
                 ))}
             </ul>
@@ -145,15 +145,15 @@ const Header = () => {
         <nav className="nav-menu">
             <ul className="flex">
                 {Object.entries(NAVIGATION_MENUS).map(([key, menu]) => (
-                    <li 
+                    <li
                         key={key}
                         className="menu-container"
                         onMouseEnter={() => handleMouseEnter(key)}
                         onMouseLeave={handleMouseLeave}
                     >
-                        <div 
+                        <div
                             className={`navtitle ${getActiveMenu() === key ? 'active' : ''}`}
-                            onClick={() => window.location.href = menu.path}
+                            onClick={() => { window.location.href = menu.path; }}
                         >
                             {menu.title}
                         </div>
@@ -168,7 +168,7 @@ const Header = () => {
         <nav className={`mobile-menu ${isMobileMenuOpen ? 'open' : ''}`}>
             <ul className="list-none">
                 {Object.entries(NAVIGATION_MENUS).map(([key, menu]) => (
-                    <li 
+                    <li
                         key={key}
                         onClick={() => toggleMobileDropdown(key)}
                         className={`${dropdown === key ? 'active' : ''} cursor-pointer`}
@@ -178,17 +178,17 @@ const Header = () => {
                     </li>
                 ))}
             </ul>
-            
+
             <div className="mobile-login-section">
                 <Login />
             </div>
-            
+
             <nav className="other-menu">
                 <ul className="flex justify-center">
                     {UPPER_LINKS.map((link, index) => (
                         <React.Fragment key={index}>
                             <li><a href={link.url}>{link.label}</a></li>
-                            {index < UPPER_LINKS.length - 1 && <span className="dot"> • </span>}
+                            {index < UPPER_LINKS.length - 1 && <span className="dot"> ··</span>}
                         </React.Fragment>
                     ))}
                 </ul>
@@ -198,7 +198,7 @@ const Header = () => {
                     {UPPER_LINKS_RIGHT.map((link, index) => (
                         <React.Fragment key={index}>
                             <li><a href={link.path}>{link.label}</a></li>
-                            {index < UPPER_LINKS_RIGHT.length - 1 && <span className="dot"> • </span>}
+                            {index < UPPER_LINKS_RIGHT.length - 1 && <span className="dot"> ··</span>}
                         </React.Fragment>
                     ))}
                 </ul>
@@ -208,7 +208,7 @@ const Header = () => {
 
     useEffect(() => {
         const header = document.querySelector('.header');
-        
+
         if (location.pathname !== '/') {
             header.classList.add('scrolled');
         }
@@ -227,14 +227,14 @@ const Header = () => {
             <div className="lower">
                 <div className="logo">
                     <a href="/">
-                        <img src="/images/logos/ajouLogo_header.svg" alt="로고"/>
+                        <img src="/images/logos/ajouLogo_header.svg" alt="로고" />
                     </a>
                 </div>
 
                 {renderNavigationMenu()}
 
                 <div className="hamburger-menu cursor-pointer" onClick={toggleMobileMenu}>
-                    {isMobileMenuOpen ? <X size={28}/> : <Menu size={28}/>}
+                    {isMobileMenuOpen ? <X size={28} /> : <Menu size={28} />}
                 </div>
 
                 {renderMobileMenu()}

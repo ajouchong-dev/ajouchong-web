@@ -4,6 +4,7 @@ import PromotionManager from "./PromotionManager";
 import RentalManager from "./RentalManager";
 import FeedbackManager from "./FeedbackManager";
 import LinkHubManager from "./LinkHubManager";
+import ProceedingManager from "./ProceedingManager";
 import "./styles.css";
 
 const Admin = () => {
@@ -31,6 +32,7 @@ const Admin = () => {
                 <PromotionManager />
                 <RentalManager />
                 <LinkHubManager />
+                <ProceedingManager />
                 <FeedbackManager />
             </div>
         </div>
