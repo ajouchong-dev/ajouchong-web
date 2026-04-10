@@ -8,7 +8,7 @@ const apiClient = axios.create({
     baseURL: process.env.REACT_APP_API_URL || "https://api.ajouchong.com",
 });
 
-const FEEDBACK_TITLE = "[홈페이지 피드백]";
+const FEEDBACK_TITLE_PREFIX = "[홈페이지 피드백]";
 const QUICK_LINKS = [
     { label: "공지사항", path: "/news/notice" },
     { label: "대여사업", path: "/welfare/rental" },
@@ -22,6 +22,7 @@ const FeedbackWidget = () => {
     const { auth } = useAuth();
     const [isOpen, setIsOpen] = useState(false);
     const [mode, setMode] = useState("menu");
+    const [title, setTitle] = useState("");
     const [content, setContent] = useState("");
     const [submitting, setSubmitting] = useState(false);
     const [message, setMessage] = useState("");
@@ -41,7 +42,14 @@ const FeedbackWidget = () => {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
+        const trimmedTitle = title.trim();
         const trimmed = content.trim();
+
+        if (!trimmedTitle) {
+            setError("제목을 입력해주세요.");
+            return;
+        }
+
         if (!trimmed) {
             setError("내용을 입력해주세요.");
             return;
@@ -58,10 +66,11 @@ const FeedbackWidget = () => {
         try {
             await apiClient.post(
                 "/api/qna",
-                { qpTitle: FEEDBACK_TITLE, qpContent: trimmed },
+                { qpTitle: `${FEEDBACK_TITLE_PREFIX} ${trimmedTitle}`, qpContent: trimmed },
                 { withCredentials: true, headers: { "Content-Type": "application/json" } }
             );
             setMessage("의견이 접수되었습니다. 감사합니다.");
+            setTitle("");
             setContent("");
         } catch (e) {
             setError(e.response?.data?.message || "의견 접수 중 오류가 발생했습니다.");
@@ -124,7 +133,14 @@ const FeedbackWidget = () => {
                         </>
                     ) : (
                         <form onSubmit={handleSubmit}>
-                            <p className="feedback-form-guide">홈페이지의 개선점이나 총학생회에게 하고싶은 말을 편하게 적어주세요!</p>
+                            <p className="feedback-form-guide">홈페이지 개선점이나 총학생회에 전달할 의견을 편하게 적어주세요.</p>
+                            <input
+                                type="text"
+                                value={title}
+                                onChange={(event) => setTitle(event.target.value)}
+                                placeholder="제목을 입력해주세요."
+                                maxLength={120}
+                            />
                             <textarea
                                 value={content}
                                 onChange={(event) => setContent(event.target.value)}
@@ -157,7 +173,7 @@ const FeedbackWidget = () => {
             <button
                 type="button"
                 className="feedback-fab"
-                aria-label="도움 메뉴 열기"
+                aria-label="퀵 메뉴 열기"
                 onClick={() => {
                     setIsOpen((prev) => !prev);
                     if (!isOpen) {

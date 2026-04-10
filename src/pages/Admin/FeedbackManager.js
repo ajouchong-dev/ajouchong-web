@@ -6,7 +6,7 @@ const apiClient = axios.create({
     baseURL: process.env.REACT_APP_API_URL || "https://api.ajouchong.com",
 });
 
-const FEEDBACK_TITLE = "[홈페이지 피드백]";
+const FEEDBACK_TITLE_PREFIX = "[홈페이지 피드백]";
 const ANSWER_VIEW_PASSWORD = "020209";
 const FEEDBACK_MANAGER_PASSWORD = "020209";
 const getPostId = (post) => post?.qpostId ?? post?.qPostId ?? post?.id;
@@ -44,7 +44,7 @@ const FeedbackManager = () => {
         try {
             const response = await apiClient.get("/api/qna", authConfig);
             const allPosts = response.data?.data || [];
-            const feedbackPosts = allPosts.filter((post) => post.qpTitle === FEEDBACK_TITLE);
+            const feedbackPosts = allPosts.filter((post) => (post.qpTitle || "").startsWith(FEEDBACK_TITLE_PREFIX));
             setItems(feedbackPosts);
         } catch (e) {
             setError(e.response?.data?.message || "피드백 목록을 불러오지 못했습니다.");
@@ -70,11 +70,12 @@ const FeedbackManager = () => {
             setError("답변 내용을 입력해주세요.");
             return;
         }
+
         setError("");
         setMessage("");
         try {
             await apiClient.post(`/api/admin/qna/${postId}/answer`, { content }, authConfig);
-            setMessage("답변이 저장되었습니다.");
+            setMessage("답변을 저장했습니다.");
             setAnswerDraft("");
             setActivePost(null);
             await loadItems();
@@ -85,12 +86,13 @@ const FeedbackManager = () => {
 
     const handleDeletePost = async (postId) => {
         if (!window.confirm("이 피드백을 삭제하시겠습니까?")) return;
+
         setDeleting(postId);
         setError("");
         setMessage("");
         try {
             await apiClient.delete(`/api/admin/qna/${postId}`, authConfig);
-            setMessage("피드백이 삭제되었습니다.");
+            setMessage("피드백을 삭제했습니다.");
             await loadItems();
         } catch (e) {
             setError(e.response?.data?.message || "삭제에 실패했습니다.");
@@ -161,7 +163,7 @@ const FeedbackManager = () => {
         <section className="admin-card admin-full">
             <div className="admin-section-head">
                 <h2>피드백 관리</h2>
-                <p>우하단 ? 위젯으로 접수된 홈페이지 개선/학생회 의견입니다.</p>
+                <p>우하단 위젯으로 접수된 홈페이지 개선/학생회 의견입니다.</p>
             </div>
 
             {message && <p className="admin-feedback success">{message}</p>}
@@ -188,40 +190,41 @@ const FeedbackManager = () => {
                             {items.map((post) => {
                                 const postId = getPostId(post);
                                 return (
-                                <tr key={postId}>
-                                    <td>{postId ?? "-"}</td>
-                                    <td>{post.qpAuthor || "-"}</td>
-                                    <td className="admin-feedback-content">{post.qpContent}</td>
-                                    <td>{formatDate(post.qpCreateTime)}</td>
-                                    <td>{post.replied ? "답변완료" : "대기중"}</td>
-                                    <td className="admin-actions">
-                                        <button
-                                            className="admin-btn small"
-                                            type="button"
-                                            disabled={!postId}
-                                            onClick={() => {
-                                                setActivePost(postId);
-                                                setAnswerDraft(post.answer?.content || "");
-                                                setError("");
-                                                setMessage("");
-                                            }}
-                                        >
-                                            답변작성
-                                        </button>
-                                        <button className="admin-btn small muted" type="button" onClick={() => openAnswerView(post)}>
-                                            답변보기
-                                        </button>
-                                        <button
-                                            className="admin-btn small danger"
-                                            type="button"
-                                            disabled={!postId || deleting === postId}
-                                            onClick={() => handleDeletePost(postId)}
-                                        >
-                                            {deleting === postId ? "삭제중..." : "삭제"}
-                                        </button>
-                                    </td>
-                                </tr>
-                            )})}
+                                    <tr key={postId}>
+                                        <td>{postId ?? "-"}</td>
+                                        <td>{post.qpAuthor || "-"}</td>
+                                        <td className="admin-feedback-content">{post.qpContent}</td>
+                                        <td>{formatDate(post.qpCreateTime)}</td>
+                                        <td>{post.replied ? "답변완료" : "대기중"}</td>
+                                        <td className="admin-actions">
+                                            <button
+                                                className="admin-btn small"
+                                                type="button"
+                                                disabled={!postId}
+                                                onClick={() => {
+                                                    setActivePost(postId);
+                                                    setAnswerDraft(post.answer?.content || "");
+                                                    setError("");
+                                                    setMessage("");
+                                                }}
+                                            >
+                                                답변작성
+                                            </button>
+                                            <button className="admin-btn small muted" type="button" onClick={() => openAnswerView(post)}>
+                                                답변보기
+                                            </button>
+                                            <button
+                                                className="admin-btn small danger"
+                                                type="button"
+                                                disabled={!postId || deleting === postId}
+                                                onClick={() => handleDeletePost(postId)}
+                                            >
+                                                {deleting === postId ? "삭제중..." : "삭제"}
+                                            </button>
+                                        </td>
+                                    </tr>
+                                );
+                            })}
                         </tbody>
                     </table>
                 )}

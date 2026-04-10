@@ -6,6 +6,23 @@ const apiClient = axios.create({
     baseURL: process.env.REACT_APP_API_URL || 'https://api.ajouchong.com'
 });
 
+const normalizeUrl = (value) => {
+    if (!value) return '';
+    const trimmed = value.trim();
+    if (!trimmed) return '';
+    if (/^https?:\/\//i.test(trimmed)) return trimmed;
+    return `https://${trimmed}`;
+};
+
+const toDomain = (value) => {
+    try {
+        const url = new URL(normalizeUrl(value));
+        return url.host;
+    } catch (e) {
+        return value || '';
+    }
+};
+
 const LinkHub = () => {
     const [links, setLinks] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -26,28 +43,21 @@ const LinkHub = () => {
                 linksData = response.data.links;
             } else if (response.data && Array.isArray(response.data.data)) {
                 linksData = response.data.data;
-            } else {
-                // console.log('API 응답 구조:', response.data);
-                linksData = [];
             }
 
-            setLinks(linksData);    
+            setLinks(linksData);
         } catch (err) {
-            // console.error('링크 목록을 가져오는 중 오류가 발생했습니다:', err);            
+            setLinks([]);
         } finally {
             setLoading(false);
         }
     };
 
-    const handleLinkClick = (link) => {
-        if (link) {
-            window.open(link, '_blank', 'noopener,noreferrer');
-        }
-    };
-
     if (loading) {
         return (
-            <div className="link-hub-container">
+            <div className="context">
+                <div className="contextTitle">LinkHub</div>
+                <hr className="titleSeparator" />
                 <div className="loading">링크를 불러오는 중...</div>
             </div>
         );
@@ -57,19 +67,33 @@ const LinkHub = () => {
         <div className="context">
             <div className="contextTitle">LinkHub</div>
             <hr className="titleSeparator" />
-            <div className="links-grid">
-                {links.map((link, index) => (
-                    <div
-                        key={index}
-                        className="link-card"
-                        onClick={() => handleLinkClick(link.link)}
-                    >
-                        <span className="link-title">{link.title}</span>
-                    </div>
-                ))}
-            </div>
-        </div>
 
+            {links.length === 0 ? (
+                <div className="link-empty">등록된 링크가 없습니다.</div>
+            ) : (
+                <div className="links-grid">
+                    {links.map((item, index) => {
+                        const safeUrl = normalizeUrl(item.link);
+                        const shouldShowLinkText = item.showLink !== false;
+                        return (
+                            <a
+                                key={item.id || index}
+                                className="link-card"
+                                href={safeUrl}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                aria-label={`${item.title} 링크 열기`}
+                            >
+                                <span className="link-title">{item.title}</span>
+                                {shouldShowLinkText && (
+                                    <span className="link-url">{toDomain(item.link)}</span>
+                                )}
+                            </a>
+                        );
+                    })}
+                </div>
+            )}
+        </div>
     );
 };
 
