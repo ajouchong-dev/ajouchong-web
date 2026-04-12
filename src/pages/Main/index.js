@@ -8,6 +8,8 @@ const apiClient = axios.create({
     baseURL: process.env.REACT_APP_API_URL || 'https://api.ajouchong.com'
 });
 
+const pickNoticeId = (notice) => notice?.nPost_id ?? notice?.npost_id ?? notice?.id ?? null;
+
 const SLIDER_IMAGES = [
     "/images/banner/main_7.jpg",
     "/images/banner/spring_1.jpeg",
@@ -32,7 +34,7 @@ const Main = () => {
     };
 
     const formatNoticeData = (notice) => ({
-        id: notice.npost_id,
+        id: pickNoticeId(notice),
         title: notice.npTitle,
         content: notice.npContent,
         image: notice.imageUrls && notice.imageUrls.length > 0 
@@ -51,7 +53,9 @@ const Main = () => {
                     .sort((a, b) => new Date(b.npCreateTime) - new Date(a.npCreateTime))
                     .slice(0, 4);
 
-                const formattedNotices = sortedNotices.map(formatNoticeData);
+                const formattedNotices = sortedNotices
+                    .map(formatNoticeData)
+                    .filter((notice) => notice.id !== null);
                 setNotices(formattedNotices);
             } else {
                 console.error('Error fetching notices:', response.data.message);

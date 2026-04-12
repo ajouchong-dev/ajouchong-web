@@ -314,6 +314,21 @@
     background: #edf3fa;
 }
 
+.admin-notice-preview-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.admin-notice-thumb {
+    width: 96px;
+    height: 72px;
+    border-radius: 8px;
+    border: 1px solid var(--border-light);
+    object-fit: cover;
+    background: #edf3fa;
+}
+
 .admin-stepper {
     display: flex;
     gap: 6px;

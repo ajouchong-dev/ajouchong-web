@@ -8,6 +8,7 @@ const apiClient = axios.create({
 });
 
 const POSTS_PER_PAGE = 9;
+const pickNoticeId = (post) => post?.nPost_id ?? post?.npost_id ?? post?.id ?? null;
 
 const Announcement = () => {
     const [posts, setPosts] = useState([]);
@@ -16,7 +17,7 @@ const Announcement = () => {
     const [currentPage, setCurrentPage] = useState(1);
 
     const formatPostData = (post) => ({
-        id: post.npost_id,
+        id: pickNoticeId(post),
         imageUrl: post.imageUrls[0] || '/images/main/achim_square.jpeg',
         title: post.npTitle,
         date: new Date(post.npCreateTime).toLocaleDateString(),
@@ -30,7 +31,9 @@ const Announcement = () => {
             });
 
             if (response.data.code === 1) {
-                const fetchedPosts = response.data.data.map(formatPostData);
+                const fetchedPosts = response.data.data
+                    .map(formatPostData)
+                    .filter((post) => post.id !== null);
                 setPosts(fetchedPosts);
                 setFilteredPosts(fetchedPosts);
             } else {
