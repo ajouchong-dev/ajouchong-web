@@ -292,9 +292,15 @@
 }
 
 @media (max-width: 768px) {
+  .org-panel{
+    padding: 14px 10px 22px;
+    margin: var(--spacing-sm) auto var(--spacing-lg);
+  }
+
   .org-grid{
     grid-template-columns: 1fr;
     grid-template-rows: auto;
+    gap: 12px;
   }
   
   .org-grid .group-box:first-child{
@@ -335,22 +341,53 @@
   }
   
   .roles-container{
-    flex-direction: column;
-    align-items: center;
-    gap: var(--spacing-md);
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(148px, 1fr));
+    align-items: stretch;
+    gap: 10px;
+    width: 100%;
   }
   
   .role-item{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
     max-width: 100%;
+    min-width: 0;
+    padding: 10px;
+    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.64);
+    text-align: left;
   }
   
   .avatar{
-    width: 100px;
-    height: 100px;
+    width: 62px;
+    height: 62px;
+    flex: 0 0 62px;
+    border-radius: 14px;
+  }
+
+  .avatar-container{
+    margin: 0 10px 0 0;
+  }
+
+  .role-info{
+    min-width: 0;
+    text-align: left;
   }
   
   .group-box{
-    padding: var(--spacing-md);
+    padding: 14px;
+    border-radius: 18px;
+  }
+
+  .group-box__title{
+    margin-bottom: 10px;
+  }
+
+  .description-section{
+    padding: 12px;
+    margin-top: 12px;
   }
   
   .member-box{
@@ -369,8 +406,9 @@
   }
   
   .avatar{
-    width: 80px;
-    height: 80px;
+    width: 56px;
+    height: 56px;
+    flex-basis: 56px;
   }
   
   .role-name{
@@ -406,8 +444,9 @@
   }
   
   .avatar{
-    width: 70px;
-    height: 70px;
+    width: 52px;
+    height: 52px;
+    flex-basis: 52px;
   }
   
   .role-name{

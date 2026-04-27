@@ -46,6 +46,9 @@
 .mainleft img {
     height: 100px;
     width: 100px;
+    object-fit: contain;
+    aspect-ratio: 1 / 1;
+    flex: 0 0 auto;
 }
 
 .mainright {
@@ -123,6 +126,7 @@
     
     .mainleft img {
         height: 90px;
+        width: 90px;
     }
     
     .infotext {
@@ -181,6 +185,7 @@
     
     .mainleft img {
         height: 80px;
+        width: 80px;
     }
     
     .title {
@@ -224,6 +229,7 @@
     
     .mainleft img {
         height: 60px;
+        width: 60px;
     }
     
     .title {
@@ -265,6 +271,7 @@
     
     .mainleft img {
         height: 50px;
+        width: 50px;
     }
     
     .title {

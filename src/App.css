@@ -32,6 +32,6 @@ footer {
 
 @media screen and (max-width: 768px) {
   .content {
-    padding-bottom: calc(var(--footer-height) * 0.8);
+    padding-bottom: 0;
   }
 }

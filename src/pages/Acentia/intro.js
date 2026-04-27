@@ -21,7 +21,7 @@ const Intro = () => {
             <section className="video-section">
                 <h3 className="video-title">2025년도 ACENTIA 공식 영상</h3>
                 <div className="video-wrapper">
-                    <video className="video-player" controls>
+                    <video className="video-player" controls preload="metadata" playsInline>
                         <source src="/videos/2025_acentia.mp4" type="video/mp4"/>
                         해당 브라우저는 비디오를 지원하지 않습니다.
                     </video>

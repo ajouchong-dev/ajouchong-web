@@ -48,6 +48,7 @@ import Policy from './pages/Utility/Policy/policy';
 import Intro from './pages/Acentia/intro';
 import Goods from './pages/Acentia/goods';
 import Record from './pages/Acentia/Record';
+import './styles/polish.css';
 
 function App() {
   return (

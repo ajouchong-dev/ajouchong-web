@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+﻿import React, { useState } from "react";
 import "./styles.css";
 
 /** 이미지 에러 시 기본 아바타로 교체 */
@@ -132,7 +132,7 @@ const Organization = () => {
         {
           role: "차장",
           name: "김찬호",
-          dept: "첨단신소재공학과(22)",
+          dept: "첨단신소재공학과(21)",
           photo: "/images/history/organization/members/김찬호.jpg",
         },
       ],
@@ -154,7 +154,7 @@ const Organization = () => {
         {
           role: "차장",
           name: "김정연",
-          dept: "미래모밀리티공학과(23)",
+          dept: "미래모빌리티공학과(23)",
           photo: "/images/history/organization/members/김정연.jpg",
         },
       ],
@@ -170,7 +170,7 @@ const Organization = () => {
           role: "국장",
           name: "염혜영",
           dept: "전자공학과(23)",
-          photo: "/images/history/organization/members/염혜영.jpg",
+          photo: "/images/history/organization/members/염혜영2.jpg",
         },
         {
           role: "차장",

@@ -75,6 +75,9 @@ const UPPER_LINKS_RIGHT = [
 const Header = () => {
     const [dropdown, setDropdown] = useState(null);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+    const [isMobileViewport, setIsMobileViewport] = useState(() => (
+        typeof window !== 'undefined' ? window.innerWidth <= 768 : false
+    ));
     const location = useLocation();
 
     const handleScroll = useCallback(() => {
@@ -217,6 +220,20 @@ const Header = () => {
         return () => window.removeEventListener('scroll', handleScroll);
     }, [location.pathname, handleScroll]);
 
+    useEffect(() => {
+        const handleResize = () => setIsMobileViewport(window.innerWidth <= 768);
+
+        handleResize();
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
+
+    useEffect(() => {
+        document.body.classList.toggle('mobile-menu-active', isMobileMenuOpen);
+
+        return () => document.body.classList.remove('mobile-menu-active');
+    }, [isMobileMenuOpen]);
+
     return (
         <header className="header">
             <div className="upper">
@@ -233,8 +250,31 @@ const Header = () => {
 
                 {renderNavigationMenu()}
 
-                <div className="hamburger-menu cursor-pointer" onClick={toggleMobileMenu}>
-                    {isMobileMenuOpen ? <X size={28} /> : <Menu size={28} />}
+                <div
+                    className="hamburger-menu cursor-pointer"
+                    onClick={toggleMobileMenu}
+                    style={isMobileViewport ? {
+                        position: 'fixed',
+                        top: 14,
+                        right: 14,
+                        display: 'grid',
+                        placeItems: 'center',
+                        width: 38,
+                        height: 38,
+                        borderRadius: 14,
+                        color: 'var(--brand-deep)',
+                        background: 'rgba(255, 255, 255, 0.94)',
+                        boxShadow: '0 8px 22px rgba(7, 67, 93, 0.1)'
+                    } : undefined}
+                >
+                    <span className={`hamburger-lines ${isMobileMenuOpen ? 'open' : ''}`}>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </span>
+                    <span className="hamburger-icon-fallback">
+                        {isMobileMenuOpen ? <X size={28} /> : <Menu size={28} />}
+                    </span>
                 </div>
 
                 {renderMobileMenu()}
@@ -243,6 +283,18 @@ const Header = () => {
                     <Login />
                 </div>
             </div>
+            <button
+                type="button"
+                className="mobile-menu-toggle-visual"
+                onClick={toggleMobileMenu}
+                aria-label="메뉴"
+            >
+                <span className={`hamburger-lines ${isMobileMenuOpen ? 'open' : ''}`}>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </span>
+            </button>
         </header>
     );
 };

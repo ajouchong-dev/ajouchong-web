@@ -6,7 +6,10 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: var(--text-primary);
-  background-color: var(--bg-primary);
+  background:
+    radial-gradient(circle at top left, rgba(207, 255, 223, 0.36), transparent 28rem),
+    radial-gradient(circle at 90% 12%, rgba(90, 198, 207, 0.22), transparent 24rem),
+    linear-gradient(180deg, #f7fdff 0%, #ffffff 42%, #f7fbfd 100%);
 }
 
 code {
@@ -38,4 +41,9 @@ button {
 
 * {
   box-sizing: border-box;
+}
+
+::selection {
+  background: rgba(23, 167, 176, 0.24);
+  color: var(--text-primary);
 }

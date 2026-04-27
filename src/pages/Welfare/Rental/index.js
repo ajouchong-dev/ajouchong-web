@@ -2,7 +2,6 @@ import "./styles.css";
 import React, { useEffect, useMemo, useState } from "react";
 import axios from "axios";
 
-const INQUIRY_FORM_URL = "https://forms.gle/V1hH3Gf5uyuC7CVp6";
 const RENTAL_GALLERY_IMAGES = [
     "/images/rental/ausum1.jpg",
     "/images/rental/ausum2.jpg",
@@ -94,10 +93,6 @@ const Rental = () => {
         };
     }, [items]);
 
-    const openExternal = (url) => {
-        window.open(url, "_blank", "noopener,noreferrer");
-    };
-
     return (
         <div className="context">
             <div className="contextTitle">대여사업</div>
@@ -108,11 +103,6 @@ const Rental = () => {
                     <div className="rental-hero-main">
                         <h2>필요한 물품, 지금 바로 대여 신청</h2>
                         <p>검색하고, 수량 확인하고, 바로 신청하세요. 신청 전 체크리스트까지 한 화면에서 확인할 수 있습니다.</p>
-                        <div className="rental-cta-group">
-                            <button className="rental-cta secondary" onClick={() => openExternal(INQUIRY_FORM_URL)}>
-                                문의하기
-                            </button>
-                        </div>
                     </div>
                     <div className="rental-summary-grid">
                         <article className="rental-summary-card">

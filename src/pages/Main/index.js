@@ -2,6 +2,7 @@ import React, { useEffect, useState, useCallback } from 'react';
 import Slider from 'react-slick';
 import axios from 'axios';
 import { useNavigate, Link } from 'react-router-dom';
+import { Bell, FileText, HeartHandshake, MapPinned, MessageSquare, Sparkles, ArrowRight } from 'lucide-react';
 import './styles.css';
 
 const apiClient = axios.create({
@@ -19,6 +20,15 @@ const SLIDER_IMAGES = [
     "/images/banner/acentia_3.jpeg",
 ];
 
+const QUICK_LINKS = [
+    { title: '소개', path: '/introduction/about', icon: MapPinned },
+    { title: '소식', path: '/news/notice', icon: Bell },
+    { title: '소통', path: '/communication/qna', icon: MessageSquare },
+    { title: '자료실', path: '/resources/bylaws', icon: FileText },
+    { title: '학생복지', path: '/welfare/promotion', icon: HeartHandshake },
+    { title: 'ACENTIA', path: '/acentia/intro', icon: Sparkles },
+];
+
 const Main = () => {
     const [notices, setNotices] = useState([]);
     const navigate = useNavigate();
@@ -31,6 +41,7 @@ const Main = () => {
         slidesToScroll: 1,
         autoplay: true,
         autoplaySpeed: 10000,
+        pauseOnHover: false,
     };
 
     const formatNoticeData = (notice) => ({
@@ -90,8 +101,32 @@ const Main = () => {
                 <div className="title2">
                     <p>AJOU UNIV.</p>
                 </div>
+                <div className="hero-orbit hero-orbit-1"></div>
+                <div className="hero-orbit hero-orbit-2"></div>
+                <div className="hero-scroll-line"></div>
             </div>
         </div>
+    );
+
+    const renderQuickLinks = () => (
+        <section className="main-link-section">
+            <div className="main-link-grid">
+                {QUICK_LINKS.map(({ title, path, icon: Icon }, index) => (
+                    <Link
+                        key={title}
+                        to={path}
+                        className="main-link-card"
+                        style={{ '--delay': `${index * 70}ms` }}
+                    >
+                        <span className="main-link-icon">
+                            <Icon size={24} strokeWidth={2.2} />
+                        </span>
+                        <span className="main-link-title">{title}</span>
+                        <ArrowRight className="main-link-arrow" size={18} strokeWidth={2.4} />
+                    </Link>
+                ))}
+            </div>
+        </section>
     );
 
     const renderNoticeCard = (notice, index) => (
@@ -174,6 +209,7 @@ const Main = () => {
     return (
         <div className="root">
             {renderSlider()}
+            {renderQuickLinks()}
             {renderMobileRentalShortcut()}
             {renderNoticesSection()}
         </div>
