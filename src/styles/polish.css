@@ -1279,3 +1279,205 @@ select:focus {
     grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
   }
 }
+
+/* Final responsive pass: avoid clipping and make sparse states feel intentional. */
+html,
+body,
+#root,
+.App {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+img,
+video,
+iframe,
+table {
+  max-width: 100%;
+}
+
+.context,
+.content,
+.aboutTextBox,
+.aboutGrid,
+.rental-v2-container,
+.promotion-container,
+.proceeding-v2-container,
+.linkhub-page,
+.admin-page {
+  max-width: 100%;
+}
+
+.link-empty,
+.promotion-message,
+.rental-load-msg,
+.proceeding-v2-state,
+.admin-empty,
+.notices-container > p {
+  width: 100%;
+  min-height: 150px;
+  margin: 12px 0;
+  padding: 28px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  border: 1px solid rgba(23, 167, 176, 0.18);
+  border-radius: 20px;
+  background:
+    radial-gradient(circle at 20% 10%, rgba(207, 255, 223, 0.88), transparent 12rem),
+    linear-gradient(135deg, rgba(255, 255, 255, 0.92), rgba(244, 253, 255, 0.96));
+  box-shadow: 0 16px 36px rgba(7, 67, 93, 0.08);
+  color: var(--text-primary);
+  font-weight: 800;
+  line-height: 1.55;
+}
+
+.promotion-message.error,
+.rental-load-msg.error,
+.proceeding-v2-state.error {
+  border-color: rgba(180, 35, 24, 0.2);
+  background:
+    radial-gradient(circle at 15% 5%, rgba(255, 226, 221, 0.82), transparent 11rem),
+    #fffafa;
+}
+
+@media (max-width: 768px) {
+  .context {
+    width: min(100% - 24px, 560px);
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+
+  .contextTitle,
+  .breadcrumb {
+    max-width: calc(100vw - 32px);
+  }
+
+  .aboutTextBox {
+    width: 100%;
+    min-width: 0;
+    overflow: hidden;
+  }
+
+  .aboutTextBox p,
+  .aboutTextBox li,
+  .rental-item-footnote,
+  .rental-updated-at,
+  .proceeding-v2-state,
+  .promotion-message,
+  .link-empty {
+    word-break: keep-all;
+    overflow-wrap: anywhere;
+  }
+
+  .rental-v2-container {
+    width: 100%;
+    padding: 16px 12px;
+    overflow: hidden;
+  }
+
+  .rental-summary-grid,
+  .rental-card-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 10px;
+  }
+
+  .rental-summary-card,
+  .rental-item-card {
+    min-width: 0;
+  }
+
+  .rental-table-wrap {
+    padding: 12px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .footer {
+    padding: 24px 14px 34px !important;
+  }
+
+  .footer .main {
+    gap: 10px !important;
+    width: min(100% - 20px, 420px) !important;
+  }
+
+  .footer .mainleft {
+    margin: 0 !important;
+  }
+
+  .footer .mainleft img {
+    width: 54px !important;
+    height: 54px !important;
+  }
+
+  .footer .title {
+    margin: 8px 0 !important;
+    font-size: 1rem !important;
+  }
+
+  .footer .column {
+    margin: 6px 0 !important;
+  }
+
+  .footer .info {
+    gap: 5px !important;
+    margin: 6px 0 !important;
+  }
+
+  .footer .infotext,
+  .footer .address,
+  .footer .developer,
+  .footer .copyright {
+    font-size: 0.72rem !important;
+    line-height: 1.5 !important;
+  }
+
+  .feedback-widget {
+    right: 10px !important;
+    bottom: 10px !important;
+  }
+
+  .feedback-fab {
+    width: 48px !important;
+    height: 48px !important;
+    font-size: 25px !important;
+    box-shadow: 0 8px 20px rgba(23, 92, 110, 0.22) !important;
+  }
+
+  .feedback-panel {
+    right: 0 !important;
+    bottom: 58px !important;
+    max-height: min(78vh, 560px);
+    overflow-y: auto;
+  }
+
+  .link-empty,
+  .promotion-message,
+  .rental-load-msg,
+  .proceeding-v2-state,
+  .admin-empty,
+  .notices-container > p {
+    min-height: 118px;
+    padding: 22px 16px;
+    border-radius: 18px;
+  }
+}
+
+@media (max-width: 480px) {
+  .rental-summary-grid,
+  .rental-card-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .footer {
+    padding-bottom: 70px !important;
+  }
+}
