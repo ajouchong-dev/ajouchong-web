@@ -154,7 +154,7 @@ const Organization = () => {
         {
           role: "차장",
           name: "김정연",
-          dept: "미래모밀리티공학과(23)",
+          dept: "미래모빌리티공학과(23)",
           photo: "/images/history/organization/members/김정연.jpg",
         },
       ],

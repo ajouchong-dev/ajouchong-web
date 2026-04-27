@@ -1,40 +1,49 @@
 :root {
-    --primary-color: #0072CE;
-    --secondary-color: #92C1E9;
+    --primary-color: #17a7b0;
+    --secondary-color: #5ac6cf;
     --accent-color: #0072CE;
-    --primary-dark: #0072CE;
-    --secondary-dark: #92C1E9;
+    --primary-dark: #0b6f83;
+    --secondary-dark: #1596a5;
+    --brand-mint: #cfffdf;
+    --brand-cyan: #5ac6cf;
+    --brand-teal: #17a7b0;
+    --brand-blue: #0072CE;
+    --brand-deep: #123b72;
+    --brand-gradient: linear-gradient(90deg, #cfffdf 0%, #5ac6cf 50%, #17a7b0 100%);
+    --brand-gradient-strong: linear-gradient(135deg, #0072CE 0%, #17a7b0 46%, #cfffdf 100%);
+    --brand-surface: linear-gradient(135deg, rgba(255, 255, 255, 0.94) 0%, rgba(242, 253, 255, 0.9) 100%);
     
     /* 텍스트 색상 */
-    --text-primary: #343a40;
-    --text-secondary: #565b61;
-    --text-light: #5d6b73;
-    --text-muted: #636363;
+    --text-primary: #182532;
+    --text-secondary: #435465;
+    --text-light: #667985;
+    --text-muted: #647280;
     --text-white: #ffffff;
     --text-light-gray: #a0a0a0;
     
     /* 배경 색상 */
     --bg-primary: #ffffff;
-    --bg-secondary: #f8f9fa;
+    --bg-secondary: #f4fbfd;
     --bg-dark: #282c34;
     --bg-light: #e9ecef;
     
     /* 버튼 색상 */
-    --button-primary: #282c34;
+    --button-primary: #182532;
     --button-primary-text: #e9ecef;
     --button-hover: #ffffff;
     --button-hover-text: #353535;
     
     /* 테두리 색상 */
-    --border-primary: #92C1E9;
-    --border-light: #e9ecef;
+    --border-primary: rgba(23, 167, 176, 0.28);
+    --border-light: rgba(15, 91, 122, 0.12);
     
     /* 에러 색상 */
     --error-color: #dc3545;
     
     /* 그림자 */
-    --shadow-light: 0 4px 6px rgba(0, 0, 0, 0.1);
-    --shadow-medium: 0 6px 12px rgba(0, 0, 0, 0.15);
+    --shadow-light: 0 10px 28px rgba(7, 67, 93, 0.1);
+    --shadow-medium: 0 18px 44px rgba(7, 67, 93, 0.16);
+    --shadow-glow: 0 18px 52px rgba(23, 167, 176, 0.24);
     
     /* 전환 효과 */
     --transition-fast: all 0.2s ease;
@@ -42,9 +51,9 @@
     --transition-slow: all 0.5s ease;
     
     /* 테두리 반경 */
-    --radius-small: 5px;
-    --radius-normal: 10px;
-    --radius-large: 50px;
+    --radius-small: 6px;
+    --radius-normal: 12px;
+    --radius-large: 24px;
     
     /* 간격 */
     --spacing-xs: 4px;
