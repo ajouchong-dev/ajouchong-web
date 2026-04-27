@@ -1,4 +1,4 @@
-﻿import React, { useState } from "react";
+import React, { useState } from "react";
 import "./styles.css";
 
 /** 이미지 에러 시 기본 아바타로 교체 */
