@@ -1,84 +1,16 @@
-@import '../styles.css';
-
-@media screen and (max-width: 768px) {
-    .audit-content {
-        max-width: 600px;
-        padding: var(--spacing-sm);
-    }
-    
-    .audit-title {
-        font-size: var(--font-base);
-        margin-bottom: var(--spacing-sm);
-    }
-    
-    .audit-item {
-        padding: var(--spacing-sm);
-        margin-bottom: var(--spacing-sm);
-    }
-    
-    .audit-link {
-        font-size: var(--font-sm);
-    }
-    
-    .audit-date {
-        font-size: var(--font-xs);
-    }
-    
-    .audit-type {
-        font-size: var(--font-xs);
-        padding: var(--spacing-xs);
-    }
+/* 감사자료: 외부 폴더로 가는 링크 한 줄 (문서 줄 모양은 ../styles.css) */
+.audit-list {
+    max-width: var(--max-width-prose);
 }
 
-@media screen and (max-width: 480px) {
-    .audit-content {
-        max-width: 100%;
-        padding: var(--spacing-xs);
-    }
-    
-    .audit-title {
-        font-size: var(--font-sm);
-        margin-bottom: var(--spacing-xs);
-    }
-    
-    .audit-item {
-        padding: var(--spacing-xs);
-        margin-bottom: var(--spacing-xs);
-    }
-    
-    .audit-link {
-        font-size: var(--font-xs);
-    }
-    
-    .audit-date {
-        font-size: var(--font-xs);
-        margin-top: var(--spacing-xs);
-    }
-    
-    .audit-type {
-        font-size: var(--font-xs);
-        padding: var(--spacing-xs);
-    }
+.audit-link-arrow {
+    flex: 0 0 auto;
+    margin-left: auto;
+    color: var(--ink-4);
+    transition: transform 0.15s var(--ease), color 0.15s var(--ease);
 }
 
-@media screen and (max-width: 360px) {
-    .audit-content {
-        padding: var(--spacing-xs);
-    }
-    
-    .audit-title {
-        font-size: var(--font-xs);
-    }
-    
-    .audit-item {
-        padding: var(--spacing-xs);
-    }
-    
-    .audit-link {
-        font-size: var(--font-xs);
-    }
-    
-    .audit-type {
-        font-size: var(--font-xs);
-    }
+.audit-link:hover .audit-link-arrow {
+    color: var(--brand-teal-ink);
+    transform: translate(2px, -2px);
 }

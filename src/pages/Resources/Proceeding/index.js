@@ -1,7 +1,8 @@
+import "../styles.css";
 import "./styles.css";
 import React, { useEffect, useMemo, useState } from "react";
 import axios from "axios";
-import { Download, ExternalLink, FileText, FolderClosed } from "lucide-react";
+import { Download, ExternalLink, FileText } from "lucide-react";
 
 const apiClient = axios.create({
     baseURL: process.env.REACT_APP_API_URL || "https://api.ajouchong.com",
@@ -51,67 +52,93 @@ const Proceeding = () => {
             <div className="contextTitle">회의록</div>
             <hr className="titleSeparator" />
 
-            <div className="proceeding-v2-layout">
-                <section className="proceeding-v2-card">
-                    <h2>위원회 선택</h2>
-                    {loading && <p className="proceeding-v2-state">불러오는 중...</p>}
-                    {!loading && error && <p className="proceeding-v2-state error">{error}</p>}
-                    {!loading && !error && categories.length === 0 && (
-                        <p className="proceeding-v2-state">등록된 회의록이 없습니다.</p>
-                    )}
+            <section className="proceeding-filter" aria-labelledby="proceeding-filter-title">
+                <h2 id="proceeding-filter-title" className="proceeding-filter-title">위원회 선택</h2>
+                {loading && <p className="loading-text">불러오는 중...</p>}
+                {!loading && error && <p className="ui-empty proceeding-error" role="alert">{error}</p>}
+                {!loading && !error && categories.length === 0 && (
+                    <p className="ui-empty">등록된 회의록이 없습니다.</p>
+                )}
 
-                    <ul className="proceeding-category-list">
+                {categories.length > 0 && (
+                    <ul className="proceeding-chip-list">
                         {categories.map((category) => (
                             <li key={category.id}>
                                 <button
                                     type="button"
-                                    className={`proceeding-category-item ${selectedCategoryId === category.id ? "active" : ""}`}
+                                    className={`ui-chip ${selectedCategoryId === category.id ? "is-active" : ""}`}
+                                    aria-pressed={selectedCategoryId === category.id}
                                     onClick={() => setSelectedCategoryId(category.id)}
                                 >
-                                    <span className="proceeding-icon-wrap">
-                                        <FolderClosed size={16} />
-                                    </span>
-                                    <span className="proceeding-category-text">
-                                        <strong>{category.name}</strong>
-                                        {category.description && <small>{category.description}</small>}
-                                    </span>
+                                    {category.name}
                                 </button>
                             </li>
                         ))}
                     </ul>
-                </section>
+                )}
+            </section>
 
-                <section className="proceeding-v2-card">
-                    <h2>{selectedCategory?.name || "회의록 목록"}</h2>
-                    {!loading && !error && selectedCategory && documents.length === 0 && (
-                        <p className="proceeding-v2-state">이 카테고리에 문서가 없습니다.</p>
+            {/* 선택된 위원회가 있을 때만 문서 영역을 그린다 */}
+            {selectedCategory && (
+                <section className="proceeding-documents">
+                    <header className="proceeding-documents-head">
+                        <div className="proceeding-documents-heading">
+                            <h2 className="proceeding-documents-title">{selectedCategory.name}</h2>
+                            {selectedCategory.description && (
+                                <p className="proceeding-documents-desc">{selectedCategory.description}</p>
+                            )}
+                        </div>
+                        {documents.length > 0 && (
+                            <span className="proceeding-documents-count">총 {documents.length}건</span>
+                        )}
+                    </header>
+
+                    {!loading && !error && documents.length === 0 && (
+                        <p className="ui-empty">이 카테고리에 문서가 없습니다.</p>
                     )}
 
-                    <ul className="proceeding-document-list">
-                        {documents.map((doc) => (
-                            <li key={doc.id} className="proceeding-document-item">
-                                <div className="proceeding-doc-main">
-                                    <span className="proceeding-icon-wrap red">
-                                        <FileText size={16} />
-                                    </span>
-                                    <div className="proceeding-doc-text">
-                                        <strong>{doc.title}</strong>
-                                        <small>{formatDate(doc.meetingDate)}</small>
+                    {documents.length > 0 && (
+                        <ul className="resources-doc-list">
+                            {documents.map((doc) => (
+                                <li key={doc.id} className="resources-doc">
+                                    <div className="resources-doc-main">
+                                        <span className="resources-doc-icon" aria-hidden="true">
+                                            <FileText size={18} />
+                                        </span>
+                                        <div className="resources-doc-text">
+                                            <strong className="resources-doc-title">{doc.title}</strong>
+                                            <small className="resources-doc-meta">{formatDate(doc.meetingDate)}</small>
+                                        </div>
                                     </div>
-                                </div>
-                                <div className="proceeding-doc-actions">
-                                    <a href={doc.fileUrl} target="_blank" rel="noopener noreferrer" aria-label="문서 열기">
-                                        <ExternalLink size={16} />
-                                    </a>
-                                    <a href={doc.fileUrl} target="_blank" rel="noopener noreferrer" download aria-label="문서 다운로드">
-                                        <Download size={16} />
-                                    </a>
-                                </div>
-                            </li>
-                        ))}
-                    </ul>
+                                    <div className="resources-doc-actions">
+                                        <a
+                                            href={doc.fileUrl}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className="resources-doc-action"
+                                            aria-label="문서 열기"
+                                            title="문서 열기"
+                                        >
+                                            <ExternalLink size={18} />
+                                        </a>
+                                        <a
+                                            href={doc.fileUrl}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            download
+                                            className="resources-doc-action"
+                                            aria-label="문서 다운로드"
+                                            title="문서 다운로드"
+                                        >
+                                            <Download size={18} />
+                                        </a>
+                                    </div>
+                                </li>
+                            ))}
+                        </ul>
+                    )}
                 </section>
-            </div>
+            )}
         </div>
     );
 };

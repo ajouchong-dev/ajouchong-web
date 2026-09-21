@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { ArrowUpRight, Info, MapPin } from 'lucide-react';
 import './styles.css';
 
 const apiClient = axios.create({
@@ -29,51 +30,64 @@ const Promotion = () => {
     }, []);
 
     const renderPromotionContainer = () => (
-        <div className="promotion-container">
-            <section className="promotion-header-card">
+        <div className="promo-page">
+            <section className="promo-intro">
                 <h2>총학생회 제휴사업 안내</h2>
                 <p>아래 제휴 혜택은 수시로 업데이트됩니다. 방문 전 세부 조건을 확인해주세요.</p>
             </section>
 
-            {loading && <p className="promotion-message">불러오는 중...</p>}
-            {error && <p className="promotion-message error">{error}</p>}
+            {loading && (
+                <div className="promo-grid" role="status" aria-label="불러오는 중...">
+                    {[0, 1, 2, 3].map((n) => (
+                        <div className="promo-card is-loading" key={n} aria-hidden="true">
+                            <div className="promo-skeleton-line is-short ui-skeleton" />
+                            <div className="promo-skeleton-line is-tall ui-skeleton" />
+                            <div className="promo-skeleton-line ui-skeleton" />
+                        </div>
+                    ))}
+                </div>
+            )}
+            {error && <p className="ui-empty promo-message is-error" role="alert">{error}</p>}
 
             {!loading && !error && partners.length === 0 && (
-                <p className="promotion-message">등록된 제휴 항목이 없습니다.</p>
+                <p className="ui-empty promo-message">등록된 제휴 항목이 없습니다.</p>
             )}
 
             {!loading && !error && partners.length > 0 && (
-                <div className="promotion-table-wrap">
-                    <table className="promotion-table" aria-label="제휴사업 표">
-                        <thead>
-                            <tr>
-                                <th>업체명</th>
-                                <th>카테고리</th>
-                                <th>혜택</th>
-                                <th>위치</th>
-                                <th>안내</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {partners.map((item) => (
-                                <tr key={item.id}>
-                                    <td className="promotion-name-cell">
-                                        <strong>{item.name}</strong>
-                                        {item.homepageUrl && (
-                                            <a href={item.homepageUrl} target="_blank" rel="noopener noreferrer">
-                                                공식 링크
-                                            </a>
-                                        )}
-                                    </td>
-                                    <td>{item.category}</td>
-                                    <td>{item.benefit}</td>
-                                    <td>{item.location}</td>
-                                    <td>{item.note || '-'}</td>
-                                </tr>
-                            ))}
-                        </tbody>
-                    </table>
-                </div>
+                <ul className="promo-grid" aria-label="제휴사업 목록">
+                    {partners.map((item) => (
+                        <li className="promo-card" key={item.id}>
+                            <div className="promo-card-head">
+                                {item.category && <span className="ui-badge is-brand">{item.category}</span>}
+                                <h3 className="promo-card-name">{item.name}</h3>
+                            </div>
+                            <p className="promo-card-benefit">{item.benefit}</p>
+                            <dl className="promo-card-meta">
+                                {item.location && (
+                                    <div>
+                                        <dt><MapPin size={15} aria-hidden="true" />위치</dt>
+                                        <dd>{item.location}</dd>
+                                    </div>
+                                )}
+                                <div>
+                                    <dt><Info size={15} aria-hidden="true" />안내</dt>
+                                    <dd>{item.note || '-'}</dd>
+                                </div>
+                            </dl>
+                            {item.homepageUrl && (
+                                <a
+                                    className="promo-card-link"
+                                    href={item.homepageUrl}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                >
+                                    공식 링크
+                                    <ArrowUpRight size={16} aria-hidden="true" />
+                                </a>
+                            )}
+                        </li>
+                    ))}
+                </ul>
             )}
         </div>
     );

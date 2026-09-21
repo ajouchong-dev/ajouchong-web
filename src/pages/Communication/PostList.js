@@ -1,12 +1,15 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { PenLine, Search } from 'lucide-react';
+import './styles.css';
 
 const apiClient = axios.create({
     baseURL: process.env.REACT_APP_API_URL || 'https://api.ajouchong.com'
 });
 
 const POSTS_PER_PAGE = 9;
+const SKELETON_ROWS = 5;
 
 const PostList = ({ 
     title, 
@@ -24,6 +27,7 @@ const PostList = ({
     const [filteredPosts, setFilteredPosts] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [selectedPostId, setSelectedPostId] = useState(null);
+    const [isLoading, setIsLoading] = useState(true); // 표시용: 첫 로딩 동안 스켈레톤
     const navigate = useNavigate();
 
     const fetchPosts = useCallback(async () => {
@@ -41,6 +45,8 @@ const PostList = ({
             }
         } catch (error) {
             console.error('API 요청 오류:', error);
+        } finally {
+            setIsLoading(false);
         }
     }, [apiEndpoint, formatPostData]);
 
@@ -113,10 +119,20 @@ const PostList = ({
                 key={index + 1}
                 onClick={() => handlePageClick(index + 1)}
                 className={`pagination-button ${currentPage === index + 1 ? 'active' : ''}`}
+                aria-current={currentPage === index + 1 ? 'page' : undefined}
             >
                 {index + 1}
             </button>
         ));
+    };
+
+    // 키보드로도 행을 열 수 있게 한다
+    const handleRowKeyDown = (e, postId) => {
+        if (e.target !== e.currentTarget) return;
+        if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            handlePostClick(postId);
+        }
     };
 
     const renderTableRows = () => {
@@ -125,56 +141,95 @@ const PostList = ({
         const currentPosts = filteredPosts.slice(indexOfFirstPost, indexOfLastPost);
 
         return currentPosts.map((post, index) => (
-            <tr key={post.id} onClick={() => handlePostClick(post.id)}>
-                <td>{filteredPosts.length - (indexOfFirstPost + index)}</td>
-                <td>{post.title}</td>
-                <td>{maskName ? maskName(post.author) : post.author}</td>
-                <td>{post.date}</td>
-                <td>
+            <tr
+                key={post.id}
+                className="clickable-row board-row"
+                onClick={() => handlePostClick(post.id)}
+                onKeyDown={(e) => handleRowKeyDown(e, post.id)}
+                tabIndex={0}
+            >
+                <td className="board-cell is-num">{filteredPosts.length - (indexOfFirstPost + index)}</td>
+                <td className="board-cell is-title">
+                    <span className="board-title-text">{post.title}</span>
+                </td>
+                <td className="board-cell is-author">{maskName ? maskName(post.author) : post.author}</td>
+                <td className="board-cell is-date">{post.date}</td>
+                <td className="board-cell is-status">
                     {renderStatusCell ? renderStatusCell(post) : post.status}
                 </td>
             </tr>
         ));
     };
 
+    const renderSkeletonRows = () => (
+        Array.from({ length: SKELETON_ROWS }, (_, index) => (
+            <tr key={`skeleton-${index}`} className="board-row is-skeleton" aria-hidden="true">
+                <td className="board-cell is-num"><span className="board-skeleton is-tiny ui-skeleton" /></td>
+                <td className="board-cell is-title"><span className="board-skeleton ui-skeleton" /></td>
+                <td className="board-cell is-author"><span className="board-skeleton is-short ui-skeleton" /></td>
+                <td className="board-cell is-date"><span className="board-skeleton is-short ui-skeleton" /></td>
+                <td className="board-cell is-status"><span className="board-skeleton is-tiny ui-skeleton" /></td>
+            </tr>
+        ))
+    );
+
     const renderPostList = () => (
         <>
-            <div className="controls-container">
-                <div className="search-container">
-                    <input
-                        type="text"
-                        placeholder="제목을 입력하여 검색"
-                        value={searchQuery}
-                        onChange={handleSearchChange}
-                        onKeyPress={handleKeyPress}
-                        className="search-input"
-                    />
-                    <button onClick={handleSearch} className="search-button">검색</button>
+            <div className="board-toolbar">
+                <div className="board-search" role="search">
+                    <div className="board-search-field">
+                        <Search className="board-search-icon" size={18} aria-hidden="true" />
+                        <input
+                            type="text"
+                            placeholder="제목을 입력하여 검색"
+                            aria-label={`${title} 제목 검색`}
+                            value={searchQuery}
+                            onChange={handleSearchChange}
+                            onKeyPress={handleKeyPress}
+                            className="ui-input board-search-input"
+                        />
+                    </div>
+                    <button type="button" onClick={handleSearch} className="ui-btn">검색</button>
                 </div>
 
-                <div className="write-container">
-                    <button className="write-button" onClick={goToWritePage}>
-                        글 작성하기
-                    </button>
-                </div>
+                <button type="button" className="ui-btn is-primary board-write-btn" onClick={goToWritePage}>
+                    <PenLine size={16} aria-hidden="true" />
+                    글 작성
+                </button>
             </div>
 
-            <table className="table">
-                <thead>
-                    <tr>
-                        {tableHeaders.map((header, index) => (
-                            <th key={index}>{header}</th>
-                        ))}
-                    </tr>
-                </thead>
-                <tbody>
-                    {renderTableRows()}
-                </tbody>
-            </table>
+            {!isLoading && (
+                <p className="board-count">
+                    총 <strong>{filteredPosts.length}</strong>건
+                </p>
+            )}
 
-            <div className="pagination">
+            {!isLoading && filteredPosts.length === 0 ? (
+                <div className="ui-empty">
+                    {posts.length === 0
+                        ? '아직 등록된 글이 없습니다. 첫 글을 작성해 보세요.'
+                        : '일치하는 게시글이 없습니다.'}
+                </div>
+            ) : (
+                <div className="table-container">
+                    <table className="table board-table" aria-busy={isLoading}>
+                        <thead>
+                            <tr>
+                                {tableHeaders.map((header, index) => (
+                                    <th key={index} className={`board-head is-col-${index}`}>{header}</th>
+                                ))}
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {isLoading ? renderSkeletonRows() : renderTableRows()}
+                        </tbody>
+                    </table>
+                </div>
+            )}
+
+            <nav className="pagination" aria-label={`${title} 페이지`}>
                 {renderPagination()}
-            </div>
+            </nav>
         </>
     );
 
@@ -190,9 +245,7 @@ const PostList = ({
             {selectedPostId && DetailComponent ? (
                 <DetailComponent postId={selectedPostId} onBack={handleBackToList} />
             ) : (
-                <div className="table-container">
-                    {renderPostList()}
-                </div>
+                renderPostList()
             )}
         </div>
     );

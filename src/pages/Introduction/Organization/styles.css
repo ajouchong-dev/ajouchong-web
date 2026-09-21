@@ -1,475 +1,230 @@
-.org-panel{
-  margin: var(--spacing-lg) auto var(--spacing-xxl);
-  max-width: 900px;
-  padding: var(--spacing-lg) var(--spacing-md) var(--spacing-xl);
-  border-radius: var(--radius-normal);
+@import '../styles.css';
+
+/* ───────── 부서 바로가기 (헤더 아래에 붙는 칩 줄) ───────── */
+.org-nav {
+  position: sticky;
+  top: var(--header-height);
+  z-index: 10;
+  margin: 0 calc(var(--gutter) * -1);
+  border-bottom: 1px solid var(--line);
+  background: var(--paper);
 }
 
-.org-grid{
+.org-nav__scroll {
+  position: relative;
+  display: flex;
+  gap: 8px;
+  padding: 10px var(--gutter);
+  overflow-x: auto;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+
+.org-nav__scroll::-webkit-scrollbar {
+  display: none;
+}
+
+.org-nav .org-nav__chip {
+  flex: none;
+  min-height: 44px;
+}
+
+/* ───────── 구역: 왼쪽 설명 / 오른쪽 사람들 ───────── */
+.org-section {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-template-rows: auto auto auto auto auto;
-  gap: var(--spacing-md);
+  grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+  grid-template-rows: auto 1fr;
+  column-gap: clamp(20px, 4vw, 56px);
   align-items: start;
+  padding: clamp(32px, 5vw, 56px) 0;
+  border-bottom: 1px solid var(--line);
+  /* 바로가기 줄 높이만큼 (헤더 높이는 html의 scroll-padding-top이 처리) */
+  scroll-margin-top: 72px;
 }
 
-/* 회장단 - 첫 번째 행, 첫 번째 열에 배치 */
-.org-grid .group-box:first-child{
-  grid-column: 1;
-  grid-row: 1;
-  border-color: var(--primary-color);
+.org-section__title {
+  margin: 0;
+  color: var(--ink);
+  font-size: clamp(1.25rem, 1.1rem + 0.6vw, 1.5rem);
+  font-weight: 700;
+  line-height: 1.3;
+  letter-spacing: -0.02em;
 }
 
-/* 나머지 국들 - 2개씩 배치 */
-.org-grid .group-box:nth-child(2){
-  grid-column: 2;
-  grid-row: 1;
+.org-section--lead .org-section__title {
+  font-size: clamp(1.25rem, 1.1rem + 0.5vw, 1.5rem);
+  font-weight: 800;
+  letter-spacing: -0.03em;
 }
 
-.org-grid .group-box:nth-child(3){
-  grid-column: 1;
-  grid-row: 2;
-}
-
-.org-grid .group-box:nth-child(4){
-  grid-column: 2;
-  grid-row: 2;
-}
-
-.org-grid .group-box:nth-child(5){
-  grid-column: 1;
-  grid-row: 3;
-}
-
-.org-grid .group-box:nth-child(6){
-  grid-column: 2;
-  grid-row: 3;
-}
-
-.org-grid .group-box:nth-child(7){
-  grid-column: 1;
-  grid-row: 4;
-}
-
-.org-grid .group-box:nth-child(8){
-  grid-column: 2;
-  grid-row: 4;
-}
-
-.group-box{
-  background: var(--bg-primary);
-  border: 1px solid var(--secondary-color);
-  border-radius: var(--radius-small);
-  box-shadow: var(--shadow-light);
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  padding: var(--spacing-md);
-  height: fit-content;
-  transition: var(--transition-normal);
-}
-
-.org-grid .group-box:not(:first-child){
-  display: flex;
-  flex-direction: column;
-}
-
-.org-grid .group-box:first-child{
-  height: fit-content;
-}
-
-.group-box__title{
-  color: var(--text-primary);
-  font-weight: bold;
-  text-align: center;
-  padding: 0 0 var(--spacing-md) 0;
-  font-size: var(--font-lg);
-}
-
-.roles-container{
-  display: flex;
-  justify-content: space-around;
-  align-items: flex-start;
-  gap: var(--spacing-md);
-  margin-bottom: var(--spacing-md);
-}
-
-.role-item{
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  flex: 1;
-  max-width: 200px;
-}
-
-.avatar-container{
-  margin-bottom: var(--spacing-sm);
-}
-
-.avatar{
-  width: 120px;
-  height: 120px;
-  border-radius: var(--radius-small);
-  object-fit: cover;
-  border: 1px solid rgba(0,0,0,.1);
-  background: var(--bg-secondary);
-}
-
-.role-info{
-  text-align: center;
-}
-
-.role-name{
-  font-weight: bold;
-  font-size: var(--font-base);
-  color: var(--text-primary);
-  margin-bottom: var(--spacing-xs);
-}
-
-.role-dept{
-  font-size: var(--font-sm);
-  color: var(--text-secondary);
-}
-
-.description-section{
-  margin: var(--spacing-sm) 0;
-  flex-shrink: 0;
-}
-
-.description-line{
-  display: flex;
-  align-items: center;
-  gap: var(--spacing-sm);
-}
-
-.line-bar{
-  width: 4px;
-  height: 16px;
-  background-color: var(--text-primary);
-  border-radius: 2px;
-}
-
-.description-text{
-  font-size: var(--font-sm);
-  color: var(--text-secondary);
-  line-height: 1.5;
-}
-
-.member-section{
-  margin-top: var(--spacing-md);
-  flex-grow: 1;
-  display: flex;
-  flex-direction: column;
-}
-
-.member-box{
-  border: 1px solid var(--border-light);
-  border-radius: var(--radius-small);
-  padding: var(--spacing-md);
-  flex-grow: 1;
-  display: flex;
-  flex-direction: column;
-  max-height: fit-content;
-}
-
-.member-title{
-  font-weight: bold;
-  font-size: var(--font-base);
-  color: var(--text-primary);
-  margin-bottom: var(--spacing-sm);
-  text-align: left;
-}
-
-.member-list{
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  flex-grow: 1;
-  overflow-y: auto;
-  min-height: fit-content;
-}
-
-/* 2열 배치 스타일 */
-.member-list.two-columns{
-  flex-direction: row;
-  gap: var(--spacing-xs);
-  justify-content: space-between;
-}
-
-.member-column{
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  flex: 1;
-}
-
-.member-item{
-  font-size: var(--font-sm);
-  color: var(--text-secondary);
-  line-height: 1.4;
-  text-align: left;
+.org-section__desc {
+  max-width: 34em;
+  margin: 10px 0 0;
+  color: var(--ink-2);
+  font-size: 15px;
+  line-height: 1.65;
   word-break: keep-all;
-  white-space: nowrap;
 }
 
-/* 반응형 디자인 */
-@media (max-width: 1024px) {
-  .org-grid{
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: auto auto auto auto auto;
-  }
-  
-  .org-grid .group-box:first-child{
-    grid-column: 1;
-    grid-row: 1;
-  }
-  
-  .org-grid .group-box:nth-child(2){
-    grid-column: 2;
-    grid-row: 1;
-  }
-  
-  .org-grid .group-box:nth-child(3){
-    grid-column: 1;
-    grid-row: 2;
-  }
-  
-  .org-grid .group-box:nth-child(4){
-    grid-column: 2;
-    grid-row: 2;
-  }
-  
-  .org-grid .group-box:nth-child(5){
-    grid-column: 1;
-    grid-row: 3;
-  }
-  
-  .org-grid .group-box:nth-child(6){
-    grid-column: 2;
-    grid-row: 3;
-  }
-  
-  .org-grid .group-box:nth-child(7){
-    grid-column: 1;
-    grid-row: 4;
-  }
-  
-  .org-grid .group-box:nth-child(8){
-    grid-column: 2;
-    grid-row: 4;
-  }
-  
-  .org-grid .group-box:not(:first-child){
-    height: 350px;
-  }
+.org-section__head {
+  grid-column: 1;
+  grid-row: 1;
 }
 
-@media (max-width: 1024px) {
-  .org-panel{
-    margin: var(--spacing-md) auto var(--spacing-xl);
-    max-width: 800px;
-    padding: var(--spacing-md) var(--spacing-sm) var(--spacing-lg);
-  }
-  
-  .org-grid{
-    gap: var(--spacing-sm);
-  }
-  
-  .group-box{
-    padding: var(--spacing-sm);
-  }
-  
-  .group-box__title{
-    font-size: var(--font-base);
-    padding: 0 0 var(--spacing-sm) 0;
-  }
-  
-  .avatar{
-    width: 110px;
-    height: 110px;
-  }
+/* 국원: 데스크톱은 설명 아래, 모바일은 사진 아래 */
+.org-members {
+  grid-column: 1;
+  grid-row: 2;
+  margin-top: var(--spacing-lg);
+  padding-top: var(--spacing-md);
+  border-top: 1px solid var(--line);
 }
 
+.org-members__title {
+  color: var(--ink-3);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.org-members__list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 16px;
+  margin: 6px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.org-members__item {
+  color: var(--ink-2);
+  font-size: 14px;
+  line-height: 1.6;
+  word-break: keep-all;
+}
+
+/* ───────── 사람 ───────── */
+.org-people {
+  grid-column: 2;
+  grid-row: 1 / span 2;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(148px, 1fr));
+  gap: clamp(20px, 3vw, 32px) clamp(12px, 2vw, 24px);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.org-section--lead .org-people {
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+}
+
+.org-person {
+  min-width: 0;
+}
+
+.org-person__photo {
+  aspect-ratio: 4 / 5;
+  margin-bottom: 12px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--surface);
+  overflow: hidden;
+  transition: border-color 0.15s var(--ease);
+}
+
+.org-avatar {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 20%;
+  transition: transform 0.3s var(--ease);
+}
+
+.org-person:hover .org-person__photo {
+  border-color: var(--brand-teal);
+}
+
+.org-person:hover .org-avatar {
+  transform: scale(1.03);
+}
+
+.org-person__role {
+  color: var(--brand-teal-ink);
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+.org-person__name {
+  margin-top: 2px;
+  color: var(--ink);
+  font-size: 17px;
+  font-weight: 700;
+  line-height: 1.35;
+  letter-spacing: -0.02em;
+}
+
+.org-section--lead .org-person__name {
+  font-size: 20px;
+}
+
+.org-person__dept {
+  margin-top: 2px;
+  color: var(--ink-3);
+  font-size: 13px;
+  line-height: 1.5;
+  font-variant-numeric: tabular-nums;
+  word-break: keep-all;
+}
+
+.org-note {
+  margin-top: clamp(40px, 6vw, 72px);
+}
+
+/* ───────── 모바일 ───────── */
 @media (max-width: 768px) {
-  .org-panel{
-    padding: 14px 10px 22px;
-    margin: var(--spacing-sm) auto var(--spacing-lg);
+  .org-section {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: none;
+    row-gap: 20px;
   }
 
-  .org-grid{
-    grid-template-columns: 1fr;
-    grid-template-rows: auto;
-    gap: 12px;
-  }
-  
-  .org-grid .group-box:first-child{
-    grid-column: 1;
-    grid-row: 1;
-  }
-  
-  .org-grid .group-box:nth-child(2),
-  .org-grid .group-box:nth-child(3),
-  .org-grid .group-box:nth-child(4),
-  .org-grid .group-box:nth-child(5),
-  .org-grid .group-box:nth-child(6),
-  .org-grid .group-box:nth-child(7),
-  .org-grid .group-box:nth-child(8){
-    grid-column: 1;
-  }
-  
-  .org-grid .group-box:nth-child(2){ grid-row: 2; }
-  .org-grid .group-box:nth-child(3){ grid-row: 3; }
-  .org-grid .group-box:nth-child(4){ grid-row: 4; }
-  .org-grid .group-box:nth-child(5){ grid-row: 5; }
-  .org-grid .group-box:nth-child(6){ grid-row: 6; }
-  .org-grid .group-box:nth-child(7){ grid-row: 7; }
-  .org-grid .group-box:nth-child(8){ grid-row: 8; }
-  
-
-  .org-grid .group-box:not(:first-child){
-    height: fit-content;
+  .org-section__head,
+  .org-people,
+  .org-members {
+    grid-column: auto;
+    grid-row: auto;
   }
 
-  .member-list.two-columns{
-    flex-direction: column;
-    gap: 6px;
-  }
-  
-  .member-column{
-    flex: none;
-  }
-  
-  .roles-container{
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(148px, 1fr));
-    align-items: stretch;
-    gap: 10px;
-    width: 100%;
-  }
-  
-  .role-item{
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    max-width: 100%;
-    min-width: 0;
-    padding: 10px;
-    border-radius: 16px;
-    background: rgba(255, 255, 255, 0.64);
-    text-align: left;
-  }
-  
-  .avatar{
-    width: 62px;
-    height: 62px;
-    flex: 0 0 62px;
-    border-radius: 14px;
+  .org-section__desc {
+    margin-top: 6px;
   }
 
-  .avatar-container{
-    margin: 0 10px 0 0;
-  }
-
-  .role-info{
-    min-width: 0;
-    text-align: left;
-  }
-  
-  .group-box{
-    padding: 14px;
-    border-radius: 18px;
-  }
-
-  .group-box__title{
-    margin-bottom: 10px;
-  }
-
-  .description-section{
-    padding: 12px;
-    margin-top: 12px;
-  }
-  
-  .member-box{
-    padding: var(--spacing-sm);
+  .org-members {
+    margin-top: 0;
   }
 }
 
+/* 좁은 화면에서는 사람을 항상 2열로 */
 @media (max-width: 480px) {
-  .org-panel{
-    padding: var(--spacing-md) var(--spacing-sm) var(--spacing-lg);
-    margin: var(--spacing-sm) auto var(--spacing-lg);
+  .org-people,
+  .org-section--lead .org-people {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
-  
-  .group-box{
-    padding: var(--spacing-sm);
-  }
-  
-  .avatar{
-    width: 56px;
-    height: 56px;
-    flex-basis: 56px;
-  }
-  
-  .role-name{
-    font-size: var(--font-sm);
-  }
-  
-  .role-dept{
-    font-size: var(--font-xs);
-  }
-  
-  .description-text{
-    font-size: 13px;
-  }
-  
-  .member-item{
-    font-size: 13px;
-  }
-  
-  .group-box__title{
-    font-size: var(--font-sm);
-    padding: 0 0 var(--spacing-xs) 0;
+
+  .org-person__name,
+  .org-section--lead .org-person__name {
+    font-size: 16px;
   }
 }
 
-@media (max-width: 360px) {
-  .org-panel{
-    padding: var(--spacing-sm) var(--spacing-xs) var(--spacing-md);
-    margin: var(--spacing-xs) auto var(--spacing-md);
+@media (prefers-reduced-motion: reduce) {
+  .org-avatar {
+    transition: none;
   }
-  
-  .group-box{
-    padding: var(--spacing-xs);
-  }
-  
-  .avatar{
-    width: 52px;
-    height: 52px;
-    flex-basis: 52px;
-  }
-  
-  .role-name{
-    font-size: var(--font-xs);
-  }
-  
-  .role-dept{
-    font-size: var(--font-xs);
-  }
-  
-  .description-text{
-    font-size: 12px;
-  }
-  
-  .member-item{
-    font-size: 12px;
-  }
-  
-  .group-box__title{
-    font-size: var(--font-xs);
-  }
-  
-  .roles-container{
-    gap: var(--spacing-sm);
+
+  .org-person:hover .org-avatar {
+    transform: none;
   }
 }

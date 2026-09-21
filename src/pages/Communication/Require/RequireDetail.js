@@ -1,11 +1,15 @@
+import '../styles.css';
 import './styles.css';
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { ArrowLeft, Heart } from 'lucide-react';
 
 const apiClient = axios.create({
     baseURL: process.env.REACT_APP_API_URL || 'https://api.ajouchong.com'
 });
+
+const AGREE_GOAL = 100; // 안건 상정에 필요한 공감 수
 
 const RequireDetail = () => {
     const { id } = useParams();
@@ -80,36 +84,70 @@ const RequireDetail = () => {
     };
 
     const renderMetadata = () => (
-        <div className="post-metadata">
-            <span><strong>작성일 |</strong> {formatDate(postDetails.createTime)}</span>
-            <span><strong>조회수 |</strong> {postDetails.apHitCount}</span>
-            <span><strong>좋아요 |</strong> {postDetails.apUserLikeCount}</span>
+        <div className="post-metadata board-meta">
+            <span>작성일 <b>{formatDate(postDetails.createTime)}</b></span>
+            <span>조회수 <b>{postDetails.apHitCount}</b></span>
+            <span>좋아요 <b>{postDetails.apUserLikeCount}</b></span>
         </div>
     );
 
-    const renderCommentSection = () => (
-        <div className="comment-section">
-            <div className="comment-item">
-                <strong>승인 상태:</strong>
-                <span className={postDetails.approve ? 'approval-approved' : 'approval-denied'}>
-                    {postDetails.approve ? '가결' : '진행중'}
-                </span>
-            </div>
-        </div>
-    );
+    // 공감 현황: 이미 있는 공감 수(apUserLikeCount)만 100 기준으로 보여준다
+    const renderProgressPanel = () => {
+        const likeCount = Number(postDetails.apUserLikeCount) || 0;
+        const percent = Math.min(100, Math.round((likeCount / AGREE_GOAL) * 100));
+        const remaining = Math.max(0, AGREE_GOAL - likeCount);
 
-    const renderLikeSection = () => (
-        <div className="like-section">
-            <button onClick={handleLike} className="like-button" disabled={isLiking}>
-                <img
-                    src={postDetails.isLiked ? "/images/main/filled-heart.png" : "/images/main/heart.png"}
-                    alt="좋아요"
-                    className="like-icon"
-                />
-            </button>
-            <span className="like-count">{postDetails.apUserLikeCount}</span>
-        </div>
-    );
+        return (
+            <section className="req-panel" aria-label="공감 현황">
+                <div className="req-panel-head">
+                    <h3 className="req-panel-title">공감 현황</h3>
+                    <div className="req-status">
+                        <span className="req-status-label">승인 상태</span>
+                        <span className={`ui-badge ${postDetails.approve ? 'is-ok' : 'is-brand'}`}>
+                            {postDetails.approve ? '가결' : '진행중'}
+                        </span>
+                    </div>
+                </div>
+
+                <div className="req-count">
+                    <strong className="req-count-now">{likeCount}</strong>
+                    <span className="req-count-goal">/ {AGREE_GOAL}</span>
+                </div>
+                <div
+                    className="ui-meter req-meter"
+                    style={{ '--value': `${percent}%` }}
+                    role="progressbar"
+                    aria-valuemin={0}
+                    aria-valuemax={AGREE_GOAL}
+                    aria-valuenow={Math.min(likeCount, AGREE_GOAL)}
+                    aria-label="공감 진행률"
+                >
+                    <span />
+                </div>
+                <p className="req-remaining">
+                    {remaining > 0
+                        ? `${AGREE_GOAL}개까지 공감 ${remaining}개가 남았습니다.`
+                        : `공감 ${AGREE_GOAL}개를 채웠습니다.`}
+                </p>
+
+                <div className="req-panel-action">
+                    <button
+                        onClick={handleLike}
+                        className={`ui-btn req-like-btn ${postDetails.isLiked ? 'is-liked' : 'is-primary'}`}
+                        disabled={isLiking}
+                        aria-pressed={Boolean(postDetails.isLiked)}
+                    >
+                        <Heart
+                            size={18}
+                            fill={postDetails.isLiked ? 'currentColor' : 'none'}
+                            aria-hidden="true"
+                        />
+                        {postDetails.isLiked ? '공감 취소' : '공감하기'}
+                    </button>
+                </div>
+            </section>
+        );
+    };
 
     useEffect(() => {
         if (id && !didFetch.current) {
@@ -119,19 +157,30 @@ const RequireDetail = () => {
     }, [id, fetchPostDetails]);
 
     if (!postDetails) {
-        return <div>Loading...</div>;
+        return (
+            <div className="context" aria-busy="true">
+                <div className="board-detail-skeleton">
+                    <span className="board-skeleton is-title ui-skeleton" />
+                    <span className="board-skeleton is-short ui-skeleton" />
+                    <span className="board-skeleton is-block ui-skeleton" />
+                </div>
+                <span className="board-visually-hidden">Loading...</span>
+            </div>
+        );
     }
 
     return (
         <div className="context">
-            <div className="contextTitle">{postDetails.apTitle}</div>
+            <div className="contextTitle board-detail-title">{postDetails.apTitle}</div>
             <hr className="titleSeparator" />
             {renderMetadata()}
-            <p className="post-content">{postDetails.apContent}</p>
-            {renderCommentSection()}
-            {renderLikeSection()}
+            <div className="req-layout">
+                <p className="post-content req-content">{postDetails.apContent}</p>
+                {renderProgressPanel()}
+            </div>
             <button onClick={handleBackToList} className="back-button">
-                목록으로 돌아가기
+                <ArrowLeft size={18} aria-hidden="true" />
+                목록으로
             </button>
         </div>
     );

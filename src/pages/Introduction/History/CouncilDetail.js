@@ -1,5 +1,7 @@
-import React from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { createPortal } from 'react-dom';
 import { useParams, useNavigate } from 'react-router-dom';
+import { ArrowLeft, FileText, X, ZoomIn } from 'lucide-react';
 import './style.css';
 
 const councilData = {
@@ -63,10 +65,65 @@ const councilData = {
     },
 };
 
+/** 이미지 크게 보기 (Esc·배경 클릭으로 닫힘) */
+const Lightbox = ({ image, onClose, onImageError }) => {
+    const closeRef = useRef(null);
+
+    useEffect(() => {
+        const handleKeyDown = (e) => {
+            if (e.key === 'Escape') onClose();
+            // 포커스가 뒤 화면으로 빠져나가지 않게 닫기 버튼에 묶어 둔다
+            if (e.key === 'Tab') {
+                e.preventDefault();
+                if (closeRef.current) closeRef.current.focus();
+            }
+        };
+        const previousOverflow = document.body.style.overflow;
+        document.body.style.overflow = 'hidden';
+        document.addEventListener('keydown', handleKeyDown);
+        if (closeRef.current) closeRef.current.focus();
+
+        return () => {
+            document.body.style.overflow = previousOverflow;
+            document.removeEventListener('keydown', handleKeyDown);
+        };
+    }, [onClose]);
+
+    return createPortal(
+        <div
+            className="council-lightbox"
+            role="dialog"
+            aria-modal="true"
+            aria-label={`${image.label} 크게 보기`}
+            onClick={onClose}
+        >
+            <button
+                type="button"
+                ref={closeRef}
+                className="council-lightbox__close"
+                aria-label="닫기"
+                onClick={onClose}
+            >
+                <X size={22} aria-hidden="true" />
+            </button>
+            <img
+                className="council-lightbox__image"
+                src={image.src}
+                alt={image.alt}
+                onError={onImageError}
+                onClick={(e) => e.stopPropagation()}
+            />
+        </div>,
+        document.body
+    );
+};
+
 const CouncilDetail = () => {
     const { year } = useParams();
     const navigate = useNavigate();
     const data = councilData[year];
+    const [activeImage, setActiveImage] = useState(null);
+    const lastTriggerRef = useRef(null);
 
     const handleImageError = (e) => {
         e.target.onerror = null;
@@ -81,38 +138,63 @@ const CouncilDetail = () => {
         window.open(promiseUrl, '_blank');
     };
 
+    const openLightbox = (e, img) => {
+        lastTriggerRef.current = e.currentTarget;
+        // 대체 이미지로 바뀐 경우에도 화면에 보이는 그대로 크게 보여준다
+        const shown = e.currentTarget.querySelector('img');
+        setActiveImage({ ...img, src: shown ? shown.currentSrc || shown.src : img.src });
+    };
+
+    const closeLightbox = useCallback(() => {
+        setActiveImage(null);
+        if (lastTriggerRef.current) lastTriggerRef.current.focus();
+    }, []);
+
+    const renderBackButton = () => (
+        <button type="button" onClick={handleBackToList} className="back-button">
+            <ArrowLeft size={18} aria-hidden="true" />
+            목록으로 돌아가기
+        </button>
+    );
+
     if (!data) {
         return (
             <div className="context">
                 <div className="contextTitle">역대 총학생회 상세</div>
                 <hr className="titleSeparator" />
-                <div className="council-detail-wrapper">
-                    <div className="council-card">
-                        <h2>정보 없음</h2>
-                        <p className="description">해당 연도의 정보가 없습니다.</p>
-                        <button onClick={handleBackToList} className="back-button">
-                            목록으로 돌아가기
-                        </button>
-                    </div>
+                <div className="council-detail">
+                    <h2 className="council-title">정보 없음</h2>
+                    <p className="ui-empty">해당 연도의 정보가 없습니다.</p>
+                    {renderBackButton()}
                 </div>
             </div>
         );
     }
 
-    const renderImageBox = (src, alt, label) => {
-        if (!src) return null;
-        
+    const renderImageBox = (img) => {
+        if (!img.src) return null;
+
         return (
-            <div key={label} className="image-box">
-                <img 
-                    src={src} 
-                    alt={alt} 
-                    onError={handleImageError}
-                    loading="lazy"
-                    className="council-image"
-                />
-                <p className="image-label">{label}</p>
-            </div>
+            <figure key={img.label} className="council-figure">
+                <figcaption className="council-figure__label">{img.label}</figcaption>
+                <button
+                    type="button"
+                    className="council-figure__button"
+                    onClick={(e) => openLightbox(e, img)}
+                    aria-label={`${img.label} 크게 보기`}
+                >
+                    <img
+                        src={img.src}
+                        alt={img.alt}
+                        onError={handleImageError}
+                        loading="lazy"
+                        className="council-figure__image"
+                    />
+                    <span className="council-figure__zoom" aria-hidden="true">
+                        <ZoomIn size={18} />
+                    </span>
+                </button>
+            </figure>
         );
     };
 
@@ -126,16 +208,12 @@ const CouncilDetail = () => {
         const validImages = images.filter(img => img.src);
 
         if (validImages.length === 0) {
-            return (
-                <div className="no-images">
-                    <p>이미지가 없습니다.</p>
-                </div>
-            );
+            return <p className="ui-empty">이미지가 없습니다.</p>;
         }
 
         return (
-            <div className="image-gallery">
-                {validImages.map(img => renderImageBox(img.src, img.alt, img.label))}
+            <div className="council-gallery">
+                {validImages.map(renderImageBox)}
             </div>
         );
     };
@@ -144,14 +222,14 @@ const CouncilDetail = () => {
         if (!data.promise) return null;
 
         return (
-            <div className="promise-link-container">
-                <button 
-                    onClick={() => handlePromiseClick(data.promise)}
-                    className="promise-link"
-                >
-                    정책집 바로가기
-                </button>
-            </div>
+            <button
+                type="button"
+                onClick={() => handlePromiseClick(data.promise)}
+                className="ui-btn council-promise"
+            >
+                <FileText size={18} aria-hidden="true" />
+                정책집 바로가기
+            </button>
         );
     };
 
@@ -159,18 +237,24 @@ const CouncilDetail = () => {
         <div className="context">
             <div className="contextTitle">역대 총학생회 상세</div>
             <hr className="titleSeparator" />
-            <div className="council-detail-wrapper">
-                <div className="council-card">
-                    <div className="title-section">
+            <div className="council-detail">
+                <header className="council-header">
+                    <div className="council-header__text">
+                        <span className="council-year">{year}</span>
                         <h2 className="council-title">{data.title}</h2>
-                        {renderPromiseLink()}
                     </div>
-                    {renderImageGallery()}
-                    <button onClick={handleBackToList} className="back-button">
-                        목록으로 돌아가기
-                    </button>
-                </div>
+                    {renderPromiseLink()}
+                </header>
+                {renderImageGallery()}
+                {renderBackButton()}
             </div>
+            {activeImage && (
+                <Lightbox
+                    image={activeImage}
+                    onClose={closeLightbox}
+                    onImageError={handleImageError}
+                />
+            )}
         </div>
     );
 };

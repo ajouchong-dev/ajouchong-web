@@ -1,6 +1,8 @@
 import React, { useEffect, useState, useRef, useCallback } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { ArrowLeft, Heart } from 'lucide-react';
+import '../styles.css';
 import './styles.css';
 
 const apiClient = axios.create({
@@ -84,10 +86,10 @@ const QnaDetail = () => {
     };
 
     const renderMetadata = () => (
-        <div className="post-metadata">
-            <span>작성일 | {formatDate(postDetails.qpCreateTime)}</span>
-            <span>조회수 | {postDetails.qpHitCnt}</span>
-            <span>좋아요 | {postDetails.qpUserLikeCnt}</span>
+        <div className="post-metadata board-meta">
+            <span>작성일 <b>{formatDate(postDetails.qpCreateTime)}</b></span>
+            <span>조회수 <b>{postDetails.qpHitCnt}</b></span>
+            <span>좋아요 <b>{postDetails.qpUserLikeCnt}</b></span>
         </div>
     );
 
@@ -96,32 +98,41 @@ const QnaDetail = () => {
         const answerCreateTime = postDetails.answer?.createTime;
 
         return (
-            <div className="answer-container">
-                <div className="answer-header">
-                    <h3>답변</h3>
-                    <span className={`answer-status ${postDetails.replied ? 'completed' : 'pending'}`}>
+            <section className={`qna-answer ${postDetails.answer?.content ? '' : 'is-empty'}`}>
+                <div className="qna-answer-header">
+                    <h3 className="qna-block-label">
+                        <span className="qna-mark is-answer" aria-hidden="true">A</span>
+                        답변
+                    </h3>
+                    <span className={`ui-badge ${postDetails.replied ? 'is-ok' : 'is-warn'}`}>
                         {postDetails.replied ? '답변 완료' : '대기 중'}
                     </span>
                 </div>
-                <div className="answer-content">
-                    <p>{answerContent}</p>
+                <div className="qna-answer-body">
+                    <p className="qna-answer-text">{answerContent}</p>
                     {answerCreateTime && (
-                        <div className="answer-meta">
+                        <div className="qna-answer-meta">
                             <small>답변일: {formatDate(answerCreateTime)}</small>
                         </div>
                     )}
                 </div>
-            </div>
+            </section>
         );
     };
 
     const renderLikeSection = () => (
         <div className="like-section">
-            <button onClick={handleLike} className="like-button" disabled={isLiking}>
-                <img
-                    src={postDetails.isLiked ? "/images/main/filled-heart.png" : "/images/main/heart.png"}
-                    alt="좋아요"
+            <button
+                onClick={handleLike}
+                className="like-button"
+                disabled={isLiking}
+                aria-label="좋아요"
+                aria-pressed={Boolean(postDetails.isLiked)}
+            >
+                <Heart
                     className="like-icon"
+                    fill={postDetails.isLiked ? 'currentColor' : 'none'}
+                    aria-hidden="true"
                 />
             </button>
             <span className="like-count">{postDetails.qpUserLikeCnt}</span>
@@ -129,23 +140,45 @@ const QnaDetail = () => {
     );
 
     const renderLoading = () => (
-        <div>Loading...</div>
+        <div className="context" aria-busy="true">
+            <div className="board-detail-skeleton">
+                <span className="board-skeleton is-title ui-skeleton" />
+                <span className="board-skeleton is-short ui-skeleton" />
+                <span className="board-skeleton is-block ui-skeleton" />
+            </div>
+            <span className="board-visually-hidden">Loading...</span>
+        </div>
     );
 
     const renderError = () => (
-        <div>No post details found.</div>
+        <div className="context">
+            <div className="ui-empty">게시글을 찾을 수 없습니다.</div>
+            <button onClick={handleBackToList} className="back-button">
+                <ArrowLeft size={18} aria-hidden="true" />
+                목록으로
+            </button>
+        </div>
     );
 
     const renderPostContent = () => (
         <div className="context">
-            <div className="contextTitle">{postDetails.qpTitle}</div>
+            <div className="contextTitle board-detail-title">{postDetails.qpTitle}</div>
             <hr className="titleSeparator"/>
             {renderMetadata()}
-            <p className="post-content">{postDetails.qpContent}</p>
-            {renderAnswerSection()}
+            <div className="qna-thread">
+                <section className="qna-question">
+                    <h3 className="qna-block-label">
+                        <span className="qna-mark" aria-hidden="true">Q</span>
+                        질문
+                    </h3>
+                    <p className="post-content qna-question-text">{postDetails.qpContent}</p>
+                </section>
+                {renderAnswerSection()}
+            </div>
             {renderLikeSection()}
             <button onClick={handleBackToList} className="back-button">
-                목록으로 돌아가기
+                <ArrowLeft size={18} aria-hidden="true" />
+                목록으로
             </button>
         </div>
     );

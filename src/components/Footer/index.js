@@ -1,64 +1,68 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
+import { ArrowUpRight } from 'lucide-react';
 import './styles.css';
+
+const FOOTER_LINKS = [
+    { label: '이용약관', path: '/policy' },
+    { label: '개인정보처리방침', path: '/policy/termsofservice' },
+    { label: '사이트맵', path: '/sitemap' },
+    { label: 'LinkHub', path: '/linkHub' }
+];
+
+const EXTERNAL_LINKS = [
+    { label: '아주대학교', url: 'https://www.ajou.ac.kr/' },
+    { label: '아주대 포탈', url: 'https://mportal.ajou.ac.kr/' },
+    { label: '아주BB', url: 'https://eclass2.ajou.ac.kr/' }
+];
+
+const DEVELOPER = {
+    name: '디지털미디어학과 정재훈(Full-Stack)',
+    email: 'ajouchongdev@gmail.com'
+};
+
+const ADDRESS = '16399) 경기도 수원시 영통구 월드컵로 206 아주대학교 신학생회관 208호 총학생회실';
 
 const Footer = () => {
     const currentYear = new Date().getFullYear();
-    
-    const footerLinks = [
-        { label: '이용약관', path: '/policy' },
-        { label: '개인정보처리방침', path: '/policy/termsofservice' }
-    ];
-    
-    const developerInfo = {
-        name: '디지털미디어학과 정재훈(Full-Stack)',
-        email: 'ajouchongdev@gmail.com'
-    };
-    
-    const address = '16399) 경기도 수원시 영통구 월드컵로 206 아주대학교 신학생회관 208호 총학생회실';
-    
-    const renderFooterLinks = () => (
-        <div className="info">
-            {footerLinks.map((link, index) => (
-                <React.Fragment key={link.path}>
-                    <span className="infotext">
-                        <a href={link.path}>{link.label}</a>
-                    </span>
-                    {index < footerLinks.length - 1 && <span className="space">|</span>}
-                </React.Fragment>
-            ))}
-        </div>
-    );
-    
-    const renderDeveloperInfo = () => (
-        <span className="developer">
-            developer | {developerInfo.name} E-mail:{' '}
-            <a href={`mailto:${developerInfo.email}`}>{developerInfo.email}</a>
-        </span>
-    );
-    
+
     return (
         <footer className="footer">
-            <div className="main">
-                <div className="mainleft">
-                    <div className="main_logo">
-                        <span className="title">AJOU UNIV</span>
-                        <img src="/images/logos/ajouLogo.svg" alt="로고" />
-                    </div>
+            <div className="footer-inner">
+                <div className="footer-brand">
+                    <p className="footer-wordmark">AU:SUM</p>
+                    <p className="footer-tagline">아주대학교 제45대 총학생회</p>
                 </div>
-                <div className="mainright">
-                    <div className="column">
-                        {renderFooterLinks()}
-                    </div>
-                    <div className="column">
-                        <span className="address">{address}</span>
-                        <span className="space"></span>
-                        {renderDeveloperInfo()}
-                    </div>
-                    <div className="column">
-                        <p className="copyright">
-                            &copy; {currentYear} Ajou University Council. All Rights Reserved.
-                        </p>
-                    </div>
+
+                <nav className="footer-nav" aria-label="하단 메뉴">
+                    <ul>
+                        {FOOTER_LINKS.map((link) => (
+                            <li key={link.path}>
+                                <Link to={link.path}>{link.label}</Link>
+                            </li>
+                        ))}
+                    </ul>
+                    <ul>
+                        {EXTERNAL_LINKS.map((link) => (
+                            <li key={link.url}>
+                                <a href={link.url} target="_blank" rel="noopener noreferrer">
+                                    {link.label}
+                                    <ArrowUpRight size={13} aria-hidden="true" />
+                                </a>
+                            </li>
+                        ))}
+                    </ul>
+                </nav>
+
+                <div className="footer-meta">
+                    <p className="address">{ADDRESS}</p>
+                    <p className="developer">
+                        developer | {DEVELOPER.name} · E-mail{' '}
+                        <a href={`mailto:${DEVELOPER.email}`}>{DEVELOPER.email}</a>
+                    </p>
+                    <p className="copyright">
+                        &copy; {currentYear} Ajou University Council. All Rights Reserved.
+                    </p>
                 </div>
             </div>
         </footer>

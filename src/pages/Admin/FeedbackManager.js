@@ -1,6 +1,19 @@
 import React, { useEffect, useMemo, useState } from "react";
+import { createPortal } from "react-dom";
 import axios from "axios";
+import { ChevronDown, Eye, Lock, Reply, Trash2 } from "lucide-react";
 import { useAuth } from "../../contexts/AuthContext";
+import {
+    AdminCollapse,
+    AdminEmpty,
+    AdminField,
+    AdminPanelHead,
+    AdminSearch,
+    AdminSkeleton,
+    AdminStatus,
+    useAutoDismiss,
+    useChangedRows,
+} from "./AdminUI";
 
 const apiClient = axios.create({
     baseURL: process.env.REACT_APP_API_URL || "https://api.ajouchong.com",
@@ -10,6 +23,15 @@ const FEEDBACK_TITLE_PREFIX = "[홈페이지 피드백]";
 const ANSWER_VIEW_PASSWORD = "020209";
 const FEEDBACK_MANAGER_PASSWORD = "020209";
 const getPostId = (post) => post?.qpostId ?? post?.qPostId ?? post?.id;
+
+// 목록 표현용 (key, 행 강조 비교 기준, 상태 필터)
+const getPostKey = (post) => String(getPostId(post) ?? post?.qpCreateTime ?? "");
+const getPostSignature = (post) => `${post.replied}|${post.answer?.content || ""}`;
+const STATUS_FILTERS = [
+    { id: "all", label: "전체" },
+    { id: "pending", label: "대기중" },
+    { id: "replied", label: "답변완료" },
+];
 
 const FeedbackManager = () => {
     const { auth } = useAuth();
@@ -133,72 +155,144 @@ const FeedbackManager = () => {
         setManagerPasswordError("비밀번호가 올바르지 않습니다.");
     };
 
+    // ── 표현용 상태 (데이터 로직과 무관) ──
+    const [expandedKey, setExpandedKey] = useState(null);
+    const [statusFilter, setStatusFilter] = useState("all");
+    const [query, setQuery] = useState("");
+    const changedRows = useChangedRows(items, getPostKey, getPostSignature);
+    useAutoDismiss(message, setMessage);
+
+    const pendingCount = items.filter((post) => !post.replied).length;
+    const keyword = query.trim().toLowerCase();
+    const visibleItems = items.filter((post) => {
+        // 답변 작성 중인 글은 필터와 상관없이 계속 보여준다
+        if (activePost && getPostId(post) === activePost) return true;
+        if (statusFilter === "pending" && post.replied) return false;
+        if (statusFilter === "replied" && !post.replied) return false;
+        if (!keyword) return true;
+        return [post.qpAuthor, post.qpContent].some((value) => String(value || "").toLowerCase().includes(keyword));
+    });
+
     if (!isManagerUnlocked) {
         return (
-            <section className="admin-card admin-full">
-                <div className="admin-section-head">
-                    <h2>피드백 관리</h2>
-                    <p>피드백 관리를 보려면 비밀번호를 입력해주세요.</p>
-                </div>
-                <div className="admin-answer-editor">
-                    <h3>비밀번호 입력</h3>
-                    <input
-                        type="password"
-                        value={managerPassword}
-                        onChange={(event) => setManagerPassword(event.target.value)}
-                        placeholder="비밀번호"
-                    />
-                    {managerPasswordError && <p className="admin-feedback error">{managerPasswordError}</p>}
+            <section className="admin-section">
+                <AdminPanelHead title="피드백 관리" description="피드백 관리를 보려면 비밀번호를 입력해주세요." />
+                <form
+                    className="admin-lock"
+                    onSubmit={(event) => {
+                        event.preventDefault();
+                        unlockManager();
+                    }}
+                >
+                    <div className="admin-lock-icon" aria-hidden="true">
+                        <Lock size={20} />
+                    </div>
+                    <AdminField label="비밀번호 입력" htmlFor="feedback-manager-password">
+                        <input
+                            id="feedback-manager-password"
+                            className="ui-input"
+                            type="password"
+                            value={managerPassword}
+                            onChange={(event) => setManagerPassword(event.target.value)}
+                            placeholder="비밀번호"
+                            autoComplete="off"
+                        />
+                    </AdminField>
+                    <AdminStatus error={managerPasswordError} />
                     <div className="admin-form-actions">
-                        <button className="admin-btn primary" type="button" onClick={unlockManager}>
+                        <button className="ui-btn is-primary" type="button" onClick={unlockManager}>
                             확인
                         </button>
                     </div>
-                </div>
+                </form>
             </section>
         );
     }
 
     return (
-        <section className="admin-card admin-full">
-            <div className="admin-section-head">
-                <h2>피드백 관리</h2>
-                <p>우하단 위젯으로 접수된 홈페이지 개선/학생회 의견입니다.</p>
-            </div>
+        <section className="admin-section">
+            <AdminPanelHead
+                title="피드백 관리"
+                count={`총 ${items.length}건 · 대기 ${pendingCount}건`}
+                description="우하단 위젯으로 접수된 홈페이지 개선/학생회 의견입니다."
+            />
 
-            {message && <p className="admin-feedback success">{message}</p>}
-            {error && <p className="admin-feedback error">{error}</p>}
+            <AdminStatus
+                message={message}
+                error={error}
+                onDismissMessage={() => setMessage("")}
+                onDismissError={() => setError("")}
+            />
 
-            <div className="admin-table-wrap">
-                {loading ? (
-                    <p className="admin-empty">불러오는 중...</p>
-                ) : items.length === 0 ? (
-                    <p className="admin-empty">접수된 피드백이 없습니다.</p>
-                ) : (
-                    <table className="admin-table">
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>작성자</th>
-                                <th>의견</th>
-                                <th>작성일</th>
-                                <th>상태</th>
-                                <th>관리</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {items.map((post) => {
-                                const postId = getPostId(post);
-                                return (
-                                    <tr key={postId}>
-                                        <td>{postId ?? "-"}</td>
-                                        <td>{post.qpAuthor || "-"}</td>
-                                        <td className="admin-feedback-content">{post.qpContent}</td>
-                                        <td>{formatDate(post.qpCreateTime)}</td>
-                                        <td>{post.replied ? "답변완료" : "대기중"}</td>
-                                        <td className="admin-actions">
+            {items.length > 0 && (
+                <div className="admin-toolbar">
+                    <AdminSearch value={query} onChange={setQuery} placeholder="작성자, 내용 검색" />
+                    <div className="admin-chips" role="group" aria-label="상태로 거르기">
+                        {STATUS_FILTERS.map((filter) => (
+                            <button
+                                key={filter.id}
+                                type="button"
+                                className="ui-chip"
+                                aria-pressed={statusFilter === filter.id}
+                                onClick={() => setStatusFilter(filter.id)}
+                            >
+                                {filter.label}
+                            </button>
+                        ))}
+                    </div>
+                </div>
+            )}
+
+            {loading && items.length === 0 ? (
+                <AdminSkeleton />
+            ) : items.length === 0 ? (
+                <AdminEmpty>접수된 피드백이 없습니다.</AdminEmpty>
+            ) : visibleItems.length === 0 ? (
+                <AdminEmpty>조건과 일치하는 피드백이 없습니다.</AdminEmpty>
+            ) : (
+                <ul className={`admin-inbox ${loading ? "is-loading" : ""}`} aria-busy={loading}>
+                    {visibleItems.map((post) => {
+                        const postId = getPostId(post);
+                        const postKey = getPostKey(post);
+                        const isAnswering = Boolean(activePost) && activePost === postId;
+                        const isOpen = expandedKey === postKey || isAnswering;
+                        const bodyId = `feedback-body-${postKey}`;
+                        return (
+                            <li
+                                key={postKey}
+                                className={[
+                                    "admin-inbox-item",
+                                    post.replied ? "" : "is-pending",
+                                    isOpen ? "is-open" : "",
+                                    changedRows.has(postKey) ? "is-flash" : "",
+                                ].join(" ")}
+                            >
+                                <button
+                                    type="button"
+                                    className="admin-inbox-head"
+                                    aria-expanded={isOpen}
+                                    aria-controls={bodyId}
+                                    onClick={() => setExpandedKey((prev) => (prev === postKey ? null : postKey))}
+                                >
+                                    <span className="admin-inbox-meta">
+                                        <span className={`ui-badge ${post.replied ? "is-ok" : "is-warn"}`}>
+                                            {post.replied ? "답변완료" : "대기중"}
+                                        </span>
+                                        <span className="admin-inbox-author">{post.qpAuthor || "-"}</span>
+                                        <span className="admin-inbox-date">{formatDate(post.qpCreateTime)}</span>
+                                        <span className="admin-inbox-id">#{postId ?? "-"}</span>
+                                    </span>
+                                    <span className="admin-inbox-preview">{post.qpContent}</span>
+                                    <ChevronDown className="admin-inbox-chevron" size={18} aria-hidden="true" />
+                                </button>
+
+                                <AdminCollapse open={isOpen} id={bodyId}>
+                                    <div className="admin-inbox-body">
+                                        <p className="admin-feedback-content">{post.qpContent}</p>
+
+                                        <div className="admin-actions">
                                             <button
-                                                className="admin-btn small"
+                                                className="ui-btn is-small admin-act"
                                                 type="button"
                                                 disabled={!postId}
                                                 onClick={() => {
@@ -208,73 +302,86 @@ const FeedbackManager = () => {
                                                     setMessage("");
                                                 }}
                                             >
+                                                <Reply size={14} aria-hidden="true" />
                                                 답변작성
                                             </button>
-                                            <button className="admin-btn small muted" type="button" onClick={() => openAnswerView(post)}>
+                                            <button className="ui-btn is-small admin-act" type="button" onClick={() => openAnswerView(post)}>
+                                                <Eye size={14} aria-hidden="true" />
                                                 답변보기
                                             </button>
                                             <button
-                                                className="admin-btn small danger"
+                                                className="ui-btn is-small is-danger admin-act"
                                                 type="button"
                                                 disabled={!postId || deleting === postId}
                                                 onClick={() => handleDeletePost(postId)}
                                             >
+                                                <Trash2 size={14} aria-hidden="true" />
                                                 {deleting === postId ? "삭제중..." : "삭제"}
                                             </button>
-                                        </td>
-                                    </tr>
-                                );
-                            })}
-                        </tbody>
-                    </table>
-                )}
-            </div>
+                                        </div>
 
-            {activePost && (
-                <div className="admin-answer-editor">
-                    <h3>답변 작성 #{activePost}</h3>
-                    <textarea
-                        rows={4}
-                        value={answerDraft}
-                        onChange={(event) => setAnswerDraft(event.target.value)}
-                        placeholder="답변을 입력해주세요."
-                    />
-                    <div className="admin-form-actions">
-                        <button className="admin-btn primary" type="button" onClick={() => handleSaveAnswer(activePost)}>
-                            답변 저장
-                        </button>
-                        <button
-                            className="admin-btn muted"
-                            type="button"
-                            onClick={() => {
-                                setActivePost(null);
-                                setAnswerDraft("");
-                            }}
-                        >
-                            취소
-                        </button>
-                    </div>
-                </div>
+                                        {isAnswering && (
+                                            <div className="admin-answer-editor">
+                                                <h3>답변 작성 #{activePost}</h3>
+                                                <textarea
+                                                    className="ui-textarea"
+                                                    rows={4}
+                                                    value={answerDraft}
+                                                    onChange={(event) => setAnswerDraft(event.target.value)}
+                                                    placeholder="답변을 입력해주세요."
+                                                    aria-label={`피드백 #${activePost} 답변`}
+                                                />
+                                                <div className="admin-form-actions">
+                                                    <button
+                                                        className="ui-btn"
+                                                        type="button"
+                                                        onClick={() => {
+                                                            setActivePost(null);
+                                                            setAnswerDraft("");
+                                                        }}
+                                                    >
+                                                        취소
+                                                    </button>
+                                                    <button className="ui-btn is-primary" type="button" onClick={() => handleSaveAnswer(activePost)}>
+                                                        답변 저장
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        )}
+                                    </div>
+                                </AdminCollapse>
+                            </li>
+                        );
+                    })}
+                </ul>
             )}
 
-            {passwordModalPost && (
+            {/* 모달은 body로 포털: 페이지 진입 애니메이션(transform)의 영향을 받지 않게 한다 */}
+            {passwordModalPost && createPortal(
                 <div className="admin-modal-backdrop" role="dialog" aria-modal="true" aria-label="답변 보기 비밀번호">
-                    <div className="admin-modal">
+                    <form
+                        className="admin-modal"
+                        onSubmit={(event) => {
+                            event.preventDefault();
+                            submitAnswerPassword();
+                        }}
+                    >
                         <h3>답변 보기</h3>
                         <p>비밀번호를 입력하세요.</p>
                         <input
+                            className="ui-input"
                             type="password"
                             value={passwordInput}
                             onChange={(event) => setPasswordInput(event.target.value)}
                             placeholder="비밀번호"
+                            autoComplete="off"
+                            aria-label="답변 보기 비밀번호"
+                            autoFocus
                         />
-                        {passwordError && <p className="admin-feedback error">{passwordError}</p>}
+                        <AdminStatus error={passwordError} />
                         <div className="admin-form-actions">
-                            <button className="admin-btn primary" type="button" onClick={submitAnswerPassword}>
-                                확인
-                            </button>
                             <button
-                                className="admin-btn muted"
+                                className="ui-btn"
                                 type="button"
                                 onClick={() => {
                                     setPasswordModalPost(null);
@@ -284,19 +391,23 @@ const FeedbackManager = () => {
                             >
                                 닫기
                             </button>
+                            <button className="ui-btn is-primary" type="button" onClick={submitAnswerPassword}>
+                                확인
+                            </button>
                         </div>
-                    </div>
-                </div>
+                    </form>
+                </div>,
+                document.body
             )}
 
-            {answerViewPost && (
+            {answerViewPost && createPortal(
                 <div className="admin-modal-backdrop" role="dialog" aria-modal="true" aria-label="답변 내용">
                     <div className="admin-modal">
                         <h3>답변 내용</h3>
                         <p className="admin-answer-view-text">{postAnswerText(answerViewPost)}</p>
                         <div className="admin-form-actions">
                             <button
-                                className="admin-btn primary"
+                                className="ui-btn is-primary"
                                 type="button"
                                 onClick={() => setAnswerViewPost(null)}
                             >
@@ -304,7 +415,8 @@ const FeedbackManager = () => {
                             </button>
                         </div>
                     </div>
-                </div>
+                </div>,
+                document.body
             )}
         </section>
     );

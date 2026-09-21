@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import { AuthProvider } from './contexts/AuthContext';
 import ProtectedRoute from './components/ProtectedRoute';
@@ -48,7 +48,6 @@ import Policy from './pages/Utility/Policy/policy';
 import Intro from './pages/Acentia/intro';
 import Goods from './pages/Acentia/goods';
 import Record from './pages/Acentia/Record';
-import './styles/polish.css';
 
 function App() {
   return (
@@ -70,6 +69,11 @@ function App() {
 const Content = () => {
   const location = useLocation();
   const showBreadcrumb = location.pathname !== '/';
+
+  // 메뉴 이동이 새로고침 없이 이뤄지므로 페이지가 바뀌면 맨 위로 올린다
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [location.pathname]);
 
   return (
     <>

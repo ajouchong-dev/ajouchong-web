@@ -1,5 +1,6 @@
 import './styles.css';
 import React from 'react';
+import PolicyLayout from './PolicyLayout';
 
 const TermOfService = () => {
     const privacyContent = [
@@ -40,33 +41,30 @@ const TermOfService = () => {
         }
     ];
 
-    const renderPrivacySection = (section) => (
-        <div key={section.title}>
-            {section.type === 'title' ? (
-                <h2>{section.title}</h2>
-            ) : (
-                <>
-                    <h3>{section.title}</h3>
-                    {section.content.map((paragraph, index) => (
-                        <p key={index}>{paragraph}</p>
-                    ))}
-                </>
-            )}
-        </div>
-    );
+    const sectionId = (index) => `privacy-section-${index}`;
 
-    const renderPrivacyContent = () => (
-        <div className="terms-content">
-            {privacyContent.map(renderPrivacySection)}
-        </div>
-    );
+    // 목차에는 큰 제목을 뺀 하위 항목만 넣는다
+    const tocSections = privacyContent
+        .map((section, index) => ({ id: sectionId(index), title: section.title, type: section.type }))
+        .filter((section) => section.type !== 'title')
+        .map(({ id, title }) => ({ id, title }));
+
+    const renderPrivacySection = (section, sectionIndex) =>
+        section.type === 'title' ? (
+            <h2 key={section.title} className="policy-heading">{section.title}</h2>
+        ) : (
+            <section key={section.title} id={sectionId(sectionIndex)} className="policy-section">
+                <h3 className="policy-section-title">{section.title}</h3>
+                {section.content.map((paragraph, index) => (
+                    <p key={index}>{paragraph}</p>
+                ))}
+            </section>
+        );
 
     return (
-        <div className="context">
-            <div className="contextTitle">개인정보처리방침</div>
-            <hr className="titleSeparator"/>
-            {renderPrivacyContent()}
-        </div>
+        <PolicyLayout title="개인정보처리방침" sections={tocSections}>
+            {privacyContent.map(renderPrivacySection)}
+        </PolicyLayout>
     );
 };
 

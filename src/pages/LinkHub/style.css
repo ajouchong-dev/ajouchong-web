@@ -1,112 +1,72 @@
-.links-grid {
-    width: min(980px, 92%);
-    margin: 0 auto;
+/* LinkHub: 링크 모음. 제목은 다른 페이지와 같은 자리에 두고, 목록은 넓은 화면에서 2열로 채운다 */
+.linkhub-list {
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 1rem;
-    padding: 1.5rem 0 2.25rem;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 360px), 1fr));
+    gap: 10px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
 }
 
-.link-card {
-    position: relative;
+.linkhub-item {
     display: flex;
-    flex-direction: column;
-    justify-content: center;
-    gap: 0.28rem;
-    min-height: 92px;
-    padding: 1rem 1.2rem;
-    border-radius: 16px;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    min-height: 64px;
+    padding: 12px 18px;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-large);
+    background: var(--paper);
+    color: var(--ink);
     text-decoration: none;
-    border: 1px solid rgba(23, 167, 176, 0.38);
-    background:
-        radial-gradient(circle at 88% 14%, rgba(255, 255, 255, 0.45) 0, rgba(255, 255, 255, 0) 48%),
-        linear-gradient(90deg, #cfffdf 0%, #5ac6cf 52%, #17a7b0 100%);
-    box-shadow: 0 10px 24px rgba(20, 108, 128, 0.2);
-    transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
-    overflow: hidden;
+    transition: border-color 0.15s var(--ease), background-color 0.15s var(--ease);
 }
 
-.link-card::after {
-    content: "↗";
-    position: absolute;
-    right: 14px;
-    top: 12px;
-    color: rgba(8, 58, 78, 0.85);
+.linkhub-item:hover {
+    border-color: var(--brand-teal);
+    color: var(--ink);
+}
+
+.linkhub-item:active {
+    background: var(--surface);
+}
+
+.linkhub-item-text {
+    display: grid;
+    gap: 2px;
+    min-width: 0;
+}
+
+.linkhub-item-title {
     font-size: 16px;
     font-weight: 700;
+    letter-spacing: -0.01em;
+    line-height: 1.4;
 }
 
-.link-card:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 16px 30px rgba(20, 108, 128, 0.26);
-    filter: brightness(0.98);
+.linkhub-item-url {
+    overflow: hidden;
+    color: var(--ink-3);
+    font-size: 13px;
+    line-height: 1.4;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
-.link-card:active {
-    transform: translateY(-1px);
+.linkhub-item-arrow {
+    flex: 0 0 auto;
+    color: var(--ink-4);
+    transition: transform 0.15s var(--ease), color 0.15s var(--ease);
 }
 
-.link-card:focus-visible {
-    outline: 3px solid #95e8ef;
-    outline-offset: 2px;
+.linkhub-item:hover .linkhub-item-arrow {
+    color: var(--brand-teal-ink);
+    transform: translate(2px, -2px);
 }
 
-.link-title {
-    color: #083a4e;
-    font-size: clamp(1rem, 0.88rem + 0.35vw, 1.2rem);
-    font-weight: 800;
-    line-height: 1.3;
-    margin-right: 26px;
-    word-break: keep-all;
-}
-
-.link-url {
-    color: #0c5168;
-    font-size: 0.88rem;
-    line-height: 1.2;
-    letter-spacing: 0.01em;
-    opacity: 0.95;
-    word-break: break-all;
-}
-
-.loading,
-.link-empty {
-    width: min(980px, 92%);
-    margin: 1rem auto 2.25rem;
-    border-radius: 14px;
-    border: 1px solid #d7e4ef;
-    background: linear-gradient(180deg, #f8fbfe 0%, #edf4fa 100%);
-    color: #35506c;
-    text-align: center;
-    font-size: 1rem;
-    padding: 1rem;
-}
-
-@media (max-width: 900px) {
-    .links-grid {
-        grid-template-columns: 1fr;
-        gap: 0.85rem;
-        width: min(700px, 92%);
-    }
-
-    .link-card {
-        min-height: 84px;
-        border-radius: 14px;
-        padding: 0.9rem 1rem;
-    }
-}
-
-@media (max-width: 480px) {
-    .links-grid {
-        width: 94%;
-        padding: 1.2rem 0 1.6rem;
-    }
-
-    .link-title {
-        font-size: 0.98rem;
-    }
-
-    .link-url {
-        font-size: 0.82rem;
+@media screen and (max-width: 480px) {
+    .linkhub-item {
+        padding: 12px 16px;
     }
 }

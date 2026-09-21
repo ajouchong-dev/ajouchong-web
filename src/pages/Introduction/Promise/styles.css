@@ -1,42 +1,12 @@
 @import '../styles.css';
 
-.promiseImg {
-    max-width: 40%;
-    margin-top: var(--spacing-xl);
+/* 공약 이미지 (현재 주석 처리되어 있음. 다시 쓸 때를 위한 기본 모양) */
+.promise-image {
+    display: block;
+    width: 100%;
+    max-width: 640px;
     height: auto;
-    margin-bottom: var(--spacing-xl);
+    margin: 0 0 var(--spacing-xl);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-large);
 }
-
-/* 반응형 디자인 */
-@media screen and (max-width: 1024px) {
-    .promiseImg {
-        max-width: 50%;
-        margin-top: var(--spacing-lg);
-        margin-bottom: var(--spacing-lg);
-    }
-}
-
-@media screen and (max-width: 768px) {
-    .promiseImg {
-        max-width: 60%;
-        margin-top: var(--spacing-md);
-        margin-bottom: var(--spacing-md);
-    }
-}
-
-@media screen and (max-width: 480px) {
-    .promiseImg {
-        max-width: 75%;
-        margin-top: var(--spacing-sm);
-        margin-bottom: var(--spacing-sm);
-    }
-}
-
-@media screen and (max-width: 360px) {
-    .promiseImg {
-        max-width: 85%;
-        margin-top: var(--spacing-xs);
-        margin-bottom: var(--spacing-xs);
-    }
-}
-

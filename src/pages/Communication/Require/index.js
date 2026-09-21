@@ -12,7 +12,7 @@ const Require = () => {
     });
 
     const renderStatusCell = (post) => (
-        <span className={`status ${post.status === '가결' ? 'completed' : 'pending'}`}>
+        <span className={`ui-badge ${post.status === '가결' ? 'is-ok' : 'is-brand'}`}>
             {post.status}
         </span>
     );

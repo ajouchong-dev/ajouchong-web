@@ -1,6 +1,7 @@
 import './styles.css';
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { ArrowUpRight } from 'lucide-react';
 
 const Sitemap = () => {
     const sitemapData = [
@@ -59,26 +60,26 @@ const Sitemap = () => {
         }
     ];
 
+    const isExternal = (path) => /^https?:\/\//i.test(path);
+
     const renderSitemapSection = (section) => (
-        <li key={section.title} className="list-container">
-            <Link className="sitemapTitle" to={section.path}>
-                {section.title}
-            </Link>
-            <hr className="listSeparator"/>
-            <ul>
+        <section key={section.title} className="sitemap-group">
+            <h2 className="sitemap-group-title">
+                <Link to={section.path}>{section.title}</Link>
+            </h2>
+            <ul className="sitemap-links">
                 {section.items.map((item) => (
                     <li key={item.path}>
-                        <Link to={item.path}>{item.name}</Link>
+                        <Link className="sitemap-link" to={item.path}>
+                            <span className="sitemap-link-text">{item.name}</span>
+                            {isExternal(item.path) && (
+                                <ArrowUpRight className="sitemap-link-icon" size={14} aria-label="외부 링크" />
+                            )}
+                        </Link>
                     </li>
                 ))}
             </ul>
-        </li>
-    );
-
-    const renderSitemapList = () => (
-        <ul className="sitemap-list">
-            {sitemapData.map(renderSitemapSection)}
-        </ul>
+        </section>
     );
 
     return (
@@ -86,9 +87,9 @@ const Sitemap = () => {
             <div className="contextTitle">사이트맵</div>
             <hr className="titleSeparator"/>
 
-            <div className="sitemap">
-                {renderSitemapList()}
-            </div>
+            <nav className="sitemap-grid" aria-label="사이트맵">
+                {sitemapData.map(renderSitemapSection)}
+            </nav>
         </div>
     );
 };

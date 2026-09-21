@@ -13,6 +13,14 @@ const REDIRECT_MAPPINGS = {
 };
 
 const BREADCRUMB_LABELS = {
+    introduction: '소개',
+    news: '소식',
+    communication: '소통',
+    resources: '자료실',
+    welfare: '학생복지',
+    acentia: 'ACENTIA',
+    linkHub: 'LinkHub',
+
     about: '총학생회 소개',
     promise: '공약 소개',
     organization: '조직도',

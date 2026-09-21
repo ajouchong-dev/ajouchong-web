@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import axios from 'axios';
+import { ArrowLeft } from 'lucide-react';
 import './styles.css';
 
 const apiClient = axios.create({
@@ -100,37 +101,48 @@ const WritePage = () => {
 
     const renderMessage = () => (
         <>
-            {message.success && <div className="message success">{message.success}</div>}
-            {message.error && <div className="message error">{message.error}</div>}
+            {message.success && <div className="write-message is-success" role="status">{message.success}</div>}
+            {message.error && <div className="write-message is-error" role="alert">{message.error}</div>}
         </>
     );
 
     const renderForm = () => (
         <form onSubmit={handleSubmit} className="write-form">
-            <div className="form-group">
+            <div className="ui-field">
                 <label htmlFor="title">제목</label>
                 <input
                     type="text"
                     id="title"
                     name="title"
+                    className="ui-input"
                     value={form.title}
                     onChange={handleChange}
                     required
                     placeholder="제목을 입력하세요"
                 />
             </div>
-            <div className="form-group">
+            <div className="ui-field">
                 <label htmlFor="content">내용</label>
                 <textarea
                     id="content"
                     name="content"
+                    className="ui-textarea write-content"
                     value={form.content}
                     onChange={handleChange}
                     required
                     placeholder="내용을 입력하세요"
                 />
             </div>
-            <button type="submit" className="submit-button">게시</button>
+
+            {renderMessage()}
+
+            <div className="write-actions">
+                <button type="button" onClick={handleBackToList} className="ui-btn">
+                    <ArrowLeft size={18} aria-hidden="true" />
+                    목록으로
+                </button>
+                <button type="submit" className="ui-btn is-primary write-submit">게시</button>
+            </div>
         </form>
     );
 
@@ -144,11 +156,6 @@ const WritePage = () => {
             <hr className="titleSeparator" />
 
             {renderForm()}
-            {renderMessage()}
-
-            <button onClick={handleBackToList} className="back-button">
-                    게시글 목록으로 돌아가기
-            </button>
         </div>
     );
 };
