@@ -1,87 +1,106 @@
-@import '../styles.css';
-
-.status {
-    padding: var(--spacing-xs) var(--spacing-sm);
-    border-radius: var(--radius-small);
-    font-size: var(--font-sm);
-    font-weight: 500;
-    display: inline-block;
-    min-width: 60px;
-    text-align: center;
+/*
+ * Q&A 상세: 질문 → 답변 스레드
+ * 목록/상세 공통 스타일은 ../styles.css(.board-*)에 있다.
+ */
+.qna-thread {
+    display: grid;
+    gap: var(--spacing-lg);
+    max-width: var(--max-width-prose);
 }
 
-.status.pending {
-    background-color: #ffc107;
-    color: #212529;
-}
-
-.status.completed {
-    background-color: var(--primary-color);
-    color: white;
-}
-
-.answer-container {
-    width: 40%;
-    margin: var(--spacing-xl) auto var(--spacing-xxl);
-    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-    border: 1px solid var(--border-light);
-    border-radius: var(--radius-normal);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
-}
-
-.answer-header {
-    background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
-    color: white;
-    padding: var(--spacing-sm) var(--spacing-lg);
+.qna-block-label {
     display: flex;
-    justify-content: space-between;
     align-items: center;
-}
-
-.answer-header h3 {
-    margin: 0;
+    gap: 10px;
+    color: var(--ink);
     font-size: var(--font-base);
-    font-weight: 600;
+    font-weight: 700;
+    letter-spacing: -0.02em;
 }
 
-.answer-status {
-    padding: var(--spacing-xs) var(--spacing-sm);
-    border-radius: var(--radius-small);
-    font-size: var(--font-sm);
-    font-weight: 500;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
+.qna-mark {
+    display: inline-grid;
+    flex: none;
+    place-items: center;
+    width: 28px;
+    height: 28px;
+    border: 1px solid var(--line-strong);
+    border-radius: 50%;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--font-display);
+    font-size: 13px;
+    font-weight: 700;
+    line-height: 1;
 }
 
-.answer-status.completed {
-    background-color: rgba(255, 255, 255, 0.2);
-    color: white;
+.qna-mark.is-answer {
+    border-color: var(--brand-teal-ink);
+    background: var(--brand-teal-ink);
+    color: #fff;
 }
 
-.answer-status.pending {
-    background-color: rgba(255, 193, 7, 0.9);
-    color: #212529;
+/* 질문 */
+.qna-question {
+    display: grid;
+    gap: var(--spacing-md);
+    padding-bottom: var(--spacing-lg);
+    border-bottom: 1px solid var(--line);
 }
 
-.answer-content {
-    padding: var(--spacing-md);
-    background-color: white;
+.post-content.qna-question-text {
+    margin-bottom: 0;
 }
 
-.answer-content p {
-    margin: 0 0 var(--spacing-xs) 0;
-    font-size: var(--font-base);
-    line-height: 1.6;
-    color: var(--text-primary);
+/* 답변: 면 배경 + 왼쪽 선으로 구분 */
+.qna-answer {
+    display: grid;
+    gap: var(--spacing-md);
+    padding: clamp(16px, 3vw, 24px);
+    border-left: 3px solid var(--brand-teal-ink);
+    border-radius: 0 var(--radius-large) var(--radius-large) 0;
+    background: var(--surface);
 }
 
-.answer-meta {
-    border-top: 1px solid var(--border-light);
-    padding-top: var(--spacing-sm);
+.qna-answer.is-empty {
+    border-left-color: var(--line-strong);
 }
 
-.answer-meta small {
-    color: var(--text-muted);
-    font-size: var(--font-sm);
+.qna-answer-header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px 12px;
+}
+
+.qna-answer-text {
+    color: var(--ink);
+    font-size: 17px;
+    line-height: 1.8;
+    white-space: pre-wrap;
+}
+
+.qna-answer.is-empty .qna-answer-text {
+    color: var(--ink-3);
+    font-size: 15px;
+}
+
+.qna-answer-meta {
+    margin-top: var(--spacing-md);
+    padding-top: 12px;
+    border-top: 1px solid var(--line);
+    color: var(--ink-3);
+    font-size: 13px;
+    font-variant-numeric: tabular-nums;
+}
+
+.qna-answer-meta small {
+    font-size: inherit;
+}
+
+@media screen and (max-width: 768px) {
+    .qna-answer-text {
+        font-size: 16px;
+    }
 }

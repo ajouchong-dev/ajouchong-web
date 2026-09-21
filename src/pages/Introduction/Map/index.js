@@ -1,4 +1,5 @@
-import React, { useEffect, useCallback } from 'react';
+import React, { useEffect, useCallback, useState } from 'react';
+import { ArrowUpRight, Clock, MapPin, Phone } from 'lucide-react';
 import './styles.css';
 
 // 상수들을 컴포넌트 외부로 이동
@@ -8,13 +9,25 @@ const AJOU_COORDINATES = {
     lng: 127.0459682
 };
 
+// 지도를 못 불러왔을 때와 길찾기 버튼에서 여는 카카오맵 주소
+const KAKAO_MAP_LINK = `https://map.kakao.com/link/map/아주대학교 신학생회관,${AJOU_COORDINATES.lat},${AJOU_COORDINATES.lng}`;
+
 const MAP_INFO = [
     { label: '주소', content: '경기 수원시 원천동 아주대학교 신학생회관 208호' },
     { label: '연락처', content: '총학생회실 031-219-2870' },
     { label: '재실 시간', content: '10:00 ~ 16:30' }
 ];
 
+// 항목별 아이콘 (표시용)
+const MAP_INFO_ICONS = {
+    '주소': MapPin,
+    '연락처': Phone,
+    '재실 시간': Clock
+};
+
 const Map = () => {
+    const [mapFailed, setMapFailed] = useState(false);
+
     // 카카오맵 스크립트 로드 함수
     const loadKakaoMapsScript = useCallback(() => {
         return new Promise((resolve, reject) => {
@@ -56,11 +69,18 @@ const Map = () => {
     }, []);
 
     // 맵 정보 렌더링 함수
-    const renderMapInfo = useCallback((info, index) => (
-        <div key={index} className="map-subinfo">
-            * {info.label}: {info.content}
-        </div>
-    ), []);
+    const renderMapInfo = useCallback((info, index) => {
+        const Icon = MAP_INFO_ICONS[info.label] || MapPin;
+        return (
+            <div key={index} className="map-info__row">
+                <dt className="map-info__label">
+                    <Icon size={18} aria-hidden="true" />
+                    {info.label}
+                </dt>
+                <dd className="map-info__content">{info.content}</dd>
+            </div>
+        );
+    }, []);
 
     useEffect(() => {
         const initializeMap = async () => {
@@ -71,6 +91,7 @@ const Map = () => {
                 initializeKakaoMap();
             } catch (error) {
                 console.error('카카오맵 로드 실패:', error);
+                setMapFailed(true);
             }
         };
 
@@ -81,10 +102,38 @@ const Map = () => {
         <div className="context">
             <div className="contextTitle">오시는 길</div>
             <hr className="titleSeparator" />
-            <div className="map-container">
-                <div className="map" id="map"></div>
-                <div className="map-info">
-                    {MAP_INFO.map(renderMapInfo)}
+            <div className="map-layout">
+                <div className="map-frame">
+                    <div className="map-canvas" id="map"></div>
+                    {mapFailed && (
+                        <div className="map-fallback">
+                            <MapPin size={28} aria-hidden="true" />
+                            <p>지도를 불러오지 못했습니다.</p>
+                            <a
+                                className="ui-btn"
+                                href={KAKAO_MAP_LINK}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
+                                카카오맵에서 보기
+                                <ArrowUpRight size={14} aria-hidden="true" />
+                            </a>
+                        </div>
+                    )}
+                </div>
+                <div className="map-side">
+                    <dl className="map-info">
+                        {MAP_INFO.map(renderMapInfo)}
+                    </dl>
+                    <a
+                        className="ui-btn map-directions"
+                        href={KAKAO_MAP_LINK}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        카카오맵에서 길찾기
+                        <ArrowUpRight size={16} aria-hidden="true" />
+                    </a>
                 </div>
             </div>
         </div>

@@ -1,6 +1,22 @@
 import React, { useEffect, useMemo, useState } from "react";
 import axios from "axios";
+import { Pencil, Trash2 } from "lucide-react";
 import { useAuth } from "../../contexts/AuthContext";
+import {
+    AdminCheckbox,
+    AdminCollapse,
+    AdminEditBanner,
+    AdminEmpty,
+    AdminField,
+    AdminFormToggle,
+    AdminPanelHead,
+    AdminSearch,
+    AdminSkeleton,
+    AdminStatus,
+    useAutoDismiss,
+    useChangedRows,
+    useFormPanel,
+} from "./AdminUI";
 
 const apiClient = axios.create({
     baseURL: process.env.REACT_APP_API_URL || "https://api.ajouchong.com",
@@ -12,6 +28,8 @@ const INITIAL_FORM = {
     active: true,
     showLink: true,
 };
+
+const getItemId = (item) => item.id;
 
 const LinkHubManager = () => {
     const { auth } = useAuth();
@@ -120,47 +138,79 @@ const LinkHubManager = () => {
         }
     };
 
+    // ── 표현용 상태 (데이터 로직과 무관) ──
+    const [query, setQuery] = useState("");
+    const formPanel = useFormPanel(editingId);
+    const changedRows = useChangedRows(items, getItemId);
+    useAutoDismiss(message, setMessage);
+
+    const editingItem = items.find((item) => item.id === editingId);
+    const keyword = query.trim().toLowerCase();
+    const visibleItems = keyword
+        ? items.filter((item) =>
+            [item.title, item.link].some((value) => String(value || "").toLowerCase().includes(keyword)))
+        : items;
+
     return (
-        <section className="admin-card admin-full">
-            <div className="admin-section-head">
-                <h2>LinkHub 관리</h2>
-                <p>노출 여부와 링크 텍스트 표시 여부를 직접 설정할 수 있습니다.</p>
-            </div>
+        <section className="admin-section">
+            <AdminPanelHead
+                title="LinkHub 관리"
+                count={keyword ? `${items.length}건 중 ${visibleItems.length}건` : `총 ${items.length}건`}
+                description="노출 여부와 링크 텍스트 표시 여부를 직접 설정할 수 있습니다."
+            >
+                <AdminFormToggle
+                    open={formPanel.open}
+                    editing={Boolean(editingId)}
+                    label="링크 추가"
+                    controls="linkhub-form-panel"
+                    onClick={() => (editingId ? resetForm() : formPanel.setOpen((prev) => !prev))}
+                />
+            </AdminPanelHead>
 
-            <form className="admin-form-grid" onSubmit={handleSubmit}>
-                <label>
-                    제목
-                    <input name="title" value={form.title} onChange={handleChange} required />
-                </label>
-                <label>
-                    링크 URL
-                    <input name="link" value={form.link} onChange={handleChange} placeholder="https://..." required />
-                </label>
-                <label className="admin-checkbox">
-                    <input type="checkbox" name="active" checked={form.active} onChange={handleChange} />
-                    노출 활성
-                </label>
-                <label className="admin-checkbox">
-                    <input type="checkbox" name="showLink" checked={form.showLink} onChange={handleChange} />
-                    링크 텍스트 표시
-                </label>
-                <div className="admin-form-actions admin-span-2">
-                    <button className="admin-btn primary" type="submit">{editingId ? "수정 저장" : "링크 추가"}</button>
-                    {editingId && (
-                        <button className="admin-btn muted" type="button" onClick={resetForm}>수정 취소</button>
-                    )}
+            <AdminStatus
+                message={message}
+                error={error}
+                onDismissMessage={() => setMessage("")}
+                onDismissError={() => setError("")}
+            />
+
+            <AdminCollapse open={formPanel.open} id="linkhub-form-panel" panelRef={formPanel.panelRef}>
+                <form className="admin-form-card" onSubmit={handleSubmit}>
+                    {editingId && <AdminEditBanner title={editingItem?.title || form.title} onCancel={resetForm} />}
+                    <div className="admin-form-grid">
+                        <AdminField label="제목" htmlFor="linkhub-title" required>
+                            <input id="linkhub-title" className="ui-input" name="title" value={form.title} onChange={handleChange} required />
+                        </AdminField>
+                        <AdminField label="링크 URL" htmlFor="linkhub-link" required>
+                            <input id="linkhub-link" className="ui-input" name="link" value={form.link} onChange={handleChange} placeholder="https://..." required />
+                        </AdminField>
+                        <AdminCheckbox label="노출 활성" name="active" checked={form.active} onChange={handleChange} />
+                        <AdminCheckbox label="링크 텍스트 표시" name="showLink" checked={form.showLink} onChange={handleChange} />
+                    </div>
+
+                    <div className="admin-form-actions">
+                        {editingId && (
+                            <button className="ui-btn" type="button" onClick={resetForm}>수정 취소</button>
+                        )}
+                        <button className="ui-btn is-primary" type="submit">{editingId ? "수정 저장" : "링크 추가"}</button>
+                    </div>
+                </form>
+            </AdminCollapse>
+
+            {items.length > 0 && (
+                <div className="admin-toolbar">
+                    <AdminSearch value={query} onChange={setQuery} placeholder="제목, 링크 검색" />
                 </div>
-            </form>
+            )}
 
-            {message && <p className="admin-feedback success">{message}</p>}
-            {error && <p className="admin-feedback error">{error}</p>}
-
-            <div className="admin-table-wrap">
-                {loading ? (
-                    <p className="admin-empty">불러오는 중...</p>
-                ) : items.length === 0 ? (
-                    <p className="admin-empty">등록된 링크가 없습니다.</p>
-                ) : (
+            {loading && items.length === 0 ? (
+                <AdminSkeleton />
+            ) : items.length === 0 ? (
+                <AdminEmpty>등록된 링크가 없습니다.</AdminEmpty>
+            ) : visibleItems.length === 0 ? (
+                <AdminEmpty>검색어와 일치하는 링크가 없습니다.</AdminEmpty>
+            ) : (
+                <div className={`admin-table-wrap ${loading ? "is-loading" : ""}`} aria-busy={loading}>
                     <table className="admin-table">
                         <thead>
                             <tr>
@@ -168,26 +218,48 @@ const LinkHubManager = () => {
                                 <th>링크</th>
                                 <th>노출</th>
                                 <th>표시 방식</th>
-                                <th>관리</th>
+                                <th className="admin-col-actions">관리</th>
                             </tr>
                         </thead>
                         <tbody>
-                            {items.map((item) => (
-                                <tr key={item.id}>
-                                    <td>{item.title || "-"}</td>
-                                    <td>{item.link || "-"}</td>
-                                    <td>{item.active ? "노출" : "숨김"}</td>
-                                    <td>{item.showLink === false ? "제목만" : "제목+링크"}</td>
-                                    <td className="admin-actions">
-                                        <button className="admin-btn small" type="button" onClick={() => handleEdit(item)}>수정</button>
-                                        <button className="admin-btn small danger" type="button" onClick={() => handleDelete(item.id)}>삭제</button>
+                            {visibleItems.map((item) => (
+                                <tr
+                                    key={item.id}
+                                    className={`${changedRows.has(String(item.id)) ? "is-flash" : ""} ${editingId === item.id ? "is-editing" : ""}`}
+                                >
+                                    <td className="admin-cell-title">{item.title || "-"}</td>
+                                    <td className="admin-cell-wide admin-cell-url">{item.link || "-"}</td>
+                                    <td className="admin-cell-badge">
+                                        <span className={`ui-badge ${item.active ? "is-ok" : ""}`}>{item.active ? "노출" : "숨김"}</span>
+                                    </td>
+                                    <td className="admin-cell-badge">
+                                        <span className="ui-badge">{item.showLink === false ? "제목만" : "제목+링크"}</span>
+                                    </td>
+                                    <td className="admin-cell-actions">
+                                        <div className="admin-actions">
+                                            <button
+                                                className="ui-btn is-small admin-act"
+                                                type="button"
+                                                onClick={() => {
+                                                    handleEdit(item);
+                                                    formPanel.reveal();
+                                                }}
+                                            >
+                                                <Pencil size={14} aria-hidden="true" />
+                                                수정
+                                            </button>
+                                            <button className="ui-btn is-small is-danger admin-act" type="button" onClick={() => handleDelete(item.id)}>
+                                                <Trash2 size={14} aria-hidden="true" />
+                                                삭제
+                                            </button>
+                                        </div>
                                     </td>
                                 </tr>
                             ))}
                         </tbody>
                     </table>
-                )}
-            </div>
+                </div>
+            )}
         </section>
     );
 };

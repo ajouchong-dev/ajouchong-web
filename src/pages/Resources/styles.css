@@ -1,196 +1,129 @@
-.proceeding-container,
-.audit-container {
+/*
+ * 자료실 공용: 문서 한 줄(아이콘 · 제목/보조정보 · 열기/다운로드)
+ * 세칙 및 회칙, 회의록, 감사자료가 함께 쓴다.
+ */
+.resources-doc-list {
+    margin: 0;
+    padding: 0;
+    border-top: 1px solid var(--ink);
+    list-style: none;
+}
+
+/* 다른 분류를 불러오는 동안 이전 목록을 흐리게 */
+.resources-doc-list[aria-busy='true'] {
+    opacity: 0.5;
+    transition: opacity 0.15s var(--ease);
+}
+
+.resources-doc {
     display: flex;
-    flex-direction: column;
     align-items: center;
-    justify-content: center;
-    padding-top: var(--spacing-xl);
-    padding-bottom: 100px;
-    width: 100%;
-    text-align: center;
+    gap: 8px;
+    min-width: 0;
+    padding: 0 8px;
+    border-bottom: 1px solid var(--line);
+    transition: background-color 0.15s var(--ease);
 }
 
-.proceeding-container li,
-.audit-container li {
-    margin: var(--spacing-xl) auto;
+.resources-doc:hover {
+    background: var(--surface);
+}
+
+/* 제목 쪽 (링크일 수도, 단순 묶음일 수도 있다) */
+.resources-doc-main {
+    flex: 1 1 auto;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    min-width: 0;
+    min-height: 72px;
+    padding: 14px 0;
+    color: var(--ink);
+    text-align: left;
     text-decoration: none;
-    background-color: var(--bg-dark);
-    border-radius: var(--radius-small);
-    list-style-type: none;
-    padding: var(--spacing-xl);
-    margin-bottom: var(--spacing-xl);
-    transition: var(--transition-normal);
-    width: fit-content;
-    min-width: 300px;
-    max-width: 600px;
-    text-align: center;
-    display: block;
 }
 
-.proceeding-container li:hover,
-.audit-container li:hover {
-    background-color: var(--bg-light);
+.resources-doc-icon {
+    flex: 0 0 auto;
+    display: grid;
+    place-items: center;
+    width: 40px;
+    height: 40px;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-normal);
+    background: var(--paper);
+    color: var(--ink-3);
+    transition: color 0.15s var(--ease), border-color 0.15s var(--ease);
 }
 
-.proceeding-container li:hover a,
-.audit-container li:hover a {
-    color: var(--text-primary);
+.resources-doc:hover .resources-doc-icon {
+    border-color: var(--line-strong);
+    color: var(--brand-teal-ink);
 }
 
-.proceeding-container a,
-.audit-container a {
-    text-decoration: none;
-    color: var(--text-white);
-    transition: var(--transition-normal);
-    display: block;
-    text-align: center;
+.resources-doc-text {
+    display: grid;
+    gap: 2px;
+    min-width: 0;
 }
 
-/* 반응형 디자인 */
-@media screen and (max-width: 1024px) {
-    .proceeding-container,
-    .audit-container {
-        width: 100%;
-        text-align: center;
-        padding-top: var(--spacing-lg);
-        padding-bottom: 80px;
-    }
-    
-    .proceeding-container li,
-    .audit-container li {
-        min-width: 280px;
-        max-width: 550px;
-        padding: var(--spacing-lg);
-        margin: var(--spacing-lg) auto;
-        display: block;
-    }
-    
-    .context {
-        margin-top: 4%;
-    }
-    
-    .contextTitle {
-        font-size: var(--font-lg);
-    }
+.resources-doc-title {
+    color: var(--ink);
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    line-height: 1.45;
 }
 
-@media screen and (max-width: 768px) {
-    .context {
-        margin-top: 5%;
-    }
-    
-    .contextTitle {
-        font-size: var(--font-lg);
-    }
-    
-    .proceeding-container,
-    .audit-container {
-        padding-top: var(--spacing-lg);
-        width: 100%;
-        text-align: center;
-    }
-    
-    .proceeding-container li,
-    .audit-container li {
-        min-width: 250px;
-        max-width: 90%;
-        padding: var(--spacing-md);
-        margin: var(--spacing-md) auto;
-        display: block;
-    }
-    
-    .announcement-table {
-        width: 95%;
-        font-size: var(--font-sm);
-    }
-    
-    .announcement-table th,
-    .announcement-table td {
-        padding: var(--spacing-xs);
-    }
-    
-    .bylaw-button {
-        padding: var(--spacing-sm) var(--spacing-lg);
-        font-size: var(--font-sm);
-    }
-    
-    .post-detail {
-        padding: var(--spacing-sm);
-    }
+.resources-doc-meta {
+    color: var(--ink-3);
+    font-size: 13px;
+    font-variant-numeric: tabular-nums;
+    line-height: 1.4;
+}
+
+.resources-doc-actions {
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+/* 아이콘만 있는 동작 버튼 */
+.resources-doc-action {
+    display: inline-grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    border: 1px solid transparent;
+    border-radius: var(--radius-normal);
+    color: var(--ink-2);
+    transition: border-color 0.15s var(--ease), color 0.15s var(--ease), background-color 0.15s var(--ease);
+}
+
+.resources-doc-action:hover {
+    border-color: var(--brand-teal);
+    background: var(--paper);
+    color: var(--ink);
+}
+
+.resources-doc-none {
+    padding: 0 8px;
+    color: var(--ink-4);
+    font-size: 13px;
+    white-space: nowrap;
 }
 
 @media screen and (max-width: 480px) {
-    .proceeding-container,
-    .audit-container {
-        width: 100%;
-        text-align: center;
+    .resources-doc {
+        padding: 0;
     }
-    
-    .proceeding-container li,
-    .audit-container li {
-        min-width: 200px;
-        max-width: 95%;
-        padding: var(--spacing-sm);
-        font-size: var(--font-sm);
-        margin: var(--spacing-sm) auto;
-        display: block;
+
+    .resources-doc-main {
+        gap: 12px;
     }
-    
-    .announcement-table {
-        width: 100%;
-        font-size: var(--font-xs);
-    }
-    
-    .pagination-button {
-        padding: var(--spacing-xs) var(--spacing-sm);
-        font-size: var(--font-xs);
-    }
-    
-    .bylaw-button {
-        padding: var(--spacing-xs) var(--spacing-md);
-        font-size: var(--font-xs);
+
+    .resources-doc-title {
+        font-size: 15px;
     }
 }
-
-@media screen and (max-width: 360px) {
-    .proceeding-container,
-    .audit-container {
-        width: 100%;
-        text-align: center;
-        padding-top: var(--spacing-sm);
-        padding-bottom: 40px;
-    }
-    
-    .proceeding-container li,
-    .audit-container li {
-        min-width: 180px;
-        max-width: 98%;
-        padding: var(--spacing-xs);
-        margin: var(--spacing-xs) auto;
-        display: block;
-        font-size: var(--font-xs);
-    }
-    
-    .context {
-        margin-top: 7%;
-    }
-    
-    .contextTitle {
-        font-size: var(--font-sm);
-    }
-    
-    .announcement-table {
-        width: 100%;
-        font-size: var(--font-xs);
-    }
-    
-    .pagination-button {
-        padding: var(--spacing-xs);
-        font-size: var(--font-xs);
-    }
-    
-    .bylaw-button {
-        padding: var(--spacing-xs) var(--spacing-sm);
-        font-size: var(--font-xs);
-    }
-} 

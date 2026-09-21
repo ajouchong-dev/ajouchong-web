@@ -6,7 +6,11 @@ const ProtectedRoute = ({ children, requiredRole = null }) => {
     const { auth } = useAuth();
 
     if (auth.loading) {
-        return <div>로딩 중...</div>;
+        return (
+            <div className="context">
+                <p className="loading-text">로딩 중...</p>
+            </div>
+        );
     }
 
     if (!auth.isAuthenticated) {

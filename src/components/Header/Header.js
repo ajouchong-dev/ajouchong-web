@@ -1,8 +1,8 @@
-import React, { useState, useEffect, useCallback } from 'react';
-import { useLocation } from 'react-router-dom';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import Login from '../../pages/Auth/Login/login';
 import './Header.css';
-import { Menu, X } from 'lucide-react';
+import { ChevronDown, ArrowUpRight, UserRound } from 'lucide-react';
 
 const NAVIGATION_MENUS = {
     introduction: {
@@ -60,6 +60,8 @@ const NAVIGATION_MENUS = {
     }
 };
 
+const MENU_ENTRIES = Object.entries(NAVIGATION_MENUS);
+
 const UPPER_LINKS = [
     { label: '아주대학교', url: 'https://www.ajou.ac.kr/' },
     { label: '아주대 포탈', url: 'https://mportal.ajou.ac.kr/' },
@@ -72,229 +74,242 @@ const UPPER_LINKS_RIGHT = [
     { label: 'profile', path: '/profile' }
 ];
 
+// 상세 페이지(/notice/3 등)에서도 상위 메뉴가 활성으로 보이도록 접두어로도 판정한다
+const ACTIVE_PREFIXES = {
+    introduction: ['/introduction'],
+    news: ['/news', '/notice'],
+    communication: ['/communication'],
+    resources: ['/resources'],
+    welfare: ['/welfare'],
+    acentia: ['/acentia']
+};
+
 const Header = () => {
-    const [dropdown, setDropdown] = useState(null);
+    const [openMenu, setOpenMenu] = useState(null);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-    const [isMobileViewport, setIsMobileViewport] = useState(() => (
-        typeof window !== 'undefined' ? window.innerWidth <= 768 : false
-    ));
+    const [mobileGroup, setMobileGroup] = useState(null);
+    const [isScrolled, setIsScrolled] = useState(false);
+    const closeTimer = useRef(null);
     const location = useLocation();
 
-    const handleScroll = useCallback(() => {
-        const header = document.querySelector('.header');
-        if (window.scrollY > 0) {
-            header.classList.add('scrolled');
-        } else {
-            header.classList.remove('scrolled');
-        }
+    const activeMenu = MENU_ENTRIES.find(([key]) =>
+        ACTIVE_PREFIXES[key].some((prefix) => location.pathname.startsWith(prefix))
+    )?.[0];
+
+    const openMega = useCallback((key) => {
+        clearTimeout(closeTimer.current);
+        setOpenMenu(key);
     }, []);
 
-    const getActiveMenu = useCallback(() => {
-        const path = location.pathname;
-        return Object.keys(NAVIGATION_MENUS).find(menuKey => {
-            const menu = NAVIGATION_MENUS[menuKey];
-            return menu.items.some(item => item.path === path);
-        });
-    }, [location.pathname]);
-
-    const handleMouseEnter = useCallback((menu) => setDropdown(menu), []);
-    const handleMouseLeave = useCallback(() => setDropdown(null), []);
-    const toggleMobileMenu = useCallback(() => setIsMobileMenuOpen(prev => !prev), []);
-    const toggleMobileDropdown = useCallback((menu) => {
-        setDropdown(prev => prev === menu ? null : menu);
+    // 마우스가 메뉴와 패널 사이를 지나갈 때 바로 닫히지 않게 약간 늦춘다
+    const scheduleCloseMega = useCallback(() => {
+        clearTimeout(closeTimer.current);
+        closeTimer.current = setTimeout(() => setOpenMenu(null), 120);
     }, []);
 
-    const renderDropdownMenu = useCallback((menuKey, isMobile = false) => {
-        const menu = NAVIGATION_MENUS[menuKey];
-        if (!menu) return null;
-
-        return (
-            <ul className={isMobile ? 'dropdown' : 'dropdown-container'}>
-                {menu.items.map((item, index) => (
-                    <li key={index}>
-                        {item.external ? (
-                            <a href={item.path} target="_blank" rel="noopener noreferrer">
-                                {item.label}
-                            </a>
-                        ) : (
-                            <a href={item.path}>{item.label}</a>
-                        )}
-                    </li>
-                ))}
-            </ul>
-        );
+    const closeAll = useCallback(() => {
+        clearTimeout(closeTimer.current);
+        setOpenMenu(null);
+        setIsMobileMenuOpen(false);
     }, []);
-
-    const renderUpperLinks = useCallback((links, isRight = false) => (
-        <nav className={isRight ? 'upnav-menu2' : 'upnav-menu'}>
-            <ul className="flex items-center">
-                {links.map((link, index) => (
-                    <React.Fragment key={index}>
-                        <li>
-                            {link.url ? (
-                                <a href={link.url}>{link.label}</a>
-                            ) : (
-                                <a href={link.path}>{link.label}</a>
-                            )}
-                        </li>
-                        {index < links.length - 1 && <span className="dot"> ··</span>}
-                    </React.Fragment>
-                ))}
-            </ul>
-        </nav>
-    ), []);
-
-    const renderNavigationMenu = useCallback(() => (
-        <nav className="nav-menu">
-            <ul className="flex">
-                {Object.entries(NAVIGATION_MENUS).map(([key, menu]) => (
-                    <li
-                        key={key}
-                        className="menu-container"
-                        onMouseEnter={() => handleMouseEnter(key)}
-                        onMouseLeave={handleMouseLeave}
-                    >
-                        <div
-                            className={`navtitle ${getActiveMenu() === key ? 'active' : ''}`}
-                            onClick={() => { window.location.href = menu.path; }}
-                        >
-                            {menu.title}
-                        </div>
-                        {dropdown === key && renderDropdownMenu(key)}
-                    </li>
-                ))}
-            </ul>
-        </nav>
-    ), [dropdown, getActiveMenu, handleMouseEnter, handleMouseLeave, renderDropdownMenu]);
-
-    const renderMobileMenu = useCallback(() => (
-        <nav className={`mobile-menu ${isMobileMenuOpen ? 'open' : ''}`}>
-            <ul className="list-none">
-                {Object.entries(NAVIGATION_MENUS).map(([key, menu]) => (
-                    <li
-                        key={key}
-                        onClick={() => toggleMobileDropdown(key)}
-                        className={`${dropdown === key ? 'active' : ''} cursor-pointer`}
-                    >
-                        {menu.title}
-                        {dropdown === key && renderDropdownMenu(key, true)}
-                    </li>
-                ))}
-            </ul>
-
-            <div className="mobile-login-section">
-                <Login />
-            </div>
-
-            <nav className="other-menu">
-                <ul className="flex justify-center">
-                    {UPPER_LINKS.map((link, index) => (
-                        <React.Fragment key={index}>
-                            <li><a href={link.url}>{link.label}</a></li>
-                            {index < UPPER_LINKS.length - 1 && <span className="dot"> ··</span>}
-                        </React.Fragment>
-                    ))}
-                </ul>
-            </nav>
-            <nav className="other-menu2">
-                <ul className="flex justify-center">
-                    {UPPER_LINKS_RIGHT.map((link, index) => (
-                        <React.Fragment key={index}>
-                            <li><a href={link.path}>{link.label}</a></li>
-                            {index < UPPER_LINKS_RIGHT.length - 1 && <span className="dot"> ··</span>}
-                        </React.Fragment>
-                    ))}
-                </ul>
-            </nav>
-        </nav>
-    ), [isMobileMenuOpen, dropdown, toggleMobileDropdown, renderDropdownMenu]);
 
     useEffect(() => {
-        const header = document.querySelector('.header');
-
-        if (location.pathname !== '/') {
-            header.classList.add('scrolled');
-        }
-
-        window.addEventListener('scroll', handleScroll);
+        const handleScroll = () => setIsScrolled(window.scrollY > 4);
+        handleScroll();
+        window.addEventListener('scroll', handleScroll, { passive: true });
         return () => window.removeEventListener('scroll', handleScroll);
-    }, [location.pathname, handleScroll]);
+    }, []);
 
     useEffect(() => {
-        const handleResize = () => setIsMobileViewport(window.innerWidth <= 768);
+        closeAll();
+        setMobileGroup(null);
+    }, [location.pathname, closeAll]);
 
-        handleResize();
+    useEffect(() => {
+        const handleKeyDown = (event) => {
+            if (event.key === 'Escape') closeAll();
+        };
+        const handleResize = () => {
+            if (window.innerWidth > 960) setIsMobileMenuOpen(false);
+        };
+        window.addEventListener('keydown', handleKeyDown);
         window.addEventListener('resize', handleResize);
-        return () => window.removeEventListener('resize', handleResize);
-    }, []);
+        return () => {
+            window.removeEventListener('keydown', handleKeyDown);
+            window.removeEventListener('resize', handleResize);
+        };
+    }, [closeAll]);
 
     useEffect(() => {
         document.body.classList.toggle('mobile-menu-active', isMobileMenuOpen);
-
         return () => document.body.classList.remove('mobile-menu-active');
     }, [isMobileMenuOpen]);
 
+    useEffect(() => () => clearTimeout(closeTimer.current), []);
+
+    const renderMenuItem = (item) => (
+        item.external ? (
+            <a href={item.path} target="_blank" rel="noopener noreferrer" onClick={closeAll}>
+                {item.label}
+                <ArrowUpRight size={14} aria-hidden="true" />
+            </a>
+        ) : (
+            <Link
+                to={item.path}
+                className={location.pathname === item.path ? 'is-current' : ''}
+                onClick={closeAll}
+            >
+                {item.label}
+            </Link>
+        )
+    );
+
+    const headerClassName = [
+        'site-header',
+        isScrolled ? 'is-scrolled' : '',
+        openMenu ? 'is-mega-open' : '',
+        isMobileMenuOpen ? 'is-mobile-open' : ''
+    ].filter(Boolean).join(' ');
+
     return (
-        <header className="header">
-            <div className="upper">
-                {renderUpperLinks(UPPER_LINKS)}
-                {renderUpperLinks(UPPER_LINKS_RIGHT, true)}
-            </div>
+        <header className={headerClassName}>
+            <div className="site-header-inner">
+                <Link to="/" className="site-logo" aria-label="아주대학교 총학생회 홈">
+                    <img src="/images/logos/ajouLogo_header.svg" alt="아주대학교" />
+                    <span className="site-logo-label">총학생회</span>
+                </Link>
 
-            <div className="lower">
-                <div className="logo">
-                    <a href="/">
-                        <img src="/images/logos/ajouLogo_header.svg" alt="로고" />
-                    </a>
-                </div>
+                <nav className="site-nav" aria-label="주 메뉴" onMouseLeave={scheduleCloseMega}>
+                    <ul>
+                        {MENU_ENTRIES.map(([key, menu]) => (
+                            <li key={key} onMouseEnter={() => openMega(key)}>
+                                <Link
+                                    to={menu.path}
+                                    className={[
+                                        'site-nav-title',
+                                        activeMenu === key ? 'is-active' : '',
+                                        openMenu === key ? 'is-open' : ''
+                                    ].filter(Boolean).join(' ')}
+                                    aria-expanded={openMenu === key}
+                                    onFocus={() => openMega(key)}
+                                    onClick={closeAll}
+                                >
+                                    {menu.title}
+                                </Link>
+                            </li>
+                        ))}
+                    </ul>
+                </nav>
 
-                {renderNavigationMenu()}
-
-                <div
-                    className="hamburger-menu cursor-pointer"
-                    onClick={toggleMobileMenu}
-                    style={isMobileViewport ? {
-                        position: 'fixed',
-                        top: 14,
-                        right: 14,
-                        display: 'grid',
-                        placeItems: 'center',
-                        width: 38,
-                        height: 38,
-                        borderRadius: 14,
-                        color: 'var(--brand-deep)',
-                        background: 'rgba(255, 255, 255, 0.94)',
-                        boxShadow: '0 8px 22px rgba(7, 67, 93, 0.1)'
-                    } : undefined}
-                >
-                    <span className={`hamburger-lines ${isMobileMenuOpen ? 'open' : ''}`}>
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                    </span>
-                    <span className="hamburger-icon-fallback">
-                        {isMobileMenuOpen ? <X size={28} /> : <Menu size={28} />}
-                    </span>
-                </div>
-
-                {renderMobileMenu()}
-
-                <div className="button">
+                <div className="site-actions">
+                    <Link to="/linkHub" className="site-action-link">LinkHub</Link>
+                    <Link to="/sitemap" className="site-action-link">사이트맵</Link>
+                    <Link to="/profile" className="site-action-icon" aria-label="프로필">
+                        <UserRound size={18} aria-hidden="true" />
+                    </Link>
                     <Login />
                 </div>
+
+                <button
+                    type="button"
+                    className="site-burger"
+                    aria-label={isMobileMenuOpen ? '메뉴 닫기' : '메뉴 열기'}
+                    aria-expanded={isMobileMenuOpen}
+                    aria-controls="site-mobile-menu"
+                    onClick={() => setIsMobileMenuOpen((prev) => !prev)}
+                >
+                    <span></span>
+                    <span></span>
+                </button>
             </div>
-            <button
-                type="button"
-                className="mobile-menu-toggle-visual"
-                onClick={toggleMobileMenu}
-                aria-label="메뉴"
+
+            {/* 데스크톱: 전체 메뉴 패널 */}
+            <div
+                className={`site-mega ${openMenu ? 'is-open' : ''}`}
+                onMouseEnter={() => clearTimeout(closeTimer.current)}
+                onMouseLeave={scheduleCloseMega}
+                aria-hidden={!openMenu}
             >
-                <span className={`hamburger-lines ${isMobileMenuOpen ? 'open' : ''}`}>
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </span>
-            </button>
+                <div className="site-mega-inner">
+                    {MENU_ENTRIES.map(([key, menu]) => (
+                        <div
+                            key={key}
+                            className={`site-mega-col ${openMenu === key ? 'is-focus' : ''}`}
+                            onMouseEnter={() => openMega(key)}
+                        >
+                            <p className="site-mega-title">{menu.title}</p>
+                            <ul>
+                                {menu.items.map((item) => (
+                                    <li key={item.label}>{renderMenuItem(item)}</li>
+                                ))}
+                            </ul>
+                        </div>
+                    ))}
+                </div>
+                <div className="site-mega-foot">
+                    <div className="site-mega-foot-inner">
+                        <span>바로가기</span>
+                        {UPPER_LINKS.map((link) => (
+                            <a key={link.url} href={link.url} target="_blank" rel="noopener noreferrer">
+                                {link.label}
+                                <ArrowUpRight size={13} aria-hidden="true" />
+                            </a>
+                        ))}
+                    </div>
+                </div>
+            </div>
+
+            {/* 모바일: 전체 화면 메뉴 */}
+            <div
+                id="site-mobile-menu"
+                className={`site-mobile ${isMobileMenuOpen ? 'is-open' : ''}`}
+                aria-hidden={!isMobileMenuOpen}
+            >
+                <ul className="site-mobile-groups">
+                    {MENU_ENTRIES.map(([key, menu]) => {
+                        const isOpen = mobileGroup === key;
+                        return (
+                            <li key={key} className={isOpen ? 'is-open' : ''}>
+                                <button
+                                    type="button"
+                                    className={`site-mobile-title ${activeMenu === key ? 'is-active' : ''}`}
+                                    aria-expanded={isOpen}
+                                    onClick={() => setMobileGroup(isOpen ? null : key)}
+                                >
+                                    {menu.title}
+                                    <ChevronDown size={20} aria-hidden="true" />
+                                </button>
+                                <div className="site-mobile-items">
+                                    <ul>
+                                        {menu.items.map((item) => (
+                                            <li key={item.label}>{renderMenuItem(item)}</li>
+                                        ))}
+                                    </ul>
+                                </div>
+                            </li>
+                        );
+                    })}
+                </ul>
+
+                <div className="site-mobile-foot">
+                    <div className="site-mobile-login">
+                        <Login />
+                    </div>
+                    <div className="site-mobile-links">
+                        {UPPER_LINKS_RIGHT.map((link) => (
+                            <Link key={link.path} to={link.path} onClick={closeAll}>{link.label}</Link>
+                        ))}
+                    </div>
+                    <div className="site-mobile-links is-external">
+                        {UPPER_LINKS.map((link) => (
+                            <a key={link.url} href={link.url} target="_blank" rel="noopener noreferrer">
+                                {link.label}
+                                <ArrowUpRight size={13} aria-hidden="true" />
+                            </a>
+                        ))}
+                    </div>
+                </div>
+            </div>
         </header>
     );
 };

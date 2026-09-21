@@ -1,297 +1,93 @@
 .footer {
-    background: linear-gradient(90deg, #cfffdf 0%, #5ac6cf 50%, #17a7b0 100%);
-    padding: var(--spacing-xl) var(--spacing-lg);
-    border-top: 1px solid var(--border-light);
-    height: auto;
-    position: relative;
-    transform: translateY(0);
-    display: flex;
-    justify-content: center;
-}
-
-.main {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    text-align: left;
-    width: 60%;
-    max-width: var(--max-width);
-    margin: 0 auto;
-    color: var(--text-white);
-}
-
-.mainleft {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    text-align: left;
-    margin-right: auto;
-    margin-top: var(--spacing-md);
-}
-
-.main_logo {
-    color: var(--text-white);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.title {
-    font-size: var(--font-xl);
-    font-weight: bold;
-    margin: var(--spacing-lg);
-}
-
-.mainleft img {
-    height: 100px;
-    width: 100px;
-    object-fit: contain;
-    aspect-ratio: 1 / 1;
     flex: 0 0 auto;
-}
-
-.mainright {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    text-align: right;
-}
-
-.column {
-    margin: var(--spacing-sm) 0;
-    display: flex;
-    flex-direction: column;
-}
-
-.info {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
-    margin: var(--spacing-sm) 0;
-}
-
-.infotext {
-    font-size: var(--font-sm);
-    color: var(--bg-secondary);
-}
-
-.infotext a {
-    color: var(--bg-secondary);
-    text-decoration: none;
-    transition: var(--transition-normal);
-}
-
-.infotext a:hover {
-    color: var(--text-white);
-}
-
-.space {
-    margin: 0 var(--spacing-xs);
-}
-
-.address, 
-.developer, 
-.copyright {
-    font-size: var(--font-xs);
+    width: 100%;
+    background: var(--ink);
+    color: rgba(255, 255, 255, 0.72);
     text-align: left;
 }
 
-.developer a {
-    color: var(--bg-secondary);
-    text-decoration: none;
-    transition: var(--transition-normal);
+.footer-inner {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 40px 64px;
+    max-width: calc(var(--max-width-wide) + var(--gutter) * 2);
+    margin: 0 auto;
+    padding: clamp(40px, 6vw, 64px) var(--gutter) calc(32px + env(safe-area-inset-bottom));
 }
 
-.developer a:hover {
-    color: var(--text-white);
+.footer-wordmark {
+    font-family: var(--font-display);
+    font-size: 28px;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1;
+    color: #fff;
 }
 
-/* 태블릿 반응형 디자인 */
-@media (max-width: 1024px) {
-    .main {
-        width: 80%;
-        padding: 0 var(--spacing-md);
-    }
-    
-    .mainleft {
-        margin-top: var(--spacing-lg);
-    }
-    
-    .title {
-        font-size: var(--font-lg);
-        margin: var(--spacing-md);
-    }
-    
-    .mainleft img {
-        height: 90px;
-        width: 90px;
-    }
-    
-    .infotext {
-        font-size: var(--font-sm);
-    }
-    
-    .address, 
-    .developer, 
-    .copyright {
-        font-size: var(--font-sm);
-    }
+.footer-tagline {
+    margin-top: 10px;
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.6);
 }
 
-/* 모바일 반응형 디자인 */
-@media (max-width: 768px) {
-    .footer {
-        padding: var(--spacing-lg) var(--spacing-md);
-    }
-    
-    .main {
-        flex-direction: column;
-        align-items: center;
-        text-align: center;
-        width: 90%;
-        gap: var(--spacing-lg);
-    }
-
-    .mainleft {
-        margin: 0;
-        margin-top: var(--spacing-lg);
-        margin-bottom: var(--spacing-md);
-        align-items: center;
-    }
-
-    .mainright {
-        align-items: center;
-        text-align: center;
-        width: 100%;
-    }
-
-    .info {
-        flex-direction: column;
-        gap: var(--spacing-xs);
-        margin: var(--spacing-md) 0;
-    }
-
-    .infotext, 
-    .address, 
-    .developer, 
-    .copyright {
-        font-size: var(--font-sm);
-        line-height: 1.4;
-        word-break: keep-all;
-        text-align: center;
-    }
-    
-    .mainleft img {
-        height: 80px;
-        width: 80px;
-    }
-    
-    .title {
-        font-size: var(--font-lg);
-        margin: var(--spacing-md);
-        text-align: center;
-    }
-    
-    .column {
-        margin: var(--spacing-md) 0;
-        align-items: center;
-    }
-    
-    .space {
-        display: none;
-    }
-    
-    .info .dot {
-        display: none;
-    }
-    
-    .info li {
-        margin: var(--spacing-xs) 0;
-    }
+.footer-nav {
+    display: flex;
+    gap: 56px;
 }
 
-/* 작은 모바일 반응형 디자인 */
-@media (max-width: 480px) {
-    .footer {
-        padding: var(--spacing-md) var(--spacing-sm);
-    }
-    
-    .main {
-        width: 95%;
-        gap: var(--spacing-md);
-    }
-    
-    .mainleft {
-        margin-top: var(--spacing-md);
-    }
-    
-    .mainleft img {
-        height: 60px;
-        width: 60px;
-    }
-    
-    .title {
-        font-size: var(--font-base);
-        margin: var(--spacing-sm);
-    }
-    
-    .infotext, 
-    .address, 
-    .developer, 
-    .copyright {
-        font-size: var(--font-xs);
-        line-height: 1.5;
-    }
-    
-    .info {
-        margin: var(--spacing-sm) 0;
-    }
-    
-    .column {
-        margin: var(--spacing-sm) 0;
-    }
+.footer-nav ul {
+    display: grid;
+    gap: 10px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
 }
 
-/* 매우 작은 화면 */
-@media (max-width: 360px) {
-    .footer {
-        padding: var(--spacing-sm);
+.footer-nav a {
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    color: rgba(255, 255, 255, 0.82);
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.footer-nav a:hover {
+    color: var(--brand-mint);
+}
+
+.footer-meta {
+    grid-column: 1 / -1;
+    display: grid;
+    gap: 6px;
+    padding-top: 24px;
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
+    font-size: 13px;
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.55);
+}
+
+.footer-meta a {
+    color: rgba(255, 255, 255, 0.82);
+}
+
+.footer-meta a:hover {
+    color: var(--brand-mint);
+}
+
+.footer-meta .copyright {
+    margin-top: 8px;
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.4);
+}
+
+@media screen and (max-width: 720px) {
+    .footer-inner {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 32px;
     }
-    
-    .main {
-        width: 98%;
-        gap: var(--spacing-sm);
-    }
-    
-    .mainleft {
-        margin-top: var(--spacing-sm);
-    }
-    
-    .mainleft img {
-        height: 50px;
-        width: 50px;
-    }
-    
-    .title {
-        font-size: var(--font-sm);
-        margin: var(--spacing-xs);
-    }
-    
-    .infotext, 
-    .address, 
-    .developer, 
-    .copyright {
-        font-size: 10px;
-        line-height: 1.6;
-    }
-    
-    .info {
-        margin: var(--spacing-xs) 0;
-    }
-    
-    .column {
-        margin: var(--spacing-xs) 0;
+
+    .footer-nav {
+        gap: 40px;
     }
 }

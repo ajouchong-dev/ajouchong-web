@@ -1,283 +1,191 @@
+/*
+ * 로그인 버튼 / 프로필 페이지
+ * 헤더 안의 .auth-button은 Header.css(.site-header .auth-button)가 맡는다.
+ * 여기서는 헤더 밖에서 쓰일 때의 기본 모양만 낮은 우선순위로 둔다.
+ */
+
+/* ───────── 로그인 버튼 기본형 ───────── */
 .login-container {
     display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: var(--spacing-sm);
 }
 
-.user-info {
-    display: flex;
-    align-items: center;
-    gap: var(--spacing-sm);
-    margin-right: var(--spacing-md);
-}
-
-.greeting {
-    color: var(--text-white);
-    font-size: var(--font-sm);
-    font-weight: 500;
-}
-
-.login-container button.auth-button,
 .auth-button {
-    all: unset;
-    width: 135px;
-    height: 35px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: var(--button-primary);
-    color: var(--button-primary-text);
-    border-radius: var(--radius-normal);
-    font-family: 'Lexend', sans-serif;
-    font-size: var(--font-base);
-    font-weight: 500;
-    cursor: pointer;
-    transition: var(--transition-normal);
-    border: none;
-    outline: none;
-    box-shadow: none;
-}
-
-.login-container button.auth-button:hover,
-.auth-button:hover {
-    background-color: var(--button-hover);
-    color: var(--button-hover-text);
-}
-
-.login-container button.auth-button:focus,
-.login-container button.auth-button:focus-visible,
-.auth-button:focus,
-.auth-button:focus-visible {
-    outline: none;
-}
-
-.login-container button.auth-button:disabled,
-.auth-button:disabled {
-    opacity: 0.6;
-    cursor: not-allowed;
-}
-
-.profile-container {
-    margin: 50px auto;
-    padding: 30px; 
-    text-align: center;
-    font-family: "Arial", sans-serif;
-    min-height: calc(100vh - 300px); 
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
-}
-
-.profile-content {
-    width: 100%;
-    max-width: 400px;
-    background-color: var(--bg-primary);
-    border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
-    padding: 30px; 
-    border: 1px solid var(--border-light); 
-}
-
-.profile-container h1 {
-    font-size: 25px;
-    font-weight: bolder;
-}
-
-.titleSeparator {
-    max-width: 50%;
-    border: none;
-    height: 2px;
-    background-color: var(--secondary-color);
-    margin-top: 15px;
-}
-
-.profile-info {
-    font-size: 16px;
-    color: #555;
-    margin: 8px 0;
-}
-
-.loading-text {
-    font-size: 18px;
-    color: #888;
-    font-weight: bold;
-    margin-bottom: 32px;
-}
-
-.admin-link-wrap {
-    margin-top: var(--spacing-md);
-    display: flex;
-    justify-content: center;
-}
-
-.admin-link-button {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    min-width: 170px;
-    height: 36px;
-    padding: 0 var(--spacing-md);
+    gap: 8px;
+    height: 44px;
+    padding: 0 18px;
+    border: 1px solid var(--brand-teal-ink);
     border-radius: var(--radius-normal);
-    background-color: var(--secondary-color);
-    color: var(--text-primary);
+    background: var(--brand-teal-ink);
+    color: #fff;
+    font-size: 15px;
+    font-weight: 600;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: background-color 0.15s var(--ease), border-color 0.15s var(--ease), color 0.15s var(--ease);
+}
+
+.auth-button:hover {
+    border-color: var(--ink);
+    background: var(--ink);
+}
+
+.auth-button.logout-button {
+    border-color: var(--line-strong);
+    background: var(--paper);
+    color: var(--ink);
+}
+
+.auth-button.logout-button:hover {
+    border-color: var(--brand-teal);
+    background: var(--paper);
+}
+
+.auth-button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* ───────── 프로필 ───────── */
+.profile-card {
+    max-width: 560px;
+}
+
+.profile-head {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    min-width: 0;
+}
+
+.profile-avatar {
+    flex: 0 0 auto;
+    display: grid;
+    place-items: center;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: var(--brand-teal-soft);
+    color: var(--brand-teal-ink);
+    font-size: 22px;
+    font-weight: 700;
+    line-height: 1;
+}
+
+.profile-identity {
+    display: grid;
+    gap: 2px;
+    min-width: 0;
+}
+
+.profile-name-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 6px 8px;
+}
+
+.profile-name {
+    color: var(--ink);
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.3;
+}
+
+.profile-email {
+    color: var(--ink-3);
+    font-size: 14px;
+    overflow-wrap: anywhere;
+}
+
+.profile-fields {
+    display: grid;
+    margin: 20px 0 0;
+    border-top: 1px solid var(--line);
+}
+
+.profile-field {
+    display: grid;
+    grid-template-columns: 72px minmax(0, 1fr);
+    gap: 12px;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--line);
+    font-size: 15px;
+}
+
+.profile-field dt {
+    color: var(--ink-3);
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 1.7;
+}
+
+.profile-field dd {
+    margin: 0;
+    color: var(--ink);
+    overflow-wrap: anywhere;
+}
+
+.profile-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+    margin-top: 20px;
+}
+
+.profile-admin-link {
     text-decoration: none;
-    font-size: var(--font-sm);
-    font-weight: var(--font-weight-medium);
-    transition: var(--transition-normal);
 }
 
-.admin-link-button:hover {
-    filter: brightness(0.95);
+.profile-admin-link svg {
+    transition: transform 0.15s var(--ease);
 }
 
-/* 반응형 디자인 */
-@media screen and (max-width: 1024px) {
-    .profile-container {
-        margin: 40px auto;
-        padding: 25px;
-    }
-    
-    .profile-content {
-        max-width: 350px;
-        padding: 25px;
-    }
-    
-    .profile-container h1 {
-        font-size: 23px;
-    }
-    
-    .titleSeparator {
-        max-width: 60%;
-    }
+.profile-admin-link:hover svg {
+    transform: translateX(2px);
 }
 
-@media screen and (max-width: 768px) {
-    .login-container {
-        padding: var(--spacing-xs);
-    }
-    
-    .login-container button.auth-button,
-    .auth-button {
-        width: 120px;
-        height: 32px;
-        font-size: var(--font-sm);
-    }
-    
-    .greeting {
-        font-size: var(--font-xs);
-    }
-    
-    .profile-container {
-        margin: 30px auto;
-        padding: 15px;
-        min-height: calc(100vh - 250px);
-    }
-    
-    .profile-content {
-        max-width: 320px;
-        padding: 20px;
-    }
-    
-    .profile-container h1 {
-        font-size: 22px;
-    }
-    
-    .titleSeparator {
-        max-width: 70%;
-        margin-top: 12px;
-    }
-    
-    .profile-info {
-        font-size: 15px;
-        margin: 6px 0;
-    }
-    
-    .loading-text {
-        font-size: 16px;
-        margin-bottom: 25px;
-    }
+/* 로그아웃 상태 안내 */
+.profile-signin-icon {
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    border-radius: var(--radius-normal);
+    background: var(--surface);
+    color: var(--ink-2);
+}
+
+.profile-signin-title {
+    margin-top: 16px;
+    color: var(--ink);
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+}
+
+.profile-signin-text {
+    margin-top: 6px;
+    color: var(--ink-2);
+    font-size: 15px;
 }
 
 @media screen and (max-width: 480px) {
-    .login-container button.auth-button,
-    .auth-button {
-        width: 100px;
-        height: 30px;
-        font-size: var(--font-xs);
+    .profile-avatar {
+        width: 48px;
+        height: 48px;
+        font-size: 19px;
     }
-    
-    .user-info {
-        margin-right: var(--spacing-sm);
+
+    .profile-actions > * {
+        flex: 1 1 100%;
     }
-    
-    .profile-container {
-        margin: 20px auto;
-        padding: 10px;
-        min-height: calc(100vh - 200px);
-    }
-    
-    .profile-content {
-        max-width: 280px;
-        padding: 15px;
-    }
-    
-    .profile-container h1 {
-        font-size: 20px;
-    }
-    
-    .titleSeparator {
-        max-width: 80%;
-        margin-top: 10px;
-    }
-    
-    .profile-info {
-        font-size: 14px;
-        margin: 5px 0;
-    }
-    
-    .loading-text {
-        font-size: 15px;
-        margin-bottom: 20px;
+
+    .profile-actions .auth-button {
+        width: 100%;
     }
 }
-
-@media screen and (max-width: 360px) {
-    .login-container button.auth-button,
-    .auth-button {
-        width: 90px;
-        height: 28px;
-        font-size: var(--font-xs);
-    }
-    
-    .profile-container {
-        margin: 15px auto;
-        padding: 8px;
-        min-height: calc(100vh - 180px);
-    }
-    
-    .profile-content {
-        max-width: 250px;
-        padding: 12px;
-    }
-    
-    .profile-container h1 {
-        font-size: 18px;
-    }
-    
-    .titleSeparator {
-        max-width: 85%;
-        margin-top: 8px;
-    }
-    
-    .profile-info {
-        font-size: 13px;
-        margin: 4px 0;
-    }
-    
-    .loading-text {
-        font-size: 14px;
-        margin-bottom: 18px;
-    }
-} 

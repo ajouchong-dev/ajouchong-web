@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { ArrowLeft, Download, FileText } from 'lucide-react';
 import './styles.css';
 
 const apiClient = axios.create({
@@ -40,16 +41,26 @@ const BylawsDetail = () => {
     );
 
     const renderAttachment = () => (
-        <div className="post-attachment">
-            <strong>첨부파일:</strong>
-            {postDetails.attachmentUrl ? (
-                <a href={postDetails.attachmentUrl} target="_blank" rel="noopener noreferrer">
+        <section className="bylaws-attachment" aria-label="첨부파일">
+            <span className="bylaws-attachment-icon" aria-hidden="true">
+                <FileText size={20} />
+            </span>
+            <div className="bylaws-attachment-text">
+                <strong>첨부파일</strong>
+                <span>{postDetails.attachmentUrl ? '새 탭에서 문서를 열거나 내려받습니다.' : '없음'}</span>
+            </div>
+            {postDetails.attachmentUrl && (
+                <a
+                    href={postDetails.attachmentUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="ui-btn is-primary bylaws-attachment-button"
+                >
+                    <Download size={16} aria-hidden="true" />
                     첨부파일 다운로드
                 </a>
-            ) : (
-                <span>없음</span>
             )}
-        </div>
+        </section>
     );
 
     useEffect(() => {
@@ -57,7 +68,11 @@ const BylawsDetail = () => {
     }, [id, fetchPostDetails]);
 
     if (!postDetails) {
-        return <div>Loading...</div>;
+        return (
+            <div className="context">
+                <p className="loading-text">불러오는 중...</p>
+            </div>
+        );
     }
 
     return (
@@ -67,7 +82,8 @@ const BylawsDetail = () => {
             {renderMetadata()}
             <div className="post-content">{postDetails.rpContent}</div>
             {renderAttachment()}
-            <button onClick={handleBackToList} className="back-button">
+            <button type="button" onClick={handleBackToList} className="back-button">
+                <ArrowLeft size={16} aria-hidden="true" />
                 목록으로 돌아가기
             </button>
         </div>

@@ -26,7 +26,7 @@ const Qna = () => {
     });
 
     const renderStatusCell = (post) => (
-        <span className={`status ${post.status === '답변완료' ? 'completed' : 'pending'}`}>
+        <span className={`ui-badge ${post.status === '답변완료' ? 'is-ok' : 'is-warn'}`}>
             {post.status}
         </span>
     );

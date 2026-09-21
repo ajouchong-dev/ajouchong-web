@@ -1,5 +1,6 @@
 import './styles.css';
 import React from 'react';
+import PolicyLayout from './PolicyLayout';
 
 const Policy = () => {
     const policyContent = [
@@ -142,16 +143,23 @@ const Policy = () => {
         },
     ];
 
-    const renderPolicySection = (section) => (
-        <div key={section.title}>
-            <h2>{section.title}</h2>
+    const sectionId = (index) => `policy-article-${index + 1}`;
+
+    const tocSections = policyContent.map((section, index) => ({
+        id: sectionId(index),
+        title: section.title,
+    }));
+
+    const renderPolicySection = (section, sectionIndex) => (
+        <section key={section.title} id={sectionId(sectionIndex)} className="policy-section">
+            <h2 className="policy-section-title">{section.title}</h2>
             {section.type === 'list' ? (
-                <ol>
+                <ol className="policy-list">
                     {section.items.map((item, index) => (
                         <li key={index}>
                             {typeof item === 'string' ? item : item.content}
                             {item.subItems && (
-                                <ol type="1">
+                                <ol type="1" className="policy-sublist">
                                     {item.subItems.map((subItem, subIndex) => (
                                         <li key={subIndex}>{subItem}</li>
                                     ))}
@@ -163,21 +171,13 @@ const Policy = () => {
             ) : (
                 <p>{section.content}</p>
             )}
-        </div>
-    );
-
-    const renderPolicyContent = () => (
-        <div className="terms-content">
-            {policyContent.map(renderPolicySection)}
-        </div>
+        </section>
     );
 
     return (
-        <div className="context">
-            <div className="contextTitle">이용약관</div>
-            <hr className="titleSeparator"/>
-            {renderPolicyContent()}
-        </div>
+        <PolicyLayout title="이용약관" sections={tocSections}>
+            {policyContent.map(renderPolicySection)}
+        </PolicyLayout>
     );
 };
 

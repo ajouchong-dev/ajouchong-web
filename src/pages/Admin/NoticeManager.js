@@ -1,6 +1,23 @@
 import React, { useEffect, useMemo, useState } from "react";
 import axios from "axios";
+import { ArrowDownUp, Pencil, Trash2 } from "lucide-react";
 import { useAuth } from "../../contexts/AuthContext";
+import {
+    AdminCollapse,
+    AdminEditBanner,
+    AdminEmpty,
+    AdminField,
+    AdminFileDrop,
+    AdminFormToggle,
+    AdminPanelHead,
+    AdminSearch,
+    AdminSkeleton,
+    AdminStatus,
+    useAutoDismiss,
+    useChangedRows,
+    useFormPanel,
+    useObjectUrls,
+} from "./AdminUI";
 
 const apiClient = axios.create({
     baseURL: process.env.REACT_APP_API_URL || "https://api.ajouchong.com",
@@ -12,6 +29,12 @@ const INITIAL_FORM = {
 };
 
 const pickNoticeId = (item) => item?.nPost_id ?? item?.npost_id ?? item?.id ?? null;
+
+// 목록 표현용 (행 강조 비교 기준, 정렬 토글)
+const getPostId = (post) => post.id;
+const getPostSignature = (post) => `${post.title}|${post.updatedAt}`;
+const SORT_NEXT = { default: "newest", newest: "oldest", oldest: "default" };
+const SORT_LABEL = { default: "기본 순서", newest: "최신 등록순", oldest: "오래된 등록순" };
 
 const NoticeManager = () => {
     const { auth } = useAuth();
@@ -89,7 +112,7 @@ const NoticeManager = () => {
             setForm({ title: data.title, content: data.content });
             setEditingImages(data.imageUrls);
             setImageFiles([]);
-            window.scrollTo({ top: 0, behavior: "smooth" });
+            formPanel.reveal(); // 페이지 맨 위 대신 수정 폼으로 스크롤
         } catch (e) {
             setError(e.response?.data?.message || "공지사항 상세를 불러오지 못했습니다.");
         }
@@ -164,124 +187,197 @@ const NoticeManager = () => {
         return parsed.toLocaleString();
     };
 
+    // ── 표현용 상태 (데이터 로직과 무관) ──
+    const [query, setQuery] = useState("");
+    const [sortMode, setSortMode] = useState("default");
+    const formPanel = useFormPanel(editingId);
+    const changedRows = useChangedRows(posts, getPostId, getPostSignature);
+    const newImagePreviews = useObjectUrls(imageFiles);
+    useAutoDismiss(message, setMessage);
+
+    const editingPost = posts.find((post) => post.id === editingId);
+    const keyword = query.trim().toLowerCase();
+    const filteredPosts = keyword
+        ? posts.filter((post) => `${post.id} ${post.title}`.toLowerCase().includes(keyword))
+        : posts;
+    const visiblePosts = sortMode === "default"
+        ? filteredPosts
+        : [...filteredPosts].sort((a, b) => {
+            const diff = new Date(a.createdAt || 0).getTime() - new Date(b.createdAt || 0).getTime();
+            return sortMode === "newest" ? -diff : diff;
+        });
+
     return (
-        <section className="admin-card admin-full">
-            <div className="admin-section-head">
-                <h2>공지사항 관리</h2>
-                <p>공지사항을 등록, 수정, 삭제할 수 있습니다.</p>
-            </div>
+        <section className="admin-section">
+            <AdminPanelHead
+                title="공지사항 관리"
+                count={keyword ? `${posts.length}건 중 ${visiblePosts.length}건` : `총 ${posts.length}건`}
+                description="공지사항을 등록, 수정, 삭제할 수 있습니다."
+            >
+                <AdminFormToggle
+                    open={formPanel.open}
+                    editing={Boolean(editingId)}
+                    label="새로 등록"
+                    controls="notice-form-panel"
+                    onClick={() => (editingId ? resetForm() : formPanel.setOpen((prev) => !prev))}
+                />
+            </AdminPanelHead>
 
-            <form className="admin-form-grid" onSubmit={handleSubmit}>
-                <label className="admin-span-2">
-                    제목
-                    <input
-                        name="title"
-                        value={form.title}
-                        onChange={handleChange}
-                        maxLength={500}
-                        required
-                    />
-                </label>
+            <AdminStatus
+                message={message}
+                error={error}
+                onDismissMessage={() => setMessage("")}
+                onDismissError={() => setError("")}
+            />
 
-                <label className="admin-span-2">
-                    내용
-                    <textarea
-                        name="content"
-                        value={form.content}
-                        onChange={handleChange}
-                        rows={6}
-                        required
-                    />
-                </label>
+            <AdminCollapse open={formPanel.open} id="notice-form-panel" panelRef={formPanel.panelRef}>
+                <form className="admin-form-card" onSubmit={handleSubmit}>
+                    {editingId && <AdminEditBanner title={editingPost?.title || form.title} onCancel={resetForm} />}
+                    <div className="admin-form-grid">
+                        <AdminField label="제목" htmlFor="notice-title" required span>
+                            <input
+                                id="notice-title"
+                                className="ui-input"
+                                name="title"
+                                value={form.title}
+                                onChange={handleChange}
+                                maxLength={500}
+                                required
+                            />
+                        </AdminField>
 
-                <label className="admin-span-2">
-                    이미지 업로드
-                    <input
-                        type="file"
-                        multiple
-                        accept="image/*"
-                        onChange={handleImageChange}
-                    />
-                </label>
+                        <AdminField label="내용" htmlFor="notice-content" required span>
+                            <textarea
+                                id="notice-content"
+                                className="ui-textarea"
+                                name="content"
+                                value={form.content}
+                                onChange={handleChange}
+                                rows={6}
+                                required
+                            />
+                        </AdminField>
 
-                {editingId && editingImages.length > 0 && imageFiles.length === 0 && (
-                    <div className="admin-span-2">
-                        <p className="admin-upload-hint">현재 등록 이미지</p>
-                        <div className="admin-notice-preview-row">
-                            {editingImages.map((url) => (
-                                <img
-                                    key={url}
-                                    src={url}
-                                    alt="공지 이미지 미리보기"
-                                    className="admin-notice-thumb"
-                                />
-                            ))}
-                        </div>
+                        <AdminField label="이미지 업로드" htmlFor="notice-images" span>
+                            <AdminFileDrop
+                                id="notice-images"
+                                title="이미지를 끌어놓거나 눌러서 선택"
+                                hint="여러 장을 한 번에 선택할 수 있습니다."
+                                fileCount={imageFiles.length}
+                                inputProps={{ multiple: true, accept: "image/*", onChange: handleImageChange }}
+                            />
+                        </AdminField>
+
+                        {editingId && editingImages.length > 0 && imageFiles.length === 0 && (
+                            <div className="admin-span-2">
+                                <p className="admin-upload-hint">현재 등록 이미지</p>
+                                <div className="admin-preview-row">
+                                    {editingImages.map((url) => (
+                                        <img
+                                            key={url}
+                                            src={url}
+                                            alt="공지 이미지 미리보기"
+                                            className="admin-preview-thumb"
+                                        />
+                                    ))}
+                                </div>
+                            </div>
+                        )}
+
+                        {imageFiles.length > 0 && (
+                            <div className="admin-span-2">
+                                <p className="admin-upload-hint">
+                                    새 이미지 {imageFiles.length}개가 선택되었습니다. 저장하면 기존 이미지를 새 이미지로 교체합니다.
+                                </p>
+                                <ul className="admin-preview-row admin-preview-list">
+                                    {newImagePreviews.map((preview) => (
+                                        <li key={preview.url}>
+                                            <img src={preview.url} alt="" className="admin-preview-thumb" />
+                                            <span>{preview.name}</span>
+                                        </li>
+                                    ))}
+                                </ul>
+                            </div>
+                        )}
                     </div>
-                )}
 
-                {imageFiles.length > 0 && (
-                    <p className="admin-upload-hint admin-span-2">
-                        새 이미지 {imageFiles.length}개가 선택되었습니다. 저장하면 기존 이미지를 새 이미지로 교체합니다.
-                    </p>
-                )}
-
-                <div className="admin-form-actions admin-span-2">
-                    <button className="admin-btn primary" type="submit" disabled={submitting}>
-                        {submitting ? "저장 중..." : (editingId ? "수정 저장" : "공지 등록")}
-                    </button>
-                    {editingId && (
-                        <button className="admin-btn muted" type="button" onClick={resetForm}>
-                            수정 취소
+                    <div className="admin-form-actions">
+                        {editingId && (
+                            <button className="ui-btn" type="button" onClick={resetForm}>
+                                수정 취소
+                            </button>
+                        )}
+                        <button className="ui-btn is-primary" type="submit" disabled={submitting}>
+                            {submitting ? "저장 중..." : (editingId ? "수정 저장" : "공지 등록")}
                         </button>
-                    )}
+                    </div>
+                </form>
+            </AdminCollapse>
+
+            {posts.length > 0 && (
+                <div className="admin-toolbar">
+                    <AdminSearch value={query} onChange={setQuery} placeholder="제목, ID 검색" />
+                    <button
+                        type="button"
+                        className="ui-btn admin-sort-btn"
+                        onClick={() => setSortMode((prev) => SORT_NEXT[prev])}
+                    >
+                        <ArrowDownUp size={16} aria-hidden="true" />
+                        {SORT_LABEL[sortMode]}
+                    </button>
                 </div>
-            </form>
+            )}
 
-            {message && <p className="admin-feedback success">{message}</p>}
-            {error && <p className="admin-feedback error">{error}</p>}
-
-            <div className="admin-table-wrap">
-                {loading ? (
-                    <p className="admin-empty">불러오는 중...</p>
-                ) : posts.length === 0 ? (
-                    <p className="admin-empty">등록된 공지사항이 없습니다.</p>
-                ) : (
+            {loading && posts.length === 0 ? (
+                <AdminSkeleton />
+            ) : posts.length === 0 ? (
+                <AdminEmpty>등록된 공지사항이 없습니다.</AdminEmpty>
+            ) : visiblePosts.length === 0 ? (
+                <AdminEmpty>검색어와 일치하는 공지사항이 없습니다.</AdminEmpty>
+            ) : (
+                <div className={`admin-table-wrap ${loading ? "is-loading" : ""}`} aria-busy={loading}>
                     <table className="admin-table">
                         <thead>
                             <tr>
-                                <th>ID</th>
+                                <th className="admin-col-num">ID</th>
                                 <th>제목</th>
                                 <th>등록일</th>
                                 <th>수정일</th>
-                                <th>조회수</th>
-                                <th>공감수</th>
-                                <th>관리</th>
+                                <th className="admin-col-num">조회수</th>
+                                <th className="admin-col-num">공감수</th>
+                                <th className="admin-col-actions">관리</th>
                             </tr>
                         </thead>
                         <tbody>
-                            {posts.map((post) => (
-                                <tr key={post.id}>
-                                    <td>{post.id}</td>
-                                    <td>{post.title || "-"}</td>
-                                    <td>{formatDate(post.createdAt)}</td>
-                                    <td>{formatDate(post.updatedAt)}</td>
-                                    <td>{post.hitCount}</td>
-                                    <td>{post.likeCount}</td>
-                                    <td className="admin-actions">
-                                        <button className="admin-btn small" type="button" onClick={() => handleEdit(post.id)}>
-                                            수정
-                                        </button>
-                                        <button className="admin-btn small danger" type="button" onClick={() => handleDelete(post.id)}>
-                                            삭제
-                                        </button>
+                            {visiblePosts.map((post) => (
+                                <tr
+                                    key={post.id}
+                                    className={`${changedRows.has(String(post.id)) ? "is-flash" : ""} ${editingId === post.id ? "is-editing" : ""}`}
+                                >
+                                    <td className="admin-cell-num" data-label="ID">{post.id}</td>
+                                    <td className="admin-cell-title">{post.title || "-"}</td>
+                                    <td className="admin-cell-date" data-label="등록">{formatDate(post.createdAt)}</td>
+                                    <td className="admin-cell-date" data-label="수정">{formatDate(post.updatedAt)}</td>
+                                    <td className="admin-cell-num" data-label="조회">{post.hitCount}</td>
+                                    <td className="admin-cell-num" data-label="공감">{post.likeCount}</td>
+                                    <td className="admin-cell-actions">
+                                        <div className="admin-actions">
+                                            <button className="ui-btn is-small admin-act" type="button" onClick={() => handleEdit(post.id)}>
+                                                <Pencil size={14} aria-hidden="true" />
+                                                수정
+                                            </button>
+                                            <button className="ui-btn is-small is-danger admin-act" type="button" onClick={() => handleDelete(post.id)}>
+                                                <Trash2 size={14} aria-hidden="true" />
+                                                삭제
+                                            </button>
+                                        </div>
                                     </td>
                                 </tr>
                             ))}
                         </tbody>
                     </table>
-                )}
-            </div>
+                </div>
+            )}
         </section>
     );
 };

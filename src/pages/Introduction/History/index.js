@@ -1,5 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import { ChevronRight } from 'lucide-react';
 import "./style.css";
 
 const councilList = [
@@ -21,33 +22,22 @@ const History = () => {
         navigate(`/introduction/history/${year}`);
     };
 
-    const renderTableRow = ({ year, title, leaders }) => (
-        <tr
-            key={year}
-            onClick={() => handleRowClick(year)}
-            className="clickable-row"
-        >
-            <td>{title}</td>
-            <td>{leaders}</td>
-        </tr>
-    );
-
-    const renderTable = () => (
-        <table className="table">
-            <colgroup>
-                <col style={{ width: "65%" }} />
-                <col style={{ width: "35%" }} />
-            </colgroup>
-            <thead>
-                <tr>
-                    <th>해당연도</th>
-                    <th>총, 부학생회장</th>
-                </tr>
-            </thead>
-            <tbody>
-                {councilList.map(renderTableRow)}
-            </tbody>
-        </table>
+    const renderItem = ({ year, title, leaders }, index) => (
+        <li key={year} className={`history-row ${index === 0 ? 'is-current' : ''}`}>
+            <button
+                type="button"
+                className="history-item"
+                onClick={() => handleRowClick(year)}
+            >
+                <span className="history-item__year">{year}</span>
+                <span className="history-item__title">{title.trim()}</span>
+                <span className="history-item__leaders">
+                    <span className="history-item__label">총, 부학생회장</span>
+                    {leaders}
+                </span>
+                <ChevronRight className="history-item__arrow" size={20} aria-hidden="true" />
+            </button>
+        </li>
     );
 
     return (
@@ -55,9 +45,13 @@ const History = () => {
             <div className="contextTitle">역대 총학생회 소개</div>
             <hr className="titleSeparator" />
 
-            <div className="table-container">
-                {renderTable()}
+            <div className="history-head" aria-hidden="true">
+                <span className="history-head__year">해당연도</span>
+                <span className="history-head__leaders">총, 부학생회장</span>
             </div>
+            <ol className="history-list">
+                {councilList.map(renderItem)}
+            </ol>
         </div>
     );
 };

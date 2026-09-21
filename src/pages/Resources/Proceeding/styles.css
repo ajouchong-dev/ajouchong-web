@@ -1,159 +1,72 @@
-﻿@import "../styles.css";
+/* 회의록: 위원회 칩 필터 + 문서 목록 (문서 줄 모양은 ../styles.css) */
 
-.proceeding-v2-layout {
-    width: min(1100px, 100%);
-    margin: 0 auto;
-    padding: var(--spacing-lg) var(--spacing-md) 80px;
-    display: grid;
-    grid-template-columns: minmax(260px, 340px) minmax(0, 1fr);
-    gap: var(--spacing-md);
-    box-sizing: border-box;
+/* ───────── 위원회 선택 ───────── */
+.proceeding-filter-title {
+    margin-bottom: 12px;
+    color: var(--ink-3);
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0;
 }
 
-.proceeding-v2-card {
-    background: #ffffff;
-    border: 1px solid var(--border-light);
-    border-radius: 10px;
-    overflow: hidden;
-}
-
-.proceeding-v2-card h2 {
-    margin: 0;
-    padding: 14px 16px;
-    border-bottom: 1px solid var(--border-light);
-    font-size: var(--font-base);
-    color: #2a3548;
-    background: #f8fafc;
-}
-
-.proceeding-v2-state {
-    margin: 0;
-    padding: 14px 16px;
-    font-size: var(--font-sm);
-    color: var(--text-muted);
-}
-
-.proceeding-v2-state.error {
-    color: #b42318;
-}
-
-.proceeding-category-list,
-.proceeding-document-list {
-    list-style: none;
+.proceeding-chip-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
     margin: 0;
     padding: 0;
+    list-style: none;
 }
 
-.proceeding-category-item,
-.proceeding-document-item {
-    width: 100%;
-    border: 0;
-    border-bottom: 1px solid var(--border-light);
-    background: #fff;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 12px;
-    padding: 12px 14px;
+/* 터치 대상 44px 확보, 긴 위원회 이름은 줄바꿈 허용 */
+.proceeding-chip-list > li > button {
+    min-height: 44px;
+    max-width: 100%;
+    padding: 6px 16px;
+    white-space: normal;
     text-align: left;
-    box-sizing: border-box;
 }
 
-.proceeding-category-item {
-    cursor: pointer;
-    transition: var(--transition-normal);
+/* 오류 상태: 빈 상태와 같은 틀에 색만 바꾼다 */
+.proceeding-filter .proceeding-error {
+    border-color: var(--danger);
+    color: var(--danger);
 }
 
-.proceeding-category-item:hover,
-.proceeding-category-item.active {
-    background: #f1f6ff;
+/* ───────── 문서 목록 ───────── */
+.proceeding-documents {
+    margin-top: clamp(32px, 5vw, 48px);
 }
 
-.proceeding-icon-wrap {
-    width: 28px;
-    height: 28px;
-    border-radius: 8px;
-    background: #e8edf5;
-    color: #384860;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-}
-
-.proceeding-icon-wrap.red {
-    background: #fde7e8;
-    color: #b42318;
-}
-
-.proceeding-category-text,
-.proceeding-doc-text {
-    min-width: 0;
+.proceeding-documents-head {
     display: flex;
-    flex-direction: column;
-    gap: 2px;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 16px;
 }
 
-.proceeding-category-text strong,
-.proceeding-doc-text strong {
-    font-size: var(--font-sm);
-    color: #1f2f46;
+.proceeding-documents-heading {
+    min-width: 0;
+}
+
+.proceeding-documents-title {
+    color: var(--ink);
+    font-size: clamp(20px, 1rem + 0.8vw, 24px);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+}
+
+.proceeding-documents-desc {
+    margin-top: 4px;
+    color: var(--ink-2);
+    font-size: 15px;
+}
+
+.proceeding-documents-count {
+    flex: 0 0 auto;
+    color: var(--ink-3);
+    font-size: 13px;
+    font-variant-numeric: tabular-nums;
     white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-.proceeding-category-text small,
-.proceeding-doc-text small {
-    color: var(--text-muted);
-    font-size: 12px;
-}
-
-.proceeding-doc-main {
-    min-width: 0;
-    flex: 1;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-.proceeding-doc-actions {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
-.proceeding-doc-actions a {
-    width: 28px;
-    height: 28px;
-    border-radius: 8px;
-    border: 1px solid var(--border-light);
-    color: #344054;
-    background: #fff;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    transition: var(--transition-normal);
-}
-
-.proceeding-doc-actions a:hover {
-    background: #eef4ff;
-    border-color: #c8daf8;
-    color: #1f4b99;
-}
-
-@media screen and (max-width: 900px) {
-    .proceeding-v2-layout {
-        grid-template-columns: 1fr;
-    }
-}
-
-@media screen and (max-width: 480px) {
-    .proceeding-v2-layout {
-        padding: var(--spacing-md) var(--spacing-xs) 56px;
-    }
-
-    .proceeding-v2-card h2 {
-        font-size: var(--font-sm);
-    }
 }

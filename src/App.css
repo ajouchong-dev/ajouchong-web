@@ -1,37 +1,18 @@
-html, body {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-}
-
 .App {
-  text-align: center;
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  overflow-x: hidden;
+  min-height: 100dvh;
 }
 
-footer {
-  background: var(--secondary-color);
-  padding: var(--spacing-xl) var(--spacing-lg);
-  text-align: center;
+/* 모든 페이지 상단에 옅은 기조색이 깔렸다가 흰색으로 풀린다 (홈은 사진이 덮는다) */
+.content {
+  flex: 1 0 auto;
   width: 100%;
-  height: var(--footer-height);
+  min-width: 0;
+  background: linear-gradient(180deg, rgba(234, 248, 245, 0.7) 0, rgba(234, 248, 245, 0) 280px) no-repeat;
 }
 
-@media screen and (max-height: 600px) {
-  html, body {
-    width: 100%;
-  }
-}
-
-@media screen and (max-width: 768px) {
-  .content {
-    padding-bottom: 0;
-  }
+body.mobile-menu-active {
+  overflow: hidden;
 }

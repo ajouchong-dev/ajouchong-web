@@ -1,41 +1,38 @@
-@import "../styles.css";
+/* 캠퍼스 맵: 폭에 맞춰 보여주고, 누르면 원본을 새 탭으로 */
+.campus-figure {
+    margin: 0;
+}
 
-.campusImg {
-    max-width: 60%;
-    margin-top: var(--spacing-xl);
+.campus-figure__link {
+    display: block;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-large);
+    background: var(--surface);
+    overflow: hidden;
+    cursor: zoom-in;
+    transition: border-color 0.15s var(--ease);
+}
+
+.campus-figure__link:hover {
+    border-color: var(--brand-teal);
+}
+
+.campus-figure__image {
+    display: block;
+    width: 100%;
     height: auto;
-    margin-bottom: var(--spacing-xl);
 }
 
-/* 반응형 디자인 */
-@media screen and (max-width: 1024px) {
-    .campusImg {
-        max-width: 70%;
-        margin-top: var(--spacing-lg);
-        margin-bottom: var(--spacing-lg);
-    }
+.campus-figure__caption {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 12px;
+    color: var(--ink-3);
+    font-size: 14px;
+    line-height: 1.5;
 }
 
-@media screen and (max-width: 768px) {
-    .campusImg {
-        max-width: 80%;
-        margin-top: var(--spacing-md);
-        margin-bottom: var(--spacing-md);
-    }
-}
-
-@media screen and (max-width: 480px) {
-    .campusImg {
-        max-width: 90%;
-        margin-top: var(--spacing-sm);
-        margin-bottom: var(--spacing-sm);
-    }
-}
-
-@media screen and (max-width: 360px) {
-    .campusImg {
-        max-width: 95%;
-        margin-top: var(--spacing-xs);
-        margin-bottom: var(--spacing-xs);
-    }
+.campus-figure__caption svg {
+    flex: none;
 }

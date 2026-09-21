@@ -1,355 +1,273 @@
-.acentia-info {
-    text-align: left;
-    max-width: 660px;
-    margin: auto;
-    padding-top: var(--spacing-sm);
+/* ACENTIA (소개 / 굿즈 / 역대) — 토큰/공용 클래스는 styles/variables.css, styles/common.css */
+
+/* ───────── 소개 ───────── */
+.acentia-hero {
+    display: grid;
+    gap: clamp(20px, 3vw, 32px);
+    padding-bottom: clamp(40px, 6vw, 72px);
+    border-bottom: 1px solid var(--line);
 }
 
 .acentia-name {
-    margin-bottom: 0;
-    font-size: 1.3rem;
-    font-weight: bold;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 4px 16px;
+    margin: 0;
+    line-height: 1;
+}
+
+.acentia-wordmark {
+    color: var(--ink);
+    font-family: var(--font-display);
+    font-size: clamp(3rem, 1.2rem + 9vw, 8rem);
+    font-weight: 800;
+    letter-spacing: -0.04em;
+    line-height: 0.95;
+}
+
+.acentia-name-ko {
+    color: var(--ink-3);
+    font-size: clamp(1rem, 0.9rem + 0.5vw, 1.25rem);
+    font-weight: 600;
+    letter-spacing: -0.02em;
+}
+
+.acentia-lead {
+    display: grid;
+    gap: var(--spacing-md);
+    max-width: var(--max-width-prose);
 }
 
 .acentia-description {
-    font-size: 1.1rem;
+    margin: 0;
+    color: var(--ink-2);
+    font-size: 17px;
+    line-height: 1.8;
+}
+
+.acentia-description.is-first {
+    color: var(--ink);
+    font-size: clamp(1.125rem, 1rem + 0.6vw, 1.375rem);
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    line-height: 1.6;
+}
+
+.acentia-video-section {
+    margin-top: clamp(40px, 6vw, 72px);
+}
+
+.acentia-section-title {
+    margin: 0 0 var(--spacing-lg);
+    color: var(--ink);
+    font-size: clamp(1.25rem, 1.1rem + 0.5vw, 1.5rem);
+    font-weight: 700;
+    letter-spacing: -0.02em;
     line-height: 1.3;
-    max-width: none;
-    margin: var(--spacing-xs) 0;
 }
 
-.video-section {
-    text-align: center;
-    margin-top: 3rem;
+.acentia-video-frame {
+    overflow: hidden;
+    border-radius: var(--radius-large);
+    background: var(--ink);
 }
 
-.video-title {
-    font-size: 1.15rem;
-    margin-bottom: var(--spacing-sm);
-}
-
-.video-wrapper {
-    display: flex;
-    justify-content: center;
-    width: 100%;
-    max-width: 860px;
-    margin: 0 auto;
-    padding: 10px;
-    border: 1px solid rgba(23, 167, 176, 0.22);
-    border-radius: 24px;
-    background:
-        linear-gradient(135deg, rgba(207, 255, 223, 0.74), rgba(90, 198, 207, 0.24)),
-        #f7feff;
-    box-shadow: 0 18px 42px rgba(7, 67, 93, 0.13);
-    box-sizing: border-box;
-}
-
-.video-player {
-    width: 100%;
-    max-width: 100%;
-    aspect-ratio: 16 / 9;
+.acentia-video {
     display: block;
-    border-radius: 18px;
-    background: #071d2f;
-    box-shadow: 0 16px 34px rgba(7, 67, 93, 0.16);
-    transition: var(--transition-normal);
-}
-
-.video-player:hover {
-    transform: scale(1.01);
-}
-
-/* ============ goods =============== */
-
-.goods-grid {
-    margin-top: 2.5rem;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.goods-row {
-    display: flex;
-    justify-content: center;
-    gap: 2rem;
-    margin-bottom: var(--spacing-sm);
-}
-
-.goodsImg {
     width: 100%;
-    max-width: 300px;
     height: auto;
-    border-radius: var(--radius-sm);
-    border: 1px solid var(--secondary-color);
-    transition: var(--transition-normal);
-    object-fit: cover;
+    aspect-ratio: 16 / 9;
+    background: var(--ink);
 }
 
-.goods-row.top-row .goodsImg {
-    max-width: 300px;
+/* ───────── 굿즈 ───────── */
+.acentia-goods-grid {
+    display: grid;
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    gap: clamp(24px, 4vw, 48px) var(--spacing-lg);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    counter-reset: acentia-goods;
 }
 
-.goods-row.bottom-row .goodsImg {
-    max-width: 300px;
-    height: 200px;
-    object-fit: cover;
+.acentia-goods-item {
+    grid-column: span 2;
+    min-width: 0;
+    counter-increment: acentia-goods;
 }
 
-.goods-row.bottom-row .slogan-img {
-    max-width: 500px;
-    height: 200px;
+.acentia-goods-item.is-large {
+    grid-column: span 3;
+}
+
+.acentia-goods-figure {
+    margin: 0;
+}
+
+/* 상품 사진은 배경이 투명/흰색인 누끼컷이라 잘리지 않게 contain으로 둔다 */
+.acentia-goods-media {
+    --acentia-goods-pad: clamp(12px, 2vw, 24px);
+    position: relative;
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-large);
+    background: var(--paper);
+    transition: border-color 0.15s var(--ease);
+}
+
+.acentia-goods-item:hover .acentia-goods-media {
+    border-color: var(--brand-teal);
+}
+
+.acentia-goods-img {
+    position: absolute;
+    top: var(--acentia-goods-pad);
+    left: var(--acentia-goods-pad);
+    display: block;
+    width: calc(100% - var(--acentia-goods-pad) * 2);
+    height: calc(100% - var(--acentia-goods-pad) * 2);
     object-fit: contain;
 }
 
-.goods-text {
-    margin-top: var(--spacing-sm);
+.acentia-goods-text {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    margin-top: 14px;
+    color: var(--ink);
+    font-size: var(--font-lg);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.4;
+}
+
+.acentia-goods-text::before {
+    content: counter(acentia-goods, decimal-leading-zero);
+    color: var(--ink-4);
+    font-family: var(--font-display);
+    font-size: 13px;
+    font-weight: 500;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: 0;
+}
+
+/* ───────── 역대 ACENTIA ───────── */
+.acentia-record-head,
+.acentia-record-item {
+    display: grid;
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    gap: var(--spacing-md) var(--spacing-xl);
+}
+
+.acentia-record-head {
+    padding: 12px 0;
+    border-bottom: 1px solid var(--ink);
+    color: var(--ink-3);
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.acentia-record-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.acentia-record-item {
+    align-items: end;
+    padding: clamp(24px, 4vw, 40px) 0;
+    border-bottom: 1px solid var(--line);
+}
+
+.acentia-record-when {
+    display: grid;
+    gap: 10px;
+    min-width: 0;
+}
+
+.acentia-record-year {
+    color: var(--ink);
+    font-family: var(--font-display);
+    font-size: clamp(2.5rem, 1.6rem + 4vw, 4.5rem);
+    font-weight: 800;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: -0.04em;
+    line-height: 1;
+}
+
+.acentia-record-council {
+    color: var(--ink-3);
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.acentia-record-name {
+    margin: 0;
+    color: var(--ink);
+    font-size: clamp(1.125rem, 1rem + 0.6vw, 1.375rem);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.5;
+}
+
+.acentia-record-item.is-pending .acentia-record-year {
+    color: var(--ink-4);
+}
+
+.acentia-record-item.is-pending .acentia-record-name {
+    color: var(--ink-3);
     font-size: var(--font-base);
-    font-weight: bold;
-    color: var(--text-primary);
+    font-weight: 500;
 }
 
-.goodsImg:hover {
-    transform: scale(1.03);
-}
-
-/* 반응형 디자인 */
-@media screen and (max-width: 1024px) {
-    .acentia-info {
-        max-width: 600px;
-        padding-top: var(--spacing-xs);
-    }
-    
-    .acentia-name {
-        font-size: 1.2rem;
-    }
-    
-    .acentia-description {
-        font-size: 1rem;
-        line-height: 1.4;
-    }
-    
-    .video-section {
-        margin-top: 2.5rem;
-    }
-    
-    .video-title {
-        font-size: 1.1rem;
-    }
-    
-    .video-player {
-        max-width: 700px;
-    }
-    
-    .goods-grid {
-        margin-top: 2rem;
-    }
-    
-    .goods-row {
-        gap: 1.5rem;
-        margin-bottom: var(--spacing-xs);
-    }
-    
-    .goodsImg {
-        max-width: 280px;
-    }
-    
-    .goods-row.top-row .goodsImg {
-        max-width: 280px;
-    }
-    
-    .goods-row.bottom-row .goodsImg {
-        max-width: 280px;
-        height: 180px;
-    }
-    
-    .goods-row.bottom-row .slogan-img {
-        max-width: 450px;
-        height: 180px;
-    }
-    
-    .goods-text {
-        font-size: var(--font-sm);
-    }
-}
-
+/* ───────── 모바일 ───────── */
 @media screen and (max-width: 768px) {
-    .acentia-info {
-        max-width: 100%;
-        padding: var(--spacing-sm) var(--spacing-md);
-        text-align: center;
-    }
-    
-    .acentia-name {
-        font-size: 1.1rem;
-    }
-    
     .acentia-description {
-        font-size: 0.95rem;
-        line-height: 1.5;
-    }
-    
-    .video-section {
-        margin-top: 2rem;
-    }
-    
-    .video-title {
-        font-size: 1rem;
-    }
-    
-    .video-player {
-        max-width: 100%;
+        font-size: 16px;
     }
 
-    .video-wrapper {
-        width: 100%;
-        padding: 7px;
-        border-radius: 18px;
+    .acentia-video-frame {
+        border-radius: 12px;
     }
-    
-    .goods-grid {
-        margin-top: 1.5rem;
-    }
-    
-    .goods-row {
-        flex-direction: column;
-        gap: var(--spacing-md);
-        margin-bottom: var(--spacing-md);
-        align-items: center;
-    }
-    
-    .goodsImg {
-        max-width: 100%;
-        width: 100%;
-        max-width: 350px;
-    }
-    
-    .goods-row.top-row .goodsImg {
-        max-width: 350px;
-        width: 100%;
-    }
-    
-    .goods-row.bottom-row .goodsImg {
-        max-width: 350px;
-        width: 100%;
-        height: auto;
-        aspect-ratio: 3/2;
-    }
-    
-    .goods-row.bottom-row .slogan-img {
-        max-width: 100%;
-        width: 100%;
-        max-width: 400px;
-        height: auto;
-        aspect-ratio: 5/2;
-    }
-    
-    .goods-text {
-        font-size: var(--font-sm);
-        margin-top: var(--spacing-xs);
-    }
-}
 
-@media screen and (max-width: 480px) {
-    .acentia-info {
-        padding: var(--spacing-sm) var(--spacing-sm);
+    .acentia-goods-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: var(--spacing-lg) 12px;
     }
-    
-    .acentia-name {
-        font-size: 1rem;
-    }
-    
-    .acentia-description {
-        font-size: 0.9rem;
-        line-height: 1.6;
-    }
-    
-    .video-section {
-        margin-top: 1.5rem;
-    }
-    
-    .video-title {
-        font-size: 0.95rem;
-    }
-    
-    .goods-grid {
-        margin-top: 1rem;
-    }
-    
-    .goods-row {
-        gap: var(--spacing-sm);
-        margin-bottom: var(--spacing-sm);
-    }
-    
-    .goodsImg {
-        max-width: 300px;
-    }
-    
-    .goods-row.top-row .goodsImg {
-        max-width: 300px;
-    }
-    
-    .goods-row.bottom-row .goodsImg {
-        max-width: 300px;
-    }
-    
-    .goods-row.bottom-row .slogan-img {
-        max-width: 350px;
-    }
-    
-    .goods-text {
-        font-size: var(--font-xs);
-    }
-}
 
-@media screen and (max-width: 360px) {
-    .acentia-info {
-        padding: var(--spacing-xs) var(--spacing-xs);
+    .acentia-goods-item,
+    .acentia-goods-item.is-large {
+        grid-column: span 1;
     }
-    
-    .acentia-name {
-        font-size: 0.95rem;
+
+    .acentia-goods-item.is-wide {
+        grid-column: 1 / -1;
     }
-    
-    .acentia-description {
-        font-size: 0.85rem;
-        line-height: 1.7;
+
+    .acentia-goods-item.is-wide .acentia-goods-media {
+        aspect-ratio: 2 / 1;
     }
-    
-    .video-section {
-        margin-top: 1rem;
+
+    .acentia-goods-text {
+        gap: 8px;
+        margin-top: 10px;
+        font-size: var(--font-base);
     }
-    
-    .video-title {
-        font-size: 0.9rem;
+
+    /* 한 단으로 쌓이면 열 제목이 의미가 없어 숨긴다 */
+    .acentia-record-head {
+        display: none;
     }
-    
-    .goods-grid {
-        margin-top: 0.8rem;
+
+    .acentia-record-list {
+        border-top: 1px solid var(--ink);
     }
-    
-    .goods-row {
-        gap: var(--spacing-xs);
-        margin-bottom: var(--spacing-xs);
-    }
-    
-    .goodsImg {
-        max-width: 280px;
-    }
-    
-    .goods-row.top-row .goodsImg {
-        max-width: 280px;
-    }
-    
-    .goods-row.bottom-row .goodsImg {
-        max-width: 280px;
-    }
-    
-    .goods-row.bottom-row .slogan-img {
-        max-width: 320px;
-    }
-    
-    .goods-text {
-        font-size: var(--font-xs);
-        margin-top: var(--spacing-xs);
+
+    .acentia-record-item {
+        grid-template-columns: 1fr;
+        gap: 12px;
     }
 }

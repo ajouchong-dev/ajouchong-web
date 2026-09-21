@@ -1,190 +1,105 @@
-@import '../styles.css';
+/* 세칙 및 회칙: 목록 + 상세 (문서 줄 모양은 ../styles.css) */
 
-.bylaw-button {
-    padding: var(--spacing-sm) 100px;
-    font-size: var(--font-base);
-    font-weight: normal;
-    background-color: rgba(218, 218, 218, 0.37);
-    color: var(--text-primary);
-    border: none;
-    margin: 6px 2px;
-    cursor: pointer;
-    transition: var(--transition-normal);
-}
-
-.bylaw-button:hover {
-    background-color: var(--secondary-color);
-    color: var(--text-primary);
-}
-
-.bylaw-button.active {
-    background-color: var(--secondary-color);
-    color: var(--text-primary);
-}
-
-.post-detail {
-    max-width: 800px;
-    margin: var(--spacing-lg) auto;
-    padding: var(--spacing-lg);
-}
-
-.post-detail .post-title {
-    font-size: var(--font-xl);
+/* ───────── 목록 ───────── */
+.bylaws-filter {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
     margin-bottom: var(--spacing-lg);
 }
 
-.post-attachment {
-    margin-top: var(--spacing-lg);
-    font-size: var(--font-base);
-    color: var(--text-primary);
-    display: flex;
-    justify-content: center;
+/* 터치 대상 44px 확보 */
+.bylaws-filter > button {
+    min-height: 44px;
+    padding: 0 18px;
+}
+
+.bylaws-attach {
+    display: inline-flex;
     align-items: center;
-    gap: var(--spacing-sm);
-}
-
-.post-attachment strong {
-    justify-content: center;
-    margin-top: var(--spacing-xl);
-    font-weight: bold;
-    color: var(--text-secondary);
-}
-
-.post-attachment a {
-    justify-content: center;
-    margin-top: var(--spacing-xl);
-    color: var(--primary-color);
+    gap: 6px;
+    min-width: 44px;
+    height: 44px;
+    padding: 0 12px;
+    border: 1px solid transparent;
+    border-radius: var(--radius-normal);
+    color: var(--ink-2);
+    font-size: 13px;
+    font-weight: 600;
+    white-space: nowrap;
     text-decoration: none;
-    font-weight: bold;
-    transition: color 0.3s ease;
+    transition: border-color 0.15s var(--ease), color 0.15s var(--ease), background-color 0.15s var(--ease);
 }
 
-.post-attachment a:hover {
-    color: var(--text-primary);
+.bylaws-attach:hover {
+    border-color: var(--brand-teal);
+    background: var(--paper);
+    color: var(--ink);
 }
 
-.post-attachment span {
-    color: var(--text-muted);
-    margin-top: var(--spacing-xl);
-    font-style: italic;
+/* ───────── 상세: 첨부파일 영역 ───────── */
+.bylaws-attachment {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    max-width: var(--max-width-prose);
+    padding: 16px 20px;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-large);
+    background: var(--paper);
 }
 
-/* 반응형 디자인 */
-@media screen and (max-width: 1024px) {
-    .bylaw-button {
-        padding: var(--spacing-sm) 80px;
-        font-size: var(--font-base);
-        margin: 5px 2px;
-    }
-    
-    .post-detail {
-        max-width: 700px;
-        margin: var(--spacing-md) auto;
-        padding: var(--spacing-md);
-    }
-    
-    .post-detail .post-title {
-        font-size: var(--font-lg);
-        margin-bottom: var(--spacing-md);
-    }
-    
-    .post-attachment {
-        margin-top: var(--spacing-md);
-        font-size: var(--font-base);
-    }
-    
-    .post-attachment strong,
-    .post-attachment a,
-    .post-attachment span {
-        margin-top: var(--spacing-lg);
-    }
+.bylaws-attachment-icon {
+    flex: 0 0 auto;
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    border-radius: var(--radius-normal);
+    background: var(--surface);
+    color: var(--ink-2);
 }
 
-@media screen and (max-width: 768px) {
-    .bylaw-button {
-        padding: var(--spacing-sm) 60px;
-        font-size: var(--font-sm);
-        margin: 4px 2px;
-    }
-    
-    .post-detail {
-        max-width: 600px;
-        margin: var(--spacing-sm) auto;
-        padding: var(--spacing-sm);
-    }
-    
-    .post-detail .post-title {
-        font-size: var(--font-base);
-        margin-bottom: var(--spacing-sm);
-    }
-    
-    .post-attachment {
-        margin-top: var(--spacing-sm);
-        font-size: var(--font-sm);
-        flex-direction: column;
-        gap: var(--spacing-xs);
-    }
-    
-    .post-attachment strong,
-    .post-attachment a,
-    .post-attachment span {
-        margin-top: var(--spacing-md);
-    }
+.bylaws-attachment-text {
+    flex: 1 1 auto;
+    display: grid;
+    gap: 2px;
+    min-width: 0;
 }
 
-@media screen and (max-width: 480px) {
-    .bylaw-button {
-        padding: var(--spacing-xs) 40px;
-        font-size: var(--font-xs);
-        margin: 3px 1px;
-    }
-    
-    .post-detail {
-        max-width: 100%;
-        margin: var(--spacing-xs) auto;
-        padding: var(--spacing-xs);
-    }
-    
-    .post-detail .post-title {
-        font-size: var(--font-sm);
-        margin-bottom: var(--spacing-xs);
-    }
-    
-    .post-attachment {
-        margin-top: var(--spacing-xs);
-        font-size: var(--font-xs);
-        gap: var(--spacing-xs);
-    }
-    
-    .post-attachment strong,
-    .post-attachment a,
-    .post-attachment span {
-        margin-top: var(--spacing-sm);
-    }
+.bylaws-attachment-text strong {
+    color: var(--ink);
+    font-size: 15px;
+    font-weight: 700;
 }
 
-@media screen and (max-width: 360px) {
-    .bylaw-button {
-        padding: var(--spacing-xs) 30px;
-        font-size: var(--font-xs);
-        margin: 2px 1px;
+.bylaws-attachment-text span {
+    color: var(--ink-3);
+    font-size: 13px;
+}
+
+.bylaws-attachment-button {
+    flex: 0 0 auto;
+    text-decoration: none;
+}
+
+@media screen and (max-width: 600px) {
+    /* 좁은 화면에서는 아이콘만 남긴다 (이름은 aria-label로 전달) */
+    .bylaws-attach {
+        justify-content: center;
+        padding: 0;
     }
-    
-    .post-detail {
-        padding: var(--spacing-xs);
+
+    .bylaws-attach-label {
+        display: none;
     }
-    
-    .post-detail .post-title {
-        font-size: var(--font-xs);
+
+    .bylaws-attachment {
+        flex-wrap: wrap;
+        padding: 16px;
     }
-    
-    .post-attachment {
-        font-size: var(--font-xs);
-    }
-    
-    .post-attachment strong,
-    .post-attachment a,
-    .post-attachment span {
-        margin-top: var(--spacing-xs);
+
+    .bylaws-attachment-button {
+        flex: 1 1 100%;
     }
 }

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useAuth } from "../../contexts/AuthContext";
+import { MessageCircleQuestion, X, ArrowRight } from "lucide-react";
 import "./styles.css";
 
 const apiClient = axios.create({
@@ -107,7 +108,8 @@ const FeedbackWidget = () => {
                                         className="feedback-quick-btn"
                                         onClick={() => moveTo(item.path)}
                                     >
-                                        {item.label}로 이동
+                                        {item.label}
+                                        <ArrowRight size={14} aria-hidden="true" />
                                     </button>
                                 ))}
                             </div>
@@ -173,7 +175,8 @@ const FeedbackWidget = () => {
             <button
                 type="button"
                 className="feedback-fab"
-                aria-label="퀵 메뉴 열기"
+                aria-label={isOpen ? "퀵 메뉴 닫기" : "퀵 메뉴 열기"}
+                aria-expanded={isOpen}
                 onClick={() => {
                     setIsOpen((prev) => !prev);
                     if (!isOpen) {
@@ -182,7 +185,7 @@ const FeedbackWidget = () => {
                     }
                 }}
             >
-                ?
+                {isOpen ? <X size={22} aria-hidden="true" /> : <MessageCircleQuestion size={24} aria-hidden="true" />}
             </button>
         </div>
     );

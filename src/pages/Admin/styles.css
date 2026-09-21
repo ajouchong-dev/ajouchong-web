@@ -1,443 +1,1295 @@
-.admin-container {
-    max-width: 900px;
-    margin: var(--spacing-xl) auto 0;
-    padding: 0 var(--spacing-md);
+/*
+ * 관리자 콘솔
+ * variables.css + common.css 위에서만 동작한다. 클래스는 모두 .admin- 접두사.
+ * 구조: 제목줄 → (왼쪽 메뉴 | 활성 패널). 1024px 미만에서는 메뉴가 헤더 아래 가로 탭으로 바뀐다.
+ * 표는 860px 미만에서 카드형으로 바뀐다 (td의 data-label 사용).
+ */
+
+.admin-console {
+    /* 고정 헤더(+모바일 탭) 아래로 스크롤·sticky 기준을 맞추는 값 */
+    --admin-sticky-offset: calc(var(--header-height) + 24px);
+}
+
+.admin-console [hidden] {
+    display: none;
+}
+
+.admin-console input,
+.admin-console select,
+.admin-console textarea {
+    /* 포커스된 입력이 고정 탭·상태 메시지 밑에 깔리지 않게 */
+    scroll-margin-top: calc(var(--admin-sticky-offset) + 72px);
+}
+
+/* ───────── 제목줄 ───────── */
+.admin-titlebar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 12px 32px;
+}
+
+.admin-title-section {
+    margin-left: 12px;
+    color: var(--ink-3);
+    font-size: 0.6em;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+}
+
+.admin-title-section::before {
+    content: '/';
+    margin-right: 12px;
+    color: var(--ink-4);
+    font-weight: 400;
+}
+
+.admin-account {
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: var(--spacing-lg);
+    gap: 4px;
+    min-width: 0;
 }
 
-.admin-card {
-    background: var(--bg-primary);
-    border: 1px solid var(--border-light);
-    border-radius: var(--radius-normal);
-    box-shadow: var(--shadow-light);
-    padding: var(--spacing-lg);
-    text-align: left;
-}
-
-.admin-card h2 {
-    margin: 0 0 var(--spacing-md);
-    font-size: var(--font-lg);
-    color: var(--text-primary);
-}
-
-.admin-card p {
-    margin: 0 0 var(--spacing-sm);
-    color: var(--text-secondary);
-    line-height: 1.6;
-}
-
-.admin-full {
-    grid-column: 1 / -1;
-}
-
-.admin-section-head h2 {
+.admin-account-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px 20px;
     margin: 0;
+    font-size: 13px;
 }
 
-.admin-section-head p {
-    margin-top: var(--spacing-xs);
-    margin-bottom: var(--spacing-md);
+.admin-account-list > div {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    min-width: 0;
+}
+
+.admin-account-list dt {
+    color: var(--ink-3);
+}
+
+.admin-account-list dd {
+    margin: 0;
+    color: var(--ink);
+    font-weight: 600;
+}
+
+.admin-account-note {
+    color: var(--ink-3);
+    font-size: 13px;
+}
+
+/* ───────── 뼈대 / 메뉴 ───────── */
+.admin-layout {
+    display: grid;
+    grid-template-columns: 220px minmax(0, 1fr);
+    gap: 40px;
+    align-items: start;
+}
+
+.admin-nav {
+    position: sticky;
+    top: var(--admin-sticky-offset);
+}
+
+.admin-nav-list {
+    display: grid;
+    gap: 2px;
+    border-left: 1px solid var(--line);
+}
+
+.admin-nav-item {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    min-height: 44px;
+    padding: 0 14px;
+    border-radius: 0 var(--radius-normal) var(--radius-normal) 0;
+    color: var(--ink-2);
+    font-size: 15px;
+    font-weight: 600;
+    text-align: left;
+    white-space: nowrap;
+    transition: background-color 0.15s var(--ease), color 0.15s var(--ease), transform 0.15s var(--ease);
+}
+
+.admin-nav-item::before {
+    content: '';
+    position: absolute;
+    left: -1px;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: var(--brand-teal-ink);
+    transform: scaleY(0);
+    transition: transform 0.2s var(--ease);
+}
+
+.admin-nav-item:hover {
+    background: var(--surface);
+    color: var(--ink);
+}
+
+.admin-nav-item:active {
+    transform: scale(0.98);
+}
+
+.admin-nav-item.is-active {
+    background: var(--surface);
+    color: var(--brand-teal-ink);
+}
+
+.admin-nav-item.is-active::before {
+    transform: scaleY(1);
+}
+
+.admin-main {
+    min-width: 0;
+    scroll-margin-top: var(--admin-sticky-offset);
+}
+
+.admin-panel {
+    animation: admin-panel-enter 0.2s var(--ease);
+}
+
+@keyframes admin-panel-enter {
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 1; transform: none; }
+}
+
+/* ───────── 패널 머리 ───────── */
+.admin-panel-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px 24px;
+    margin-bottom: 20px;
+}
+
+.admin-panel-heading {
+    min-width: 0;
+    flex: 1 1 320px;
+}
+
+.admin-panel-title {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 4px 12px;
+    color: var(--ink);
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+}
+
+.admin-count {
+    color: var(--ink-3);
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0;
+    font-variant-numeric: tabular-nums;
+}
+
+.admin-panel-desc {
+    max-width: 64ch;
+    margin-top: 6px;
+    color: var(--ink-3);
+    font-size: 14px;
+}
+
+.admin-panel-tools {
+    display: flex;
+    gap: 8px;
+}
+
+.admin-segment {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 20px;
+}
+
+.admin-segment .ui-chip,
+.admin-chips .ui-chip {
+    min-height: 44px;
+    font-variant-numeric: tabular-nums;
+}
+
+.admin-subpanel-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 16px;
+}
+
+.admin-subpanel-head h3 {
+    color: var(--ink);
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+}
+
+/* ───────── 상태 메시지 ───────── */
+.admin-status-stack {
+    position: sticky;
+    top: var(--admin-sticky-offset);
+    z-index: 40;
+    display: grid;
+    gap: 8px;
+    margin-bottom: 16px;
+}
+
+.admin-modal .admin-status-stack,
+.admin-lock .admin-status-stack {
+    position: static;
+    margin-bottom: 0;
+}
+
+.admin-feedback {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin: 0;
+    padding: 12px 14px;
+    border-radius: var(--radius-normal);
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 1.5;
+    animation: admin-status-enter 0.2s var(--ease);
+}
+
+.admin-feedback.success {
+    background: var(--ok-soft);
+    color: var(--ok);
+}
+
+.admin-feedback.error {
+    background: var(--danger-soft);
+    color: var(--danger);
+}
+
+.admin-feedback > svg {
+    flex: none;
+    margin-top: 1px;
+}
+
+.admin-feedback > span {
+    flex: 1;
+    min-width: 0;
+}
+
+.admin-feedback-close {
+    position: relative;
+    flex: none;
+    display: grid;
+    place-items: center;
+    width: 24px;
+    height: 24px;
+    border-radius: var(--radius-small);
+    color: inherit;
+    opacity: 0.7;
+    transition: opacity 0.15s var(--ease);
+}
+
+/* 보이는 크기는 작게, 누르는 영역은 44px */
+.admin-feedback-close::after {
+    content: '';
+    position: absolute;
+    inset: -10px;
+}
+
+.admin-feedback-close:hover {
+    opacity: 1;
+}
+
+@keyframes admin-status-enter {
+    from { opacity: 0; transform: translateY(-4px); }
+    to { opacity: 1; transform: none; }
+}
+
+/* ───────── 접히는 영역 (0fr → 1fr) ───────── */
+.admin-collapse {
+    display: grid;
+    grid-template-rows: 0fr;
+    scroll-margin-top: var(--admin-sticky-offset);
+    transition: grid-template-rows 0.25s var(--ease);
+}
+
+.admin-collapse.is-open {
+    grid-template-rows: 1fr;
+}
+
+.admin-collapse-inner {
+    min-height: 0;
+    overflow: hidden;
+    visibility: hidden; /* 접힌 동안 탭 포커스가 들어가지 않게 */
+    transition: visibility 0s linear 0.25s;
+}
+
+.admin-collapse.is-open > .admin-collapse-inner {
+    visibility: visible;
+    transition-delay: 0s;
+}
+
+/* ───────── 폼 ───────── */
+.admin-form-card {
+    margin-bottom: 24px;
+    padding: clamp(16px, 2.4vw, 24px);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-large);
+    background: var(--paper);
+}
+
+.admin-edit-banner {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 16px;
+    padding: 8px 8px 8px 14px;
+    border-radius: var(--radius-normal);
+    background: var(--brand-teal-soft);
+    color: var(--brand-teal-ink);
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.admin-edit-banner > svg {
+    flex: none;
+}
+
+.admin-edit-banner p {
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.admin-edit-banner strong {
+    color: var(--ink);
 }
 
 .admin-form-grid {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: var(--spacing-sm);
-    margin-bottom: var(--spacing-md);
-}
-
-.admin-form-grid label {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 6px;
-    font-size: var(--font-sm);
-    color: var(--text-secondary);
-}
-
-.admin-form-grid input,
-.admin-form-grid textarea,
-.admin-form-grid select {
-    width: 100%;
-    border: 1px solid var(--border-light);
-    border-radius: var(--radius-small);
-    padding: 10px 12px;
-    font-size: var(--font-sm);
-    color: var(--text-primary);
-    background: #fff;
-    box-sizing: border-box;
-}
-
-.admin-tab {
-    display: flex;
-    gap: 8px;
-    margin-bottom: var(--spacing-md);
-}
-
-.admin-tab-btn {
-    border: 1px solid var(--border-light);
-    background: #fff;
-    color: #2d3f57;
-    border-radius: var(--radius-small);
-    padding: 8px 12px;
-    cursor: pointer;
-    font-size: var(--font-sm);
-}
-
-.admin-tab-btn.active {
-    background: #1f4b99;
-    border-color: #1f4b99;
-    color: #fff;
-}
-
-.admin-checkbox {
-    justify-content: center;
-    flex-direction: row !important;
-    align-items: center !important;
-    margin-top: 26px;
-}
-
-.admin-checkbox input {
-    width: auto;
+    gap: 16px 20px;
 }
 
 .admin-span-2 {
-    grid-column: span 2;
+    grid-column: 1 / -1;
+}
+
+.admin-field {
+    min-width: 0;
+    align-content: start;
+}
+
+.admin-required {
+    color: var(--danger);
+}
+
+.admin-form-grid .admin-textarea-sm {
+    min-height: 88px;
+}
+
+.admin-upload-hint {
+    margin: 0;
+    color: var(--ink-3);
+    font-size: 13px;
+    font-weight: 400;
+    line-height: 1.5;
+}
+
+.admin-checkbox {
+    display: inline-flex;
+    align-items: center;
+    align-self: end;
+    justify-self: start;
+    gap: 10px;
+    min-height: 44px;
+    color: var(--ink);
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.admin-checkbox input {
+    flex: none;
+    width: 20px;
+    height: 20px;
+    margin: 0;
+    accent-color: var(--brand-teal-ink);
+    cursor: pointer;
 }
 
 .admin-form-actions {
     display: flex;
-    gap: var(--spacing-sm);
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: 8px;
+    margin-top: 20px;
 }
 
-.admin-btn {
-    border: 1px solid transparent;
-    border-radius: var(--radius-small);
-    padding: 9px 12px;
-    font-size: var(--font-sm);
+/* 파일 선택: 점선 영역 전체가 실제 file input */
+.admin-filedrop,
+.admin-dropzone {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    min-height: 88px;
+    padding: 16px 18px;
+    border: 1px dashed var(--line-strong);
+    border-radius: var(--radius-normal);
+    background: var(--surface);
+    color: var(--ink-3);
+    transition: border-color 0.15s var(--ease), background-color 0.15s var(--ease), opacity 0.15s var(--ease);
+}
+
+.admin-filedrop > svg,
+.admin-dropzone > svg {
+    flex: none;
+}
+
+.admin-filedrop:hover,
+.admin-filedrop.is-over,
+.admin-dropzone.is-over {
+    border-color: var(--brand-teal-ink);
+    background: var(--brand-teal-soft);
+    color: var(--brand-teal-ink);
+}
+
+.admin-filedrop:focus-within {
+    outline: 2px solid var(--brand-teal);
+    outline-offset: 2px;
+}
+
+.admin-filedrop.is-busy,
+.admin-dropzone.is-busy {
+    opacity: 0.7;
+}
+
+.admin-filedrop-text {
+    display: grid;
+    gap: 2px;
+    min-width: 0;
+}
+
+.admin-filedrop-title {
+    color: var(--ink);
+    font-size: 15px;
+    font-weight: 600;
+}
+
+.admin-filedrop-input {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
     cursor: pointer;
-    transition: var(--transition-normal);
 }
 
-.admin-btn.primary {
-    background: #1f4b99;
-    color: #fff;
+.admin-dropzone p {
+    flex: 1;
+    min-width: 0;
+    color: var(--ink);
+    font-size: 15px;
+    font-weight: 600;
 }
 
-.admin-btn.muted {
-    background: #eef1f5;
-    color: #1f2f46;
+.admin-dropzone-input {
+    display: none;
 }
 
-.admin-btn.small {
-    padding: 6px 10px;
+.admin-preview-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 8px 0 0;
+    padding: 0;
+    list-style: none;
 }
 
-.admin-btn.danger {
-    background: #fce9ea;
-    color: #a0222c;
+.admin-preview-thumb {
+    display: block;
+    width: 72px;
+    height: 72px;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    background: var(--surface-2);
+    object-fit: cover;
 }
 
-.admin-feedback {
-    margin: 0 0 var(--spacing-sm);
-    font-size: var(--font-sm);
+.admin-preview-list li {
+    display: grid;
+    gap: 4px;
+    width: 72px;
 }
 
-.admin-feedback.success {
-    color: #1e6d35;
+.admin-preview-list span {
+    overflow: hidden;
+    color: var(--ink-3);
+    font-size: 12px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
-.admin-feedback.error {
-    color: #b42318;
+.admin-rental-preview {
+    display: block;
+    width: 220px;
+    max-width: 100%;
+    aspect-ratio: 4 / 3;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    background: var(--surface-2);
+    object-fit: cover;
 }
 
+/* ───────── 목록 도구줄 ───────── */
+.admin-toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px 12px;
+    margin-bottom: 12px;
+}
+
+.admin-search {
+    position: relative;
+    flex: 1 1 240px;
+    max-width: 360px;
+}
+
+.admin-search > svg {
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    color: var(--ink-3);
+    transform: translateY(-50%);
+    pointer-events: none;
+}
+
+.admin-search .admin-search-input {
+    padding-left: 40px;
+}
+
+.admin-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.admin-toolbar .admin-toolbar-chip {
+    gap: 6px;
+    min-height: 44px;
+}
+
+.admin-toolbar .admin-sort-btn {
+    font-size: 14px;
+}
+
+.admin-toolbar .admin-toolbar-select {
+    flex: 0 1 200px;
+    width: auto;
+}
+
+.admin-toolbar-summary {
+    margin-left: auto;
+    color: var(--ink-3);
+    font-size: 13px;
+    font-variant-numeric: tabular-nums;
+}
+
+.admin-toolbar-summary strong {
+    color: var(--ink);
+}
+
+/* ───────── 표 ───────── */
 .admin-table-wrap {
+    width: 100%;
     overflow-x: auto;
-    border: 1px solid var(--border-light);
-    border-radius: var(--radius-small);
+    -webkit-overflow-scrolling: touch;
+    transition: opacity 0.15s var(--ease);
+}
+
+.admin-table-wrap.is-loading,
+.admin-inbox.is-loading {
+    opacity: 0.6;
 }
 
 .admin-table {
     width: 100%;
     border-collapse: collapse;
-    min-width: 700px;
-}
-
-.rental-ledger-table {
-    min-width: 1300px;
-}
-
-.admin-table th,
-.admin-table td {
-    border-bottom: 1px solid var(--border-light);
+    font-size: 15px;
     text-align: left;
-    padding: 10px 12px;
-    font-size: var(--font-sm);
 }
 
-.admin-table th {
-    background: #f5f8fc;
-    color: #2b3a55;
+.admin-table thead th {
+    padding: 12px;
+    border-bottom: 1px solid var(--ink);
+    color: var(--ink-3);
+    font-size: 13px;
+    font-weight: 600;
+    text-align: left;
+    white-space: nowrap;
+}
+
+.admin-table thead th.admin-col-actions {
+    text-align: right;
+}
+
+.admin-table tbody tr {
+    transition: background-color 0.15s var(--ease);
+}
+
+.admin-table tbody tr:hover {
+    background: var(--surface);
+}
+
+.admin-table tbody tr.is-dirty {
+    background: var(--warn-soft);
+}
+
+.admin-table tbody tr.is-editing {
+    background: var(--brand-teal-soft);
+}
+
+.admin-table tbody tr.is-flash,
+.admin-inbox-item.is-flash {
+    animation: admin-row-flash 2s var(--ease);
+}
+
+@keyframes admin-row-flash {
+    from, 35% { background-color: var(--brand-teal-soft); }
+    to { background-color: transparent; }
+}
+
+.admin-table tbody td {
+    padding: 14px 12px;
+    border-bottom: 1px solid var(--line);
+    color: var(--ink-2);
+    vertical-align: middle;
+}
+
+.admin-table tbody td.admin-cell-title {
+    min-width: 160px;
+    color: var(--ink);
+    font-weight: 600;
+}
+
+.admin-table tbody td.admin-cell-num,
+.admin-table tbody td.admin-cell-date {
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+}
+
+.admin-table tbody td.admin-cell-date {
+    font-size: 14px;
+}
+
+.admin-table tbody td.admin-cell-url {
+    max-width: 320px;
+    color: var(--ink-3);
+    font-size: 14px;
+    overflow-wrap: anywhere;
+}
+
+.admin-table tbody td.admin-cell-actions {
+    width: 1%;
+    white-space: nowrap;
 }
 
 .admin-actions {
     display: flex;
-    gap: 8px;
-}
-
-.admin-empty {
-    margin: 0;
-    padding: var(--spacing-md);
-    color: var(--text-muted);
-}
-
-.admin-feedback-content {
-    white-space: pre-wrap;
-    min-width: 280px;
-    max-width: 460px;
-}
-
-.admin-answer-editor {
-    margin-top: var(--spacing-md);
-    border: 1px solid var(--border-light);
-    border-radius: var(--radius-small);
-    padding: var(--spacing-md);
-    background: #fff;
-}
-
-.admin-answer-editor h3 {
-    margin: 0 0 var(--spacing-sm);
-}
-
-.admin-answer-editor textarea {
-    width: 100%;
-    border: 1px solid var(--border-light);
-    border-radius: var(--radius-small);
-    padding: 10px 12px;
-    font-size: var(--font-sm);
-    box-sizing: border-box;
-    margin-bottom: var(--spacing-sm);
-}
-
-.admin-modal-backdrop {
-    position: fixed;
-    inset: 0;
-    background: rgba(15, 25, 39, 0.45);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 2000;
-    padding: 16px;
-    box-sizing: border-box;
-}
-
-.admin-modal {
-    width: 360px;
-    max-width: 100%;
-    background: #fff;
-    border-radius: 12px;
-    padding: var(--spacing-md);
-    text-align: left;
-}
-
-.admin-modal h3 {
-    margin: 0 0 8px;
-}
-
-.admin-modal p {
-    margin: 0 0 var(--spacing-sm);
-}
-
-.admin-modal input {
-    width: 100%;
-    border: 1px solid var(--border-light);
-    border-radius: 8px;
-    padding: 9px 12px;
-    font-size: var(--font-sm);
-    box-sizing: border-box;
-    margin-bottom: var(--spacing-sm);
-}
-
-.admin-answer-view-text {
-    white-space: pre-wrap;
-    max-height: 48vh;
-    overflow-y: auto;
-    background: #f7fafc;
-    border: 1px solid var(--border-light);
-    border-radius: 8px;
-    padding: 10px 12px;
-    color: var(--text-primary);
-}
-
-.rental-returned {
-    font-size: var(--font-sm);
-    color: #1e6d35;
-    font-weight: 600;
-}
-
-.admin-upload-row {
-    width: 100%;
-    display: flex;
-    align-items: center;
-    gap: var(--spacing-sm);
-}
-
-.admin-upload-row input[type="file"] {
-    flex: 1;
-    min-width: 0;
-}
-
-.admin-upload-hint {
-    color: var(--text-muted);
-    font-size: 12px;
-    white-space: nowrap;
-}
-
-.admin-rental-preview {
-    width: 220px;
-    max-width: 100%;
-    border: 1px solid var(--border-light);
-    border-radius: var(--radius-small);
-    background: #edf3fa;
-    aspect-ratio: 4 / 3;
-    object-fit: cover;
-}
-
-.admin-rental-thumb {
-    width: 72px;
-    height: 54px;
-    border-radius: 8px;
-    border: 1px solid var(--border-light);
-    object-fit: cover;
-    background: #edf3fa;
-}
-
-.admin-notice-preview-row {
-    display: flex;
     flex-wrap: wrap;
-    gap: 8px;
-}
-
-.admin-notice-thumb {
-    width: 96px;
-    height: 72px;
-    border-radius: 8px;
-    border: 1px solid var(--border-light);
-    object-fit: cover;
-    background: #edf3fa;
-}
-
-.admin-stepper {
-    display: flex;
+    justify-content: flex-end;
     gap: 6px;
 }
 
-.admin-pending-mark {
-    color: #a45700;
-    font-size: 12px;
-    font-weight: 600;
+.admin-thumb {
+    display: block;
+    width: 48px;
+    height: 48px;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    background: var(--surface-2);
+    object-fit: cover;
 }
 
-.proceeding-admin-grid {
+/* ───────── 대여 재고 ───────── */
+.admin-stock {
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: var(--spacing-md);
+    gap: 6px;
+    min-width: 150px;
 }
 
-.proceeding-admin-panel {
-    border: 1px solid var(--border-light);
-    border-radius: var(--radius-small);
-    padding: var(--spacing-md);
-    background: #fff;
-}
-
-.proceeding-admin-panel h3 {
-    margin: 0 0 var(--spacing-sm);
-    font-size: var(--font-base);
-    color: var(--text-primary);
-}
-
-.proceeding-admin-table {
-    min-width: 640px;
-}
-
-.proceeding-doc-title {
-    min-width: 240px;
-    max-width: 360px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-.proceeding-upload-wrap {
+.admin-stock-line {
     display: flex;
-    flex-direction: column;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 4px 8px;
+}
+
+.admin-stock-nums {
+    color: var(--ink-3);
+    font-size: 14px;
+    font-variant-numeric: tabular-nums;
+}
+
+.admin-stock-nums strong {
+    color: var(--ink);
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.admin-pending-mark {
+    color: var(--warn);
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.admin-stepper-row {
+    display: flex;
+    align-items: center;
     gap: 8px;
 }
 
-.proceeding-upload-label {
-    margin: 0;
-    font-size: var(--font-sm);
-    color: var(--text-secondary);
-}
-
-.proceeding-dropzone {
-    border: 1px dashed #aac0df;
-    border-radius: 10px;
-    background: #f7fbff;
-    padding: 14px;
-    display: flex;
+.admin-stepper {
+    display: inline-flex;
     align-items: center;
-    justify-content: space-between;
-    gap: 10px;
+    border: 1px solid var(--line-strong);
+    border-radius: var(--radius-normal);
+    background: var(--paper);
 }
 
-.proceeding-dropzone p {
+.admin-stepper-btn {
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    border-radius: calc(var(--radius-normal) - 1px);
+    color: var(--ink);
+    transition: background-color 0.15s var(--ease), transform 0.15s var(--ease);
+}
+
+.admin-stepper-btn:hover:not(:disabled) {
+    background: var(--surface);
+}
+
+.admin-stepper-btn:active:not(:disabled) {
+    background: var(--surface-2);
+    transform: scale(0.98);
+}
+
+.admin-stepper-btn:disabled {
+    color: var(--ink-4);
+    cursor: not-allowed;
+}
+
+.admin-stepper-value {
+    min-width: 44px;
+    padding: 0 6px;
+    border-left: 1px solid var(--line);
+    border-right: 1px solid var(--line);
+    color: var(--ink);
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+    line-height: 44px;
+    text-align: center;
+}
+
+.admin-stepper-row .admin-stepper-save {
+    padding: 0 14px;
+    font-size: 14px;
+}
+
+/* ───────── 피드백 수신함 ───────── */
+.admin-inbox {
     margin: 0;
-    font-size: var(--font-sm);
-    color: #355070;
+    padding: 0;
+    border-top: 1px solid var(--ink);
+    list-style: none;
+    transition: opacity 0.15s var(--ease);
 }
 
-.proceeding-dropzone.dragging {
-    border-color: #1f4b99;
-    background: #edf4ff;
+.admin-inbox-item {
+    border-bottom: 1px solid var(--line);
 }
 
-.proceeding-dropzone.uploading {
-    opacity: 0.75;
+.admin-inbox-head {
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 6px 12px;
+    width: 100%;
+    min-height: 64px;
+    padding: 14px 8px 14px 14px;
+    text-align: left;
+    transition: background-color 0.15s var(--ease);
 }
 
-.proceeding-file-input {
+.admin-inbox-head:hover {
+    background: var(--surface);
+}
+
+/* 아직 답변하지 않은 글: 왼쪽 막대 + 굵은 미리보기 */
+.admin-inbox-item.is-pending .admin-inbox-head::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 14px;
+    bottom: 14px;
+    width: 2px;
+    background: var(--brand-teal-ink);
+}
+
+.admin-inbox-meta {
+    grid-column: 1;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 4px 10px;
+    color: var(--ink-3);
+    font-size: 13px;
+    font-variant-numeric: tabular-nums;
+}
+
+.admin-inbox-author {
+    color: var(--ink-2);
+    font-weight: 600;
+}
+
+.admin-inbox-preview {
+    grid-column: 1;
+    overflow: hidden;
+    color: var(--ink-2);
+    font-size: 15px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.admin-inbox-item.is-pending .admin-inbox-preview {
+    color: var(--ink);
+    font-weight: 600;
+}
+
+.admin-inbox-item.is-open .admin-inbox-preview {
     display: none;
 }
 
-@media screen and (max-width: 768px) {
-    .admin-container {
-        grid-template-columns: 1fr;
-        gap: var(--spacing-md);
+.admin-inbox-chevron {
+    grid-column: 2;
+    grid-row: 1 / span 2;
+    color: var(--ink-3);
+    transition: transform 0.2s var(--ease);
+}
+
+.admin-inbox-item.is-open .admin-inbox-chevron {
+    transform: rotate(180deg);
+}
+
+.admin-inbox-body {
+    display: grid;
+    gap: 16px;
+    padding: 4px 14px 20px;
+}
+
+.admin-inbox-body .admin-actions {
+    justify-content: flex-start;
+}
+
+.admin-feedback-content {
+    max-width: var(--max-width-prose);
+    color: var(--ink);
+    font-size: 16px;
+    line-height: 1.7;
+    white-space: pre-wrap;
+}
+
+.admin-answer-editor {
+    display: grid;
+    gap: 12px;
+    padding: 16px;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-large);
+    background: var(--paper);
+}
+
+.admin-answer-editor h3 {
+    font-size: 16px;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+}
+
+.admin-answer-editor .admin-form-actions {
+    margin-top: 0;
+}
+
+/* 비밀번호 잠금 */
+.admin-lock {
+    display: grid;
+    gap: 16px;
+    max-width: 400px;
+    padding: 24px;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-large);
+}
+
+.admin-lock-icon {
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: var(--surface);
+    color: var(--ink-2);
+}
+
+.admin-lock .admin-form-actions {
+    margin-top: 0;
+}
+
+/* ───────── 모달 (body로 포털되므로 .admin-console 밖에서도 동작해야 한다) ───────── */
+.admin-modal-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: var(--z-modal);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+    background: rgba(20, 33, 43, 0.45);
+    animation: admin-fade 0.2s var(--ease);
+}
+
+.admin-modal {
+    display: grid;
+    gap: 12px;
+    width: 400px;
+    max-width: 100%;
+    max-height: calc(100vh - 32px);
+    max-height: calc(100dvh - 32px);
+    padding: 24px;
+    overflow-y: auto;
+    border-radius: var(--radius-large);
+    background: var(--paper);
+    box-shadow: var(--shadow-pop);
+    text-align: left;
+    animation: admin-modal-enter 0.2s var(--ease);
+}
+
+.admin-modal h3 {
+    color: var(--ink);
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.admin-modal > p {
+    color: var(--ink-2);
+    font-size: 15px;
+}
+
+.admin-modal .admin-form-actions {
+    margin-top: 4px;
+}
+
+.admin-modal .admin-answer-view-text {
+    max-height: 48vh;
+    padding: 12px 14px;
+    overflow-y: auto;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-normal);
+    background: var(--surface);
+    color: var(--ink);
+    line-height: 1.7;
+    white-space: pre-wrap;
+}
+
+@keyframes admin-fade {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes admin-modal-enter {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: none; }
+}
+
+/* ───────── 비어 있음 / 불러오는 중 ───────── */
+.admin-section .admin-empty {
+    margin: 8px 0 0;
+}
+
+.admin-skeleton {
+    display: grid;
+    gap: 10px;
+    margin-top: 8px;
+}
+
+.admin-skeleton-row {
+    height: 52px;
+}
+
+/* ───────── 터치 기기: 행 버튼도 44px ───────── */
+@media (pointer: coarse) {
+    .admin-console .admin-actions .admin-act {
+        min-height: 44px;
+        padding: 0 14px;
+        font-size: 14px;
+    }
+}
+
+/* ───────── 1024px 미만: 메뉴 → 헤더 아래 가로 탭 ───────── */
+@media screen and (max-width: 1023px) {
+    .admin-console {
+        --admin-sticky-offset: calc(var(--header-height) + 72px);
+    }
+
+    .admin-layout {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 24px;
+    }
+
+    .admin-nav {
+        top: var(--header-height);
+        z-index: 50;
+        margin: 0 calc(var(--gutter) * -1);
+        border-bottom: 1px solid var(--line);
+        background: var(--paper);
+    }
+
+    .admin-nav-list {
+        display: flex;
+        gap: 4px;
+        padding: 8px var(--gutter);
+        border-left: 0;
+        overflow-x: auto;
+        scroll-snap-type: x proximity;
+        scroll-padding: 0 var(--gutter);
+        scrollbar-width: none;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .admin-nav-list::-webkit-scrollbar {
+        display: none;
+    }
+
+    .admin-nav-item {
+        flex: none;
+        width: auto;
+        gap: 8px;
+        border-radius: var(--radius-pill);
+        scroll-snap-align: start;
+    }
+
+    .admin-nav-item::before {
+        content: none;
+    }
+
+    .admin-nav-item.is-active {
+        background: var(--brand-teal-soft);
+    }
+}
+
+/* ───────── 860px 미만: 표 → 카드 ───────── */
+@media screen and (max-width: 859px) {
+    .admin-table-wrap {
+        overflow-x: visible;
+    }
+
+    .admin-table,
+    .admin-table tbody {
+        display: block;
+    }
+
+    .admin-table thead {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+        clip-path: inset(50%);
+        white-space: nowrap;
+    }
+
+    .admin-table tbody tr {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 6px 14px;
+        padding: 16px;
+        border: 1px solid var(--line);
+        border-radius: var(--radius-large);
+    }
+
+    .admin-table tbody tr + tr {
+        margin-top: 12px;
+    }
+
+    .admin-table tbody tr:hover {
+        background: transparent;
+    }
+
+    .admin-table tbody tr.is-dirty {
+        border-color: var(--warn);
+        background: var(--warn-soft);
+    }
+
+    .admin-table tbody tr.is-editing {
+        border-color: var(--brand-teal-ink);
+        background: var(--brand-teal-soft);
+    }
+
+    .admin-table tbody td {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        min-width: 0;
+        padding: 0;
+        border: 0;
+        font-size: 13px;
+        color: var(--ink-2);
+    }
+
+    .admin-table tbody td[data-label]::before {
+        content: attr(data-label);
+        flex: none;
+        color: var(--ink-3);
+    }
+
+    .admin-table tbody td.admin-cell-title {
+        order: -2;
+        flex: 1 1 100%;
+        min-width: 0;
+        font-size: 16px;
+        line-height: 1.4;
+    }
+
+    .admin-table tbody td.admin-cell-date {
+        font-size: 13px;
+        white-space: normal;
+    }
+
+    .admin-table tbody td.admin-cell-wide {
+        flex: 1 1 100%;
+        max-width: none;
+    }
+
+    .admin-table tbody td.admin-cell-wide > * {
+        flex: 1;
+        min-width: 0;
+    }
+
+    .admin-table tbody td.admin-cell-thumb {
+        order: -3;
+        flex: none;
+    }
+
+    .admin-table.has-thumb tbody td.admin-cell-title {
+        flex: 1 1 calc(100% - 62px);
+    }
+
+    .admin-table tbody td.admin-cell-actions {
+        flex: 1 1 100%;
+        width: auto;
+        margin-top: 8px;
+        padding-top: 12px;
+        border-top: 1px solid var(--line);
+        white-space: normal;
+    }
+
+    .admin-table tbody td.admin-cell-actions .admin-actions {
+        flex: 1;
+        justify-content: stretch;
+    }
+
+    .admin-console .admin-actions .admin-act {
+        flex: 1 1 0;
+        min-height: 44px;
+        padding: 0 14px;
+        font-size: 14px;
+    }
+
+    .admin-stepper-row {
+        flex-wrap: wrap;
+        margin-top: 4px;
+    }
+
+    .admin-stepper-row .admin-stepper-save {
+        flex: 1 1 auto;
+    }
+}
+
+/* ───────── 720px 미만: 폼 1열, 버튼 전체 폭 ───────── */
+@media screen and (max-width: 719px) {
+    .admin-title-section {
+        margin-left: 8px;
+    }
+
+    .admin-title-section::before {
+        margin-right: 8px;
+    }
+
+    .admin-panel-title {
+        font-size: 20px;
+    }
+
+    .admin-panel-tools,
+    .admin-panel-tools .admin-form-toggle,
+    .admin-subpanel-head .admin-form-toggle {
+        width: 100%;
     }
 
     .admin-form-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .admin-span-2 {
-        grid-column: auto;
+        grid-template-columns: minmax(0, 1fr);
     }
 
     .admin-checkbox {
-        margin-top: 0;
-        justify-content: flex-start;
+        align-self: auto;
     }
 
-    .proceeding-admin-grid {
-        grid-template-columns: 1fr;
+    .admin-form-actions {
+        flex-direction: column-reverse;
     }
 
-    .proceeding-dropzone {
-        flex-direction: column;
-        align-items: flex-start;
+    .admin-form-actions .ui-btn {
+        width: 100%;
+    }
+
+    .admin-dropzone {
+        flex-wrap: wrap;
+    }
+
+    .admin-dropzone .ui-btn {
+        width: 100%;
+    }
+
+    .admin-search {
+        flex-basis: 100%;
+        max-width: none;
+    }
+
+    .admin-toolbar .admin-toolbar-select {
+        flex: 1 1 100%;
+    }
+
+    .admin-toolbar-summary {
+        margin-left: 0;
+    }
+
+    .admin-inbox-head {
+        padding-right: 4px;
+    }
+
+    .admin-modal {
+        width: 100%;
     }
 }

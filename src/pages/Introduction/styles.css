@@ -1,1 +1,46 @@
+/* 소개 메뉴 공용: 안내 문구 상자 (조직도, 공약 소개에서 사용) */
+.introduction-note {
+    display: grid;
+    gap: 6px;
+    max-width: var(--max-width-prose);
+    padding: clamp(16px, 2.4vw, 24px);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-large);
+    background: var(--surface);
+    color: var(--ink-2);
+    font-size: 15px;
+    line-height: 1.7;
+    word-break: keep-all;
+}
 
+.introduction-note p {
+    margin: 0;
+}
+
+.introduction-note a {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    justify-self: start;
+    min-height: 44px;
+    margin-top: 4px;
+    color: var(--brand-teal-ink);
+    font-weight: 600;
+    text-decoration: none;
+    transition: color 0.15s var(--ease);
+}
+
+.introduction-note a:hover {
+    color: var(--ink);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+
+.introduction-note a svg {
+    flex: none;
+    transition: transform 0.15s var(--ease);
+}
+
+.introduction-note a:hover svg {
+    transform: translate(2px, -2px);
+}

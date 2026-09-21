@@ -1,6 +1,9 @@
 import React from 'react';
 import './styles.css';
 
+// 기조 문장: 따옴표 안쪽을 인용구로 크게 보여준다
+const SLOGAN_PATTERN = /^(.*?)(“[^”]+”)(.*)$/;
+
 const About = () => {
     const aboutTexts = [
         '안녕하십니까, 아주대학교 학우 여러분.',
@@ -14,20 +17,45 @@ const About = () => {
         '아주대학교 제45대 총학생회 AU:SUM 올림',
     ];
 
-    const renderAboutText = (text, index) => (
-        <React.Fragment key={index}>
-            <div className="aboutText">{text}</div>
-            {index < aboutTexts.length - 1 && <span className="space2"></span>}
-        </React.Fragment>
-    );
+    const lastIndex = aboutTexts.length - 1;
+
+    const renderAboutText = (text, index) => {
+        // 첫 문장: 큰 리드
+        if (index === 0) {
+            return <p key={index} className="about-lead">{text}</p>;
+        }
+
+        // 마지막 문장: 서명
+        if (index === lastIndex) {
+            return <p key={index} className="about-signature">{text}</p>;
+        }
+
+        const slogan = text.match(SLOGAN_PATTERN);
+        if (slogan) {
+            const [, before, quote, after] = slogan;
+            return (
+                <blockquote key={index} className="about-quote">
+                    <span className="about-quote__context">{before.trim()}</span>
+                    <strong className="about-quote__slogan">{quote}</strong>
+                    <span className="about-quote__context">{after.trim()}</span>
+                </blockquote>
+            );
+        }
+
+        return (
+            <p key={index} className={index === 1 ? 'about-text about-text--intro' : 'about-text'}>
+                {text}
+            </p>
+        );
+    };
 
     return (
         <div className="context">
             <div className="contextTitle">총학생회 소개</div>
             <hr className="titleSeparator" />
-            <div className="aboutTextBox">
+            <article className="about-letter">
                 {aboutTexts.map(renderAboutText)}
-            </div>
+            </article>
         </div>
     );
 };
