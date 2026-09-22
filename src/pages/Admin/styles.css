@@ -612,6 +612,87 @@
     color: var(--ink);
 }
 
+/* 순서 바꾸기 (LinkHub) */
+.admin-order-actions {
+    display: flex;
+    gap: 6px;
+}
+
+.admin-col-order {
+    width: 132px;
+}
+
+.admin-order-cell {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.admin-order-num {
+    min-width: 22px;
+    color: var(--ink-3);
+    font-size: 13px;
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+}
+
+.admin-order-btn {
+    display: inline-grid;
+    place-items: center;
+    width: 36px;
+    height: 36px;
+    border: 1px solid var(--line-strong);
+    border-radius: 8px;
+    background: var(--paper);
+    color: var(--ink-2);
+    transition: var(--transition-fast);
+}
+
+.admin-order-btn:hover:not(:disabled) {
+    border-color: var(--brand-teal);
+    color: var(--brand-teal-ink);
+}
+
+.admin-order-btn:disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+}
+
+/* 드래그로 옮기기 */
+.admin-order-grip {
+    display: inline-grid;
+    place-items: center;
+    width: 20px;
+    color: var(--ink-4);
+}
+
+.admin-table tbody tr.is-draggable {
+    cursor: grab;
+}
+
+.admin-table tbody tr.is-draggable:hover .admin-order-grip {
+    color: var(--ink-2);
+}
+
+.admin-table tbody tr.is-dragging {
+    opacity: 0.4;
+    cursor: grabbing;
+}
+
+/* 놓을 자리: 그 행 위쪽에 기조색 선이 뜬다 */
+.admin-table tbody tr.is-drop-target td {
+    box-shadow: inset 0 3px 0 var(--brand-teal);
+}
+
+.admin-table tbody tr.is-drop-target {
+    background: var(--brand-wash);
+}
+
+/* 드래그 중에는 행 안의 글자가 같이 선택되지 않게 */
+.admin-table tbody tr.is-draggable * {
+    user-select: none;
+}
+
 /* ───────── 표 ───────── */
 .admin-table-wrap {
     width: 100%;
