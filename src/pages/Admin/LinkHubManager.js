@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from "react";
 import axios from "axios";
-import { Pencil, Trash2 } from "lucide-react";
+import { ArrowDown, ArrowUp, Pencil, RotateCcw, Save, Trash2 } from "lucide-react";
 import { useAuth } from "../../contexts/AuthContext";
 import {
     AdminCheckbox,
@@ -39,6 +39,8 @@ const LinkHubManager = () => {
     const [loading, setLoading] = useState(false);
     const [message, setMessage] = useState("");
     const [error, setError] = useState("");
+    const [orderedIds, setOrderedIds] = useState(null); // null이면 서버 순서 그대로
+    const [savingOrder, setSavingOrder] = useState(false);
 
     const authConfig = useMemo(
         () => ({
@@ -61,6 +63,7 @@ const LinkHubManager = () => {
         try {
             const response = await apiClient.get("/api/admin/link", authConfig);
             setItems(pickItems(response.data));
+            setOrderedIds(null);
         } catch (e) {
             setError(e.response?.data?.message || "링크 목록을 불러오지 못했습니다.");
         } finally {
@@ -124,6 +127,38 @@ const LinkHubManager = () => {
         }
     };
 
+    const moveItem = (id, direction) => {
+        const current = orderedIds ?? items.map(getItemId);
+        const index = current.indexOf(id);
+        const target = index + direction;
+        if (index < 0 || target < 0 || target >= current.length) return;
+        const next = [...current];
+        [next[index], next[target]] = [next[target], next[index]];
+        setOrderedIds(next);
+    };
+
+    const handleSaveOrder = async () => {
+        if (!orderedIds) return;
+        setSavingOrder(true);
+        setError("");
+        setMessage("");
+        try {
+            const response = await apiClient.patch("/api/admin/link/order", { orderedIds }, authConfig);
+            const saved = pickItems(response.data);
+            if (saved.length > 0) {
+                setItems(saved);
+                setOrderedIds(null);
+            } else {
+                await loadItems();
+            }
+            setMessage("링크 순서를 저장했습니다.");
+        } catch (e) {
+            setError(e.response?.data?.message || "순서 저장에 실패했습니다.");
+        } finally {
+            setSavingOrder(false);
+        }
+    };
+
     const handleDelete = async (id) => {
         if (!window.confirm("이 링크를 삭제하시겠습니까?")) return;
         setError("");
@@ -146,10 +181,16 @@ const LinkHubManager = () => {
 
     const editingItem = items.find((item) => item.id === editingId);
     const keyword = query.trim().toLowerCase();
-    const visibleItems = keyword
-        ? items.filter((item) =>
-            [item.title, item.link].some((value) => String(value || "").toLowerCase().includes(keyword)))
+    const orderDirty = orderedIds !== null;
+    const sortedItems = orderedIds
+        ? orderedIds.map((id) => items.find((item) => getItemId(item) === id)).filter(Boolean)
         : items;
+    const visibleItems = keyword
+        ? sortedItems.filter((item) =>
+            [item.title, item.link].some((value) => String(value || "").toLowerCase().includes(keyword)))
+        : sortedItems;
+    // 검색으로 일부만 보일 때는 순서 이동을 막는다 (안 보이는 항목과 자리가 바뀌는 혼란 방지)
+    const canReorder = !keyword && !loading;
 
     return (
         <section className="admin-section">
@@ -200,6 +241,37 @@ const LinkHubManager = () => {
             {items.length > 0 && (
                 <div className="admin-toolbar">
                     <AdminSearch value={query} onChange={setQuery} placeholder="제목, 링크 검색" />
+                    {orderDirty && (
+                        <div className="admin-order-actions">
+                            <button
+                                className="ui-btn is-small"
+                                type="button"
+                                onClick={() => setOrderedIds(null)}
+                                disabled={savingOrder}
+                            >
+                                <RotateCcw size={14} aria-hidden="true" />
+                                되돌리기
+                            </button>
+                            <button
+                                className="ui-btn is-small is-primary"
+                                type="button"
+                                onClick={handleSaveOrder}
+                                disabled={savingOrder}
+                            >
+                                <Save size={14} aria-hidden="true" />
+                                {savingOrder ? "저장 중..." : "순서 저장"}
+                            </button>
+                        </div>
+                    )}
+                    <span className="admin-toolbar-summary">
+                        {orderDirty ? (
+                            <strong>순서가 바뀌었습니다. 저장을 눌러야 반영됩니다.</strong>
+                        ) : keyword ? (
+                            "검색 중에는 순서를 옮길 수 없습니다."
+                        ) : (
+                            "화살표로 노출 순서를 바꿀 수 있습니다."
+                        )}
+                    </span>
                 </div>
             )}
 
@@ -214,6 +286,7 @@ const LinkHubManager = () => {
                     <table className="admin-table">
                         <thead>
                             <tr>
+                                <th className="admin-col-order">순서</th>
                                 <th>제목</th>
                                 <th>링크</th>
                                 <th>노출</th>
@@ -222,11 +295,34 @@ const LinkHubManager = () => {
                             </tr>
                         </thead>
                         <tbody>
-                            {visibleItems.map((item) => (
+                            {visibleItems.map((item, index) => (
                                 <tr
                                     key={item.id}
                                     className={`${changedRows.has(String(item.id)) ? "is-flash" : ""} ${editingId === item.id ? "is-editing" : ""}`}
                                 >
+                                    <td className="admin-cell-order" data-label="순서">
+                                        <div className="admin-order-cell">
+                                            <span className="admin-order-num">{index + 1}</span>
+                                            <button
+                                                className="admin-order-btn"
+                                                type="button"
+                                                aria-label={`${item.title} 위로`}
+                                                disabled={!canReorder || index === 0}
+                                                onClick={() => moveItem(item.id, -1)}
+                                            >
+                                                <ArrowUp size={16} aria-hidden="true" />
+                                            </button>
+                                            <button
+                                                className="admin-order-btn"
+                                                type="button"
+                                                aria-label={`${item.title} 아래로`}
+                                                disabled={!canReorder || index === visibleItems.length - 1}
+                                                onClick={() => moveItem(item.id, 1)}
+                                            >
+                                                <ArrowDown size={16} aria-hidden="true" />
+                                            </button>
+                                        </div>
+                                    </td>
                                     <td className="admin-cell-title">{item.title || "-"}</td>
                                     <td className="admin-cell-wide admin-cell-url">{item.link || "-"}</td>
                                     <td className="admin-cell-badge">

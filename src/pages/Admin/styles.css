@@ -612,6 +612,52 @@
     color: var(--ink);
 }
 
+/* 순서 바꾸기 (LinkHub) */
+.admin-order-actions {
+    display: flex;
+    gap: 6px;
+}
+
+.admin-col-order {
+    width: 132px;
+}
+
+.admin-order-cell {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.admin-order-num {
+    min-width: 22px;
+    color: var(--ink-3);
+    font-size: 13px;
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+}
+
+.admin-order-btn {
+    display: inline-grid;
+    place-items: center;
+    width: 36px;
+    height: 36px;
+    border: 1px solid var(--line-strong);
+    border-radius: 8px;
+    background: var(--paper);
+    color: var(--ink-2);
+    transition: var(--transition-fast);
+}
+
+.admin-order-btn:hover:not(:disabled) {
+    border-color: var(--brand-teal);
+    color: var(--brand-teal-ink);
+}
+
+.admin-order-btn:disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+}
+
 /* ───────── 표 ───────── */
 .admin-table-wrap {
     width: 100%;
