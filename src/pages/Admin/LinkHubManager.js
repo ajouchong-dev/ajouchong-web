@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from "react";
 import axios from "axios";
-import { ArrowDown, ArrowUp, Pencil, RotateCcw, Save, Trash2 } from "lucide-react";
+import { ArrowDown, ArrowUp, GripVertical, Pencil, RotateCcw, Save, Trash2 } from "lucide-react";
 import { useAuth } from "../../contexts/AuthContext";
 import {
     AdminCheckbox,
@@ -41,6 +41,8 @@ const LinkHubManager = () => {
     const [error, setError] = useState("");
     const [orderedIds, setOrderedIds] = useState(null); // null이면 서버 순서 그대로
     const [savingOrder, setSavingOrder] = useState(false);
+    const [dragId, setDragId] = useState(null); // 끌고 있는 행
+    const [overId, setOverId] = useState(null); // 놓을 자리(그 행 위에 들어간다)
 
     const authConfig = useMemo(
         () => ({
@@ -135,6 +137,45 @@ const LinkHubManager = () => {
         const next = [...current];
         [next[index], next[target]] = [next[target], next[index]];
         setOrderedIds(next);
+    };
+
+    // 끌던 행을 targetId 행 자리에 끼워 넣는다 (targetId 행은 아래로 밀린다)
+    const moveItemTo = (id, targetId) => {
+        if (id === targetId) return;
+        const current = orderedIds ?? items.map(getItemId);
+        const from = current.indexOf(id);
+        const to = current.indexOf(targetId);
+        if (from < 0 || to < 0) return;
+        const next = [...current];
+        next.splice(from, 1);
+        next.splice(to, 0, id);
+        setOrderedIds(next);
+    };
+
+    const handleDragStart = (event, id) => {
+        setDragId(id);
+        event.dataTransfer.effectAllowed = "move";
+        // Firefox는 데이터가 있어야 드래그가 시작된다
+        event.dataTransfer.setData("text/plain", String(id));
+    };
+
+    const handleDragOver = (event, id) => {
+        if (dragId === null) return;
+        event.preventDefault();
+        event.dataTransfer.dropEffect = "move";
+        if (overId !== id) setOverId(id);
+    };
+
+    const handleDrop = (event, id) => {
+        event.preventDefault();
+        if (dragId !== null) moveItemTo(dragId, id);
+        setDragId(null);
+        setOverId(null);
+    };
+
+    const handleDragEnd = () => {
+        setDragId(null);
+        setOverId(null);
     };
 
     const handleSaveOrder = async () => {
@@ -269,7 +310,7 @@ const LinkHubManager = () => {
                         ) : keyword ? (
                             "검색 중에는 순서를 옮길 수 없습니다."
                         ) : (
-                            "화살표로 노출 순서를 바꿀 수 있습니다."
+                            "행을 끌어서 놓거나 화살표로 노출 순서를 바꿀 수 있습니다."
                         )}
                     </span>
                 </div>
@@ -298,10 +339,24 @@ const LinkHubManager = () => {
                             {visibleItems.map((item, index) => (
                                 <tr
                                     key={item.id}
-                                    className={`${changedRows.has(String(item.id)) ? "is-flash" : ""} ${editingId === item.id ? "is-editing" : ""}`}
+                                    className={[
+                                        changedRows.has(String(item.id)) ? "is-flash" : "",
+                                        editingId === item.id ? "is-editing" : "",
+                                        canReorder ? "is-draggable" : "",
+                                        dragId === item.id ? "is-dragging" : "",
+                                        overId === item.id && dragId !== item.id ? "is-drop-target" : "",
+                                    ].filter(Boolean).join(" ")}
+                                    draggable={canReorder}
+                                    onDragStart={(event) => handleDragStart(event, item.id)}
+                                    onDragOver={(event) => handleDragOver(event, item.id)}
+                                    onDrop={(event) => handleDrop(event, item.id)}
+                                    onDragEnd={handleDragEnd}
                                 >
                                     <td className="admin-cell-order" data-label="순서">
                                         <div className="admin-order-cell">
+                                            <span className="admin-order-grip" aria-hidden="true">
+                                                <GripVertical size={16} />
+                                            </span>
                                             <span className="admin-order-num">{index + 1}</span>
                                             <button
                                                 className="admin-order-btn"
